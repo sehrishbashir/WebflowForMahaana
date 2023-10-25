@@ -3,4 +3,4 @@
 input:focus-visible { outline: none; }
 .sst-input-content { position: relative; }
 #initial-error, #monthly-error { position: absolute; bottom: -12px; font-size: 12px; font-family: 'Poppins'; color: red;  }
-#mainHomaTitle { color: red }
+#mainHomaTitle { color: yellow }
