@@ -233,7 +233,7 @@ Webflow.push(function () {
                 else { wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData; showElements(wlError) }
             }
             console.log('mahaanaInvitee', mahaanaInvitee)
-            //handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
+            handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
         } else { $(document).off('submit') }
     })
 });
