@@ -1,11 +1,19 @@
 // ---------------- CREDS SETUP ---------------- //
 const currentDomain = window.location.hostname;
-const corporate = 'corporate';
-const individual = 'personal';
+const corporate = window.env.CORPORATE;
+const individual = window.env.INDIVIDUAL;
 
 let mahaanaWealthCashFund;
 let mahaanaInvitee;
 let domainURL;
+
+
+mahaanaWealthCashFund = window.env.CASHFUND
+mahaanaInvitee = window.env.INVITE_MAHANIERS
+domainURL = window.env.DOMAIN_URL
+
+
+
 if (!currentDomain.includes('webflow')) {
     mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
     mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
@@ -19,8 +27,8 @@ if (!currentDomain.includes('webflow')) {
 
 
 // ---------------- HELP CRUNCH ---------------- //
-const org = 'mahaanawealth';
-const appId = '3e2db6fc-88c6-4d53-8713-fa639bf8c4f2';
+const org = window.env.HC_ORGANIZATION;
+const appId = window.env.HC_APPID;
 const userData = { custom_data: { approch: 'Website' } }
 
 window.helpcrunchSettings = { organization: org, appId: appId, user: userData };
@@ -210,25 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = new Date().getFullYear();
     const currentYearElement = document.querySelectorAll('.current-year');
     currentYearElement.forEach(function (element) { element.innerHTML = currentYear });
-
-    // FORM ELEMENTS
-    // GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
-    // WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
-
-    // if (closeButton || closeByBg) {
-    //     [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
-    //         resetForm(gitForm, gElementsToReset)
-    //         homeBody.style.overflowY = 'auto'
-    //     }))
-    // }
-    
-    // if (wlCloseButton || wlBackdrop || wlCancelButton) {
-    //     [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
-    //         resetForm(wlForm, wElementsToReset);
-    //         hideElements(wlError)
-    //         homeBody.style.overflowY = 'auto'
-    //     }))
-    // }
 });
 
 // FORM ELEMENTS
