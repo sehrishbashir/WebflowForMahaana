@@ -726,29 +726,25 @@ function renderScripts() {
         initializeSelection(windowWidth);
     }
 
-    // document.addEventListener('DOMContentLoaded', function () {
+    handleResize();
+    window.addEventListener('resize', function () {
         handleResize();
-        window.addEventListener('resize', function () {
-            handleResize();
-        });
-    // });
+    });
 
-    // document.addEventListener('DOMContentLoaded', function () {
-        const items = document.querySelectorAll('.sst-list-item');
-        items[0].classList.add('selected');
-        items.forEach(item => {
-            item.addEventListener('click', function () {
-                const h3Value = this.querySelector('.sst-item-head').textContent;
-                const lowerCaseValue = h3Value.toLowerCase();
-                const selectedItemsCount = document.querySelectorAll('.sst-list-item.selected').length;
-                if (this.classList.contains('selected') && selectedItemsCount === 1) {
-                    return;
-                }
-                window.onSelectRate(lowerCaseValue);
-                this.classList.toggle('selected');
-            });
+    const items = document.querySelectorAll('.sst-list-item');
+    items[0].classList.add('selected');
+    items.forEach(item => {
+        item.addEventListener('click', function () {
+            const h3Value = this.querySelector('.sst-item-head').textContent;
+            const lowerCaseValue = h3Value.toLowerCase();
+            const selectedItemsCount = document.querySelectorAll('.sst-list-item.selected').length;
+            if (this.classList.contains('selected') && selectedItemsCount === 1) {
+                return;
+            }
+            window.onSelectRate(lowerCaseValue);
+            this.classList.toggle('selected');
         });
-    // })
+    });
 
     const initRangeInput = document.querySelector('input[type="range"]#initial-slider');
     const initTooltipContainer = document.getElementById('init-tooltip-container');
