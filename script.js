@@ -617,14 +617,20 @@ function handleBody(type) {
 
 // Function to create the loader element and append it to the body
 function createLoader() {
-    const loaderDiv = document.createElement('div');
-    loaderDiv.id = 'loader-wrapper';
-    loaderDiv.className = 'loader-wrapper';
+    // Create the loader wrapper div
+    const loaderWrapper = document.createElement('div');
+    loaderWrapper.id = 'loader-wrapper';
+    loaderWrapper.className = 'loader-wrapper';
 
+    // Create the inner loader div
     const loaderElement = document.createElement('div');
     loaderElement.className = 'loader';
 
-    document.body.appendChild(loaderDiv);
+    // Append the loader element to the loader wrapper
+    loaderWrapper.appendChild(loaderElement);
 
-    return loaderDiv;
+    // Append the loader wrapper to the body
+    document.body.appendChild(loaderWrapper);
+
+    return loaderWrapper;
 }
