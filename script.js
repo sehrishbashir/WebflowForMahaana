@@ -212,39 +212,45 @@ document.addEventListener("DOMContentLoaded", function () {
     currentYearElement.forEach(function (element) { element.innerHTML = currentYear });
 
     // FORM ELEMENTS
-    GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
-    WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
+    // GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
+    // WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
 
-    if (closeButton || closeByBg) {
-        closeButton.forEach((element) => element.addEventListener('click', function () {
-            resetForm(gitForm, gElementsToReset)
-            homeBody.style.overflowY = 'auto'
-        }))
-        closeByBg.forEach((element) => element.addEventListener('click', function () {
-            resetForm(gitForm, gElementsToReset)
-            homeBody.style.overflowY = 'auto'
-        }))
-    }
-
-    if (wlCloseButton || wlBackdrop || wlCancelButton) {
-        wlCloseButton.forEach((element) => element.addEventListener('click', function () {
-
-            console.log('>>>>if1');
-            resetForm(wlForm, wElementsToReset);
-            hideElements(wlError)
-        }))
-        wlBackdrop.forEach((element) => element.addEventListener('click', function () {
-            resetForm(wlForm, wElementsToReset);
-            console.log('>>>>if2');
-            hideElements(wlError)
-        }))
-        wlCancelButton.forEach((element) => element.addEventListener('click', function () {
-            console.log('>>>>if3');
-            resetForm(wlForm, wElementsToReset);
-            hideElements(wlError)
-        }))
-    }
+    // if (closeButton || closeByBg) {
+    //     [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
+    //         resetForm(gitForm, gElementsToReset)
+    //         homeBody.style.overflowY = 'auto'
+    //     }))
+    // }
+    
+    // if (wlCloseButton || wlBackdrop || wlCancelButton) {
+    //     [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
+    //         resetForm(wlForm, wElementsToReset);
+    //         hideElements(wlError)
+    //         homeBody.style.overflowY = 'auto'
+    //     }))
+    // }
 });
+
+// FORM ELEMENTS
+GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
+WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
+
+if (closeButton || closeByBg) {
+    [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
+        resetForm(gitForm, gElementsToReset)
+        homeBody.style.overflowY = 'auto'
+    }))
+}
+
+if (wlCloseButton || wlBackdrop || wlCancelButton) {
+    [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
+
+        console.log('>>>>>>>>>>>>>')
+        resetForm(wlForm, wElementsToReset);
+        hideElements(wlError)
+        homeBody.style.overflowY = 'auto'
+    }))
+}
 
 
 // ---------------- WAITLIST FORM ---------------- //
