@@ -1,3 +1,21 @@
+// CREDS SETUP
+const currentDomain = window.location.hostname;
+const corporate = 'corporate';
+const individual = 'personal';
+
+let mahaanaWealthCashFund;
+let mahaanaInvitee;
+let domainURL;
+if(!currentDomain.includes('webflow')){
+  mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
+  mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
+  domainURL = 'https://mahaana.com/'
+} else {
+  mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
+  mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
+  domainURL = 'https://mahaana.webflow.io/'
+}
+
 // HELP CRUNCH
 const org = 'mahaanawealth';
 const appId = '3e2db6fc-88c6-4d53-8713-fa639bf8c4f2';
