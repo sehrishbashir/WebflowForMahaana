@@ -513,15 +513,15 @@ function truncateText(elements, limit) {
 }
 const blogCardParaElements = document.getElementsByClassName('blog-card-para');
 const blogTitleElements = document.getElementsByClassName('blog-title');
-const blogParaElements2 = document.querySelectorAll('.blogs-para')
-const blogTitleElements2 = document.getElementsByClassName('blogs-head');
+// const blogParaElements2 = document.querySelectorAll('.blogs-para')
+// const blogTitleElements2 = document.getElementsByClassName('blogs-head');
 
 const paraLimit = 100;
 const titleLimit = 50;
 truncateText(blogCardParaElements, paraLimit);
 truncateText(blogTitleElements, titleLimit);
-truncateText(blogParaElements2, paraLimit);
-truncateText(blogTitleElements2, titleLimit);
+// truncateText(blogParaElements2, paraLimit);
+// truncateText(blogTitleElements2, titleLimit);
 
 // ---------------------------------------------- //
 
