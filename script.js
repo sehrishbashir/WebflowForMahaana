@@ -687,3 +687,223 @@ function handleWindowResize() {
 handleWindowResize();
 window.addEventListener('resize', handleWindowResize);
 // ---------------------------------------------- //
+
+
+// ---------------- HOME ---------------- //
+function renderScripts() {
+    let windowWidth = window.innerWidth;
+    let selectedBox;
+
+    function initializeSelection(windowWidth) {
+        const featureTexts = document.querySelectorAll('.feature-text');
+        let selectedBox = null;
+        selectBox(featureTexts[0]);
+        featureTexts.forEach(function (featureText) {
+            featureText.addEventListener('click', function () {
+                selectBox(featureText);
+            })
+        });
+    }
+
+    function selectBox(box) {
+        if (windowWidth > 766) {
+            if (selectedBox) {
+                selectedBox.style.boxShadow = '';
+                selectedBox.querySelector('.feature-count').style.color = '';
+            }
+            box.style.boxShadow = '0px 20px 25px -5px rgba(0, 0, 0, 0.05)';
+            box.querySelector('.feature-count').style.color = '#E5DDFF';
+            selectedBox = box;
+        } else {
+            box.style.boxShadow = '';
+            box.querySelector('.feature-count').style.color = '';
+            selectedBox = box;
+        }
+    }
+
+    function handleResize() {
+        const windowWidth = window.innerWidth;
+        initializeSelection(windowWidth);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        handleResize();
+        window.addEventListener('resize', function () {
+            handleResize();
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const items = document.querySelectorAll('.sst-list-item');
+        items[0].classList.add('selected');
+        items.forEach(item => {
+            item.addEventListener('click', function () {
+                const h3Value = this.querySelector('.sst-item-head').textContent;
+                const lowerCaseValue = h3Value.toLowerCase();
+                const selectedItemsCount = document.querySelectorAll('.sst-list-item.selected').length;
+                if (this.classList.contains('selected') && selectedItemsCount === 1) {
+                    return;
+                }
+                window.onSelectRate(lowerCaseValue);
+                this.classList.toggle('selected');
+            });
+        });
+
+    })
+
+    const initRangeInput = document.querySelector('input[type="range"]#initial-slider');
+    const initTooltipContainer = document.getElementById('init-tooltip-container');
+    const initTooltip = document.querySelector('#init-tooltip-container span');
+    const initRange = document.querySelector('.init-range')
+    const initInput = document.getElementById('initial-amount');
+    const initError = document.getElementById('initial-error');
+
+    const monthlyRangeInput = document.querySelector('input[type="range"]#monthly-slider');
+    const monthlyTooltipContainer = document.getElementById('monthly-tooltip-container');
+    const monthlyTooltip = document.querySelector('#monthly-tooltip-container span');
+    const monthlyRange = document.querySelector('.monthly-range');
+    const monthlyInput = document.getElementById('monthly-amount');
+    const monthlyError = document.getElementById('monthly-error');
+
+    function calcTransform(percentage) {
+        if (percentage <= 0.99) {
+            return `translateX(15%)`
+        } else if (percentage >= 1 && percentage <= 9.99) {
+            return `translateX(-10%)`
+        } else if (percentage >= 10) {
+            return `translateX(-${(15 + percentage) - 20}%)`
+        } else {
+            return `translateX(-80%)`
+        }
+    }
+
+    const currencyFormatted = (value) => {
+        if (/^\d{1,3}(,\d{3})*$/.test(value)) {
+            return value;
+        } else {
+            const returnVal = Number(value).toLocaleString('en-PK', {
+                minimumFractionDigits: 0, maximumFractionDigits: 0
+            });
+            return returnVal;
+        }
+    };
+
+    const currencyFormatted2 = (value) => {
+        const numericValue = parseFloat(value.replace(/,/g, ''));
+        if (!isNaN(numericValue) && isFinite(numericValue)) {
+            const returnVal = numericValue.toLocaleString('en-PK', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            });
+            return returnVal;
+        } else {
+            return value;
+        }
+    };
+
+    function removeCommaFormatting(amount) {
+        if (!amount) { return undefined; }
+        if (amount == "0.00" || amount == "0") { return 0; }
+        let amountWithoutCommas = amount.toString().replace(/\,/g, "");
+        if (amountWithoutCommas.endsWith('.')) { amountWithoutCommas = amountWithoutCommas.replace('.', ''); }
+        amountWithoutCommas = amountWithoutCommas.toString().replace('.00', "");
+        if (amountWithoutCommas.includes(".")) { return parseFloat(amountWithoutCommas) }
+        return parseInt(amountWithoutCommas);
+    }
+
+    const validateAndFormat = function (input, error, minValue, maxValue, updateRange) {
+        const numericValue = parseFloat(input.value.replace(/,/g, ''));
+
+        if (!input.value.trim()) {
+            error.textContent = 'Amount is required';
+            input.classList.add('error');
+        } else if (isNaN(numericValue) || /[a-zA-Z]/.test(input.value)) {
+            error.textContent = 'Only numbers allowed';
+            input.classList.add('error');
+        } else if (numericValue < minValue || numericValue > maxValue) {
+            error.textContent = numericValue < minValue ? `Min ${minValue.toLocaleString()} amount required` : `Max ${maxValue.toLocaleString()} amount allowed`;
+            input.classList.add('error');
+        } else {
+            error.textContent = '';
+            input.classList.remove('error');
+            const formattedValue = currencyFormatted2(input.value);
+            input.value = formattedValue;
+            updateRange();
+        }
+    };
+
+    initInput.addEventListener('input', function () {
+        const updateRange = () => {
+            const newValue = removeCommaFormatting(this.value);
+            updateSliderValues(newValue, initTooltip, initRange, this.value);
+            if (initRangeInput) { initRangeInput.value = newValue; }
+        }
+
+        if (initRangeInput) { initRangeInput.value = removeCommaFormatting(this.value); }
+        initInput.value = this.value;
+        validateAndFormat(this, initError, 1000, 9999999, updateRange);
+
+        window.mahaanaChart(removeCommaFormatting(this.value), monthlyRangeInput ? monthlyRangeInput.value : 0)
+    });
+
+    monthlyInput.addEventListener('input', function () {
+        const updateRange = () => {
+            const newValue = removeCommaFormatting(this.value);
+            updateSliderValues(newValue, monthlyTooltip, monthlyRange, this.value);
+            if (monthlyRangeInput) { monthlyRangeInput.value = newValue; }
+        }
+
+        if (monthlyRangeInput) { monthlyRangeInput.value = removeCommaFormatting(this.value); }
+        monthlyInput.value = this.value;
+        validateAndFormat(this, monthlyError, 500, 999999, updateRange);
+
+        window.mahaanaChart(initRangeInput ? initRangeInput.value : 0, removeCommaFormatting(this.value))
+    });
+
+    function updateSliderValues(slider, tooltip, range, rangeInput) {
+        const value = removeCommaFormatting(slider.value);
+        const rangeMax = parseInt(slider.max, 10);
+        const percentage = (value / rangeMax) * 100;
+        let containerWidth;
+        let left;
+        if (tooltip) {
+            containerWidth = tooltip.clientWidth;
+            left = (percentage * containerWidth) / 100;
+            tooltip.style.left = `${percentage}%`;
+            tooltip.style.transform = calcTransform(percentage);
+            tooltip.textContent = rangeInput;
+            range.style.width = `${percentage}%`;
+            tooltip.innerHTML = currencyFormatted(value);
+        }
+    }
+
+    function initializeSliders() {
+        const initValue = 1000;
+        const monthlyValue = 500;
+        initInput.value = currencyFormatted(initValue);
+        monthlyInput.value = currencyFormatted(monthlyValue);
+        updateSliderValues(initValue, initTooltip, initRange, initValue);
+        updateSliderValues(monthlyValue, monthlyTooltip, monthlyRange, monthlyValue);
+
+        if (initRangeInput) { initRangeInput.value = initValue; }
+        if (monthlyRangeInput) { monthlyRangeInput.value = monthlyValue; }
+    }
+    initializeSliders();
+
+    if (initRangeInput) {
+        initRangeInput.addEventListener('input', function () {
+            updateSliderValues(this, initTooltip, initRange, this.value);
+            initInput.value = currencyFormatted(this.value);
+            if (monthlyRangeInput) { window.mahaanaChart(this.value, monthlyRangeInput.value) }
+        });
+    }
+    if (monthlyRangeInput) {
+        monthlyRangeInput.addEventListener('input', function () {
+            updateSliderValues(this, monthlyTooltip, monthlyRange, this.value);
+            monthlyInput.value = currencyFormatted(this.value);
+            if (initRangeInput) { window.mahaanaChart(initRangeInput.value, this.value) }
+        });
+    }
+}
+renderScripts();
+// ---------------------------------------------- //
