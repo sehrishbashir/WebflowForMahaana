@@ -726,14 +726,14 @@ function renderScripts() {
         initializeSelection(windowWidth);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // document.addEventListener('DOMContentLoaded', function () {
         handleResize();
         window.addEventListener('resize', function () {
             handleResize();
         });
-    });
+    // });
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.sst-list-item');
         items[0].classList.add('selected');
         items.forEach(item => {
@@ -748,8 +748,7 @@ function renderScripts() {
                 this.classList.toggle('selected');
             });
         });
-
-    })
+    // })
 
     const initRangeInput = document.querySelector('input[type="range"]#initial-slider');
     const initTooltipContainer = document.getElementById('init-tooltip-container');
