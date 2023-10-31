@@ -597,16 +597,16 @@ function handleBody(type) {
         }
 
         // Hide the loader when your code is complete
-        // loader.style.display = 'none';
+        loader.style.display = 'none';
 
     } else {
         const intervalId = setInterval(function () {
             if (b2bBody) {
                 clearInterval(intervalId);
                 handleBody(type);
-
+                
                 // Hide the loader when your code is complete
-                // loader.style.display = 'none';
+                loader.style.display = 'none';
             }
         }, 100);
         window.location.href = domainURL;
@@ -621,10 +621,6 @@ function createLoader() {
     loaderDiv.id = 'loader';
     loaderDiv.className = 'loader';
 
-    const textElement = document.createElement('p');
-    textElement.textContent = 'Loading...';
-
-    loaderDiv.appendChild(textElement);
     document.body.appendChild(loaderDiv);
 
     return loaderDiv;
