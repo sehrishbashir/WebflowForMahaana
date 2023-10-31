@@ -40,6 +40,7 @@ $('#return-to-top').click(function () { scrollToTop() });
 // ---------------- VARIABLES ---------------- //
 const gElementsToReset = [];
 const wElementsToReset = [];
+const cElementsToReset = [];
 
 const headers = { 'Content-Type': 'application/json' };
 const currentYear = new Date().getFullYear();
@@ -101,10 +102,29 @@ const wlEmailInput = document.querySelector('#waitlist-email');
 const wlNameError = document.querySelector('#waitlist-name-error');
 const wlEmailError = document.querySelector('#waitlist-email-error');
 
+// CONTACT US FORM FIELS
+const cuForm = document.getElementById('wf-form-contact-us');
+const cuSubmit = document.getElementById('contact-us-submit');
+const cuSuccessModal = document.getElementById('contact-us-sucess-modal');
+const cuError = document.getElementById('wf-form-error');
+const cuErrorText = document.getElementById('contact-us-error-text');
+const cuBd = document.getElementById('contact-us-backdrop');
+const cuCloseBtn = document.getElementById('contact-us-close-button');
+// name field with error
+const cuName = document.getElementById('contact-us-name');
+const cuNameError = document.getElementById('contact-us-name-error');
+// email field with error
+const cuEmail = document.getElementById('contact-us-email');
+const cuEmailError = document.getElementById('contact-us-email-error');
+// msg field with error
+const cuMsg = document.getElementById('contact-us-message');
+const cuMsgError = document.getElementById('contact-us-msg-error');
+
 // ERROR MESGS
 const nameMsg = "Please enter your name";
 const emailMsg = "Please enter your email";
 const phoneMsg = "Please enter your phone number";
+const requiredMessage = "Please enter message";
 const invalidEmail = "Invalid email address";
 const userAddedMsg = "User has already been added to the waitlist";
 
@@ -138,16 +158,27 @@ function handleInputValidation(inputField, errorElement) { inputField.addEventLi
 function validateInput(inputField, errorElement, errorMessage, minLength) {
     const trimmedValue = inputField.value.trim();
     if (trimmedValue === '') {
-        errorElement.innerHTML = errorMessage; showElements(errorElement); inputField.classList.add('input-error');
+        errorElement.innerHTML = errorMessage;
+        showElements(errorElement);
+        inputField.classList.add('input-error');
         return false;
+
     } else if (minLength && trimmedValue.length < minLength) {
-        errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters'; showElements(errorElement);
-        inputField.classList.add('input-error'); return false;
-    } return true;
+        errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
+        showElements(errorElement);
+        inputField.classList.add('input-error');
+        return false;
+    }
+    return true;
 }
 
 // FORM RESET
-function resetForm(form, elementsToReset) { form.reset(); if (elementsToReset) { elementsToReset.forEach(({ errorElement, inputField }) => hideErrorMessage(errorElement, inputField)) } }
+function resetForm(form, elementsToReset) {
+    form.reset();
+    if (elementsToReset) {
+        elementsToReset.forEach(({ errorElement, inputField }) => hideErrorMessage(errorElement, inputField))
+    }
+}
 
 // ERROR HANDLER
 function handleErrorList(err, errMsg, errorData, emailErr, nameErr) {
@@ -195,8 +226,20 @@ function handleFormSubmission(apiURL, formData, inputs, handleSuccess, handleErr
 }
 
 // FORMS ASSETS
-const GIFormElements = [{ inputField: nameInput, errorElement: nameError, message: nameMsg, validator: 3 }, { inputField: emailInput, errorElement: emailError, message: emailMsg, validator: isValidEmail }, { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11 }];
-const WLFormElements = [{ inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 }, { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail }];
+const GIFormElements = [
+    { inputField: nameInput, errorElement: nameError, message: nameMsg, validator: 3 },
+    { inputField: emailInput, errorElement: emailError, message: emailMsg, validator: isValidEmail },
+    { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11 }
+];
+const WLFormElements = [
+    { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
+    { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail }
+];
+const CUFormElements = [
+    { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
+    { inputField: cuEmail, errorElement: cuEmailError, message: emailMsg, validator: isValidEmail },
+    { inputField: cuMsg, errorElement: cuMsgError, message: requiredMessage }
+];
 
 
 buttons.forEach(button => { button.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'hidden'; $('form#wf-form-Get-In-Touch-Form')[0].reset() }) });
@@ -213,17 +256,20 @@ document.addEventListener("DOMContentLoaded", function () {
     currentYearElement.forEach(function (element) { element.innerHTML = currentYear });
 });
 
+// ---------------- FORMS INITIALIZATION ---------------- //
 // FORM ELEMENTS
 GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
 WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
+CUFormElements.forEach((element) => cElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
 
+// GI
 if (closeButton || closeByBg) {
     [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
         resetForm(gitForm, gElementsToReset)
         homeBody.style.overflowY = 'auto'
     }))
 }
-
+// WL
 if (wlCloseButton || wlBackdrop || wlCancelButton) {
     [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
         resetForm(wlForm, wElementsToReset);
@@ -231,38 +277,15 @@ if (wlCloseButton || wlBackdrop || wlCancelButton) {
         homeBody.style.overflowY = 'auto'
     }))
 }
+// CU
+if (cuBd || cuCloseBtn) {
+    [cuBd, cuCloseBtn].forEach((element) => element.addEventListener('click', function () {
+        resetForm(cuForm, cElementsToReset);
+        homeBody.style.overflowY = 'auto'
+    }))
+}
 
-
-// ---------------- WAITLIST FORM ---------------- //
-var Webflow = Webflow || [];
-Webflow.push(function () {
-    $('form#waitlist-form').submit(function (evt) {
-        evt.preventDefault();
-        const inputValidations = handleInitForm(WLFormElements);
-        if (inputValidations.every((isValid) => isValid)) {
-            $(document).off('submit');
-            const formData = { name: wlNameInput.value, email: wlEmailInput.value };
-            handleBtnStatus(wlSubmit, 'Please wait ...');
-            const inputs = [wlNameInput, wlEmailInput, wlSubmit]
-            handleDisabled(inputs, true)
-
-            function handleSuccess() {
-                handleBtnStatus(wlSubmit, 'Send'); handleDisabled(inputs, false); hideElements(wlForm); showElements(wlSucess);
-                setTimeout(() => { hideElements(wlFormModal, wlSucess); showElements(wlForm); wlForm.reset() }, 3000)
-            }
-            function handleError(errorData, errorCode) {
-                handleBtnStatus(wlSubmit, 'Send');
-                if (errorData.charAt(0) == "{") { handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError) }
-                else { wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData; showElements(wlError) }
-            }
-            handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
-        } else { $(document).off('submit') }
-    })
-});
-// ---------------------------------------------- //
-
-
-// ---------------- GET IN TOUCH FORM ---------------- //
+// GET IN TOUCH FORM
 var Webflow = Webflow || [];
 Webflow.push(function () {
     $('form#wf-form-Get-In-Touch-Form').submit(function (evt) {
@@ -287,6 +310,97 @@ Webflow.push(function () {
         } else { $(document).off('submit') }
     })
 });
+
+// WAITLIST FORM
+var Webflow = Webflow || [];
+Webflow.push(function () {
+    $('form#waitlist-form').submit(function (evt) {
+        evt.preventDefault();
+        const inputValidations = handleInitForm(WLFormElements);
+        if (inputValidations.every((isValid) => isValid)) {
+            $(document).off('submit');
+            const formData = { name: wlNameInput.value, email: wlEmailInput.value };
+            handleBtnStatus(wlSubmit, 'Please wait ...');
+            const inputs = [wlNameInput, wlEmailInput, wlSubmit]
+            handleDisabled(inputs, true)
+
+            function handleSuccess() {
+                handleBtnStatus(wlSubmit, 'Send'); 
+                handleDisabled(inputs, false); 
+                hideElements(wlForm); s
+                howElements(wlSucess);
+                setTimeout(() => { 
+                    hideElements(wlFormModal, wlSucess); 
+                    showElements(wlForm); 
+                    wlForm.reset() 
+                }, 3000)
+            }
+            function handleError(errorData, errorCode) {
+                handleBtnStatus(wlSubmit, 'Send');
+                if (errorData.charAt(0) == "{") { 
+                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError) 
+                }
+                else { 
+                    wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData; 
+                    showElements(wlError) 
+                }
+            }
+            handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
+        } else { $(document).off('submit') }
+    })
+});
+
+// CONTACT US FORM
+var Webflow = Webflow || [];
+Webflow.push(function () {
+    $('form#wf-form-contact-us').submit(function (evt) {
+        evt.preventDefault();
+
+        const inputValidations = handleInitForm(CUFormElements);
+
+        if (inputValidations.every((isValid) => isValid)) {
+            $(document).off('submit');
+
+            const formData = {
+                name: cuName.value, 
+                email: cuEmail.value, 
+                message: cuMsg.value
+            };
+
+            handleBtnStatus(cuSubmit, 'Please wait ...');
+
+            const inputs = [cuName, cuEmail, cuMsg, cuSubmit]
+
+            function handleSuccess() {
+                handleBtnStatus(cuSubmit, 'Send'); 
+                handleDisabled(inputs, false); 
+                hideElements(cuForm); 
+                showElements(cuSuccessModal);
+                setTimeout(() => { 
+                    hideElements(cuSuccessModal); 
+                    showElements(cuForm); 
+                    cuForm.reset() 
+                }, 3000)
+            }
+            function handleError(errorData) {
+                handleBtnStatus(gitSubmit, 'Send');
+                if (errorData.charAt(0) == "{") { 
+                    handleErrorList(cuError, cuErrorText, errorData, emailError, nameError) 
+                }
+                else { 
+                    cuErrorText.innerText = errorData; 
+                    showElements(cuError) 
+                }
+            }
+            handleDisabled(inputs, true)
+            handleFormSubmission(`${mahaanaInvitee}/api/Message`, formData, inputs, handleSuccess, handleError);
+
+        } else {
+            $(document).off('submit')
+        }
+    })
+});
+
 // ---------------------------------------------- //
 
 
@@ -469,12 +583,12 @@ function handleBody(type) {
     if (b2bBody || b2cBody) {
         scrollToTop();
         if (type.toLowerCase() == corporate) {
-            b2bBody.style.display = 'flex'; b2cBody.style.display = 'none'; 
+            b2bBody.style.display = 'flex'; b2cBody.style.display = 'none';
             imageResizing(); refreshSlickSliders()
         } else {
-            b2bBody.style.display = 'none'; b2cBody.style.display = 'flex'; 
-            imageResizing(); 
-            initializeAccordions(homeAccordions); 
+            b2bBody.style.display = 'none'; b2cBody.style.display = 'flex';
+            imageResizing();
+            initializeAccordions(homeAccordions);
             refreshSlickSliders()
         }
     } else {
