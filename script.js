@@ -374,13 +374,11 @@ Webflow.push(function () {
             function handleSuccess() {
                 handleBtnStatus(cuSubmit, 'Send'); 
                 handleDisabled(inputs, false); 
-                // hideElements(cuForm); 
                 showElements(cuSuccessModal);
-                // setTimeout(() => { 
-                //     hideElements(cuSuccessModal); 
-                //     showElements(cuForm); 
-                //     cuForm.reset() 
-                // }, 3000)
+                cuForm.reset() 
+                setTimeout(() => { 
+                    hideElements(cuSuccessModal); 
+                }, 3000)
             }
             function handleError(errorData) {
                 handleBtnStatus(gitSubmit, 'Send');
