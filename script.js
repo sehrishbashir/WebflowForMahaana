@@ -255,7 +255,6 @@ Webflow.push(function () {
                 if (errorData.charAt(0) == "{") { handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError) }
                 else { wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData; showElements(wlError) }
             }
-            console.log('mahaanaInvitee', mahaanaInvitee)
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
         } else { $(document).off('submit') }
     })
@@ -288,84 +287,6 @@ Webflow.push(function () {
         } else { $(document).off('submit') }
     })
 });
-// ---------------------------------------------- //
-
-
-// ---------------- NAV DROP DOWN ---------------- //
-// if (selectedItem === null) {
-//     setDropdownItem(individual);
-//     if (window.location.href == domainURL) { handleBody(individual) }
-//     else { handleClick(individual) }
-// }
-// else {
-//     setDropdownItem(selectedItem)
-//     if (window.location.href == domainURL) { handleBody(selectedItem) }
-//     else { handleClick(selectedItem) }
-// }
-// dropDownItems.forEach(function (item) {
-//     item.addEventListener('click', () => {
-//         const selectVal = item.querySelector('.choose-type').textContent.toLowerCase();
-//         handleClick(selectVal); setDropdownItem(selectVal); handleBody(selectVal);
-//     })
-// })
-// function handleClick(selected) {
-//     dropDownItems.forEach((item, i) => {
-//         const newVal = item.querySelector('.choose-type').textContent.toLowerCase()
-//         if (selected.toLowerCase() === newVal) { item.classList.add('selected'); }
-//         else { item.classList.remove('selected'); }
-//     })
-// }
-// function createDropdownItem(text) {
-//     const dropdownItem = document.createElement('span');
-//     dropdownItem.className = 'nav-list-item';
-//     dropdownItem.innerText = text;
-//     return dropdownItem;
-// }
-// function setDropdownItem(selectedValue) {
-//     navSelectedItem.forEach((item, index) => { item.innerText = selectedValue; })
-
-//     localStorage.setItem('selectedItem', selectedValue.toLowerCase());
-
-//     dropdownMenu.forEach((item, index) => {
-//         item.innerHTML = '';
-
-//         if (selectedValue.toLowerCase() === corporate) {
-//             item.appendChild(createDropdownItem(individual));
-//         }
-//         else if (selectedValue.toLowerCase() === individual) {
-//             item.appendChild(createDropdownItem(corporate));
-//         }
-//     })
-// }
-
-// dropdownMenu.forEach((item, index) => {
-//     item.addEventListener('click', function (event) {
-//         if (event.target.classList.contains('nav-list-item')) {
-//             const selectedValue = event.target.innerText;
-//             const type = selectedValue.toLowerCase() === corporate ? 0 : 1;
-//             handleBody(selectedValue);
-//             setDropdownItem(selectedValue);
-//         }
-//     })
-// });
-
-// function handleBody(type) {
-//     handleClick(type)
-
-//     if (b2bBody || b2cBody) {
-//         scrollToTop();
-//         if (type.toLowerCase() == corporate) {
-//             b2bBody.style.display = 'flex'; b2cBody.style.display = 'none'; //imageResizing(); refreshSlickSliders()}
-//         } else {
-//             b2bBody.style.display = 'none'; b2cBody.style.display = 'flex'; imageResizing(); //initializeAccordions(homeAccordions); refreshSlickSliders()}
-//         }
-//     } else {
-//         const intervalId = setInterval(function () {
-//             if (b2bBody) { clearInterval(intervalId); handleBody(type); }
-//         }, 100);
-//         window.location.href = domainURL;
-//     }
-// }
 // ---------------------------------------------- //
 
 
@@ -563,3 +484,4 @@ function handleBody(type) {
         window.location.href = domainURL;
     }
 }
+// ---------------------------------------------- //
