@@ -215,23 +215,27 @@ document.addEventListener("DOMContentLoaded", function () {
     GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
     WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
 
-    // if (closeButton || closeByBg) {
-    //     [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
-    //         resetForm(gitForm, gElementsToReset)
-    //         homeBody.style.overflowY = 'auto'
-    //     }))
-    // }
-    if (closeButton && closeButton instanceof Element && closeByBg && closeByBg instanceof Element) {
-        [closeButton, closeByBg].forEach((element) => {
-            element.addEventListener('click', function () {
-                resetForm(gitForm, gElementsToReset);
-                homeBody.style.overflowY = 'auto';
-            });
-        });
+    if (closeButton || closeByBg) {
+        closeButton.forEach((element) => element.addEventListener('click', function () {
+            resetForm(gitForm, gElementsToReset)
+            homeBody.style.overflowY = 'auto'
+        }))
+        closeByBg.forEach((element) => element.addEventListener('click', function () {
+            resetForm(gitForm, gElementsToReset)
+            homeBody.style.overflowY = 'auto'
+        }))
     }
 
     if (wlCloseButton || wlBackdrop || wlCancelButton) {
-        [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
+        wlCloseButton.forEach((element) => element.addEventListener('click', function () {
+            resetForm(wlForm, wElementsToReset);
+            hideElements(wlError)
+        }))
+        wlBackdrop.forEach((element) => element.addEventListener('click', function () {
+            resetForm(wlForm, wElementsToReset);
+            hideElements(wlError)
+        }))
+        wlCancelButton.forEach((element) => element.addEventListener('click', function () {
             resetForm(wlForm, wElementsToReset);
             hideElements(wlError)
         }))
