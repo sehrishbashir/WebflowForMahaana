@@ -599,7 +599,7 @@ function handleBody(type) {
         // Hide the loader when your code is complete
         setTimeout(() => {
             loader.style.display = 'none';
-        }, 3000);
+        }, 1000);
 
     } else {
         const intervalId = setInterval(function () {
@@ -610,7 +610,7 @@ function handleBody(type) {
                 // Hide the loader when your code is complete
                 setTimeout(() => {
                     loader.style.display = 'none';
-                }, 3000);
+                }, 1000);
             }
         }, 100);
         window.location.href = domainURL;
