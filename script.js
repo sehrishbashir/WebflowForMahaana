@@ -7,8 +7,8 @@ let mahaanaWealthCashFund;
 let mahaanaInvitee;
 let domainURL;
 if(!currentDomain.includes('webflow')){
-  mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
-  mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
+  mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
+  mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
   domainURL = 'https://mahaana.com/'
 } else {
   mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
