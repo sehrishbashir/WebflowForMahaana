@@ -184,8 +184,16 @@ body :is(.b2c-home-arrow, .b2c-slick-arrow):hover path { stroke: #432F87; }
 }
 
 /* HOME PAGE CSS */
-.sst-item-head {text-wrap: nowrap;}
+.sst-item-head { text-wrap: nowrap; }
 .calculatorWrapper svg.recharts-surface .recharts-rectangle.recharts-tooltip-cursor { fill: transparent; }
 input:focus-visible { outline: none; }
 .sst-input-content { position: relative; }
-#initial-error, #monthly-error { position: absolute; bottom: -12px; font-size: 12px; font-family: 'Poppins'; color: red;  }
+#initial-error, #monthly-error { position: absolute; bottom: -12px; font-size: 12px; font-family: 'Poppins'; color: red; }
+
+/* ABOUT PAGE CSS */
+:is(.read-more, .read-less) a { color: #432F87; font-size: 16px; font-family: Poppins; font-size: 16px; font-style: normal; font-weight: 600; line-height: 24px; }
+
+/* SAVE+ */
+.overflowhidden {overflow-x: hidden;}
+.wod-break {word-break: break-word;}
+.main-heading {word-break: break-word;}
