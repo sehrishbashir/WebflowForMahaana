@@ -374,7 +374,7 @@ Webflow.push(function () {
             function handleSuccess() {
                 handleBtnStatus(cuSubmit, 'Send'); 
                 handleDisabled(inputs, false); 
-                hideElements(cuForm); 
+                // hideElements(cuForm); 
                 showElements(cuSuccessModal);
                 // setTimeout(() => { 
                 //     hideElements(cuSuccessModal); 
