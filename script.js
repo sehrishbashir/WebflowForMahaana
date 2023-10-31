@@ -326,19 +326,13 @@ function setDropdownItem(selectedValue) {
     })
 }
 
-// Example createDropdownItem function that returns a div element
-function createDropdownItem(itemText) {
-    const newItem = document.createElement('div');
-    newItem.innerText = itemText;
-    return newItem;
-}
-
 dropdownMenu.forEach((item, index) => {
     item.addEventListener('click', function (event) {
         if (event.target.classList.contains('nav-list-item')) {
             const selectedValue = event.target.innerText;
             const type = selectedValue.toLowerCase() === corporate ? 0 : 1;
-            handleBody(selectedValue); setDropdownItem(selectedValue);
+            handleBody(selectedValue);
+            setDropdownItem(selectedValue);
         }
     })
 });
