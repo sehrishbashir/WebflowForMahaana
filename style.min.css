@@ -215,3 +215,22 @@ textarea::placeholder { color: #667085; }
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* MEDIA BLOG PAGE CSS */
+.copied div, .copied path { color: #007bff; stroke: #007bff; }
+.div-block-58 { transition: 0.2s ease-in-out }
+
+.linkedin:hover { background-color: rgb(0, 114, 177); border-color: rgb(0, 114, 177); }
+.facebook:hover { background-color: rgb(59, 89, 152); border-color: rgb(59, 89, 152); }
+.twitter:hover { background-color: rgb(0, 172, 238); border-color: rgb(0, 172, 238); }
+
+.linkedin:hover path { fill: #fff; }
+.facebook:hover path { fill: #fff; }
+.facebook:hover path ~ path { fill: rgb(59, 89, 152); }
+.twitter:hover path { fill: #fff; }
+
+/* JOB OPENING TEMPLATE PAGE CSS */
+.job-content :is(p, ol, ul), .how-to-apply p { margin: 0 }
+.job-content :is(ol, ul) { padding-left: 25px }
+.job-content ol { display: flex; flex-direction: column; gap: 12px; }
+.how-to-apply a { color: #475467 }
