@@ -1019,7 +1019,19 @@ const ContributionChart = ({ amount, amount2 }) => {
 
     const kFormatter = (num) => { let formattedNumber; num = Math.abs(num); if (num >= 1000000000) { formattedNumber = (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B'; } else if (num >= 1000000) { formattedNumber = (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'; } else if (num >= 100000) { formattedNumber = num.toLocaleString(); } else { formattedNumber = num; } return formattedNumber; }
 
-    return (<div class="calculatorWrapper"><ResponsiveContainer width="100%" height={461}><LineChart width={730} height={100} data={graphData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}><CartesianGrid strokeDasharray="0 0" vertical={false} /><XAxis dataKey="year" axisLine={false} /><YAxis interval={0} minTickGap={0} tickCount={8} orientation="left" axisLine={false} includeHidden tickFormatter={kFormatter} /><Tooltip content={<CustomTooltip />} wrapperStyle={{ backgroundColor: '#fff', borderRadius: '4px', padding: '10px' }} />{selectedRate.map((item, index) => { return (item.isShown && <Line key={String(index)} type="monotone" dataKey={item.type} stroke={graphColorCodes[index]} strokeWidth={2} fillOpacity={1} fill={graphColorCodes[index]} isAnimationActive dot={false} />) })}</LineChart></ResponsiveContainer></div>)
+    return (<div class="calculatorWrapper">
+        <ResponsiveContainer width="100%" height={461}>
+            <LineChart width={730} height={100} data={graphData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}><CartesianGrid strokeDasharray="0 0" vertical={false} /><XAxis dataKey="year" axisLine={false} /><YAxis interval={0} minTickGap={0} tickCount={8} orientation="left" axisLine={false} includeHidden tickFormatter={kFormatter} />
+                <Tooltip
+                    // content={<CustomTooltip />}
+                    wrapperStyle={{ backgroundColor: '#fff', borderRadius: '4px', padding: '10px' }}
+                />
+                {selectedRate.map((item, index) => {
+                    return (item.isShown && <Line key={String(index)} type="monotone" dataKey={item.type} stroke={graphColorCodes[index]} strokeWidth={2} fillOpacity={1} fill={graphColorCodes[index]} isAnimationActive dot={false} />)
+                })}
+            </LineChart>
+        </ResponsiveContainer>
+    </div>)
 }
 ReactDOM.render(<ContributionChart />, document.getElementById('contribution-chart'));
 const mahaanaChart = (amount, amount2) => ReactDOM.render(<ContributionChart amount={amount} amount2={amount2} />, document.getElementById('contribution-chart'));
