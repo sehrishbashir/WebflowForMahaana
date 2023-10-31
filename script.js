@@ -647,43 +647,43 @@ function createLoader() {
 
 
 // ---------------- ABOUT US ---------------- //
-document.addEventListener('DOMContentLoaded', function () {
-    function handleWindowResize() {
-        const windowWidth = window.innerWidth;
-        const ourStory = document.getElementById('our-story');
+// document.addEventListener('DOMContentLoaded', function () {
+function handleWindowResize() {
+    const windowWidth = window.innerWidth;
+    const ourStory = document.getElementById('our-story');
 
-        const text = `At Mahaana, our journey began with a vision to revolutionize the investment management industry in Pakistan. Recognizing the transformative power of technology in the global financial landscape, our team of renowned investment managers embarked on a mission to bring that innovation to our home country. Through close collaboration with the regulatory body, SECP, we spearheaded the introduction of the Digital AMC framework, marking a significant milestone as the first Digital AMC in Pakistan.<br/><br/>Driven by our commitment to democratize access to financial planning and advice, we combine cutting-edge technology with our team's extensive expertise to provide a comprehensive suite of services. Our goal is to break down the barriers that have traditionally limited access to high-quality financial solutions, making them available to a wider audience at affordable costs.`;
+    const text = `At Mahaana, our journey began with a vision to revolutionize the investment management industry in Pakistan. Recognizing the transformative power of technology in the global financial landscape, our team of renowned investment managers embarked on a mission to bring that innovation to our home country. Through close collaboration with the regulatory body, SECP, we spearheaded the introduction of the Digital AMC framework, marking a significant milestone as the first Digital AMC in Pakistan.<br/><br/>Driven by our commitment to democratize access to financial planning and advice, we combine cutting-edge technology with our team's extensive expertise to provide a comprehensive suite of services. Our goal is to break down the barriers that have traditionally limited access to high-quality financial solutions, making them available to a wider audience at affordable costs.`;
 
-        if (windowWidth <= 991) {
-            const characterLimit = 495;
+    if (windowWidth <= 991) {
+        const characterLimit = 495;
 
-            if (text.length > characterLimit) {
-                const truncatedText = text.substring(0, characterLimit);
-                const remainingText = text.substring(characterLimit);
-                const readMoreElement = document.createElement('span');
-                const readLessElement = document.createElement('span');
+        if (text.length > characterLimit) {
+            const truncatedText = text.substring(0, characterLimit);
+            const remainingText = text.substring(characterLimit);
+            const readMoreElement = document.createElement('span');
+            const readLessElement = document.createElement('span');
 
-                readMoreElement.className = 'read-more';
-                readMoreElement.innerHTML = ' <a href="#">read more</a>';
+            readMoreElement.className = 'read-more';
+            readMoreElement.innerHTML = ' <a href="#">read more</a>';
 
-                readLessElement.className = 'read-less';
-                readLessElement.innerHTML = `${remainingText} <a href="#">read less</a>`;
+            readLessElement.className = 'read-less';
+            readLessElement.innerHTML = `${remainingText} <a href="#">read less</a>`;
 
-                document.addEventListener('click', function (event) {
-                    if (event.target.matches('span.read-less a')) {
-                        ourStory.innerHTML = truncatedText + readMoreElement.outerHTML;
-                    } else if (event.target.matches('span.read-more a')) {
-                        ourStory.innerHTML = truncatedText + readLessElement.outerHTML;
-                    }
-                });
+            document.addEventListener('click', function (event) {
+                if (event.target.matches('span.read-less a')) {
+                    ourStory.innerHTML = truncatedText + readMoreElement.outerHTML;
+                } else if (event.target.matches('span.read-more a')) {
+                    ourStory.innerHTML = truncatedText + readLessElement.outerHTML;
+                }
+            });
 
-                ourStory.innerHTML = truncatedText + readMoreElement.outerHTML;
-            }
+            ourStory.innerHTML = truncatedText + readMoreElement.outerHTML;
         }
-        else { ourStory.innerHTML = text }
     }
+    else { ourStory.innerHTML = text }
+}
 
-    handleWindowResize();
-    window.addEventListener('resize', handleWindowResize);
-});
+handleWindowResize();
+window.addEventListener('resize', handleWindowResize);
+// });
 // ---------------------------------------------- //
