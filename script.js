@@ -1,25 +1,25 @@
 // ---------------- CREDS SETUP ---------------- //
-const currentDomain = window.location.hostname;
-const corporate = window.env.CORPORATE;
-const individual = window.env.INDIVIDUAL;
+// const currentDomain = window.location.hostname;
+// const corporate = window.env.CORPORATE;
+// const individual = window.env.INDIVIDUAL;
 
-let mahaanaWealthCashFund;
-let mahaanaInvitee;
-let domainURL;
+// let mahaanaWealthCashFund;
+// let mahaanaInvitee;
+// let domainURL;
 
-mahaanaWealthCashFund = window.env.CASHFUND
-mahaanaInvitee = window.env.INVITE_MAHANIERS
-domainURL = window.env.DOMAIN_URL
+// mahaanaWealthCashFund = window.env.CASHFUND
+// mahaanaInvitee = window.env.INVITE_MAHANIERS
+// domainURL = window.env.DOMAIN_URL
 
-if (!currentDomain.includes('webflow')) {
-    mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
-    domainURL = 'https://mahaana.com/'
-} else {
-    mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
-    domainURL = 'https://mahaana.webflow.io/'
-}
+// if (!currentDomain.includes('webflow')) {
+//     mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
+//     mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
+//     domainURL = 'https://mahaana.com/'
+// } else {
+//     mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
+//     mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
+//     domainURL = 'https://mahaana.webflow.io/'
+// }
 // ---------------------------------------------- //
 
 
