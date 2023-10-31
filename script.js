@@ -1015,7 +1015,7 @@ const ContributionChart = ({ amount, amount2 }) => {
     const currencyFormatOptions = { style: 'currency', currency: defaultCurrency, signDisplay: 'never', currencyDisplay: 'code', maximumFractionDigits: 0, };
     const CurrencyFormatter = (amount, showPrefix = false, showSign = 'auto', hideDecimal = false) => { if (typeof amount !== 'number') { return Number(amount).toLocaleString(defaultLocale, currencyFormatOptions); } const options = { ...currencyFormatOptions }; options.style = showPrefix ? 'currency' : 'decimal'; options.signDisplay = showSign === 'always' || showSign === 'exceptZero' ? 'never' : showSign; options.maximumFractionDigits = hideDecimal ? 0 : 2; return amount.toLocaleString(defaultLocale, options); };
 
-    // const CustomTooltip = ({ active, payload }) => { if (active && payload && payload.length) { payload.sort((a, b) => b.value - a.value); return (<div><p style={{ fontFamily: 'Poppins', fontSize: '14px', color: '#677385', marginBottom: 0, lineHeight: '24px', textAlign: 'right', paddingTop: 0 }}>{payload[0].payload.year}</p>{payload.map((item, index) => { const name = item.dataKey == 'bill' ? "Treasury Bill" : item.dataKey; const color = item.fill; return (<p key={String(index)} style={{ fontFamily: 'Poppins', fontSize: '13px', marginBottom: 0, lineHeight: '24px', fontWeight: 500, textAlign: 'right', textTransform: 'capitalize', paddingTop: 0, color: color }}>{`${name}: ${CurrencyFormatter(item.value)}`}</p>) })} </div>); } return null; };
+    const CustomTooltip = ({ active, payload }) => { if (active && payload && payload.length) { payload.sort((a, b) => b.value - a.value); return (<div><p style={{ fontFamily: 'Poppins', fontSize: '14px', color: '#677385', marginBottom: 0, lineHeight: '24px', textAlign: 'right', paddingTop: 0 }}>{payload[0].payload.year}</p>{payload.map((item, index) => { const name = item.dataKey == 'bill' ? "Treasury Bill" : item.dataKey; const color = item.fill; return (<p key={String(index)} style={{ fontFamily: 'Poppins', fontSize: '13px', marginBottom: 0, lineHeight: '24px', fontWeight: 500, textAlign: 'right', textTransform: 'capitalize', paddingTop: 0, color: color }}>{`${name}: ${CurrencyFormatter(item.value)}`}</p>) })} </div>); } return null; };
 
     const kFormatter = (num) => { let formattedNumber; num = Math.abs(num); if (num >= 1000000000) { formattedNumber = (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B'; } else if (num >= 1000000) { formattedNumber = (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'; } else if (num >= 100000) { formattedNumber = num.toLocaleString(); } else { formattedNumber = num; } return formattedNumber; }
 
@@ -1023,7 +1023,7 @@ const ContributionChart = ({ amount, amount2 }) => {
         <ResponsiveContainer width="100%" height={461}>
             <LineChart width={730} height={100} data={graphData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}><CartesianGrid strokeDasharray="0 0" vertical={false} /><XAxis dataKey="year" axisLine={false} /><YAxis interval={0} minTickGap={0} tickCount={8} orientation="left" axisLine={false} includeHidden tickFormatter={kFormatter} />
                 <Tooltip
-                    // content={<CustomTooltip />}
+                    content={<CustomTooltip />}
                     wrapperStyle={{ backgroundColor: '#fff', borderRadius: '4px', padding: '10px' }}
                 />
                 {selectedRate.map((item, index) => {
