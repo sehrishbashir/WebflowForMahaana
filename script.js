@@ -606,7 +606,7 @@ function handleBody(type) {
                 handleBody(type);
                 
                 // Hide the loader when your code is complete
-                // loader.style.display = 'none';
+                loader.style.display = 'none';
             }
         }, 100);
         window.location.href = domainURL;
@@ -618,8 +618,11 @@ function handleBody(type) {
 // Function to create the loader element and append it to the body
 function createLoader() {
     const loaderDiv = document.createElement('div');
-    loaderDiv.id = 'loader';
-    loaderDiv.className = 'loader';
+    loaderDiv.id = 'loader-wrapper';
+    loaderDiv.className = 'loader-wrapper';
+
+    const loaderElement = document.createElement('div');
+    loaderElement.className = 'loader';
 
     document.body.appendChild(loaderDiv);
 
