@@ -597,7 +597,7 @@ function handleBody(type) {
         }
 
         // Hide the loader when your code is complete
-        loader.style.display = 'none';
+        // loader.style.display = 'none';
 
     } else {
         const intervalId = setInterval(function () {
@@ -606,7 +606,7 @@ function handleBody(type) {
                 handleBody(type);
                 
                 // Hide the loader when your code is complete
-                loader.style.display = 'none';
+                // loader.style.display = 'none';
             }
         }, 100);
         window.location.href = domainURL;
