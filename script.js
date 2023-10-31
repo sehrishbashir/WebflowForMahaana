@@ -597,16 +597,20 @@ function handleBody(type) {
         }
 
         // Hide the loader when your code is complete
-        // loader.style.display = 'none';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 3000);
 
     } else {
         const intervalId = setInterval(function () {
             if (b2bBody) {
                 clearInterval(intervalId);
                 handleBody(type);
-                
+
                 // Hide the loader when your code is complete
-                // loader.style.display = 'none';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 3000);
             }
         }, 100);
         window.location.href = domainURL;
