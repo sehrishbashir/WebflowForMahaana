@@ -8,8 +8,8 @@ mahaanaInvitee = window.env.INVITE_MAHANIERS
 domainURL = window.env.DOMAIN_URL
 
 if (!currentDomain.includes('webflow')) {
-    mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net'
+    mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
+    mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
     domainURL = 'https://mahaana.com/'
 } else {
     mahaanaWealthCashFund = 'https://stg-mahaana-wealth-cashfund.azurewebsites.net'
