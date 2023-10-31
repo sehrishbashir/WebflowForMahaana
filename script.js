@@ -64,7 +64,7 @@ const mahaanaAccordions = document.querySelectorAll('.mahaana-save-faqs .faq-acc
 
 // MODALS ASSETS
 const closeButton = document.querySelectorAll('.modal-close-button');
-const closeByBg = document.querySelector('.modal-bg');
+const closeByBg = document.querySelectorAll('.modal-bg');
 const modalWrap = document.querySelectorAll('.modal-wrapper')
 const buttons = document.querySelectorAll('.open-get-in-touch-form')
 const closeModal = document.querySelectorAll('.modal-bg')
@@ -199,8 +199,8 @@ const WLFormElements = [{ inputField: wlNameInput, errorElement: wlNameError, me
 
 
 buttons.forEach(button => { button.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'hidden'; $('form#wf-form-Get-In-Touch-Form')[0].reset() }) });
-if (closeButton) { closeButton.forEach(item => { item.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'auto' }) }) }
-if (closeModal) { closeModal.forEach(item => { item.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'auto' }) }) }
+// if (closeButton) { closeButton.forEach(item => { item.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'auto' }) }) }
+// if (closeModal) { closeModal.forEach(item => { item.addEventListener('click', function handleClick(event) { homeBody.style.overflowY = 'auto' }) }) }
 
 // ---------------------------------------------- //
 
@@ -215,8 +215,18 @@ document.addEventListener("DOMContentLoaded", function () {
     GIFormElements.forEach((element) => gElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
     WLFormElements.forEach((element) => wElementsToReset.push(setupInputValidation(element.inputField, element.errorElement)));
 
-    if (closeButton || closeByBg) { [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () { resetForm(gitForm, gElementsToReset) })) }
-    if (wlCloseButton || wlBackdrop || wlCancelButton) { [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () { resetForm(wlForm, wElementsToReset); hideElements(wlError) })) }
+    if (closeButton || closeByBg) {
+        [closeButton, closeByBg].forEach((element) => element.addEventListener('click', function () {
+            resetForm(gitForm, gElementsToReset)
+            homeBody.style.overflowY = 'auto'
+        }))
+    }
+    if (wlCloseButton || wlBackdrop || wlCancelButton) {
+        [wlCloseButton, wlBackdrop, wlCancelButton].forEach((element) => element.addEventListener('click', function () {
+            resetForm(wlForm, wElementsToReset);
+            hideElements(wlError)
+        }))
+    }
 });
 
 
