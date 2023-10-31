@@ -548,9 +548,13 @@ function handleBody(type) {
     if (b2bBody || b2cBody) {
         scrollToTop();
         if (type.toLowerCase() == corporate) {
-            b2bBody.style.display = 'flex'; b2cBody.style.display = 'none'; //imageResizing(); refreshSlickSliders()}
+            b2bBody.style.display = 'flex'; b2cBody.style.display = 'none'; 
+            imageResizing(); refreshSlickSliders()
         } else {
-            b2bBody.style.display = 'none'; b2cBody.style.display = 'flex'; imageResizing(); //initializeAccordions(homeAccordions); refreshSlickSliders()}
+            b2bBody.style.display = 'none'; b2cBody.style.display = 'flex'; 
+            imageResizing(); 
+            initializeAccordions(homeAccordions); 
+            refreshSlickSliders()
         }
     } else {
         const intervalId = setInterval(function () {
