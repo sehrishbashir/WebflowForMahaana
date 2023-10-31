@@ -1,4 +1,5 @@
 /* OVERALL CSS */
+body {overflow-x: hidden}
 .team-slide.save-team-slider .slick-track {display: flex; align-items: center;}
 .our-bg-card-para.text-right::before {content: "\2022"; margin-right: 8px;}
 #performance .recharts-curve.recharts-tooltip-cursor {stroke: #D5D5D5; stroke-width: 1.548px;}
