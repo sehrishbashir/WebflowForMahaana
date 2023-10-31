@@ -53,7 +53,7 @@ const generalAccordions = document.querySelectorAll('.general-faqs .faq-accordio
 const mahaanaAccordions = document.querySelectorAll('.mahaana-save-faqs .faq-accordionwrap .single-accordion');
 
 // MODALS ASSETS
-const closeButton = document.querySelector('.modal-close-button');
+const closeButton = document.querySelectorAll('.modal-close-button');
 const closeByBg = document.querySelector('.modal-bg');
 const modalWrap = document.querySelectorAll('.modal-wrapper')
 const buttons = document.querySelectorAll('.open-get-in-touch-form')
