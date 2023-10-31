@@ -578,10 +578,10 @@ dropdownMenu.forEach((item, index) => {
 
 function handleBody(type) {
     // Create the loader
-    // const loader = createLoader();
+    const loader = createLoader();
 
     // Display the loader
-    // loader.style.display = 'block';
+    loader.style.display = 'block';
 
     handleClick(type)
     if (b2bBody || b2cBody) {
@@ -597,7 +597,7 @@ function handleBody(type) {
         }
 
         // Hide the loader when your code is complete
-        // loader.style.display = 'none';
+        loader.style.display = 'none';
 
     } else {
         const intervalId = setInterval(function () {
