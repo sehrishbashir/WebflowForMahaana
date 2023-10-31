@@ -325,24 +325,24 @@ Webflow.push(function () {
             handleDisabled(inputs, true)
 
             function handleSuccess() {
-                handleBtnStatus(wlSubmit, 'Send'); 
-                handleDisabled(inputs, false); 
+                handleBtnStatus(wlSubmit, 'Send');
+                handleDisabled(inputs, false);
                 hideElements(wlForm); s
                 howElements(wlSucess);
-                setTimeout(() => { 
-                    hideElements(wlFormModal, wlSucess); 
-                    showElements(wlForm); 
-                    wlForm.reset() 
+                setTimeout(() => {
+                    hideElements(wlFormModal, wlSucess);
+                    showElements(wlForm);
+                    wlForm.reset()
                 }, 3000)
             }
             function handleError(errorData, errorCode) {
                 handleBtnStatus(wlSubmit, 'Send');
-                if (errorData.charAt(0) == "{") { 
-                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError) 
+                if (errorData.charAt(0) == "{") {
+                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
                 }
-                else { 
-                    wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData; 
-                    showElements(wlError) 
+                else {
+                    wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
+                    showElements(wlError)
                 }
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
@@ -362,8 +362,8 @@ Webflow.push(function () {
             $(document).off('submit');
 
             const formData = {
-                name: cuName.value, 
-                email: cuEmail.value, 
+                name: cuName.value,
+                email: cuEmail.value,
                 message: cuMsg.value
             };
 
@@ -372,22 +372,22 @@ Webflow.push(function () {
             const inputs = [cuName, cuEmail, cuMsg, cuSubmit]
 
             function handleSuccess() {
-                handleBtnStatus(cuSubmit, 'Send'); 
-                handleDisabled(inputs, false); 
+                handleBtnStatus(cuSubmit, 'Send');
+                handleDisabled(inputs, false);
                 showElements(cuSuccessModal);
-                cuForm.reset() 
-                setTimeout(() => { 
-                    hideElements(cuSuccessModal); 
+                cuForm.reset()
+                setTimeout(() => {
+                    hideElements(cuSuccessModal);
                 }, 3000)
             }
             function handleError(errorData) {
                 handleBtnStatus(gitSubmit, 'Send');
-                if (errorData.charAt(0) == "{") { 
-                    handleErrorList(cuError, cuErrorText, errorData, emailError, nameError) 
+                if (errorData.charAt(0) == "{") {
+                    handleErrorList(cuError, cuErrorText, errorData, emailError, nameError)
                 }
-                else { 
-                    cuErrorText.innerText = errorData; 
-                    showElements(cuError) 
+                else {
+                    cuErrorText.innerText = errorData;
+                    showElements(cuError)
                 }
             }
             handleDisabled(inputs, true)
@@ -577,6 +577,12 @@ dropdownMenu.forEach((item, index) => {
 });
 
 function handleBody(type) {
+    // Create the loader
+    const loader = createLoader();
+
+    // Display the loader
+    loader.style.display = 'block';
+
     handleClick(type)
     if (b2bBody || b2cBody) {
         scrollToTop();
@@ -589,11 +595,37 @@ function handleBody(type) {
             initializeAccordions(homeAccordions);
             refreshSlickSliders()
         }
+
+        // Hide the loader when your code is complete
+        loader.style.display = 'none';
+
     } else {
         const intervalId = setInterval(function () {
-            if (b2bBody) { clearInterval(intervalId); handleBody(type); }
+            if (b2bBody) {
+                clearInterval(intervalId);
+                handleBody(type);
+                
+                // Hide the loader when your code is complete
+                loader.style.display = 'none';
+            }
         }, 100);
         window.location.href = domainURL;
     }
 }
 // ---------------------------------------------- //
+
+
+// Function to create the loader element and append it to the body
+function createLoader() {
+    const loaderDiv = document.createElement('div');
+    loaderDiv.id = 'loader';
+    loaderDiv.className = 'loader';
+
+    const textElement = document.createElement('p');
+    textElement.textContent = 'Loading...';
+
+    loaderDiv.appendChild(textElement);
+    document.body.appendChild(loaderDiv);
+
+    return loaderDiv;
+}
