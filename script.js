@@ -304,17 +304,35 @@ function handleClick(selected) {
     })
 }
 function createDropdownItem(text) {
-    const dropdownItem = document.createElement('span'); dropdownItem.className = 'nav-list-item'; //dropdownItem.innerText = text; return dropdownItem;
+    const dropdownItem = document.createElement('span');
+    dropdownItem.className = 'nav-list-item';
+    dropdownItem.innerText = text;
+    return dropdownItem;
 }
 function setDropdownItem(selectedValue) {
     navSelectedItem.forEach((item, index) => { item.innerText = selectedValue; })
+
     localStorage.setItem('selectedItem', selectedValue.toLowerCase());
+
     dropdownMenu.forEach((item, index) => {
         item.innerHTML = '';
-        if (selectedValue.toLowerCase() === corporate) { item.appendChild(createDropdownItem(individual)); }
-        else if (selectedValue.toLowerCase() === individual) { item.appendChild(createDropdownItem(corporate)); }
+
+        if (selectedValue.toLowerCase() === corporate) {
+            item.appendChild(createDropdownItem(individual));
+        }
+        else if (selectedValue.toLowerCase() === individual) {
+            item.appendChild(createDropdownItem(corporate));
+        }
     })
 }
+
+// Example createDropdownItem function that returns a div element
+function createDropdownItem(itemText) {
+    const newItem = document.createElement('div');
+    newItem.innerText = itemText;
+    return newItem;
+}
+
 dropdownMenu.forEach((item, index) => {
     item.addEventListener('click', function (event) {
         if (event.target.classList.contains('nav-list-item')) {
