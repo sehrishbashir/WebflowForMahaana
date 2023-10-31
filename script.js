@@ -228,14 +228,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (wlCloseButton || wlBackdrop || wlCancelButton) {
         wlCloseButton.forEach((element) => element.addEventListener('click', function () {
+
+            console.log('>>>>if1');
             resetForm(wlForm, wElementsToReset);
             hideElements(wlError)
         }))
         wlBackdrop.forEach((element) => element.addEventListener('click', function () {
             resetForm(wlForm, wElementsToReset);
+            console.log('>>>>if2');
             hideElements(wlError)
         }))
         wlCancelButton.forEach((element) => element.addEventListener('click', function () {
+            console.log('>>>>if3');
             resetForm(wlForm, wElementsToReset);
             hideElements(wlError)
         }))
