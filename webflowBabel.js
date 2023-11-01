@@ -141,4 +141,4 @@ function Welcome() {
     </div>);
 }
 
-ReactDOM.render(<Welcome />, document.getElementById("contribution-chart"));
+ReactDOM.render(<Welcome />, document.getElementById("body"));
