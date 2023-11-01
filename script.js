@@ -1,14 +1,14 @@
 // ---------------- CREDS SETUP ---------------- //
-// const ENVIRONMENT = "stg"
-// const CORPORATE = "corporate"
-// const INDIVIDUAL = "personal"
-// const HC_ORGANIZATION = "mahaanawealth"
-// const HC_APPID = "3e2db6fc-88c6-4d53-8713-fa639bf8c4f2"
-// const CASHFUND = "https://stg-mahaana-wealth-cashfund.azurewebsites.net"
-// const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
-// const DOMAIN_URL = "https://mahaana.webflow.io/"
+const ENVIRONMENT = "stg"
+const CORPORATE = "corporate"
+const INDIVIDUAL = "personal"
+const HC_ORGANIZATION = "mahaanawealth"
+const HC_APPID = "3e2db6fc-88c6-4d53-8713-fa639bf8c4f2"
+const CASHFUND = "https://stg-mahaana-wealth-cashfund.azurewebsites.net"
+const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
+const DOMAIN_URL = "https://mahaana.webflow.io/"
 
-const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
+// const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
 
 
 currentDomain = window.location.hostname;
@@ -950,26 +950,36 @@ function tabStopHandler() {
 }
 
 function tabHandler() {
-    const tabLinks = document.querySelectorAll(".tab-item"); const header = document.querySelector(".navbar-3"); const headerHeight = header.getBoundingClientRect().height
-    function handleTabLinkClick(targetSection) {
-        const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed'); const offset = !isTabBarFixed ? -headerHeight - 170 : -190; const targetSectionRect = targetSection.getBoundingClientRect();
-        window.scrollTo({ top: targetSectionRect.top + window.scrollY + offset, behavior: "smooth" });
-        const sectionId = targetSection.id;
-        if (sectionId) {
-            const updatedUrl = new URL(window.location.href);
-            updatedUrl.searchParams.set("section", sectionId);
-            window.history.replaceState(null, null, updatedUrl);
+    const tabLinks = document.querySelectorAll(".tab-item");
+    const header = document.querySelector(".navbar-3");
+
+    if (header) {
+        const headerHeight = header.getBoundingClientRect().height;
+
+        function handleTabLinkClick(targetSection) {
+            const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
+            const offset = !isTabBarFixed ? -headerHeight - 170 : -190;
+            const targetSectionRect = targetSection.getBoundingClientRect();
+
+            window.scrollTo({ top: targetSectionRect.top + window.scrollY + offset, behavior: "smooth" });
+            const sectionId = targetSection.id;
+            if (sectionId) {
+                const updatedUrl = new URL(window.location.href);
+                updatedUrl.searchParams.set("section", sectionId);
+                window.history.replaceState(null, null, updatedUrl);
+            }
         }
-    }
-    tabLinks.forEach(link => {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-            const targetSection = document.querySelector(link.getAttribute("href"));
-            handleTabLinkClick(targetSection)
-            const tabsMenu = document.querySelector('.tabs-menu')
-            tabsMenu.classList.add("fixed");
+
+        tabLinks.forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                const targetSection = document.querySelector(link.getAttribute("href"));
+                handleTabLinkClick(targetSection)
+                const tabsMenu = document.querySelector('.tabs-menu')
+                tabsMenu.classList.add("fixed");
+            });
         });
-    });
+    }
 }
 
 function scrollHandler() {
@@ -1025,14 +1035,24 @@ const setTextContent = (elementId, content) => {
 function renderLoop(data) {
     const { performances, currentAssetAllocation, holding, creditRating, distributions } = data;
 
-    const dataMappings = [{ elementClass: '.asset-allocation', data: currentAssetAllocation }, { elementClass: '.credit-quality', data: creditRating }, { elementClass: '.top-holdings', data: holding }];
+    const dataMappings = [
+        { elementClass: '.asset-allocation', data: currentAssetAllocation },
+        { elementClass: '.credit-quality', data: creditRating },
+        { elementClass: '.top-holdings', data: holding }
+    ];
 
-    dataMappings.forEach(({ elementClass, data }) => { const bodyRow = document.querySelector(elementClass); populateTableData(data, bodyRow) });
+    dataMappings.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        populateTableData(data, bodyRow)
+    });
+
     if (performances) {
         const performanceBodyRow = document.querySelector('.performance-body');
-        performances.forEach(data => {
-            const row = document.createElement('div'); row.classList.add('performance-body-row');
-            const html = `
+
+        if (performanceBodyRow) {
+            performances.forEach(data => {
+                const row = document.createElement('div'); row.classList.add('performance-body-row');
+                const html = `
             <div class="performance-body-cell flex-1 right-align">
                 <span class="per-body-title">${data.name || '-'}</span>
             </div>
@@ -1048,14 +1068,18 @@ function renderLoop(data) {
             <div class="performance-body-cell">
                 <span class="per-body-title">${data.days365 || '-'}</span>
             </div>`;
-            row.innerHTML = html; performanceBodyRow.appendChild(row)
-        })
+                row.innerHTML = html;
+                performanceBodyRow.appendChild(row)
+            })
+        }
+
     }
     if (distributions) {
         const distributionBodyRow = document.querySelector('.distribution-body');
-        distributions.forEach((data) => {
-            const row = document.createElement('div'); row.classList.add('distribution-body-row');
-            const html = `
+        if (distributionBodyRow) {
+            distributions.forEach((data) => {
+                const row = document.createElement('div'); row.classList.add('distribution-body-row');
+                const html = `
             <div class="distribution-body-cell flex-1 right-align">
                 <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
             </div>
@@ -1068,8 +1092,10 @@ function renderLoop(data) {
             <div class="distribution-body-cell">
                 <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
             </div>`;
-            row.innerHTML = html; distributionBodyRow.appendChild(row)
-        })
+                row.innerHTML = html;
+                distributionBodyRow.appendChild(row)
+            })
+        }
     }
 }
 
@@ -1104,8 +1130,11 @@ async function fetchData() {
             offeringDocumentList.pop()
         }
         reportsData = offeringDocumentList;
+
         displayReports(offeringDocumentList);
+
         offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
+
         for (const elementId in contentMapping) {
             setTextContent(elementId, contentMapping[elementId])
         }
@@ -1113,8 +1142,10 @@ async function fetchData() {
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
         renderLoop(data);
+
         renderAssetChart(transformData(currentAssetAllocation));
         renderCreditChart(transformData(creditRating));
+        
     } catch (error) {
         console.error('>>>>>>Error', error)
     }
@@ -1131,15 +1162,21 @@ function getFundData(duration) {
         return response.json();
     }).then((data) => {
         let totalReturnDate = document.querySelector('#totalReturnsDate');
+
         renderFundChart(data);
+
         const lastDate = data[data.length - 1].date;
-        totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+
+        if (totalReturnDate) {
+            totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+        }
+
     }).catch((error) => {
         console.error('Error occurred:', error)
     })
 }
 
-document.addEventListener('DOMContentLoaded', fetchData); 
+document.addEventListener('DOMContentLoaded', fetchData);
 document.addEventListener('DOMContentLoaded', getFundData);
 
 
@@ -1180,13 +1217,19 @@ function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").forma
 
 function populateTableData(data, container) {
     data.forEach((item) => {
-        const row = document.createElement('div'); 
+        const row = document.createElement('div');
         row.classList.add('portfolio-body-row');
         const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
         const html = `
-        <div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div>
-<div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`;
-        row.innerHTML = html; container.appendChild(row)
+        <div class="portfolio-body-cell flex-1">
+            <span class="port-body-title">${item.key}</span>
+        </div>
+        <div class="portfolio-body-cell">
+            <span class="port-body-title">${returnVal}</span>
+        </div>`;
+
+        row.innerHTML = html;
+        if (container) { container.appendChild(row) }
     })
 }
 
@@ -1198,11 +1241,13 @@ function displayReports(reportsData) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const displayedData = reportsData?.slice(startIndex, endIndex) || [];
-    reportsBodyContainer.innerHTML = '';
-    displayedData.forEach((data) => {
-        const url = `https://dev-mahaana-wealth-cashfund.azurewebsites.net/api/Document/${data.key.split('.')[0]}`;
-        const row = document.createElement('div'); row.classList.add('reports-body-row');
-        const html = `
+
+    if (reportsBodyContainer) {
+        reportsBodyContainer.innerHTML = '';
+        displayedData.forEach((data) => {
+            const url = `https://dev-mahaana-wealth-cashfund.azurewebsites.net/api/Document/${data.key.split('.')[0]}`;
+            const row = document.createElement('div'); row.classList.add('reports-body-row');
+            const html = `
         <div class="reports-body-cell flex-1 text-right">
             <span class="rep-body-title">${data.key}</span>
         </div>
@@ -1210,8 +1255,10 @@ function displayReports(reportsData) {
             <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
             <span class="rep-body-title download">Download</span>
         </a>`;
-        row.innerHTML = html; reportsBodyContainer.appendChild(row)
-    })
+            row.innerHTML = html; reportsBodyContainer.appendChild(row)
+        })
+    }
+
 }
 
 function goToPage(page) {
@@ -1243,6 +1290,6 @@ graphDur.forEach(item => {
         getFundData(item.value)
     });
 
-    durationContainer.appendChild(durationDiv);
+    if (durationContainer) { durationContainer.appendChild(durationDiv); }
 })
 // ---------------------------------------------- //
