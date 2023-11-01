@@ -173,6 +173,8 @@ let reportsData;
 async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
+
+        console.log('response', response)
         if (!response.ok) {
             throw new Error('Network response was not ok')
         }
@@ -225,27 +227,31 @@ function getFundData(duration) {
 
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
 
-    fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then((response) => {
-        if (!response.ok) {
-            return response.json().then((errorData) => { throw new Error(errorData.message || 'Unknown error occurred.') });
-        }
-        return response.json();
-    }).then((data) => {
-        let totalReturnDate = document.querySelector('#totalReturnsDate');
-
-        renderFundChart(data);
-
-        const lastDate = data[data.length - 1].date;
-
-        if (totalReturnDate) {
-            totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
-        }
-
-    }).catch((error) => {
-        console.error('Error occurred:', error)
+    fetch(url, {
+        method: 'GET', headers: { 'Content-Type': 'application/json' }
     })
-}
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((errorData) => { throw new Error(errorData.message || 'Unknown error occurred.') });
+            }
+            return response.json();
+        }).then((data) => {
+            let totalReturnDate = document.querySelector('#totalReturnsDate');
 
+            renderFundChart(data);
+
+            const lastDate = data[data.length - 1].date;
+
+            if (totalReturnDate) {
+                totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+            }
+
+        }).catch((error) => {
+            console.error('Error occurred:', error)
+        })
+}
+fetchData();
+getFundData();
 document.addEventListener('DOMContentLoaded', fetchData);
 document.addEventListener('DOMContentLoaded', getFundData);
 
