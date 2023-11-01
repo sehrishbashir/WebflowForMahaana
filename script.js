@@ -1,11 +1,23 @@
 // ---------------- CREDS SETUP ---------------- //
-currentDomain = window.location.hostname;
-corporate = window.env.CORPORATE;
-individual = window.env.INDIVIDUAL;
+// const ENVIRONMENT = "stg"
+// const CORPORATE = "corporate"
+// const INDIVIDUAL = "personal"
+// const HC_ORGANIZATION = "mahaanawealth"
+// const HC_APPID = "3e2db6fc-88c6-4d53-8713-fa639bf8c4f2"
+// const CASHFUND = "https://stg-mahaana-wealth-cashfund.azurewebsites.net"
+// const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
+// const DOMAIN_URL = "https://mahaana.webflow.io/"
 
-mahaanaWealthCashFund = window.env.CASHFUND
-mahaanaInvitee = window.env.INVITE_MAHANIERS
-domainURL = window.env.DOMAIN_URL
+const {CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID} =  window.env
+
+
+currentDomain = window.location.hostname;
+corporate = CORPORATE;
+individual = INDIVIDUAL;
+
+mahaanaWealthCashFund = INDIVIDUAL
+mahaanaInvitee = INVITE_MAHANIERS
+domainURL = DOMAIN_URL
 
 if (!currentDomain.includes('webflow')) {
     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
@@ -20,8 +32,8 @@ if (!currentDomain.includes('webflow')) {
 
 
 // ---------------- HELP CRUNCH ---------------- //
-const org = window.env.HC_ORGANIZATION;
-const appId = window.env.HC_APPID;
+const org = HC_ORGANIZATION;
+const appId = HC_APPID;
 const userData = { custom_data: { approch: 'Website' } }
 
 window.helpcrunchSettings = { organization: org, appId: appId, user: userData };
@@ -711,13 +723,19 @@ function renderScripts() {
                 selectedBox.style.boxShadow = '';
                 selectedBox.querySelector('.feature-count').style.color = '';
             }
-            box.style.boxShadow = '0px 20px 25px -5px rgba(0, 0, 0, 0.05)';
-            box.querySelector('.feature-count').style.color = '#E5DDFF';
-            selectedBox = box;
+            if (box) {
+                box.style.boxShadow = '0px 20px 25px -5px rgba(0, 0, 0, 0.05)';
+                box.querySelector('.feature-count').style.color = '#E5DDFF';
+                selectedBox = box;
+            }
+
         } else {
-            box.style.boxShadow = '';
-            box.querySelector('.feature-count').style.color = '';
-            selectedBox = box;
+            if (box) {
+                box.style.boxShadow = '';
+                box.querySelector('.feature-count').style.color = '';
+                selectedBox = box;
+            }
+
         }
     }
 
@@ -732,19 +750,22 @@ function renderScripts() {
     });
 
     const items = document.querySelectorAll('.sst-list-item');
-    items[0].classList.add('selected');
-    items.forEach(item => {
-        item.addEventListener('click', function () {
-            const h3Value = this.querySelector('.sst-item-head').textContent;
-            const lowerCaseValue = h3Value.toLowerCase();
-            const selectedItemsCount = document.querySelectorAll('.sst-list-item.selected').length;
-            if (this.classList.contains('selected') && selectedItemsCount === 1) {
-                return;
-            }
-            window.onSelectRate(lowerCaseValue);
-            this.classList.toggle('selected');
+    if (items) {
+        items[0]?.classList.add('selected');
+        items.forEach(item => {
+            item.addEventListener('click', function () {
+                const h3Value = this.querySelector('.sst-item-head').textContent;
+                const lowerCaseValue = h3Value.toLowerCase();
+                const selectedItemsCount = document.querySelectorAll('.sst-list-item.selected').length;
+                if (this.classList.contains('selected') && selectedItemsCount === 1) {
+                    return;
+                }
+                window.onSelectRate(lowerCaseValue);
+                this.classList.toggle('selected');
+            });
         });
-    });
+    }
+
 
     const initRangeInput = document.querySelector('input[type="range"]#initial-slider');
     const initTooltipContainer = document.getElementById('init-tooltip-container');
@@ -827,33 +848,38 @@ function renderScripts() {
         }
     };
 
-    initInput.addEventListener('input', function () {
-        const updateRange = () => {
-            const newValue = removeCommaFormatting(this.value);
-            updateSliderValues(newValue, initTooltip, initRange, this.value);
-            if (initRangeInput) { initRangeInput.value = newValue; }
-        }
+    if (initInput) {
+        initInput.addEventListener('input', function () {
+            const updateRange = () => {
+                const newValue = removeCommaFormatting(this.value);
+                updateSliderValues(newValue, initTooltip, initRange, this.value);
+                if (initRangeInput) { initRangeInput.value = newValue; }
+            }
 
-        if (initRangeInput) { initRangeInput.value = removeCommaFormatting(this.value); }
-        initInput.value = this.value;
-        validateAndFormat(this, initError, 1000, 9999999, updateRange);
+            if (initRangeInput) { initRangeInput.value = removeCommaFormatting(this.value); }
+            initInput.value = this.value;
+            validateAndFormat(this, initError, 1000, 9999999, updateRange);
 
-        window.mahaanaChart(removeCommaFormatting(this.value), monthlyRangeInput ? monthlyRangeInput.value : 0)
-    });
+            window.mahaanaChart(removeCommaFormatting(this.value), monthlyRangeInput ? monthlyRangeInput.value : 0)
+        });
+    }
 
-    monthlyInput.addEventListener('input', function () {
-        const updateRange = () => {
-            const newValue = removeCommaFormatting(this.value);
-            updateSliderValues(newValue, monthlyTooltip, monthlyRange, this.value);
-            if (monthlyRangeInput) { monthlyRangeInput.value = newValue; }
-        }
+    if (monthlyInput) {
+        monthlyInput.addEventListener('input', function () {
+            const updateRange = () => {
+                const newValue = removeCommaFormatting(this.value);
+                updateSliderValues(newValue, monthlyTooltip, monthlyRange, this.value);
+                if (monthlyRangeInput) { monthlyRangeInput.value = newValue; }
+            }
 
-        if (monthlyRangeInput) { monthlyRangeInput.value = removeCommaFormatting(this.value); }
-        monthlyInput.value = this.value;
-        validateAndFormat(this, monthlyError, 500, 999999, updateRange);
+            if (monthlyRangeInput) { monthlyRangeInput.value = removeCommaFormatting(this.value); }
+            monthlyInput.value = this.value;
+            validateAndFormat(this, monthlyError, 500, 999999, updateRange);
 
-        window.mahaanaChart(initRangeInput ? initRangeInput.value : 0, removeCommaFormatting(this.value))
-    });
+            window.mahaanaChart(initRangeInput ? initRangeInput.value : 0, removeCommaFormatting(this.value))
+        });
+    }
+
 
     function updateSliderValues(slider, tooltip, range, rangeInput) {
         const value = removeCommaFormatting(slider.value);
@@ -875,10 +901,14 @@ function renderScripts() {
     function initializeSliders() {
         const initValue = 1000;
         const monthlyValue = 500;
-        initInput.value = currencyFormatted(initValue);
-        monthlyInput.value = currencyFormatted(monthlyValue);
-        updateSliderValues(initValue, initTooltip, initRange, initValue);
-        updateSliderValues(monthlyValue, monthlyTooltip, monthlyRange, monthlyValue);
+
+        if (initInput || monthlyInput) {
+            initInput.value = currencyFormatted(initValue);
+            monthlyInput.value = currencyFormatted(monthlyValue);
+            updateSliderValues(initValue, initTooltip, initRange, initValue);
+            updateSliderValues(monthlyValue, monthlyTooltip, monthlyRange, monthlyValue);
+        }
+
 
         if (initRangeInput) { initRangeInput.value = initValue; }
         if (monthlyRangeInput) { monthlyRangeInput.value = monthlyValue; }
