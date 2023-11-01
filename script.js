@@ -1,15 +1,14 @@
 // ---------------- CREDS SETUP ---------------- //
-const ENVIRONMENT = "stg"
-const CORPORATE = "corporate"
-const INDIVIDUAL = "personal"
-const HC_ORGANIZATION = "mahaanawealth"
-const HC_APPID = "3e2db6fc-88c6-4d53-8713-fa639bf8c4f2"
-const CASHFUND = "https://stg-mahaana-wealth-cashfund.azurewebsites.net"
-const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
-const DOMAIN_URL = "https://mahaana.webflow.io/"
+// const ENVIRONMENT = "stg"
+// const CORPORATE = "corporate"
+// const INDIVIDUAL = "personal"
+// const HC_ORGANIZATION = "mahaanawealth"
+// const HC_APPID = "3e2db6fc-88c6-4d53-8713-fa639bf8c4f2"
+// const CASHFUND = "https://stg-mahaana-wealth-cashfund.azurewebsites.net"
+// const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
+// const DOMAIN_URL = "https://mahaana.webflow.io/"
 
-// const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
-
+const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
 
 currentDomain = window.location.hostname;
 corporate = CORPORATE;

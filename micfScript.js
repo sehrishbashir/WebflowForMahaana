@@ -201,14 +201,23 @@ async function fetchData() {
         });
 
         const contentMapping = {
-            'asset-class': fundInfo.fundCategory, 'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`, 'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
-            'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`, 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+            'asset-class': fundInfo.fundCategory,
+            'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,
+            'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
+            'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+            'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
             'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
             'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-            'productSummary': overview.assetCategory, 'fundManager': fundInfo.fundManager, 'netAssets': fundInfo.netAssets,
+            'productSummary': overview.assetCategory,
+            'fundManager': fundInfo.fundManager,
+            'netAssets': fundInfo.netAssets,
             'launchDate': fundInfo.launchDate || '-',
-            'fundCategory': fundInfo.fundCategory, 'investmentObjective': fundInfo.investmentObjective, 'benchmark': fundInfo.benchmark,
-            'fundAuditors': fundInfo.fundAuditors, 'fundStabilityRating': fundInfo.fundStabilityRating
+            'fundCategory': fundInfo.fundCategory,
+            'investmentObjective': fundInfo.investmentObjective,
+            'benchmark': fundInfo.benchmark,
+            'managementFee': fundInfo.managementFee,
+            'fundAuditors': fundInfo.fundAuditors,
+            'fundStabilityRating': fundInfo.fundStabilityRating
         };
 
         if (offeringDocumentList.length > 0) {
@@ -247,7 +256,9 @@ function getFundData(duration) {
     })
         .then((response) => {
             if (!response.ok) {
-                return response.json().then((errorData) => { throw new Error(errorData.message || 'Unknown error occurred.') });
+                return response.json().then((errorData) => {
+                    throw new Error(errorData.message || 'Unknown error occurred.')
+                });
             }
             return response.json();
         }).then((data) => {
@@ -333,16 +344,17 @@ function displayReports(reportsData) {
     if (reportsBodyContainer) {
         reportsBodyContainer.innerHTML = '';
         displayedData.forEach((data) => {
-            const url = `https://dev-mahaana-wealth-cashfund.azurewebsites.net/api/Document/${data.key.split('.')[0]}`;
-            const row = document.createElement('div'); row.classList.add('reports-body-row');
+            const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
+            const row = document.createElement('div');
+            row.classList.add('reports-body-row');
             const html = `
-        <div class="reports-body-cell flex-1 text-right">
-            <span class="rep-body-title">${data.key}</span>
-        </div>
-        <a href="${url}" target="_blank" class="reports-body-cell download-doc">
-            <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
-            <span class="rep-body-title download">Download</span>
-        </a>`;
+                <div class="reports-body-cell flex-1 text-right">
+                    <span class="rep-body-title">${data.key}</span>
+                </div>
+                <a href="${url}" target="_blank" class="reports-body-cell download-doc">
+                    <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
+                    <span class="rep-body-title download">Download</span>
+                </a>`;
             row.innerHTML = html; reportsBodyContainer.appendChild(row)
         })
     }
