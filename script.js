@@ -990,7 +990,11 @@ function scrollHandler() {
     const tabLinks = document.querySelectorAll(".tab-item");
     const header = document.querySelector(".navbar-3");
     const headerHeight = header.getBoundingClientRect().height;
-    const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
+    let isTabBarFixed;
+    if (tabsMenu) {
+        isTabBarFixed = tabsMenu.classList.contains('fixed');
+    }
+    // const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
 
     function obCallback(payload) {
         if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) { tabsMenu.classList.add("fixed"); tabWrapper.style.paddingTop = '64px'; }
@@ -1145,7 +1149,7 @@ async function fetchData() {
 
         renderAssetChart(transformData(currentAssetAllocation));
         renderCreditChart(transformData(creditRating));
-        
+
     } catch (error) {
         console.error('>>>>>>Error', error)
     }
