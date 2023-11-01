@@ -131,3 +131,14 @@
 // ReactDOM.render(<ContributionChart />, document.getElementById('contribution-chart'));
 // const mahaanaChart = (amount, amount2) => ReactDOM.render(<ContributionChart amount={amount} amount2={amount2} />, document.getElementById('contribution-chart'));
 // window.mahaanaChart = mahaanaChart;
+
+
+const { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } = Recharts;
+
+function Welcome() {
+    return (<div class="calculatorWrapper">
+        <ResponsiveContainer><h1>Hello React!</h1></ResponsiveContainer>
+    </div>);
+}
+
+ReactDOM.render(<Welcome />, document.getElementById("contribution-chart"));
