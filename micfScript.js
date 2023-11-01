@@ -25,7 +25,11 @@ function tabHandler() {
             const offset = !isTabBarFixed ? -headerHeight - 170 : -190;
             const targetSectionRect = targetSection.getBoundingClientRect();
 
-            window.scrollTo({ top: targetSectionRect.top + window.scrollY + offset, behavior: "smooth" });
+            window.scrollTo({
+                top: targetSectionRect.top + window.scrollY + offset,
+                behavior: "smooth"
+            });
+
             const sectionId = targetSection.id;
             if (sectionId) {
                 const updatedUrl = new URL(window.location.href);
@@ -59,8 +63,14 @@ function scrollHandler() {
         isTabBarFixed = tabsMenu.classList.contains('fixed');
 
         function obCallback(payload) {
-            if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) { tabsMenu.classList.add("fixed"); tabWrapper.style.paddingTop = '64px'; }
-            else { tabsMenu.classList.remove("fixed"); tabWrapper.style.paddingTop = '0'; }
+            if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
+                tabsMenu.classList.add("fixed");
+                tabWrapper.style.paddingTop = '64px';
+            }
+            else {
+                tabsMenu.classList.remove("fixed");
+                tabWrapper.style.paddingTop = '0';
+            }
         }
 
         const ob = new IntersectionObserver(obCallback);
@@ -70,7 +80,8 @@ function scrollHandler() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const offset = !isTabBarFixed ? 250 : 200; const targetId = entry.target.id;
+                    const offset = !isTabBarFixed ? 250 : 200;
+                    const targetId = entry.target.id;
                     const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);
                     if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {
                         tabLinks.forEach(link => link.classList.remove("active"));
@@ -81,7 +92,9 @@ function scrollHandler() {
                 }
             });
         }, options)
-        sections.forEach((section) => { observer.observe(section); });
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
     } else {
         // Handle the case where '.tabs-menu' is not found in the DOM
     }
@@ -225,8 +238,7 @@ async function fetchData() {
 
 function getFundData(duration) {
 
-    const params = typeof duration == 'object' || duration == undefined  ? 3 : duration;
-    console.log('params', params)
+    const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
 
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
 
@@ -363,6 +375,7 @@ graphDur.forEach(item => {
             selectedDiv.classList.remove('selected')
         }
         durationDiv.classList.add('selected');
+        console.log('item', item)
         getFundData(item.value)
     });
 
