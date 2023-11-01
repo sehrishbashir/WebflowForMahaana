@@ -141,4 +141,4 @@ function Welcome() {
     </div>);
 }
 
-ReactDOM.render(<Welcome />, document.getElementById("body"));
+ReactDOM.render(<Welcome />, document.getElementById("b2c-header"));
