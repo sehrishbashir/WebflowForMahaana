@@ -5,5 +5,3 @@ function Welcome() {
         <ResponsiveContainer><h1>Hello React!</h1></ResponsiveContainer>
     </div>);
 }
-
-ReactDOM.render(<Welcome />, document.getElementById("b2c-header"));
