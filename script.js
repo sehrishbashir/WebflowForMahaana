@@ -993,33 +993,35 @@ function scrollHandler() {
     let isTabBarFixed;
     if (tabsMenu) {
         isTabBarFixed = tabsMenu.classList.contains('fixed');
+
+        function obCallback(payload) {
+            if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) { tabsMenu.classList.add("fixed"); tabWrapper.style.paddingTop = '64px'; }
+            else { tabsMenu.classList.remove("fixed"); tabWrapper.style.paddingTop = '0'; }
+        }
+
+        const ob = new IntersectionObserver(obCallback);
+        ob.observe(tabContent);
+        const options = { threshold: 0.2 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const offset = !isTabBarFixed ? 250 : 200; const targetId = entry.target.id;
+                    const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);
+                    if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {
+                        tabLinks.forEach(link => link.classList.remove("active"));
+                        targetTabLinks.forEach(link => link.classList.add("active"));
+                    } else {
+                        targetTabLinks.forEach(link => link.classList.remove("active"));
+                    }
+                }
+            });
+        }, options)
+        sections.forEach((section) => { observer.observe(section); });
+    } else {
+        // Handle the case where '.tabs-menu' is not found in the DOM
     }
     // const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
-
-    function obCallback(payload) {
-        if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) { tabsMenu.classList.add("fixed"); tabWrapper.style.paddingTop = '64px'; }
-        else { tabsMenu.classList.remove("fixed"); tabWrapper.style.paddingTop = '0'; }
-    }
-
-    const ob = new IntersectionObserver(obCallback);
-    ob.observe(tabContent);
-    const options = { threshold: 0.2 };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const offset = !isTabBarFixed ? 250 : 200; const targetId = entry.target.id;
-                const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);
-                if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {
-                    tabLinks.forEach(link => link.classList.remove("active"));
-                    targetTabLinks.forEach(link => link.classList.add("active"));
-                } else {
-                    targetTabLinks.forEach(link => link.classList.remove("active"));
-                }
-            }
-        });
-    }, options)
-    sections.forEach((section) => { observer.observe(section); });
 }
 
 function removePer(str) {
