@@ -222,8 +222,11 @@ async function fetchData() {
         console.error('>>>>>>Error', error)
     }
 }
+
 function getFundData(duration) {
-    const params = typeof duration == 'object' ? 3 : duration;
+
+    const params = typeof duration == 'object' || duration == undefined  ? 3 : duration;
+    console.log('params', params)
 
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
 
@@ -252,9 +255,6 @@ function getFundData(duration) {
 }
 fetchData();
 getFundData();
-document.addEventListener('DOMContentLoaded', fetchData);
-document.addEventListener('DOMContentLoaded', getFundData);
-
 
 // BODY
 var currentUrl = window.location.href;
