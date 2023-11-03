@@ -185,7 +185,7 @@ function renderLoop(data) {
                                 <div class="text-block-37">90 DAYS</div>
                                 <div class="text-block-38">${data.days90 || '-'}</div>
                             </div>
-                            <div class="div-block-100">
+                            <div>
                                 <div class="text-block-37">1Y</div>
                                 <div class="text-block-38">${data.days365 || '-'}</div>
                             </div>
