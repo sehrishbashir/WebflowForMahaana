@@ -171,7 +171,7 @@ function renderLoop(data) {
                 const html = `
                     <div class="div-block-98"></div>
                     <div class="table-content-area">
-                        <h3 class="table-title"${data.name || '-'}</h3>
+                        <h3 class="table-title">${data.name || '-'}</h3>
                         <div class="div-block-99">
                             <div>
                                 <div class="text-block-37">MTD</div>
