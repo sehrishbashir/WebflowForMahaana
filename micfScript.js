@@ -441,6 +441,11 @@ graphDur.forEach(item => {
 
 const durationContainerNew = document.getElementById('new-graph-duration');
 
+// Clear existing content by removing all child elements
+while (durationContainerNew.firstChild) {
+    durationContainerNew.removeChild(durationContainerNew.firstChild);
+}
+
 graphDur.forEach(item => {
     const durationDiv = document.createElement('div');
     durationDiv.className = 'duration';
