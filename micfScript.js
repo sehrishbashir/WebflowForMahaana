@@ -301,7 +301,7 @@ function renderLoop(data) {
 
     // NEW CREDIT & TOP HOLDING LIST
     if (creditRating) {
-        const creditRatingContentArea = document.querySelector('.performace-new-table');
+        const creditRatingContentArea = document.querySelector('.performace-new-table.credit-list');
 
         if (creditRatingContentArea) {
             // Clear existing content by removing all child elements
