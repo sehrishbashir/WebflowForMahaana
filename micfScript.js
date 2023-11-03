@@ -439,7 +439,7 @@ graphDur.forEach(item => {
     }
 })
 
-const durationContainerNew = document.querySelector('#graph-duration.new-duration-container');
+const durationContainerNew = document.getElementById('new-graph-duration');
 
 graphDur.forEach(item => {
     const durationDiv = document.createElement('div');
