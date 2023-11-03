@@ -124,9 +124,19 @@ function renderLoop(data) {
         { elementClass: '.top-holdings', data: holding }
     ];
 
+    const dataMappingsUpdated = [
+        { elementClass: '.credit-list', data: creditRating },
+        { elementClass: '.holding-list', data: holding }
+    ];
+
     dataMappings.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
         populateTableData(data, bodyRow)
+    });
+
+    dataMappingsUpdated.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        compositionList(data, bodyRow)
     });
 
     if (performances) {
@@ -159,15 +169,57 @@ function renderLoop(data) {
 
     }
 
+    if (distributions) {
+        const distributionBodyRow = document.querySelector('.distribution-body');
+        if (distributionBodyRow) {
+            distributions.forEach((data) => {
+                const row = document.createElement('div'); row.classList.add('distribution-body-row');
+                const html = `
+            <div class="distribution-body-cell flex-1 right-align">
+                <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
+            </div>`;
+                row.innerHTML = html;
+                distributionBodyRow.appendChild(row)
+            })
+        }
+    }
+
+    function populateTableData(data, container) {
+        data.forEach((item) => {
+            const row = document.createElement('div');
+            row.classList.add('portfolio-body-row');
+            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
+            const html = `
+            <div class="portfolio-body-cell flex-1">
+                <span class="port-body-title">${item.key}</span>
+            </div>
+            <div class="portfolio-body-cell">
+                <span class="port-body-title">${returnVal}</span>
+            </div>`;
+
+            row.innerHTML = html;
+            if (container) { container.appendChild(row) }
+        })
+    }
+
+    // NEW PERFROMANCE LIST
     if (performances) {
         const performanceContentArea = document.querySelector('.performace-new-table');
 
-        // Clear existing content by removing all child elements
-        while (performanceContentArea.firstChild) {
-            performanceContentArea.removeChild(performanceContentArea.firstChild);
-        }
-
         if (performanceContentArea) {
+            // Clear existing content by removing all child elements
+            while (performanceContentArea.firstChild) {
+                performanceContentArea.removeChild(performanceContentArea.firstChild);
+            }
 
             performances.forEach(data => {
                 const row = document.createElement('div');
@@ -206,26 +258,77 @@ function renderLoop(data) {
         }
     }
 
-    if (distributions) {
-        const distributionBodyRow = document.querySelector('.distribution-body');
-        if (distributionBodyRow) {
-            distributions.forEach((data) => {
-                const row = document.createElement('div'); row.classList.add('distribution-body-row');
+    // NEW ASSET ALLOCATION LIST
+    if (currentAssetAllocation) {
+        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+
+        if (portfolioDataContainer) {
+            // Clear existing content by removing all child elements
+            while (portfolioDataContainer.firstChild) {
+                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild);
+            }
+
+            currentAssetAllocation.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+
+                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
+
                 const html = `
-            <div class="distribution-body-cell flex-1 right-align">
-                <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
-            </div>`;
+                    <div class="table-item">
+                        <div class="table-content-area">
+                            <h3 class="table-title">Bank deposits</h3>
+                            <div class="div-block-101">
+                                <div>
+                                    <div class="text-block-37">THIS MONTH</div>
+                                    <div class="text-block-38">20%</div>
+                                </div>
+                                <div>
+                                    <div class="text-block-37">Last month</div>
+                                    <div class="text-block-38">20%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+
                 row.innerHTML = html;
-                distributionBodyRow.appendChild(row)
+                portfolioDataContainer.appendChild(row)
+            })
+        }
+
+    }
+
+    // NEW CREDIT & TOP HOLDING LIST
+
+    function compositionList(data, container) {
+        if (container) {
+
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            data.forEach((item) => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                row.classList.add('no-min-width');
+
+                const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
+                const html = `
+                    <div class="div-block-98"></div>
+                    <div class="table-content-area">
+                        <h3 class="table-title">AA</h3>
+                        <div class="div-block-99">
+                            <div class="div-block-100">
+                                <div class="text-block-37">${item.key}</div>
+                                <div class="text-block-38">${returnVal}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                row.innerHTML = html;
+                container.appendChild(row)
             })
         }
     }
@@ -362,24 +465,6 @@ tippy('.tippy', {
 })
 
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
-
-function populateTableData(data, container) {
-    data.forEach((item) => {
-        const row = document.createElement('div');
-        row.classList.add('portfolio-body-row');
-        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-        const html = `
-        <div class="portfolio-body-cell flex-1">
-            <span class="port-body-title">${item.key}</span>
-        </div>
-        <div class="portfolio-body-cell">
-            <span class="port-body-title">${returnVal}</span>
-        </div>`;
-
-        row.innerHTML = html;
-        if (container) { container.appendChild(row) }
-    })
-}
 
 const reportsBodyContainer = document.querySelector('.reports-body');
 const itemsPerPage = 5;
