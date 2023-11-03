@@ -459,8 +459,8 @@ graphDur.forEach(item => {
     //     getFundData(item.value)
     // });
 
-    if (durationContainer) {
-        durationContainer.appendChild(durationDiv);
+    if (durationContainerNew) {
+        durationContainerNew.appendChild(durationDiv);
     }
 })
 // ---------------------------------------------- //
