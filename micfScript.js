@@ -136,7 +136,7 @@ function renderLoop(data) {
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        compositionList(data, bodyRow)
+        // compositionList(data, bodyRow)
     });
 
     if (performances) {
@@ -300,6 +300,39 @@ function renderLoop(data) {
     }
 
     // NEW CREDIT & TOP HOLDING LIST
+    if (creditRating) {
+        const creditRatingContentArea = document.querySelector('.performace-new-table');
+
+        if (creditRatingContentArea) {
+            // Clear existing content by removing all child elements
+            while (creditRatingContentArea.firstChild) {
+                creditRatingContentArea.removeChild(creditRatingContentArea.firstChild);
+            }
+
+            creditRating.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                row.classList.add('no-min-width');
+
+                const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
+                const html = `
+                    <div class="div-block-98"></div>
+                    <div class="table-content-area">
+                        <h3 class="table-title">AA</h3>
+                        <div class="div-block-99">
+                            <div class="div-block-100">
+                                <div class="text-block-37">${item.key}</div>
+                                <div class="text-block-38">${returnVal}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                row.innerHTML = html;
+                creditRatingContentArea.appendChild(row)
+            })
+        }
+    }
 
     function compositionList(data, container) {
         if (container) {
