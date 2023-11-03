@@ -134,7 +134,8 @@ function renderLoop(data) {
 
         if (performanceBodyRow) {
             performances.forEach(data => {
-                const row = document.createElement('div'); row.classList.add('performance-body-row');
+                const row = document.createElement('div');
+                row.classList.add('performance-body-row');
                 const html = `
             <div class="performance-body-cell flex-1 right-align">
                 <span class="per-body-title">${data.name || '-'}</span>
@@ -157,6 +158,47 @@ function renderLoop(data) {
         }
 
     }
+
+    if (performances) {
+        const performanceContentArea = document.querySelector('.performace-new-table');
+
+        if (performanceContentArea) {
+
+            performances.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+
+                const html = `
+                    <div class="div-block-98"></div>
+                    <div class="table-content-area">
+                        <h3 class="table-title"${data.name || '-'}</h3>
+                        <div class="div-block-99">
+                            <div>
+                                <div class="text-block-37">MTD</div>
+                                <div class="text-block-38">${data.mtd || '-'}</div>
+                            </div>
+                            <div>
+                                <div class="text-block-37">YD</div>
+                                <div class="text-block-38">${data.ytd || '-'}</div>
+                            </div>
+                            <div>
+                                <div class="text-block-37">90 DAYS</div>
+                                <div class="text-block-38">${data.days90 || '-'}</div>
+                            </div>
+                            <div>
+                                <div class="text-block-37">1Y</div>
+                                <div class="text-block-38">${data.days365 || '-'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+
+                row.innerHTML = html;
+                performanceContentArea.appendChild(row)
+            })
+        }
+    }
+
     if (distributions) {
         const distributionBodyRow = document.querySelector('.distribution-body');
         if (distributionBodyRow) {
