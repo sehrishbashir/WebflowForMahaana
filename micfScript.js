@@ -176,7 +176,7 @@ function renderLoop(data) {
                 const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
 
                 const html = `
-                    <div class="div-block-98" style="color: ${selectedColor}"></div>
+                    <div class="div-block-98" style="background-color: ${selectedColor}"></div>
                     <div class="table-content-area">
                         <h3 class="table-title">${data.name || '-'}</h3>
                         <div class="div-block-99">
