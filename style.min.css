@@ -118,6 +118,7 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .slick-arrow.disabled, .slick-arrow.disabled:hover { background-color: #eaeaea !important; border-color: #c0c0c0 !important; cursor: auto; }
 .slick-arrow.disabled path, .slick-arrow.disabled:hover path { stroke: #c0c0c0 !important; }
 .text-navlink:hover { color: #432f86 }
+#performance-area-chart .recharts-cartesian-axis-line { stroke: #F2F4F7; }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
