@@ -420,6 +420,7 @@ graphDur.forEach(item => {
     const durationDiv = document.createElement('div');
     durationDiv.className = 'duration';
     durationDiv.textContent = item.key;
+
     if (item.key === '3M') {
         durationDiv.classList.add('selected')
     }
@@ -433,6 +434,33 @@ graphDur.forEach(item => {
         getFundData(item.value)
     });
 
-    if (durationContainer) { durationContainer.appendChild(durationDiv); }
+    if (durationContainer) {
+        durationContainer.appendChild(durationDiv);
+    }
+})
+
+const durationContainerNew = document.querySelector('#graph-duration.new-duration-container');
+
+graphDur.forEach(item => {
+    const durationDiv = document.createElement('div');
+    durationDiv.className = 'duration';
+    durationDiv.textContent = item.key;
+
+    // if (item.key === '3M') {
+    //     durationDiv.classList.add('selected')
+    // }
+    // durationDiv.addEventListener('click', () => {
+    //     const selectedDiv = document.querySelector('.duration.selected');
+    //     if (selectedDiv) {
+    //         selectedDiv.classList.remove('selected')
+    //     }
+    //     durationDiv.classList.add('selected');
+    //     console.log('item', item)
+    //     getFundData(item.value)
+    // });
+
+    if (durationContainer) {
+        durationContainer.appendChild(durationDiv);
+    }
 })
 // ---------------------------------------------- //
