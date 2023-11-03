@@ -173,7 +173,7 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
-                const selectedColor = data.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
+                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
 
                 const html = `
                     <div class="div-block-98" style="color: ${selectedColor}"></div>
