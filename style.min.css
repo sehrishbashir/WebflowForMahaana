@@ -120,6 +120,10 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .text-navlink:hover { color: #432f86 }
 #performance-area-chart .recharts-cartesian-axis-line { stroke: #F2F4F7; }
 .table-item:nth-child(2) { background-color: #F9FAFB; }
+#performance .recharts-tooltip-label, #performance .recharts-tooltip-item, #performance .recharts-tooltip-item ~ p { font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; }
+#performance .recharts-tooltip-label { color: #344054; line-height: 130%; letter-spacing: 0.17px;}
+#performance .recharts-tooltip-item { color: #667085; line-height: 166%; text-transform: uppercase; }
+#performance .recharts-tooltip-item ~ p { color: #1D2939; font-size: 14px; line-height: 137%; letter-spacing: 0.1px; }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
