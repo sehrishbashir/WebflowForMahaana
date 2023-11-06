@@ -1,31 +1,22 @@
 // ---------------- MICF PAGE ---------------- //
 // ---------------- LOADER ---------------- //
-function createLoader(showLoader = true) {
-    const loaderWrapper = document.getElementById('loader-wrapper');
+function createLoader() {
+    // Create the loader wrapper div
+    const loaderWrapper = document.createElement('div');
+    loaderWrapper.id = 'loader-wrapper';
+    loaderWrapper.className = 'loader-wrapper';
 
-    if (showLoader) {
-        if (!loaderWrapper) {
-            // Create the loader wrapper div if it doesn't exist
-            const newLoaderWrapper = document.createElement('div');
-            newLoaderWrapper.id = 'loader-wrapper';
-            newLoaderWrapper.className = 'loader-wrapper';
+    // Create the inner loader div
+    const loaderElement = document.createElement('div');
+    loaderElement.className = 'loader';
 
-            // Create the inner loader div
-            const loaderElement = document.createElement('div');
-            loaderElement.className = 'loader';
+    // Append the loader element to the loader wrapper
+    loaderWrapper.appendChild(loaderElement);
 
-            // Append the loader element to the loader wrapper
-            newLoaderWrapper.appendChild(loaderElement);
+    // Append the loader wrapper to the body
+    document.body.appendChild(loaderWrapper);
 
-            // Append the loader wrapper to the body
-            document.body.appendChild(newLoaderWrapper);
-        }
-    } else {
-        if (loaderWrapper) {
-            // Hide the loader by removing it from the DOM
-            document.body.removeChild(loaderWrapper);
-        }
-    }
+    return loaderWrapper;
 }
 // ---------------------------------------------- //
 
@@ -361,8 +352,11 @@ function renderLoop(data) {
 
 let reportsData;
 async function fetchData() {
-    // To show the loader:
-    createLoader(true);
+    // Create the loader
+    const loader = createLoader();
+
+    // Display the loader
+    loader.style.display = 'block';
 
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
@@ -422,7 +416,9 @@ async function fetchData() {
         console.error('>>>>>>Error', error)
     }
     // To hide the loader:
-    createLoader(false);
+    setTimeout(() => {
+        loader.style.display = 'none';
+    }, 1000);
 }
 
 function getFundData(duration) {
