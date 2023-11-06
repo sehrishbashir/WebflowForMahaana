@@ -56,8 +56,7 @@ function scrollHandler() {
     const tabWrapper = document.querySelector('#tab-wrapper');
     const sections = document.querySelectorAll(".tab-content-container");
     const tabLinks = document.querySelectorAll(".tab-item");
-    const header = document.querySelector(".navbar-3");
-    const headerHeight = header.getBoundingClientRect().height;
+
     let isTabBarFixed;
     if (tabsMenu) {
         isTabBarFixed = tabsMenu.classList.contains('fixed');
