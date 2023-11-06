@@ -318,7 +318,7 @@ function renderLoop(data) {
                 const html = `
                     <div class="div-block-98" style="background-color: ${selectedColor}"></div>
                     <div class="table-content-area">
-                        <div class="text-block-37">${item.key}</div>
+                        <div class="text-block-37" style="margin-bottom: 2px">${item.key}</div>
                         <div class="text-block-39">${returnVal}%</div>
                     </div>
                 `;
