@@ -291,6 +291,8 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
+                console.log('data', data)
+
                 const html = `
                     <div class="table-item">
                         <div class="table-content-area">
@@ -300,10 +302,10 @@ function renderLoop(data) {
                                     <div class="text-block-37">THIS MONTH</div>
                                     <div class="text-block-38">20%</div>
                                 </div>
-                                <div>
-                                    <div class="text-block-37">LAST MONTH</div>
-                                    <div class="text-block-38">20%</div>
-                                </div>
+                                // <div>
+                                //     <div class="text-block-37">LAST MONTH</div>
+                                //     <div class="text-block-38">20%</div>
+                                // </div>
                             </div>
                         </div>
                     </div>
