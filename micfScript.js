@@ -319,7 +319,7 @@ function renderLoop(data) {
                     <div class="div-block-98" style="background-color: ${selectedColor}"></div>
                     <div class="table-content-area">
                         <div class="text-block-37">${item.key}</div>
-                        <div class="text-block-38">${returnVal}%</div>
+                        <div class="text-block-39">${returnVal}%</div>
                     </div>
                 `;
 
