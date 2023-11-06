@@ -124,6 +124,9 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 #performance .recharts-tooltip-label { color: #344054; line-height: 130%; letter-spacing: 0.17px;}
 #performance .recharts-tooltip-item { color: #667085; line-height: 166%; text-transform: uppercase; }
 #performance .recharts-tooltip-item ~ p { color: #1D2939; font-size: 14px; line-height: 137%; letter-spacing: 0.1px; margin-bottom: 0;}
+.bar-graph-tooltip {display: flex; gap: 16px;}
+.bar-graph-tooltip-dot {width: 6px; height: 6px; border-radius: 50%;}
+.bar-graph-tooltip p {margin: 0;}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
