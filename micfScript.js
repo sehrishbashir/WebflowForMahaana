@@ -271,8 +271,6 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
-                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
-
                 const html = `
                     <div class="table-item">
                         <div class="table-content-area">
@@ -541,28 +539,30 @@ const graphDur = [
 
 const durationContainer = document.getElementById('graph-duration');
 
-graphDur.forEach(item => {
-    const durationDiv = document.createElement('div');
-    durationDiv.className = 'duration';
-    durationDiv.textContent = item.key;
+if (durationContainer) {
+    graphDur.forEach(item => {
+        const durationDiv = document.createElement('div');
+        durationDiv.className = 'duration';
+        durationDiv.textContent = item.key;
 
-    if (item.key === '3M') {
-        durationDiv.classList.add('selected')
-    }
-    durationDiv.addEventListener('click', () => {
-        const selectedDiv = document.querySelector('.duration.selected');
-        if (selectedDiv) {
-            selectedDiv.classList.remove('selected')
+        if (item.key === '3M') {
+            durationDiv.classList.add('selected')
         }
-        durationDiv.classList.add('selected');
-        console.log('item', item)
-        getFundData(item.value)
-    });
+        durationDiv.addEventListener('click', () => {
+            const selectedDiv = document.querySelector('.duration.selected');
+            if (selectedDiv) {
+                selectedDiv.classList.remove('selected')
+            }
+            durationDiv.classList.add('selected');
+            console.log('item', item)
+            getFundData(item.value)
+        });
 
-    if (durationContainer) {
-        durationContainer.appendChild(durationDiv);
-    }
-})
+        if (durationContainer) {
+            durationContainer.appendChild(durationDiv);
+        }
+    })
+}
 
 const durationContainerNew = document.getElementById('new-graph-duration');
 
