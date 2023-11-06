@@ -118,26 +118,26 @@ const setTextContent = (elementId, content) => {
 function renderLoop(data) {
     const { performances, currentAssetAllocation, holding, creditRating, distributions } = data;
 
-    const dataMappings = [
-        { elementClass: '.asset-allocation', data: currentAssetAllocation },
-        { elementClass: '.credit-quality', data: creditRating },
-        { elementClass: '.top-holdings', data: holding }
-    ];
+    // const dataMappings = [
+    //     { elementClass: '.asset-allocation', data: currentAssetAllocation },
+    //     { elementClass: '.credit-quality', data: creditRating },
+    //     { elementClass: '.top-holdings', data: holding }
+    // ];
 
-    const dataMappingsUpdated = [
-        { elementClass: '.credit-list', data: creditRating },
-        { elementClass: '.holding-list', data: holding }
-    ];
+    // const dataMappingsUpdated = [
+    //     { elementClass: '.credit-list', data: creditRating },
+    //     { elementClass: '.holding-list', data: holding }
+    // ];
 
-    dataMappings.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        populateTableData(data, bodyRow)
-    });
+    // dataMappings.forEach(({ elementClass, data }) => {
+    //     const bodyRow = document.querySelector(elementClass);
+    //     populateTableData(data, bodyRow)
+    // });
 
-    dataMappingsUpdated.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        // compositionList(data, bodyRow)
-    });
+    // dataMappingsUpdated.forEach(({ elementClass, data }) => {
+    //     const bodyRow = document.querySelector(elementClass);
+    //     // compositionList(data, bodyRow)
+    // });
 
     if (performances) {
         const performanceBodyRow = document.querySelector('.performance-body');
@@ -300,6 +300,7 @@ function renderLoop(data) {
     }
 
     // NEW CREDIT & TOP HOLDING LIST
+    console.log('creditRating',creditRating)
     if (creditRating) {
         const creditRatingContentArea = document.querySelector('.performace-new-table.credit-list');
 
