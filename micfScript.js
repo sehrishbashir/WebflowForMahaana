@@ -123,20 +123,20 @@ function renderLoop(data) {
     //     { elementClass: '.top-holdings', data: holding }
     // ];
 
-    // const dataMappingsUpdated = [
-    //     { elementClass: '.credit-list', data: creditRating },
-    //     { elementClass: '.holding-list', data: holding }
-    // ];
+    const dataMappingsUpdated = [
+        { elementClass: '.credit-list', data: creditRating },
+        { elementClass: '.holding-list', data: holding }
+    ];
 
     // dataMappings.forEach(({ elementClass, data }) => {
     //     const bodyRow = document.querySelector(elementClass);
     //     populateTableData(data, bodyRow)
     // });
 
-    // dataMappingsUpdated.forEach(({ elementClass, data }) => {
-    //     const bodyRow = document.querySelector(elementClass);
-    //     // compositionList(data, bodyRow)
-    // });
+    dataMappingsUpdated.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        compositionList(data, bodyRow)
+    });
 
     if (performances) {
         const performanceBodyRow = document.querySelector('.performance-body');
@@ -297,34 +297,33 @@ function renderLoop(data) {
     }
 
     // NEW CREDIT & TOP HOLDING LIST
+    // if (creditRating) {
+    //     const creditRatingContentArea = document.querySelector('.performace-new-table.credit-list');
 
-    if (creditRating) {
-        const creditRatingContentArea = document.querySelector('.performace-new-table.credit-list');
+    //     if (creditRatingContentArea) {
+    //         // Clear existing content by removing all child elements
+    //         while (creditRatingContentArea.firstChild) {
+    //             creditRatingContentArea.removeChild(creditRatingContentArea.firstChild);
+    //         }
 
-        if (creditRatingContentArea) {
-            // Clear existing content by removing all child elements
-            while (creditRatingContentArea.firstChild) {
-                creditRatingContentArea.removeChild(creditRatingContentArea.firstChild);
-            }
+    //         creditRating.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('table-item');
+    //             row.classList.add('no-min-width');
 
-            creditRating.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-                row.classList.add('no-min-width');
+    //             const html = `
+    //                 <div class="div-block-98"></div>
+    //                 <div class="table-content-area">
+    //                     <div class="text-block-37">${data.key}</div>
+    //                     <div class="text-block-38">${data.value}</div>
+    //                 </div>
+    //             `;
 
-                const html = `
-                    <div class="div-block-98"></div>
-                    <div class="table-content-area">
-                        <div class="text-block-37">${data.key}</div>
-                        <div class="text-block-38">${data.value}</div>
-                    </div>
-                `;
-
-                row.innerHTML = html;
-                creditRatingContentArea.appendChild(row)
-            })
-        }
-    }
+    //             row.innerHTML = html;
+    //             creditRatingContentArea.appendChild(row)
+    //         })
+    //     }
+    // }
 
     function compositionList(data, container) {
         if (container) {
