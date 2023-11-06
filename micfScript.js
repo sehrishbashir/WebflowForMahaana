@@ -294,14 +294,12 @@ function renderLoop(data) {
                 console.log('data', data)
 
                 const html = `
-                    <div class="table-item">
-                        <div class="table-content-area">
-                            <h3 class="table-title">${data.key}</h3>
-                            <div class="div-block-101">
-                                <div>
-                                    <div class="text-block-37">THIS MONTH</div>
-                                    <div class="text-block-38">${data.value}%</div>
-                                </div>
+                    <div class="table-content-area">
+                        <h3 class="table-title">${data.key}</h3>
+                        <div class="div-block-101">
+                            <div>
+                                <div class="text-block-37">THIS MONTH</div>
+                                <div class="text-block-38">${data.value}%</div>
                             </div>
                         </div>
                     </div>
