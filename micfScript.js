@@ -294,12 +294,12 @@ function renderLoop(data) {
                 console.log('data', data)
 
                 const html = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
-                        <circle cx="3" cy="9" r="3" fill="#432F87"/>
-                    </svg>
                     <div class="table-content-area">
                         <h3 class="table-title">${data.key}</h3>
-                        <div class="div-block-101">
+                        <div class="div-block-101" style="display: flex;">
+                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                                <circle cx="3" cy="9" r="3" fill="#432F87"/>
+                            </svg>
                             <div>
                                 <div class="text-block-37">THIS MONTH</div>
                                 <div class="text-block-38">${data.value}%</div>
