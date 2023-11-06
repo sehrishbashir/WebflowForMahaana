@@ -127,6 +127,7 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .bar-graph-tooltip {display: flex; gap: 16px;}
 .bar-graph-tooltip-dot {width: 6px; height: 6px; border-radius: 50%;}
 .bar-graph-tooltip p {margin: 0;}
+.bar-graph-tooltip-wrapper {padding: 12px; gap: 8px; border-radius: 6px; border: 1px solid #EAECF0; background-color: #FFF;}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
