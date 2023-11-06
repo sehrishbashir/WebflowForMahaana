@@ -296,16 +296,12 @@ function renderLoop(data) {
                 const html = `
                     <div class="table-item">
                         <div class="table-content-area">
-                            <h3 class="table-title">Bank deposits</h3>
+                            <h3 class="table-title">${data.key}</h3>
                             <div class="div-block-101">
                                 <div>
                                     <div class="text-block-37">THIS MONTH</div>
-                                    <div class="text-block-38">20%</div>
+                                    <div class="text-block-38">${data.value}%</div>
                                 </div>
-                                // <div>
-                                //     <div class="text-block-37">LAST MONTH</div>
-                                //     <div class="text-block-38">20%</div>
-                                // </div>
                             </div>
                         </div>
                     </div>
@@ -315,7 +311,10 @@ function renderLoop(data) {
                 portfolioDataContainer.appendChild(row)
             })
         }
-
+        // <div>
+        //     <div class="text-block-37">LAST MONTH</div>
+        //     <div class="text-block-38">20%</div>
+        // </div>
     }
 
     // NEW CREDIT & TOP HOLDING LIST
