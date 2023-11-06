@@ -593,11 +593,8 @@ dropdownMenu.forEach((item, index) => {
 });
 
 function handleBody(type) {
-    // Create the loader
-    const loader = createLoader();
-
-    // Display the loader
-    loader.style.display = 'block';
+    // To show the loader:
+    createLoader(true);
 
     handleClick(type)
     if (b2bBody || b2cBody) {
@@ -614,7 +611,7 @@ function handleBody(type) {
 
         // Hide the loader when your code is complete
         setTimeout(() => {
-            loader.style.display = 'none';
+            // To hide the loader:
         }, 1000);
 
     } else {
@@ -625,7 +622,7 @@ function handleBody(type) {
 
                 // Hide the loader when your code is complete
                 setTimeout(() => {
-                    loader.style.display = 'none';
+                    createLoader(false);
                 }, 1000);
             }
         }, 100);
@@ -636,23 +633,32 @@ function handleBody(type) {
 
 
 // ---------------- LOADER ---------------- //
-function createLoader() {
-    // Create the loader wrapper div
-    const loaderWrapper = document.createElement('div');
-    loaderWrapper.id = 'loader-wrapper';
-    loaderWrapper.className = 'loader-wrapper';
+function createLoader(showLoader = true) {
+    const loaderWrapper = document.getElementById('loader-wrapper');
 
-    // Create the inner loader div
-    const loaderElement = document.createElement('div');
-    loaderElement.className = 'loader';
+    if (showLoader) {
+        if (!loaderWrapper) {
+            // Create the loader wrapper div if it doesn't exist
+            const newLoaderWrapper = document.createElement('div');
+            newLoaderWrapper.id = 'loader-wrapper';
+            newLoaderWrapper.className = 'loader-wrapper';
 
-    // Append the loader element to the loader wrapper
-    loaderWrapper.appendChild(loaderElement);
+            // Create the inner loader div
+            const loaderElement = document.createElement('div');
+            loaderElement.className = 'loader';
 
-    // Append the loader wrapper to the body
-    document.body.appendChild(loaderWrapper);
+            // Append the loader element to the loader wrapper
+            newLoaderWrapper.appendChild(loaderElement);
 
-    return loaderWrapper;
+            // Append the loader wrapper to the body
+            document.body.appendChild(newLoaderWrapper);
+        }
+    } else {
+        if (loaderWrapper) {
+            // Hide the loader by removing it from the DOM
+            document.body.removeChild(loaderWrapper);
+        }
+    }
 }
 // ---------------------------------------------- //
 

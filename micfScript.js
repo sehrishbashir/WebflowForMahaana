@@ -332,6 +332,9 @@ function renderLoop(data) {
 
 let reportsData;
 async function fetchData() {
+    // To show the loader:
+    createLoader(true);
+
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
         if (!response.ok) {
@@ -389,6 +392,8 @@ async function fetchData() {
     } catch (error) {
         console.error('>>>>>>Error', error)
     }
+    // To hide the loader:
+    createLoader(false);
 }
 
 function getFundData(duration) {
