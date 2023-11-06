@@ -413,6 +413,7 @@ async function fetchData() {
 
         renderHoldingChart(transformData(holding));
         renderCreditChart(transformData(creditRating));
+        renderAssetChart(transformData(currentAssetAllocation))
 
     } catch (error) {
         console.error('>>>>>>Error', error)
