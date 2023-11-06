@@ -311,25 +311,22 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
-                
-                console.log('data', data)
 
-                // const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-                // const html = `
-                //     <div class="div-block-98"></div>
-                //     <div class="table-content-area">
-                //         <h3 class="table-title">AA</h3>
-                //         <div class="div-block-99">
-                //             <div class="div-block-100">
-                //                 <div class="text-block-37">${item.key}</div>
-                //                 <div class="text-block-38">${returnVal}</div>
-                //             </div>
-                //         </div>
-                //     </div>
-                // `;
+                const html = `
+                    <div class="div-block-98"></div>
+                    <div class="table-content-area">
+                        <h3 class="table-title">AA</h3>
+                        <div class="div-block-99">
+                            <div class="div-block-100">
+                                <div class="text-block-37">${data.key}</div>
+                                <div class="text-block-38">${data.value}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
 
-                // row.innerHTML = html;
-                // creditRatingContentArea.appendChild(row)
+                row.innerHTML = html;
+                creditRatingContentArea.appendChild(row)
             })
         }
     }
