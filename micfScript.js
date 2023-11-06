@@ -117,21 +117,21 @@ const setTextContent = (elementId, content) => {
 function renderLoop(data) {
     const { performances, currentAssetAllocation, holding, creditRating, distributions } = data;
 
-    // const dataMappings = [
-    //     { elementClass: '.asset-allocation', data: currentAssetAllocation },
-    //     { elementClass: '.credit-quality', data: creditRating },
-    //     { elementClass: '.top-holdings', data: holding }
-    // ];
+    const dataMappings = [
+        { elementClass: '.asset-allocation', data: currentAssetAllocation },
+        { elementClass: '.credit-quality', data: creditRating },
+        { elementClass: '.top-holdings', data: holding }
+    ];
 
     const dataMappingsUpdated = [
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
 
-    // dataMappings.forEach(({ elementClass, data }) => {
-    //     const bodyRow = document.querySelector(elementClass);
-    //     populateTableData(data, bodyRow)
-    // });
+    dataMappings.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        populateTableData(data, bodyRow)
+    });
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
@@ -297,34 +297,6 @@ function renderLoop(data) {
     }
 
     // NEW CREDIT & TOP HOLDING LIST
-    // if (creditRating) {
-    //     const creditRatingContentArea = document.querySelector('.performace-new-table.credit-list');
-
-    //     if (creditRatingContentArea) {
-    //         // Clear existing content by removing all child elements
-    //         while (creditRatingContentArea.firstChild) {
-    //             creditRatingContentArea.removeChild(creditRatingContentArea.firstChild);
-    //         }
-
-    //         creditRating.forEach(data => {
-    //             const row = document.createElement('div');
-    //             row.classList.add('table-item');
-    //             row.classList.add('no-min-width');
-
-    //             const html = `
-    //                 <div class="div-block-98"></div>
-    //                 <div class="table-content-area">
-    //                     <div class="text-block-37">${data.key}</div>
-    //                     <div class="text-block-38">${data.value}</div>
-    //                 </div>
-    //             `;
-
-    //             row.innerHTML = html;
-    //             creditRatingContentArea.appendChild(row)
-    //         })
-    //     }
-    // }
-
     function compositionList(data, container) {
         if (container) {
 
@@ -332,17 +304,22 @@ function renderLoop(data) {
                 container.removeChild(container.firstChild);
             }
 
+            const maxItemValue = Math.max(...data.map(item => item.value));
+            console.log('maxItemValue', maxItemValue);
+
             data.forEach((item) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
 
                 const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
+                const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
+
                 const html = `
-                    <div class="div-block-98"></div>
+                    <div class="div-block-98" style="background-color: ${selectedColor}"></div>
                     <div class="table-content-area">
                         <div class="text-block-37">${item.key}</div>
-                        <div class="text-block-38">${returnVal}</div>
+                        <div class="text-block-38">${returnVal}%</div>
                     </div>
                 `;
 
@@ -357,8 +334,6 @@ let reportsData;
 async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
-
-        console.log('response', response)
         if (!response.ok) {
             throw new Error('Network response was not ok')
         }
