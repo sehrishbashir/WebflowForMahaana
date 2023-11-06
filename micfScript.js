@@ -408,7 +408,8 @@ async function fetchData() {
         data.holding = transformData(holding, 'table');
         renderLoop(data);
 
-        renderAssetChart(transformData(currentAssetAllocation));
+        // renderAssetChart(transformData(currentAssetAllocation));
+        console.log('transformData(creditRating)',transformData(creditRating));
         renderCreditChart(transformData(creditRating));
 
     } catch (error) {
