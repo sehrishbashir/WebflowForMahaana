@@ -1,4 +1,33 @@
 // ---------------- MICF PAGE ---------------- //
+// ---------------- LOADER ---------------- //
+function createLoader(showLoader = true) {
+    const loaderWrapper = document.getElementById('loader-wrapper');
+
+    if (showLoader) {
+        if (!loaderWrapper) {
+            // Create the loader wrapper div if it doesn't exist
+            const newLoaderWrapper = document.createElement('div');
+            newLoaderWrapper.id = 'loader-wrapper';
+            newLoaderWrapper.className = 'loader-wrapper';
+
+            // Create the inner loader div
+            const loaderElement = document.createElement('div');
+            loaderElement.className = 'loader';
+
+            // Append the loader element to the loader wrapper
+            newLoaderWrapper.appendChild(loaderElement);
+
+            // Append the loader wrapper to the body
+            document.body.appendChild(newLoaderWrapper);
+        }
+    } else {
+        if (loaderWrapper) {
+            // Hide the loader by removing it from the DOM
+            document.body.removeChild(loaderWrapper);
+        }
+    }
+}
+// ---------------------------------------------- //
 
 // HEAD
 function tabStopHandler() {
