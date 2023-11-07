@@ -291,8 +291,6 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
-                console.log('data', data)
-
                 const html = `
                     <div class="table-content-area">
                         <h3 class="table-title">${data.key}</h3>
