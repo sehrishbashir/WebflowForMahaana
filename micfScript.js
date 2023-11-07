@@ -247,25 +247,28 @@ function renderLoop(data) {
                 const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
 
                 const html = `
-                    <div class="div-block-98" style="background-color: ${selectedColor}"></div>
                     <div class="table-content-area">
-                        <h3 class="table-title">${data.name || '-'}</h3>
-                        <div class="div-block-99">
-                            <div class="div-block-100">
-                                <div class="text-block-37">MTD</div>
-                                <div class="text-block-38">${data.mtd || '-'}</div>
-                            </div>
-                            <div class="div-block-100">
-                                <div class="text-block-37">YD</div>
-                                <div class="text-block-38">${data.ytd || '-'}</div>
-                            </div>
-                            <div class="div-block-100">
-                                <div class="text-block-37">90 DAYS</div>
-                                <div class="text-block-38">${data.days90 || '-'}</div>
-                            </div>
-                            <div>
-                                <div class="text-block-37">1Y</div>
-                                <div class="text-block-38">${data.days365 || '-'}</div>
+                       <div class="div-block-98" style="background-color: ${selectedColor}"></div>
+
+                        <div style="display: flex;">
+                            <h3 class="table-title">${data.name || '-'}</h3>
+                            <div class="div-block-99">
+                                <div class="div-block-100">
+                                    <div class="text-block-37">MTD</div>
+                                    <div class="text-block-38">${data.mtd || '-'}</div>
+                                </div>
+                                <div class="div-block-100">
+                                    <div class="text-block-37">YD</div>
+                                    <div class="text-block-38">${data.ytd || '-'}</div>
+                                </div>
+                                <div class="div-block-100">
+                                    <div class="text-block-37">90 DAYS</div>
+                                    <div class="text-block-38">${data.days90 || '-'}</div>
+                                </div>
+                                <div>
+                                    <div class="text-block-37">1Y</div>
+                                    <div class="text-block-38">${data.days365 || '-'}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
