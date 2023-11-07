@@ -9,7 +9,7 @@ img:focus-visible {outline: none}
 .recharts-layer:focus {outline: none}
 .tippy-tooltip {padding: 4px 8px !important}
 .duration.selected {background-color: #F5F8FF; color: #2960EC;}
-#performance .recharts-layer :is(text, tspan) { fill: #6B6F80; font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.387px;}
+#performance .recharts-layer :is(text, tspan) { color: #6B6F80; text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-style: normal; font-weight: 400; line-height: 143%; letter-spacing: 0.17px; }
 .recharts-tooltip-label {color: #313131;}
 .recharts-tooltip-item, .recharts-tooltip-label {font-family: 'Inter'; font-weight: 500; font-size: 14px; padding: 0 !important;     margin: 0 !important;}
 .micf-section {isolation: isolate;}
@@ -19,7 +19,7 @@ img:focus-visible {outline: none}
 .tippy-arrow {border-right-color: #616161 !important;}
 ul.legends-list {padding-left: 0; display: flex; flex-wrap: wrap; justify-content: center; list-style: none;column-gap: 20px; row-gap: 10px;}
 .legends-list li {display: flex; flex-wrap: wrap; justify-content: center; align-items: center;}
-.pie-legend {font-family:Poppins; font-weight: 400; font-size: 13px; line-height: 20px; color: #747474; padding-left: 4px}
+.pie-legend {font-family:'Poppins'; font-weight: 400; font-size: 13px; line-height: 20px; color: #747474; padding-left: 4px}
 .creditQualityPie .recharts-legend-wrapper {bottom: 0 !important;width: 100% !important; display: flex;justify-content: center;}
 .creditQualityPie ul li:nth-child(2) {padding-right: 0 !important;}
 .MuiPagination-ul {justify-content: center; gap: 6px;}
