@@ -9,7 +9,7 @@ img:focus-visible {outline: none}
 .recharts-layer:focus {outline: none}
 .tippy-tooltip {padding: 4px 8px !important}
 .duration.selected {background-color: #F5F8FF; color: #2960EC;}
-#performance .recharts-layer :is(text, tspan) { color: #6B6F80; text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-style: normal; font-weight: 400; line-height: 143%; letter-spacing: 0.17px; }
+#performance .recharts-layer :is(text, tspan) { fill: #6B6F80; color: #6B6F80; text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-style: normal; font-weight: 400; line-height: 143%; letter-spacing: 0.17px; }
 .recharts-tooltip-label {color: #313131;}
 .recharts-tooltip-item, .recharts-tooltip-label {font-family: 'Inter'; font-weight: 500; font-size: 14px; padding: 0 !important;     margin: 0 !important;}
 .micf-section {isolation: isolate;}
