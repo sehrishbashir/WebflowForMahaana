@@ -130,6 +130,9 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .bar-graph-tooltip-wrapper {padding: 12px; gap: 8px; border-radius: 6px; border: 1px solid #EAECF0; background-color: #FFF;}
 .bar-graph-tooltip p:first-child { color: #667085; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; line-height: 166%; text-transform: uppercase; }
 .bar-graph-tooltip p:last-child { color: #1D2939; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-weight: 400; line-height: 137%; letter-spacing: 0.1px; }
+.legend-wrapper {display: flex; gap: 6px; align-items: center; justify-content: center;}
+.legend-wrapper .bar-graph-tooltip-dot, .legend-wrapper p  {margin: 0;}
+.legend-wrapper p {color:#667085; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-weight: 500; line-height: 130%;}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
