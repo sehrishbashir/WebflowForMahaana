@@ -294,13 +294,24 @@ function renderLoop(data) {
                 const html = `
                     <div class="table-content-area">
                         <h3 class="table-title">${data.key}</h3>
-                        <div class="div-block-101" style="display: flex;">
-                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
-                                <circle cx="3" cy="9" r="3" fill="#432F87"/>
-                            </svg>
-                            <div>
-                                <div class="text-block-37">THIS MONTH</div>
-                                <div class="text-block-38">${data.value}%</div>
+                        <div style="display: flex; gap: 14px">
+                            <div class="div-block-101" style="display: flex;">
+                                <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                                    <circle cx="3" cy="9" r="3" fill="#432F87"/>
+                                </svg>
+                                <div>
+                                    <div class="text-block-37">THIS MONTH</div>
+                                    <div class="text-block-38">${data.value}%</div>
+                                </div>
+                            </div>
+                            <div class="div-block-101" style="display: flex;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
+                                    <circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/>
+                                </svg>
+                                <div>
+                                    <div class="text-block-37">LAST MONTH</div>
+                                    <div class="text-block-38">${data.value}%</div>
+                                </div>
                             </div>
                         </div>
                     </div>
