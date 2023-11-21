@@ -263,9 +263,11 @@ textarea::placeholder { color: var(--gray-500); }
 #contribution-chart .recharts-cartesian-axis-tick-value tspan, .recharts-cartesian-axis-tick text { font-family: 'Poppins'; font-weight: 400; font-size: 14px; line-height: 20.02px; text-align: center; color: var(--neutral-neutral-60); }
 #contribution-chart .recharts-legend-wrapper ul {flex-wrap: wrap;}
 #contribution-chart .recharts-legend-wrapper ul, .recharts-legend-wrapper ul div { display: flex; align-items: center; justify-content: center; margin: 0; }
-#contribution-chart .recharts-legend-wrapper p { color: var(--gray-700); text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; line-height: 166%; text-transform: uppercase; margin: 0; }
+#contribution-chart .recharts-legend-wrapper :is(p, .year) { color: var(--gray-700); text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; line-height: 166%; text-transform: uppercase; margin: 0; }
 #contribution-chart .recharts-legend-wrapper p:last-child { padding-left: 2px; color: var(--gray-500); text-transform: capitalize;}
 #contribution-chart .recharts-legend-wrapper { bottom: 0 !important; }
 #contribution-chart .recharts-legend-wrapper ul div { margin: 5px }
 #contribution-chart .recharts-legend-wrapper ul div div { width: 8px; height: 8px; margin-right: 8px; border-radius: 100%; }
-#contribution-chart .recharts-tooltip-wrapper { border-radius: 8px; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; border: 1px solid #EAECF0; background: var(--white);}
+#contribution-chart .recharts-tooltip-wrapper { border-radius: 8px; padding: 12px; border: 1px solid #EAECF0; background: var(--white);}
+#contribution-chart .recharts-tooltip-wrapper > div { display: flex; flex-direction: column; align-items: flex-start; gap: 8px;}
+#contribution-chart .recharts-tooltip-wrapper .year { line-height: 130%; letter-spacing: 0.17px; text-transform: capitalize; }
