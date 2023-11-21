@@ -265,4 +265,5 @@ textarea::placeholder { color: var(--gray-500); }
 #contribution-chart .recharts-legend-wrapper p { color: var(--gray-700); text-align: center; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; line-height: 166%; text-transform: uppercase; margin: 0; }
 #contribution-chart .recharts-legend-wrapper p:last-child { padding-left: 2px; color: var(--gray-500); text-transform: capitalize;}
 #contribution-chart .recharts-legend-wrapper { bottom: 0 !important; }
+#contribution-chart .recharts-legend-wrapper ul { gap: 42px }
 #contribution-chart .recharts-legend-wrapper ul div div { width: 8px; height: 8px; margin-right: 8px; border-radius: 100%; }
