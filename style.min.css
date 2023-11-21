@@ -36,8 +36,6 @@ ul.legends-list {padding-left: 0; display: flex; flex-wrap: wrap; justify-conten
 .get-in-touch-text-field.textarea { resize: vertical; }
 .save-content-wrapper .join-waitlist:hover { background-color: white !important; border: 1px solid white; }
 .text-navlink.primary-button-text:hover { font-weight: 500 }
-.yAxis .recharts-cartesian-axis-tick-value tspan { line-height: 15px; text-align: right; }
-.recharts-cartesian-axis-tick-value tspan { font-family: Poppins; font-style: normal; font-weight: 400; font-size: 12px; line-height: 18px; text-align: center; color: #A3A3A3; }
 .input-wrapper:has(input:focus) { border: 1px solid #43BED8; box-shadow: 0px 0px 0px 4px #CBF6FF, 0px 1px 2px 0px rgba(16, 24, 40, 0.05);}
 input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; max-width: 100%; transition: box-shadow 0.2s ease-in-out; border-radius: 20px; }
 .relative {	position: relative; }
@@ -261,3 +259,5 @@ textarea::placeholder { color: var(--gray-500); }
 
 /* HOME GRAPH */
 #contribution-chart .recharts-cartesian-grid line { stroke: #F2F4F7; }
+.yAxis .recharts-cartesian-axis-tick-value tspan { line-height: 15px; text-align: right; }
+.recharts-cartesian-axis-tick-value :is(tspan, text) { font-family: 'Poppins'; font-weight: 400; font-size: 14px; line-height: 20.02px; text-align: center; color: var(--neutral-neutral-60); }
