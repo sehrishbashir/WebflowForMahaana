@@ -260,4 +260,4 @@ textarea::placeholder { color: var(--gray-500); }
 /* HOME GRAPH */
 #contribution-chart .recharts-cartesian-grid line { stroke: #F2F4F7; }
 .yAxis .recharts-cartesian-axis-tick-value tspan { line-height: 15px; text-align: right; }
-.recharts-cartesian-axis-tick-value :is(tspan, text) { font-family: 'Poppins'; font-weight: 400; font-size: 14px; line-height: 20.02px; text-align: center; color: var(--neutral-neutral-60); }
+.recharts-cartesian-axis-tick-value tspan, .recharts-cartesian-axis-tick text { font-family: 'Poppins'; font-weight: 400; font-size: 14px; line-height: 20.02px; text-align: center; color: var(--neutral-neutral-60); }
