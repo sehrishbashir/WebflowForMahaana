@@ -256,4 +256,5 @@ textarea::placeholder { color: #667085; }
 
 
 /* SPONSERS TESTIMONIALS SLIDER */
-.sponsors-testimonials-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px; background: #F2F4F7; mix-blend-mode: multiply;}
+.sponsors-testimonials-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px !important; background-color: #F2F4F7; mix-blend-mode: multiply; margin-left: 6px !important; margin-right: 6px !important; margin-bottom: 0;}
+.sponsors-testimonials-slider .w-slider-dot.w-active { background-color: #6941C6; }
