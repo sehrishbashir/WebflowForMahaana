@@ -253,3 +253,7 @@ textarea::placeholder { color: #667085; }
 .job-content :is(ol, ul) { padding-left: 25px }
 .job-content ol { display: flex; flex-direction: column; gap: 12px; }
 .how-to-apply a { color: #475467 }
+
+
+/* SPONSERS TESTIMONIALS SLIDER */
+.sponsors-testimonials-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px; background: #F2F4F7; mix-blend-mode: multiply;}
