@@ -597,7 +597,7 @@ function handleBody(type) {
     const loader = createLoader();
 
     // Display the loader
-    loader.style.display = 'block';
+    loader.style.display = 'flex';
 
     handleClick(type)
     if (b2bBody || b2cBody) {

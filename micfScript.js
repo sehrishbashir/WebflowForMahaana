@@ -367,7 +367,7 @@ async function fetchData() {
     const loader = createLoader();
 
     // Display the loader
-    loader.style.display = 'block';
+    loader.style.display = 'flex';
 
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
