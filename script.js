@@ -345,15 +345,15 @@ Webflow.push(function () {
 
                 console.log('>>>>>handleSuccess')
 
-                handleBtnStatus(wlSubmit, 'Send');
-                handleDisabled(inputs, false);
-                hideElements(wlForm); s
-                showElements(wlSucess);
-                setTimeout(() => {
-                    hideElements(wlFormModal, wlSucess);
-                    showElements(wlForm);
-                    wlForm.reset()
-                }, 3000)
+                    // handleBtnStatus(wlSubmit, 'Send');
+                    // handleDisabled(inputs, false);
+                    // hideElements(wlForm); s
+                    // showElements(wlSucess);
+                    // setTimeout(() => {
+                    //     hideElements(wlFormModal, wlSucess);
+                    //     showElements(wlForm);
+                    //     wlForm.reset()
+                    // }, 3000)
             }
             function handleError(errorData, errorCode) {
                 handleBtnStatus(wlSubmit, 'Send');
