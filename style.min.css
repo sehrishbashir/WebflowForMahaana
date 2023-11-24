@@ -257,8 +257,8 @@ textarea::placeholder { color: var(--gray-500); }
 .secondary-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px !important; background-color: #F2F4F7; mix-blend-mode: multiply; margin-left: 6px !important; margin-right: 6px !important; margin-bottom: 0;}
 .secondary-slider .w-slider-dot.w-active { background-color: var(--primary-700); }
 
-.primary-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px !important; background-color: rgba(255, 255, 255, 0.20); mix-blend-mode: multiply; margin-left: 6px !important; margin-right: 6px !important; margin-bottom: 0;}
-.primary-slider .w-slider-dot.w-active { background-color: var(--white); }
+/* .primary-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px !important; background-color: rgba(255, 255, 255, 0.20); mix-blend-mode: multiply; margin-left: 6px !important; margin-right: 6px !important; margin-bottom: 0;}
+.primary-slider .w-slider-dot.w-active { background-color: var(--white); } */
 
 /* HOME GRAPH */
 #contribution-chart .recharts-cartesian-grid line { stroke: #F2F4F7; }
