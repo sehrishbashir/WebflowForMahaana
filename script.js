@@ -24,7 +24,7 @@ if (!currentDomain.includes('webflow')) {
     domainURL = 'https://mahaana.com/'
 } else {
     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
+    mahaanaInvitee = 'https://dev-mahaana-dfa-invitemahaniers.azurewebsites.net'
     domainURL = 'https://mahaana.webflow.io/'
 }
 // ---------------------------------------------- //
@@ -228,13 +228,17 @@ function handleFormSubmission(apiURL, formData, inputs, handleSuccess, handleErr
             if (!response.ok) {
                 const errorCode = response.status;
                 return response.text().then((errorData) => {
-                    handleDisabled(inputs, false); handleError(errorData, errorCode);
+                    handleDisabled(inputs, false);
+                    handleError(errorData, errorCode);
                     throw new Error(errorData || 'Unknown error occurred.')
                 })
             }
             return response.json()
         })
-        .then((data) => handleSuccess())
+        .then((data) => {
+            console.log('>>>>>>>>>>>>>>>.suxxxx')
+            handleSuccess()
+        })
         .catch((error) => console.log('Error occurred:', error))
 }
 
@@ -338,10 +342,13 @@ Webflow.push(function () {
             handleDisabled(inputs, true)
 
             function handleSuccess() {
+
+                console.log('>>>>>handleSuccess')
+
                 handleBtnStatus(wlSubmit, 'Send');
                 handleDisabled(inputs, false);
                 hideElements(wlForm); s
-                howElements(wlSucess);
+                showElements(wlSucess);
                 setTimeout(() => {
                     hideElements(wlFormModal, wlSucess);
                     showElements(wlForm);
