@@ -281,9 +281,3 @@ textarea::placeholder { color: var(--gray-500); }
 #contribution-chart .tooltip-wrapper div:last-child p { text-align: start !important; color: var(--gray-500);}
 #contribution-chart .tooltip-wrapper div:last-child p:last-child {color: var(--gray-800); font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-weight: 400; line-height: 137%; letter-spacing: 0.1px; margin-bottom: 0;}
 #contribution-chart .tooltip-container { display: grid; grid-template-columns: auto auto; column-gap: 16px; row-gap: 8px;}
-
-
-
-
-
-.helpcrunch-iframe-wrapper, [name='helpcrunch-iframe'] {z-index: 999 !important;}
