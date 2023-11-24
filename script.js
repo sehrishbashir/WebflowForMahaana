@@ -61,7 +61,7 @@ const currentYearElement = document.querySelectorAll('.current-year');
 const homeBody = document.querySelector('body');
 
 // HEADER DROPDOWN
-localStorage.setItem('selectedItem', individual.toLowerCase())
+let selectedItem = localStorage.setItem('selectedItem', individual.toLowerCase())
 // let selectedItem = localStorage.getItem('selectedItem');
 const dropDownItems = document.querySelectorAll('.choose-type-wrap');
 const navSelectedItem = document.querySelectorAll('.nav-selected-item');
