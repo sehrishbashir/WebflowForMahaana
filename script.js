@@ -356,6 +356,8 @@ Webflow.push(function () {
                     // }, 3000)
             }
             function handleError(errorData, errorCode) {
+
+                console.log('>>>>>>handleError')
                 handleBtnStatus(wlSubmit, 'Send');
                 if (errorData.charAt(0) == "{") {
                     handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
