@@ -347,7 +347,7 @@ Webflow.push(function () {
 
                     // handleBtnStatus(wlSubmit, 'Send');
                     // handleDisabled(inputs, false);
-                    // hideElements(wlForm); s
+                    // hideElements(wlForm);
                     // showElements(wlSucess);
                     // setTimeout(() => {
                     //     hideElements(wlFormModal, wlSucess);
@@ -358,14 +358,14 @@ Webflow.push(function () {
             function handleError(errorData, errorCode) {
 
                 console.log('>>>>>>handleError')
-                handleBtnStatus(wlSubmit, 'Send');
-                if (errorData.charAt(0) == "{") {
-                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
-                }
-                else {
-                    wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
-                    showElements(wlError)
-                }
+                // handleBtnStatus(wlSubmit, 'Send');
+                // if (errorData.charAt(0) == "{") {
+                //     handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
+                // }
+                // else {
+                //     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
+                //     showElements(wlError)
+                // }
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
         } else { $(document).off('submit') }
