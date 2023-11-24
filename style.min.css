@@ -65,8 +65,8 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .b2c-navlink.w--current ~ .active-link-rectangle { width: 24px; transform: translateX(0); }
 .b2c-navlink.w--current:nth-child(3) ~ .active-link-rectangle { transform: translateX(102px); }
 .b2c-navlink.w--current:nth-child(4) ~ .active-link-rectangle { transform: translateX(225px); }
-.b2c-navlink.w--current:nth-child(5) ~ .active-link-rectangle { transform: translateX(298px); }
-.b2c-navlink.w--current:nth-child(6) ~ .active-link-rectangle { transform: translateX(418px); }
+.b2c-navlink.w--current:nth-child(5) ~ .active-link-rectangle { transform: translateX(308px); }
+.b2c-navlink.w--current:nth-child(6) ~ .active-link-rectangle { transform: translateX(428px); }
 
 .b2b-navlink.w--current ~ .active-link-rectangle { width: 24px; transform: translateX(0px); }
 .b2b-navlink.w--current:nth-child(2) ~ .active-link-rectangle { transform: translateX(103px); }
