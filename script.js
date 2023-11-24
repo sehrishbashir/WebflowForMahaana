@@ -573,6 +573,9 @@ function createDropdownItem(text) {
 
 function setDropdownItem(selectedValue) {
     navSelectedItem.forEach((item, index) => { item.innerText = selectedValue; })
+
+    console.log('selectedValue', selectedValue)
+
     localStorage.setItem('selectedItem', selectedValue.toLowerCase());
     dropdownMenu.forEach((item, index) => {
         item.innerHTML = '';
