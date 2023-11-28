@@ -957,6 +957,7 @@ function reveal() {
         var elementTop = reveals[i].getBoundingClientRect().top;
         var elementVisible = 150;
         reveals[i].classList.add("animate__animated");
+        reveals[i].classList.add("animate__delay-2s");
 
         if (elementTop < windowHeight - elementVisible) {
             reveals[i].classList.add("animate__flipInX");
