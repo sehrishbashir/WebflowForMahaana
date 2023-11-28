@@ -950,14 +950,14 @@ renderScripts();
 // ---------------------------------------------- //
 
 
-function reveal() {
-    var reveals = document.querySelectorAll("h1");
+function reveal(selector) {
+    var reveals = document.querySelectorAll(selector);
     for (var i = 0; i < reveals.length; i++) {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
         var elementVisible = 150;
         reveals[i].classList.add("animate__animated");
-        reveals[i].classList.add("animate__delay-2s");
+        reveals[i].classList.add("animate__delay-1s");
 
         if (elementTop < windowHeight - elementVisible) {
             reveals[i].classList.add("animate__flipInX");
@@ -967,5 +967,10 @@ function reveal() {
     }
 }
 
-window.addEventListener("scroll", reveal);
-reveal();
+window.addEventListener("scroll", function () {
+    reveal("h1");
+    reveal("h5");
+});
+
+reveal("h1");
+reveal("h5");
