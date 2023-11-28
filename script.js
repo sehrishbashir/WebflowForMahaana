@@ -956,11 +956,11 @@ function reveal() {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
         var elementVisible = 150;
+        reveals[i].classList.add("animate__animated");
+
         if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("animate__animated");
             reveals[i].classList.add("animate__flipInX");
         } else {
-            reveals[i].classList.remove("animate__animated");
             reveals[i].classList.remove("animate__flipInX");
         }
     }
