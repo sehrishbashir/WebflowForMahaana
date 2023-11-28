@@ -948,3 +948,21 @@ function renderScripts() {
 }
 renderScripts();
 // ---------------------------------------------- //
+
+
+function reveal() {
+    var reveals = document.querySelectorAll("h1");
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("animate__animated animate__flipInX");
+        } else {
+            reveals[i].classList.remove("animate__animated animate__flipInX");
+        }
+    }
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
