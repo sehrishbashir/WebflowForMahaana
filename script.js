@@ -236,7 +236,6 @@ function handleFormSubmission(apiURL, formData, inputs, handleSuccess, handleErr
             return response.json()
         })
         .then((data) => {
-            console.log('>>>>>>>>>>>>>>>.suxxxx')
             handleSuccess()
         })
         .catch((error) => console.log('Error occurred:', error))
@@ -324,7 +323,11 @@ Webflow.push(function () {
             }
             handleDisabled(inputs, true)
             handleFormSubmission(`${mahaanaInvitee}/api/Message`, formData, inputs, handleSuccess, handleError);
-        } else { $(document).off('submit') }
+            return false;
+        } else {
+            $(document).off('submit');
+            return false;
+        }
     })
 });
 
@@ -416,9 +419,10 @@ Webflow.push(function () {
             }
             handleDisabled(inputs, true)
             handleFormSubmission(`${mahaanaInvitee}/api/Message`, formData, inputs, handleSuccess, handleError);
-
+            return false;
         } else {
-            $(document).off('submit')
+            $(document).off('submit');
+            return false;
         }
     })
 });
