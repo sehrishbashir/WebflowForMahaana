@@ -329,50 +329,50 @@ Webflow.push(function () {
 });
 
 // WAITLIST FORM
-var Webflow = Webflow || [];
-Webflow.push(function () {
-    $('form#waitlist-form').submit(function (evt) {
-        evt.preventDefault();
-        $(document).off('submit');
+// var Webflow = Webflow || [];
+// Webflow.push(function () {
+//     $('form#waitlist-form').submit(function (evt) {
+//         evt.preventDefault();
+//         $(document).off('submit');
 
-        const inputValidations = handleInitForm(WLFormElements);
+//         const inputValidations = handleInitForm(WLFormElements);
 
-        if (inputValidations.every((isValid) => isValid)) {
-            $(document).off('submit');
-            const formData = { name: wlNameInput.value, email: wlEmailInput.value };
-            handleBtnStatus(wlSubmit, 'Please wait ...');
-            const inputs = [wlNameInput, wlEmailInput, wlSubmit]
-            handleDisabled(inputs, true)
+//         if (inputValidations.every((isValid) => isValid)) {
+//             $(document).off('submit');
+//             const formData = { name: wlNameInput.value, email: wlEmailInput.value };
+//             handleBtnStatus(wlSubmit, 'Please wait ...');
+//             const inputs = [wlNameInput, wlEmailInput, wlSubmit]
+//             handleDisabled(inputs, true)
 
-            function handleSuccess() {
-                handleBtnStatus(wlSubmit, 'Send');
-                handleDisabled(inputs, false);
-                hideElements(wlForm);
-                showElements(wlSucess);
-                setTimeout(() => {
-                    hideElements(wlFormModal, wlSucess);
-                    showElements(wlForm);
-                    wlForm.reset()
-                }, 3000)
-            }
-            function handleError(errorData, errorCode) {
-                showElements(wlForm);
-                hideElements(wlSucess)
-                handleBtnStatus(wlSubmit, 'Send');
-                if (errorData.charAt(0) == "{") {
-                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
-                }
-                else {
-                    wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
-                    showElements(wlError)
-                }
-            }
-            handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
-        } else {
-            $(document).off('submit')
-        }
-    })
-});
+//             function handleSuccess() {
+//                 handleBtnStatus(wlSubmit, 'Send');
+//                 handleDisabled(inputs, false);
+//                 hideElements(wlForm);
+//                 showElements(wlSucess);
+//                 setTimeout(() => {
+//                     hideElements(wlFormModal, wlSucess);
+//                     showElements(wlForm);
+//                     wlForm.reset()
+//                 }, 3000)
+//             }
+//             function handleError(errorData, errorCode) {
+//                 showElements(wlForm);
+//                 hideElements(wlSucess)
+//                 handleBtnStatus(wlSubmit, 'Send');
+//                 if (errorData.charAt(0) == "{") {
+//                     handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
+//                 }
+//                 else {
+//                     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
+//                     showElements(wlError)
+//                 }
+//             }
+//             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
+//         } else {
+//             $(document).off('submit')
+//         }
+//     })
+// });
 
 // CONTACT US FORM
 var Webflow = Webflow || [];
