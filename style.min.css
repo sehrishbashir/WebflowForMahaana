@@ -152,7 +152,8 @@ body :is(.b2c-home-arrow, .b2c-slick-arrow):hover path { stroke: var(--primary-5
 @media screen and (max-width: 1279px) {
 .b2c-navlink.w--current:nth-child(3) ~ .active-link-rectangle { transform: translateX(94px); }
 .b2c-navlink.w--current:nth-child(4) ~ .active-link-rectangle { transform: translateX(165px); }
-.b2c-navlink.w--current:nth-child(5) ~ .active-link-rectangle { transform: translateX(228px); }
+.b2c-navlink.w--current:nth-child(5) ~ .active-link-rectangle { transform: translateX(1066%); }
+/* .b2c-navlink.w--current:nth-child(5) ~ .active-link-rectangle { transform: translateX(228px); } */
 .b2b-navlink.w--current:nth-child(2) ~ .active-link-rectangle { transform: translateX(93px); }
 .b2b-navlink.w--current:nth-child(3) ~ .active-link-rectangle { transform: translateX(296px); }
 }
