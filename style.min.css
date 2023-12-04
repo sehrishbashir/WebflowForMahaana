@@ -125,7 +125,7 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .bar-graph-tooltip {display: flex; gap: 6px;}
 .bar-graph-tooltip-dot {width: 6px; height: 6px; border-radius: 50%; margin-top: 6px;}
 .bar-graph-tooltip p {margin: 0;}
-.bar-graph-tooltip-wrapper {display: flex; padding: 12px; gap: 8px; border-radius: 6px; border: 1px solid #EAECF0; background-color: #FFF;}
+.bar-graph-tooltip-wrapper {display: flex; flex-direction: column; padding: 12px; gap: 8px; border-radius: 6px; border: 1px solid #EAECF0; background-color: #FFF;}
 .bar-graph-tooltip p:first-child { color: var(--gray-500); font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; line-height: 166%; text-transform: uppercase; }
 .bar-graph-tooltip p:last-child { color: #1D2939; font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 14px; font-weight: 400; line-height: 137%; letter-spacing: 0.1px; }
 .legend-wrapper {display: flex; gap: 6px; align-items: center; justify-content: center;}
