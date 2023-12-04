@@ -18,15 +18,15 @@ mahaanaWealthCashFund = CASHFUND
 mahaanaInvitee = INVITE_MAHANIERS
 domainURL = DOMAIN_URL
 
-if (!currentDomain.includes('webflow')) {
-    mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
-    domainURL = 'https://mahaana.com/'
-} else {
-    mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
-    mahaanaInvitee = 'https://dev-mahaana-dfa-invitemahaniers.azurewebsites.net'
-    domainURL = 'https://mahaana.webflow.io/'
-}
+// if (!currentDomain.includes('webflow')) {
+//     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
+//     mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
+//     domainURL = 'https://mahaana.com/'
+// } else {
+//     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
+//     mahaanaInvitee = 'https://dev-mahaana-dfa-invitemahaniers.azurewebsites.net'
+//     domainURL = 'https://mahaana.webflow.io/'
+// }
 // ---------------------------------------------- //
 
 
