@@ -611,28 +611,30 @@ dropdownMenu.forEach((item, index) => {
 
 function handleBody(type) {
     // Create the loader
-    const loader = createLoader();
+    // const loader = createLoader();
 
     // Display the loader
-    loader.style.display = 'flex';
+    // loader.style.display = 'flex';
 
     handleClick(type)
     if (b2bBody || b2cBody) {
         scrollToTop();
         if (type.toLowerCase() == corporate) {
-            b2bBody.style.display = 'flex'; b2cBody.style.display = 'none';
+            b2bBody.style.display = 'flex';
+            b2cBody.style.display = 'none';
             imageResizing(); refreshSlickSliders()
         } else {
-            b2bBody.style.display = 'none'; b2cBody.style.display = 'flex';
+            b2bBody.style.display = 'none';
+            b2cBody.style.display = 'flex';
             imageResizing();
             initializeAccordions(homeAccordions);
             refreshSlickSliders()
         }
 
         // Hide the loader when your code is complete
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 1000);
+        // setTimeout(() => {
+        //     loader.style.display = 'none';
+        // }, 1000);
 
     } else {
         const intervalId = setInterval(function () {
@@ -641,9 +643,9 @@ function handleBody(type) {
                 handleBody(type);
 
                 // Hide the loader when your code is complete
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 1000);
+                // setTimeout(() => {
+                //     loader.style.display = 'none';
+                // }, 1000);
             }
         }, 100);
         window.location.href = domainURL;
