@@ -95,7 +95,7 @@ function scrollHandler() {
 
         function obCallback(payload) {
             const scrollPosition = window.scrollY + window.innerHeight;
-            const bottomOffset = 50; // Adjust this value based on your requirements
+            const bottomOffset = 15; // Adjust this value based on your requirements //finetune bottomoffset value
             const bottomThreshold = tabContent.offsetTop + tabContent.offsetHeight - bottomOffset;
 
             if (scrollPosition > bottomThreshold && window.innerWidth >= 768) {
