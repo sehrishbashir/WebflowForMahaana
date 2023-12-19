@@ -85,7 +85,7 @@ function scrollHandler() {
         function obCallback(payload) {
             if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
                 tabsMenu.classList.add("fixed");
-                tabWrapper.style.paddingTop = '64px';
+                // tabWrapper.style.paddingTop = '64px';
 
             }
             else {
