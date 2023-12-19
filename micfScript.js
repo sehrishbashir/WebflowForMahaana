@@ -42,8 +42,8 @@ function tabHandler() {
 
         function handleTabLinkClick(targetSection) {
             const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
-            // const offset = !isTabBarFixed ? -headerHeight - 170 : -190;
-            const offset = isTabBarFixed ? -headerHeight - 190 : -headerHeight - 170; // Adjusted offset
+            const offset = !isTabBarFixed ? -headerHeight - 170 : -190;
+            // const offset = isTabBarFixed ? -headerHeight - 190 : -headerHeight - 170; // Adjusted offset
             const targetSectionRect = targetSection.getBoundingClientRect();
 
             window.scrollTo({
