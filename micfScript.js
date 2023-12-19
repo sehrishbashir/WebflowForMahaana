@@ -85,20 +85,19 @@ function scrollHandler() {
         function obCallback(payload) {
             if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
                 tabsMenu.classList.add("fixed");
-                // tabWrapper.style.paddingTop = '64px';
+                tabWrapper.style.paddingTop = '64px';
 
             }
             else {
-                if (isTabBarFixed) {
-                    animateFadeOut(tabsMenu);
-                }
+                tabsMenu.classList.remove("fixed");
+                tabWrapper.style.paddingTop = '0';
             }
         }
         
         function animateFadeOut(element) {
-            tabWrapper.style.paddingTop = '0';
             element.style.transition = 'opacity 0.5s'; // Add transition for fading out
             element.style.opacity = '0';
+            tabWrapper.style.paddingTop = '0';
         
             // After the animation duration, remove the fixed class
             setTimeout(() => {
