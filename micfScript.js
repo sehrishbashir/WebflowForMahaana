@@ -82,14 +82,28 @@ function scrollHandler() {
     if (tabsMenu) {
         isTabBarFixed = tabsMenu.classList.contains('fixed');
 
+        // function obCallback(payload) {
+        //     if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
+        //         tabsMenu.classList.add("fixed");
+        //         tabWrapper.style.paddingTop = '64px';
+        //     }
+        //     else {
+        //         tabsMenu.classList.remove("fixed");
+        //         tabWrapper.style.paddingTop = '0';
+        //     }
+        // }
+
         function obCallback(payload) {
-            if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
-                tabsMenu.classList.add("fixed");
-                tabWrapper.style.paddingTop = '64px';
-            }
-            else {
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const bottomOffset = 50; // Adjust this value based on your requirements
+            const bottomThreshold = tabContent.offsetTop + tabContent.offsetHeight - bottomOffset;
+
+            if (scrollPosition > bottomThreshold && window.innerWidth >= 768) {
                 tabsMenu.classList.remove("fixed");
                 tabWrapper.style.paddingTop = '0';
+            } else {
+                tabsMenu.classList.add("fixed");
+                tabWrapper.style.paddingTop = '64px';
             }
         }
 
