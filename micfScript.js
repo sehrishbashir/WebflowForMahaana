@@ -95,13 +95,24 @@ function scrollHandler() {
 
         function obCallback(payload) {
             const scrollPosition = window.scrollY + window.innerHeight;
-            const bottomOffset = 75; // Adjust this value based on your requirements //finetune bottomoffset value
+            const bottomOffset = 50; // Adjust this value based on your requirements //finetune bottomoffset value
             const bottomThreshold = tabContent.offsetTop + tabContent.offsetHeight - bottomOffset;
 
             if (scrollPosition > bottomThreshold && window.innerWidth >= 768) {
-                tabsMenu.classList.remove("fixed");
+                tabsMenu.style.transition = 'opacity 0.5s'; // Add transition for fading out
+                tabsMenu.style.opacity = '0';
                 tabWrapper.style.paddingTop = '0';
-            } else {
+
+                // After the animation duration, remove the fixed class
+                setTimeout(() => {
+                    tabsMenu.classList.remove("fixed");
+                    tabsMenu.style.transition = ''; // Reset transition property
+                    tabsMenu.style.opacity = '1'; // Reset opacity
+                }, 500); // Adjust the duration (in milliseconds) based on your animation duration
+                // tabsMenu.classList.remove("fixed");
+                // tabWrapper.style.paddingTop = '0';
+            }
+            else {
                 tabsMenu.classList.add("fixed");
                 tabWrapper.style.paddingTop = '64px';
             }
