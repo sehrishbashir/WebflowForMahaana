@@ -96,9 +96,9 @@ function scrollHandler() {
         }
         
         function animateFadeOut(element) {
+            tabWrapper.style.paddingTop = '0';
             element.style.transition = 'opacity 0.5s'; // Add transition for fading out
             element.style.opacity = '0';
-            tabWrapper.style.paddingTop = '0';
         
             // After the animation duration, remove the fixed class
             setTimeout(() => {
