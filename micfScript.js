@@ -296,7 +296,7 @@ function renderLoop(data) {
                                 <div class="text-block-38">${data.mtd || '-'}</div>
                             </div>
                             <div class="div-block-100">
-                                <div class="text-block-37">YD</div>
+                                <div class="text-block-37">YTD</div>
                                 <div class="text-block-38">${data.ytd || '-'}</div>
                             </div>
                             <div class="div-block-100">
