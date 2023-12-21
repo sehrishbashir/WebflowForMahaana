@@ -461,7 +461,7 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-        renderCreditChart(transformData(creditRating));
+        // renderCreditChart(transformData(creditRating));
 
         // const data = [
         //     "currentAssetAllocation": {
