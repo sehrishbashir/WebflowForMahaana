@@ -460,9 +460,9 @@ async function fetchData() {
         data.holding = transformData(holding, 'table');
         renderLoop(data);
 
-        // renderHoldingChart(transformData(holding));
-        renderCreditChart(transformData(creditRating));
-        renderAssetChart(transformData(currentAssetAllocation))
+        holding && renderHoldingChart(transformData(holding));
+        creditRating && renderCreditChart(transformData(creditRating));
+        currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
     } catch (error) {
         console.error('>>>>>>Error', error)
