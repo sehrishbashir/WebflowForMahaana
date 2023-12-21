@@ -461,7 +461,8 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-        creditRating && renderCreditChart(transformData(creditRating));
+        // creditRating && renderCreditChart(transformData(creditRating));
+
         currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
     } catch (error) {
