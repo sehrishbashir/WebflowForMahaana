@@ -416,7 +416,10 @@ async function fetchData() {
         }
         const data = await response.json();
 
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, creditRating, holding, distributions } = data;
+        const {
+            offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview,
+            currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions
+        } = data;
 
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => {
@@ -461,24 +464,23 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-        // renderCreditChart(transformData(creditRating));
 
-        // const data = [
-        //     "currentAssetAllocation": {
-        //         "Shariah Compliant Bank Deposits": 39.24,
-        //         "GoP Ijarah Sukuks": 57.83,
-        //         "Short Term Sukuk": 0.00,
-        //         "Certificate of Investments": 0.00,
-        //         "Other assets ": 2.93
-        //     },
-        //     "lastAssetAllocation": {
-        //         "Shariah Compliant Bank Deposits": 44.53,
-        //         "GoP Ijarah Sukuks": 46.71,
-        //         "Short Term Sukuk": 6.80,
-        //         "Certificate of Investments": 0.00,
-        //         "Other assets ": 1.96
-        //     }
-        // ]
+        let mergeCreditRatingData;
+        mergeCreditRatingData.push(currentAssetAllocation)
+        mergeCreditRatingData.push(lastAssetAllocation)
+
+        const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+
+        // Creating the desired array of objects
+        const newCreditRatingData = assetClasses.map(assetClass => ({
+            name: assetClass,
+            current: assetAllocationData.currentAssetAllocation[assetClass],
+            last: assetAllocationData.lastAssetAllocation[assetClass]
+        }));
+
+        console.log(newCreditRatingData);
+
+        // renderCreditChart(transformData(creditRating));
 
         currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
