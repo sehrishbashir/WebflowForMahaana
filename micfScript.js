@@ -532,14 +532,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("scroll", scrollHandler)
 
-tippy('.tippy', {
-    theme: 'dark', animation: 'fade', duration: 100,
-    arrow: true, arrowType: 'sharp', delay: [0, 50],
-    maxWidth: 191, interactive: true, theme: 'light-border',
-    content: '<p style="margin: 0; font-family: poppins; font-size: 12px; font-weight: 500px; line-height: 14px; color: #fff; text-align: left;">NAV and return values include reinvested dividends</p>',
-    allowHTML: true, placement: 'right'
-})
-
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
 
 const reportsBodyContainer = document.querySelector('.reports-body');
