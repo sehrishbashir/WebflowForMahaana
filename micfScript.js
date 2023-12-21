@@ -469,16 +469,18 @@ async function fetchData() {
         assetAllocationData.push(currentAssetAllocation)
         assetAllocationData.push(lastAssetAllocation)
 
-        const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+        console.log('assetAllocationData',assetAllocationData)
 
-        // Creating the desired array of objects
-        const newCreditRatingData = assetClasses.map(assetClass => ({
-            name: assetClass,
-            current: assetAllocationData.currentAssetAllocation[assetClass],
-            last: assetAllocationData.lastAssetAllocation[assetClass]
-        }));
+        // const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
 
-        console.log(newCreditRatingData);
+        // // Creating the desired array of objects
+        // const newCreditRatingData = assetClasses.map(assetClass => ({
+        //     name: assetClass,
+        //     current: assetAllocationData.currentAssetAllocation[assetClass],
+        //     last: assetAllocationData.lastAssetAllocation[assetClass]
+        // }));
+
+        // console.log(newCreditRatingData);
 
         // renderCreditChart(transformData(creditRating));
 
