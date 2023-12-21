@@ -444,7 +444,10 @@ async function fetchData() {
             'benchmark': fundInfo.benchmark,
             'managementFee': fundInfo.managementFee,
             'fundAuditors': fundInfo.fundAuditors,
-            'fundStabilityRating': fundInfo.fundStabilityRating
+            'fundStabilityRating': fundInfo.fundStabilityRating,
+            'shahr-e-advisor': fundInfo.shariahAdvisors,
+            'custodian': fundInfo.custodian,
+            'weightAverageTime': fundInfo.weightAverageTime,
         };
 
         if (offeringDocumentList.length > 0) {
