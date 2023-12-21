@@ -559,7 +559,7 @@ function displayReports(reportsData) {
             row.classList.add('reports-body-row');
             const html = `
                 <div class="reports-body-cell flex-1 text-right">
-                    <span class="rep-body-title">${data.key}</span>
+                    <span class="rep-body-title">${data.name || data.key}</span>
                 </div>
                 <a href="${url}" target="_blank" class="reports-body-cell download-doc">
                     <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
