@@ -93,12 +93,12 @@ function scrollHandler() {
                 tabWrapper.style.paddingTop = '0';
             }
         }
-        
+
         function animateFadeOut(element) {
             element.style.transition = 'opacity 0.5s'; // Add transition for fading out
             element.style.opacity = '0';
             tabWrapper.style.paddingTop = '0';
-        
+
             // After the animation duration, remove the fixed class
             setTimeout(() => {
                 element.classList.remove("fixed");
@@ -106,7 +106,7 @@ function scrollHandler() {
                 element.style.opacity = '1'; // Reset opacity
             }, 500); // Adjust the duration (in milliseconds) based on your animation duration
         }
-        
+
         // function obCallback(payload) {
         //     const scrollPosition = window.scrollY + window.innerHeight;
         //     const bottomOffset = 50; // Adjust this value based on your requirements //finetune bottomoffset value
@@ -461,7 +461,33 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-        // creditRating && renderCreditChart(transformData(creditRating));
+
+        const creditData = {
+            "Shariah Compliant Bank Deposits": 39.24,
+            "GoP Ijarah Sukuks": 57.83,
+            "Short Term Sukuk": 0.00,
+            "Certificate of Investments": 0.00,
+            "Other assets": 2.93
+        }
+
+        renderCreditChart(transformData(creditData));
+
+        // const data = [
+        //     "currentAssetAllocation": {
+        //         "Shariah Compliant Bank Deposits": 39.24,
+        //         "GoP Ijarah Sukuks": 57.83,
+        //         "Short Term Sukuk": 0.00,
+        //         "Certificate of Investments": 0.00,
+        //         "Other assets ": 2.93
+        //     },
+        //     "lastAssetAllocation": {
+        //         "Shariah Compliant Bank Deposits": 44.53,
+        //         "GoP Ijarah Sukuks": 46.71,
+        //         "Short Term Sukuk": 6.80,
+        //         "Certificate of Investments": 0.00,
+        //         "Other assets ": 1.96
+        //     }
+        // ]
 
         currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
