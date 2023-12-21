@@ -447,7 +447,7 @@ async function fetchData() {
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'shahr-e-advisor': fundInfo.shariahAdvisors,
             'custodian': fundInfo.custodian,
-            'weightAverageTime': fundInfo.weightAverageTime,
+            'weightAverageTime': fundInfo.weightedAverageTime,
         };
 
         if (offeringDocumentList.length > 0) {
@@ -491,7 +491,7 @@ async function fetchData() {
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
 
 
-        // renderCreditChart(transformData(creditRating));
+        renderCreditChart(transformData(creditRating));
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
         renderAssetChart(newCreditRatingData)
