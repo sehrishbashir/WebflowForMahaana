@@ -484,8 +484,6 @@ async function fetchData() {
 
         data.overAllCreditRating = newCreditRatingData;
 
-        console.log('assetAllocationData',data)
-
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
