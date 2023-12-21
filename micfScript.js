@@ -461,16 +461,7 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-
-        const creditData = {
-            "Shariah Compliant Bank Deposits": 39.24,
-            "GoP Ijarah Sukuks": 57.83,
-            "Short Term Sukuk": 0.00,
-            "Certificate of Investments": 0.00,
-            "Other assets": 2.93
-        }
-
-        renderCreditChart(transformData(creditData));
+        renderCreditChart(transformData(creditRating));
 
         // const data = [
         //     "currentAssetAllocation": {
