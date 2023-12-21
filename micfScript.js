@@ -543,7 +543,7 @@ tippy('.tippy', {
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
 
 const reportsBodyContainer = document.querySelector('.reports-body');
-const itemsPerPage = 5;
+itemsPerPage = 5;
 currentPage = 1;
 
 function displayReports(reportsData) {
