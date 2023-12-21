@@ -175,7 +175,7 @@ const setTextContent = (elementId, content) => {
 };
 
 function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributionsm, overAllCreditRating } = data;
+    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
 
     const dataMappings = [
         { elementClass: '.asset-allocation', data: currentAssetAllocation },
