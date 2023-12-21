@@ -466,7 +466,7 @@ async function fetchData() {
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
 
         const assetAllocationData = [];
-        assetAllocationData.push(currentAssetAllocation)
+        assetAllocationData.push({"currentAssetAllocation": currentAssetAllocation})
         assetAllocationData.push(lastAssetAllocation)
 
         console.log('assetAllocationData',assetAllocationData)
