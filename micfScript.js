@@ -471,20 +471,21 @@ async function fetchData() {
         };
 
         const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-        const newCreditRatingData = assetClasses.map(assetClass => ({
-            name: assetClass,
-            current: assetAllocationData.currentAssetAllocation[assetClass],
-            last: assetAllocationData.lastAssetAllocation[assetClass]
-        }));
+
+        const newCreditRatingData = assetClasses
+            .map(assetClass => ({
+                name: assetClass,
+                current: assetAllocationData.currentAssetAllocation[assetClass],
+                last: assetAllocationData.lastAssetAllocation[assetClass]
+            }))
+            .filter(data => data.current > 0 || data.last > 0);
 
         console.log('assetAllocationData',assetAllocationData, newCreditRatingData)
 
-
-        // console.log(newCreditRatingData);
-
         // renderCreditChart(transformData(creditRating));
+        // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
-        currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
+        currentAssetAllocation && renderAssetChart(newCreditRatingData)
 
     } catch (error) {
         console.error('>>>>>>Error', error)
