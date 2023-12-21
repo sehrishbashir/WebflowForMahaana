@@ -461,9 +461,7 @@ async function fetchData() {
         data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
-        renderLoop(data);
 
-        Object.keys(holding).length && renderHoldingChart(transformData(holding));
 
         const assetAllocationData = {
             "currentAssetAllocation": currentAssetAllocation,
@@ -480,7 +478,14 @@ async function fetchData() {
             }))
             .filter(data => data.current > 0 || data.last > 0);
 
-        console.log('assetAllocationData',assetAllocationData, newCreditRatingData)
+        data.overAllCreditRating = newCreditRatingData;
+
+        console.log('assetAllocationData',data)
+
+        renderLoop(data);
+
+        Object.keys(holding).length && renderHoldingChart(transformData(holding));
+
 
         // renderCreditChart(transformData(creditRating));
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
