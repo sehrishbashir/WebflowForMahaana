@@ -410,8 +410,8 @@ async function fetchData() {
     loader.style.display = 'flex';
 
     try {
-        // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); 
-        const response = await fetch(`https://7562-110-93-236-185.ngrok-free.app/api/CashFund/micf`);
+        // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
+        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
         if (!response.ok) {
             throw new Error('Network response was not ok')
         }
