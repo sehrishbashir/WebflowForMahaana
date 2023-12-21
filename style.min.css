@@ -117,7 +117,7 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .slick-arrow.disabled path, .slick-arrow.disabled:hover path { stroke: #c0c0c0 !important; }
 .text-navlink:hover { color: var(--primary-700) }
 #performance-area-chart .recharts-cartesian-axis-line { stroke: #F2F4F7; }
-.table-item:nth-child(2) { background-color: #F9FAFB; }
+.table-item:nth-child(2n) { background-color: #F9FAFB; }
 #performance .recharts-tooltip-label, #performance .recharts-tooltip-item, #performance .recharts-tooltip-item ~ p { font-feature-settings: 'clig' off, 'liga' off; font-family: 'Poppins'; font-size: 12px; font-weight: 400; }
 #performance .recharts-tooltip-label { color: var(--gray-700); line-height: 130%; letter-spacing: 0.17px;}
 #performance .recharts-tooltip-item { color: var(--gray-500); line-height: 166%; text-transform: uppercase; }
