@@ -175,7 +175,7 @@ const setTextContent = (elementId, content) => {
 };
 
 function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributions } = data;
+    const { performances, currentAssetAllocation, holding, creditRating, distributionsm, overAllCreditRating } = data;
 
     const dataMappings = [
         { elementClass: '.asset-allocation', data: currentAssetAllocation },
@@ -318,7 +318,7 @@ function renderLoop(data) {
     }
 
     // NEW ASSET ALLOCATION LIST
-    if (currentAssetAllocation) {
+    if (overAllCreditRating) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
 
         if (portfolioDataContainer) {
@@ -327,13 +327,13 @@ function renderLoop(data) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild);
             }
 
-            currentAssetAllocation.forEach(data => {
+            overAllCreditRating.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
                 const html = `
                     <div class="table-content-area">
-                        <h3 class="table-title">${data.key}</h3>
+                        <h3 class="table-title">${data.name}</h3>
                         <div style="display: flex; gap: 14px">
                             <div class="div-block-101" style="display: flex;">
                                 <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
@@ -341,7 +341,7 @@ function renderLoop(data) {
                                 </svg>
                                 <div>
                                     <div class="text-block-37">THIS MONTH</div>
-                                    <div class="text-block-38">${data.value}%</div>
+                                    <div class="text-block-38">${data.current}%</div>
                                 </div>
                             </div>
                             <div class="div-block-101" style="display: flex;">
@@ -350,7 +350,7 @@ function renderLoop(data) {
                                 </svg>
                                 <div>
                                     <div class="text-block-37">LAST MONTH</div>
-                                    <div class="text-block-38">${data.value}%</div>
+                                    <div class="text-block-38">${data.last}%</div>
                                 </div>
                             </div>
                         </div>
