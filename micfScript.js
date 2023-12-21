@@ -460,7 +460,7 @@ async function fetchData() {
         data.holding = transformData(holding, 'table');
         renderLoop(data);
 
-        holding && renderHoldingChart(transformData(holding));
+        Object.keys(holding).length && renderHoldingChart(transformData(holding));
         creditRating && renderCreditChart(transformData(creditRating));
         currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
