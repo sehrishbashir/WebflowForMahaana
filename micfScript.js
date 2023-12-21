@@ -465,7 +465,7 @@ async function fetchData() {
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
 
-        let mergeCreditRatingData;
+        const mergeCreditRatingData = [];
         mergeCreditRatingData.push(currentAssetAllocation)
         mergeCreditRatingData.push(lastAssetAllocation)
 
