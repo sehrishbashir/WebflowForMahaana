@@ -485,7 +485,7 @@ async function fetchData() {
         // renderCreditChart(transformData(creditRating));
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
-        currentAssetAllocation && renderAssetChart(newCreditRatingData)
+        renderAssetChart(newCreditRatingData)
 
     } catch (error) {
         console.error('>>>>>>Error', error)
