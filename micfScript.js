@@ -469,18 +469,16 @@ async function fetchData() {
             "currentAssetAllocation": currentAssetAllocation,
             "lastAssetAllocation": lastAssetAllocation
         };
-        
-
-        console.log('assetAllocationData',assetAllocationData)
 
         const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-
-        // Creating the desired array of objects
         const newCreditRatingData = assetClasses.map(assetClass => ({
             name: assetClass,
             current: assetAllocationData.currentAssetAllocation[assetClass],
             last: assetAllocationData.lastAssetAllocation[assetClass]
         }));
+
+        console.log('assetAllocationData',assetAllocationData, newCreditRatingData)
+
 
         // console.log(newCreditRatingData);
 
