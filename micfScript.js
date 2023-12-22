@@ -488,8 +488,8 @@ async function fetchData() {
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
 
-
-        renderCreditChart(transformData(creditRating));
+        console.log('transformData(creditRating)', transformData(creditRating))
+        // renderCreditChart(transformData(creditRating));
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
         renderAssetChart(newCreditRatingData)
