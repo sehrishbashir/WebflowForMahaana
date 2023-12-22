@@ -511,6 +511,8 @@ async function fetchData() {
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
         Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChart.style.display = "flex";
 
+        assetChart.style.display = "flex";
+
     } catch (error) {
         console.error('>>>>>>Error', error)
     }
