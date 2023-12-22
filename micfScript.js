@@ -233,11 +233,13 @@ function renderLoop(data) {
 
     }
 
+    const distributionBodyRow = document.querySelector('.distribution-body');
     if (distributions) {
-        const distributionBodyRow = document.querySelector('.distribution-body');
         if (distributionBodyRow) {
             distributions.forEach((data) => {
-                const row = document.createElement('div'); row.classList.add('distribution-body-row');
+                const row = document.createElement('div'); 
+                row.classList.add('distribution-body-row');
+                
                 const html = `
             <div class="distribution-body-cell flex-1 right-align">
                 <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
@@ -255,6 +257,10 @@ function renderLoop(data) {
                 distributionBodyRow.appendChild(row)
             })
         }
+    } else {
+        const emptyView = document.querySelector('.distribution-body .flex-block-23');
+        emptyView.style.display = "flex";
+        
     }
 
     function populateTableData(data, container) {
@@ -382,13 +388,16 @@ function renderLoop(data) {
 
             const maxItemValue = Math.max(...data.map(item => item.value));
 
-            data.forEach((item) => {
+            data.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
 
                 const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-                const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
+                // const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
+
+                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+                const selectedColor = PIE_COLORS[index]
 
                 const html = `
                     <div class="div-block-98" style="background-color: ${selectedColor}"></div>
