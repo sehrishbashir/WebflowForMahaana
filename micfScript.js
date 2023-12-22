@@ -500,15 +500,16 @@ async function fetchData() {
 
         const sendingPieData = transformData(creditRating)
 
-        const creditChart = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
-        const holdingChart = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
-        const assetChart = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+        const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+        const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+        const holdingChart = document.querySelector('#top-holdings-chart');
+        const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 
-        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : holdingChart.style.display = "flex";
-        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChart.style.display = "flex";
+        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingChart.style.display = "none");
+        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChartWrap.style.display = "flex";
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
-        Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChart.style.display = "flex";
+        Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
         console.error('>>>>>>Error', error)
