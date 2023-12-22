@@ -487,9 +487,9 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-        const ABC = transformData(creditRating)
-        console.log('ABC', ABC)
-        renderCreditChart(ABC);
+        
+        const sendingPieData = transformData(creditRating)
+        renderCreditChart(sendingPieData);
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
         renderAssetChart(newCreditRatingData)
