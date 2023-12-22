@@ -503,12 +503,13 @@ async function fetchData() {
 
         const creditChart = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
         const holdingChart = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+        const assetChart = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 
         Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : holdingChart.style.display = "flex";
         Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChart.style.display = "flex";
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
-        renderAssetChart(newCreditRatingData)
+        Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChart.style.display = "flex";
 
     } catch (error) {
         console.error('>>>>>>Error', error)
