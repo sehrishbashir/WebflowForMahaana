@@ -487,11 +487,7 @@ async function fetchData() {
         renderLoop(data);
 
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
-
-        console.log('transformData(creditRating)', transformData(creditRating))
-        PieCustomChart("ABC")
-        
-        // renderCreditChart(transformData(creditRating));
+        renderCreditChart(transformData(creditRating));
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
 
         renderAssetChart(newCreditRatingData)
