@@ -489,9 +489,9 @@ async function fetchData() {
         Object.keys(holding).length && renderHoldingChart(transformData(holding));
         const ABC = transformData(creditRating)
         console.log('ABC', ABC)
-        renderCreditChart('ABC');
-        // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
+        renderCreditChart(ABC);
 
+        // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
         renderAssetChart(newCreditRatingData)
 
     } catch (error) {
