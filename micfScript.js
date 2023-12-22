@@ -491,9 +491,8 @@ async function fetchData() {
         const creditChart = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
         const holdingChart = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
 
-console.log(Object.keys(creditRating).length, creditRating)
-        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : creditChart.style.display = "flex";
-        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : holdingChart.style.display = "flex";
+        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : holdingChart.style.display = "flex";
+        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChart.style.display = "flex";
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
         renderAssetChart(newCreditRatingData)
