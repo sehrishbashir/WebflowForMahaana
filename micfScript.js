@@ -234,36 +234,34 @@ function renderLoop(data) {
     }
 
     const distributionBodyRow = document.querySelector('.distribution-body');
-    const emptyView = document.querySelector('.distribution-body .flex-block-23');
-    emptyView.style.display = "flex";
-    // if (distributions) {
-    //     if (distributionBodyRow) {
-    //         distributions.forEach((data) => {
-    //             const row = document.createElement('div'); 
-    //             row.classList.add('distribution-body-row');
+    if (distributions) {
+        if (distributionBodyRow) {
+            distributions.forEach((data) => {
+                const row = document.createElement('div'); 
+                row.classList.add('distribution-body-row');
                 
-    //             const html = `
-    //         <div class="distribution-body-cell flex-1 right-align">
-    //             <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
-    //         </div>
-    //         <div class="distribution-body-cell">
-    //             <span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span>
-    //         </div>
-    //         <div class="distribution-body-cell">
-    //             <span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span>
-    //         </div>
-    //         <div class="distribution-body-cell">
-    //             <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
-    //         </div>`;
-    //             row.innerHTML = html;
-    //             distributionBodyRow.appendChild(row)
-    //         })
-    //     }
-    // } else {
-    //     const emptyView = document.querySelector('.distribution-body .flex-block-23');
-    //     emptyView.style.display = "flex";
+                const html = `
+            <div class="distribution-body-cell flex-1 right-align">
+                <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span>
+            </div>
+            <div class="distribution-body-cell">
+                <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
+            </div>`;
+                row.innerHTML = html;
+                distributionBodyRow.appendChild(row)
+            })
+        }
+    } else {
+        const emptyView = document.querySelector('.distribution-body .flex-block-23');
+        emptyView.style.display = "flex";
         
-    // }
+    }
 
     function populateTableData(data, container) {
         data.forEach((item) => {
