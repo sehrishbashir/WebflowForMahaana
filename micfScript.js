@@ -503,20 +503,6 @@ async function fetchData() {
     }, 1000);
 }
 
-const renderHorizontalCusomizedLegend = (props) => {
-    const { payload } = props
-    return (<ul class='legends-list'>{payload.map((entry, index) => {return (<li key={`item-${index}`}><div style={{backgroundColor: entry.color, height: '8px', width: '8px' }}/><span class='pie-legend'>{entry.payload.key}</span></li>)})}</ul>)}
-    return (
-    <div style={{ width:"100%", height:"100%", position: 'relative', top: '-12px', margin: '0 auto' }}>
-    <ResponsiveContainer className={'creditQualityPie'} width="100%" height={400}>
-    <PieChart>
-    <Legend content={renderHorizontalCusomizedLegend} layout='horizontal'/>
-    <Pie data={data} cx="50%" cy="50%" labelLine={false} outerRadius={"75%"} innerRadius={"47%"} startAngle={90} endAngle={-360} paddingAngle={1} fill="#8884d8" dataKey="value" stroke={'26.5667px solid #3D2B7D'}>
-    {data.map((entry, index) => (<Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />))}
-    </Pie></PieChart>
-    </ResponsiveContainer></div>)
-
-
 
 function getFundData(duration) {
 
