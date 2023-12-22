@@ -195,7 +195,12 @@ function renderLoop(data) {
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        compositionList(data, bodyRow)
+        if (Object.keys(data).length > 0) {
+            compositionList(data, bodyRow)
+        } else {
+            bodyRow.style.display = "none"
+        }
+
     });
 
     if (performances) {
@@ -376,7 +381,6 @@ function renderLoop(data) {
             }
 
             const maxItemValue = Math.max(...data.map(item => item.value));
-            console.log('maxItemValue', maxItemValue);
 
             data.forEach((item) => {
                 const row = document.createElement('div');
