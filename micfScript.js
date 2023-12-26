@@ -414,12 +414,18 @@ function renderLoop(data) {
 }
 
 let reportsData;
+const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+const holdingChart = document.querySelector('#top-holdings-chart');
+const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+
 async function fetchData() {
     // Create the loader
     const loader = createLoader();
 
     // Display the loader
     loader.style.display = 'flex';
+    
 
     try {
         // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
@@ -500,10 +506,7 @@ async function fetchData() {
 
         const sendingPieData = transformData(creditRating)
 
-        const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
-        const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
-        const holdingChart = document.querySelector('#top-holdings-chart');
-        const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+      
 
         Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingChart.style.display = "none");
         Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChartWrap.style.display = "flex";
@@ -512,6 +515,9 @@ async function fetchData() {
         Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
+        holdingChartWrap.style.display = "flex";
+        creditChartWrap.style.display = "flex";
+        assetChartWrap.style.display = "flex";
         console.error('>>>>>>Error', error)
     }
     // To hide the loader:
