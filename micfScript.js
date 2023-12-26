@@ -22,6 +22,8 @@ const distributionWrap = document.querySelector('.distribution-body .flex-block-
 const reportsBodyContainer = document.querySelector('.reports-body');
 const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
+const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23')
+
 // ---------------- LOADER ---------------- //
 function createLoader() {
     // Create the loader wrapper div
@@ -433,8 +435,6 @@ function renderLoop(data) {
     }
 }
 
-
-
 async function fetchData() {
     // Create the loader
     const loader = createLoader();
@@ -555,7 +555,6 @@ async function fetchData() {
     }, 1000);
 }
 
-
 function getFundData(duration) {
 
     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
@@ -572,7 +571,9 @@ function getFundData(duration) {
                 });
             }
             return response.json();
+
         }).then((data) => {
+            poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
 
             renderFundChart(data);
