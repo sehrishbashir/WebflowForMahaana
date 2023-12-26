@@ -522,6 +522,7 @@ async function fetchData() {
 
         if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
+            holdingList.style.display = "flex";
             renderHoldingChart(transformData(holding))
         } else {
             holdingChart.style.border = 0
@@ -529,9 +530,10 @@ async function fetchData() {
 
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
+            creditList.style.display = "flex";
             renderCreditChart(sendingPieData);
         } else {
-            creditChart.style.border = 0
+            creditChart.style.border = 0;
         }
 
         if (Object.keys(overallAssetAllocationData).length > 0) {
