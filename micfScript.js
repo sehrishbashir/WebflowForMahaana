@@ -1,4 +1,29 @@
 // ---------------- MICF PAGE ---------------- //
+
+
+
+let reportsData;
+itemsPerPage = 5;
+currentPage = 1;
+
+const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
+const creditChart = document.querySelector('#credit-quality-chart');
+
+const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
+const holdingChart = document.querySelector('#top-holdings-chart');
+
+const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+
+const distributionBodyRow = document.querySelector('.distribution-body');
+const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
+
+const reportsBodyContainer = document.querySelector('.reports-body');
+const reportWrap = document.querySelector('.reports-body .flex-block-23');
+
+const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23')
+
 // ---------------- LOADER ---------------- //
 function createLoader() {
     // Create the loader wrapper div
@@ -175,7 +200,7 @@ const setTextContent = (elementId, content) => {
 };
 
 function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributions } = data;
+    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
 
     const dataMappings = [
         { elementClass: '.asset-allocation', data: currentAssetAllocation },
@@ -195,7 +220,12 @@ function renderLoop(data) {
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        compositionList(data, bodyRow)
+        if (Object.keys(data).length > 0) {
+            compositionList(data, bodyRow)
+        } else {
+            bodyRow.style.display = "none"
+        }
+
     });
 
     if (performances) {
@@ -228,11 +258,14 @@ function renderLoop(data) {
 
     }
 
+
     if (distributions) {
-        const distributionBodyRow = document.querySelector('.distribution-body');
+        distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
-                const row = document.createElement('div'); row.classList.add('distribution-body-row');
+                const row = document.createElement('div');
+                row.classList.add('distribution-body-row');
+
                 const html = `
             <div class="distribution-body-cell flex-1 right-align">
                 <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
@@ -310,7 +343,6 @@ function renderLoop(data) {
                         </div>
                     </div>
                 `
-
                 row.innerHTML = html;
                 performanceContentArea.appendChild(row)
             })
@@ -318,7 +350,7 @@ function renderLoop(data) {
     }
 
     // NEW ASSET ALLOCATION LIST
-    if (currentAssetAllocation) {
+    if (overAllCreditRating) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
 
 
@@ -341,13 +373,13 @@ function renderLoop(data) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild);
             }
 
-            currentAssetAllocation.forEach(data => {
+            overAllCreditRating.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
 
                 const html = `
                     <div class="table-content-area">
-                        <h3 class="table-title">${data.key}</h3>
+                        <h3 class="table-title">${data.name}</h3>
                         <div style="display: flex; gap: 14px">
                             <div class="div-block-101" style="display: flex;">
                                 <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
@@ -355,7 +387,7 @@ function renderLoop(data) {
                                 </svg>
                                 <div>
                                     <div class="text-block-37">THIS MONTH</div>
-                                    <div class="text-block-38">${data.value}%</div>
+                                    <div class="text-block-38">${data.current}%</div>
                                 </div>
                             </div>
                             <div class="div-block-101" style="display: flex;">
@@ -364,7 +396,7 @@ function renderLoop(data) {
                                 </svg>
                                 <div>
                                     <div class="text-block-37">LAST MONTH</div>
-                                    <div class="text-block-38">${data.value}%</div>
+                                    <div class="text-block-38">${data.last}%</div>
                                 </div>
                             </div>
                         </div>
@@ -390,15 +422,17 @@ function renderLoop(data) {
             }
 
             const maxItemValue = Math.max(...data.map(item => item.value));
-            console.log('maxItemValue', maxItemValue);
 
-            data.forEach((item) => {
+            data.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
 
                 const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-                const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
+                // const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
+
+                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+                const selectedColor = PIE_COLORS[index]
 
                 const html = `
                     <div class="div-block-98" style="background-color: ${selectedColor}"></div>
@@ -415,7 +449,6 @@ function renderLoop(data) {
     }
 }
 
-let reportsData;
 async function fetchData() {
     // Create the loader
     const loader = createLoader();
@@ -430,7 +463,10 @@ async function fetchData() {
         }
         const data = await response.json();
 
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, creditRating, holding, distributions } = data;
+        const {
+            offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview,
+            currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions
+        } = data;
 
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => {
@@ -454,11 +490,15 @@ async function fetchData() {
             'benchmark': fundInfo.benchmark,
             'managementFee': fundInfo.managementFee,
             'fundAuditors': fundInfo.fundAuditors,
-            'fundStabilityRating': fundInfo.fundStabilityRating
+            'fundStabilityRating': fundInfo.fundStabilityRating,
+            'shahr-e-advisor': fundInfo.shariahAdvisors,
+            'custodian': fundInfo.custodian,
+            'weightAverageTime': fundInfo.weightedAverageTime,
         };
 
         if (offeringDocumentList.length > 0) {
-            offeringDocumentList.pop()
+            offeringDocumentList.pop();
+            reportWrap.style.display = "none";
         }
         reportsData = offeringDocumentList;
 
@@ -472,16 +512,60 @@ async function fetchData() {
         data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
+
+
+        const assetAllocationData = {
+            "currentAssetAllocation": currentAssetAllocation,
+            "lastAssetAllocation": lastAssetAllocation
+        };
+
+        const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+        const overallAssetAllocationData = assetClasses
+            .map(assetClass => ({
+                name: assetClass,
+                current: assetAllocationData.currentAssetAllocation[assetClass],
+                last: assetAllocationData.lastAssetAllocation[assetClass]
+            }))
+            .filter(data => data.current > 0 || data.last > 0);
+
+        data.overAllCreditRating = overallAssetAllocationData;
+
         renderLoop(data);
 
-        // renderHoldingChart(transformData(holding));
-        renderCreditChart(transformData(creditRating));
-        renderAssetChart(transformData(currentAssetAllocation))
+        const sendingPieData = transformData(creditRating)
+
+        if (Object.keys(holding).length > 0) {
+            holdingChartWrap.style.display = "none";
+            holdingList.style.display = "flex";
+            renderHoldingChart(transformData(holding))
+        } else {
+            holdingChart.style.border = 0
+        }
+
+        if (Object.keys(creditRating).length > 0) {
+            creditChartWrap.style.display = "none";
+            creditList.style.display = "flex";
+            renderCreditChart(sendingPieData);
+        } else {
+            creditChart.style.border = 0;
+        }
+
+        if (Object.keys(overallAssetAllocationData).length > 0) {
+            assetChartWrap.style.display = "none";
+            renderAssetChart(overallAssetAllocationData);
+        }
+
+        // Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
+        // Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
+
+        // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
+        // Object.keys(overallAssetAllocationData).length > 0 ? renderAssetChart(overallAssetAllocationData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
-        console.error('>>>>>>Error', error)
+        console.error('>>>>>>Error', error);
+        creditChart.style.border = 0;
+        holdingChart.style.border = 0;
     }
-    // To hide the loader:
     setTimeout(() => {
         loader.style.display = 'none';
     }, 1000);
@@ -503,7 +587,9 @@ function getFundData(duration) {
                 });
             }
             return response.json();
+
         }).then((data) => {
+            poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
 
             renderFundChart(data);
@@ -548,9 +634,7 @@ document.addEventListener("scroll", scrollHandler)
 
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
 
-const reportsBodyContainer = document.querySelector('.reports-body');
-itemsPerPage = 5;
-currentPage = 1;
+
 
 function displayReports(reportsData) {
     const startIndex = (currentPage - 1) * itemsPerPage;
