@@ -8,6 +8,7 @@ currentPage = 1;
 
 const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
+const creditChart = document.querySelector('#credit-quality-chart');
 
 const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
 const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
@@ -255,14 +256,14 @@ function renderLoop(data) {
 
     }
 
-   
+
     if (distributions) {
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
-                const row = document.createElement('div'); 
+                const row = document.createElement('div');
                 row.classList.add('distribution-body-row');
-                
+
                 const html = `
             <div class="distribution-body-cell flex-1 right-align">
                 <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
@@ -519,17 +520,21 @@ async function fetchData() {
 
         const sendingPieData = transformData(creditRating)
 
-        if(Object.keys(holding).length > 0) {
+        if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
-            renderHoldingChart(transformData(holding)) 
+            renderHoldingChart(transformData(holding))
+        } else {
+            holdingChart.style.borderWidth = 0
         }
 
-        if(Object.keys(creditRating).length > 0) {
+        if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             renderCreditChart(sendingPieData);
+        } else {
+            creditChart.style.borderWidth = 0
         }
 
-        if(Object.keys(overallAssetAllocationData).length > 0) {
+        if (Object.keys(overallAssetAllocationData).length > 0) {
             assetChartWrap.style.display = "none";
             renderAssetChart(overallAssetAllocationData);
         }
