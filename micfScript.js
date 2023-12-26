@@ -432,7 +432,6 @@ async function fetchData() {
     
 
     try {
-        // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
         if (!response.ok) {
             throw new Error('Network response was not ok')
@@ -510,10 +509,8 @@ async function fetchData() {
 
         const sendingPieData = transformData(creditRating)
 
-      
-
-        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingChart.style.display = "none");
-        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : creditChartWrap.style.display = "flex";
+        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
+        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
         Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
@@ -522,7 +519,7 @@ async function fetchData() {
         holdingChartWrap.style.display = "flex";
         creditChartWrap.style.display = "flex";
         assetChartWrap.style.display = "flex";
-        
+
         holdingList.style.display = "none";
         creditList.style.display = "none";
 
