@@ -1,4 +1,21 @@
 // ---------------- MICF PAGE ---------------- //
+
+
+
+let reportsData;
+const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
+
+const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
+const holdingChart = document.querySelector('#top-holdings-chart');
+
+const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+
+const distributionBodyRow = document.querySelector('.distribution-body');
+const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
+
+
 // ---------------- LOADER ---------------- //
 function createLoader() {
     // Create the loader wrapper div
@@ -233,8 +250,9 @@ function renderLoop(data) {
 
     }
 
-    const distributionBodyRow = document.querySelector('.distribution-body');
+   
     if (distributions) {
+        distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
                 const row = document.createElement('div'); 
@@ -257,10 +275,6 @@ function renderLoop(data) {
                 distributionBodyRow.appendChild(row)
             })
         }
-    } else {
-        const emptyView = document.querySelector('.distribution-body .flex-block-23');
-        emptyView.style.display = "flex";
-        
     }
 
     function populateTableData(data, container) {
@@ -413,15 +427,7 @@ function renderLoop(data) {
     }
 }
 
-let reportsData;
-const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
-const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
 
-const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
-const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
-const holdingChart = document.querySelector('#top-holdings-chart');
-
-const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 
 async function fetchData() {
     // Create the loader
@@ -429,7 +435,6 @@ async function fetchData() {
 
     // Display the loader
     loader.style.display = 'flex';
-    
 
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
@@ -494,8 +499,7 @@ async function fetchData() {
         };
 
         const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-
-        const newCreditRatingData = assetClasses
+        const overallAssetAllocationData = assetClasses
             .map(assetClass => ({
                 name: assetClass,
                 current: assetAllocationData.currentAssetAllocation[assetClass],
@@ -503,7 +507,7 @@ async function fetchData() {
             }))
             .filter(data => data.current > 0 || data.last > 0);
 
-        data.overAllCreditRating = newCreditRatingData;
+        data.overAllCreditRating = overallAssetAllocationData;
 
         renderLoop(data);
 
@@ -519,28 +523,20 @@ async function fetchData() {
             renderCreditChart(sendingPieData);
         }
 
-        if(Object.keys(newCreditRatingData).length > 0) {
+        if(Object.keys(overallAssetAllocationData).length > 0) {
             assetChartWrap.style.display = "none";
-            renderAssetChart(newCreditRatingData);
+            renderAssetChart(overallAssetAllocationData);
         }
 
         // Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
         // Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
-        // Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
+        // Object.keys(overallAssetAllocationData).length > 0 ? renderAssetChart(overallAssetAllocationData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
-        holdingChartWrap.style.display = "flex";
-        creditChartWrap.style.display = "flex";
-        assetChartWrap.style.display = "flex";
-
-        holdingList.style.display = "none";
-        creditList.style.display = "none";
-
         console.error('>>>>>>Error', error)
     }
-    // To hide the loader:
     setTimeout(() => {
         loader.style.display = 'none';
     }, 1000);
