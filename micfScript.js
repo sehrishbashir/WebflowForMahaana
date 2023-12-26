@@ -546,7 +546,9 @@ async function fetchData() {
         // Object.keys(overallAssetAllocationData).length > 0 ? renderAssetChart(overallAssetAllocationData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
-        console.error('>>>>>>Error', error)
+        console.error('>>>>>>Error', error);
+        creditChart.style.border = 0;
+        holdingChart.style.border = 0;
     }
     setTimeout(() => {
         loader.style.display = 'none';
