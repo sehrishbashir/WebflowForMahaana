@@ -415,8 +415,12 @@ function renderLoop(data) {
 
 let reportsData;
 const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
+
 const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
 const holdingChart = document.querySelector('#top-holdings-chart');
+
 const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 
 async function fetchData() {
@@ -518,6 +522,10 @@ async function fetchData() {
         holdingChartWrap.style.display = "flex";
         creditChartWrap.style.display = "flex";
         assetChartWrap.style.display = "flex";
+        
+        holdingList.style.display = "none";
+        creditList.style.display = "none";
+
         console.error('>>>>>>Error', error)
     }
     // To hide the loader:
