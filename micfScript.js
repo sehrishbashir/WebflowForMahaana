@@ -3,6 +3,9 @@
 
 
 let reportsData;
+itemsPerPage = 5;
+currentPage = 1;
+
 const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
 
@@ -15,6 +18,8 @@ const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .
 const distributionBodyRow = document.querySelector('.distribution-body');
 const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
 
+const reportsBodyContainer = document.querySelector('.reports-body');
+const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
 // ---------------- LOADER ---------------- //
 function createLoader() {
@@ -477,7 +482,8 @@ async function fetchData() {
         };
 
         if (offeringDocumentList.length > 0) {
-            offeringDocumentList.pop()
+            offeringDocumentList.pop();
+            reportWrap.style.display = "none";
         }
         reportsData = offeringDocumentList;
 
@@ -604,9 +610,7 @@ document.addEventListener("scroll", scrollHandler)
 
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
 
-const reportsBodyContainer = document.querySelector('.reports-body');
-itemsPerPage = 5;
-currentPage = 1;
+
 
 function displayReports(reportsData) {
     const startIndex = (currentPage - 1) * itemsPerPage;
