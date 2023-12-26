@@ -509,11 +509,26 @@ async function fetchData() {
 
         const sendingPieData = transformData(creditRating)
 
-        Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
-        Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
+        if(Object.keys(holding).length > 0) {
+            holdingChartWrap.style.display = "none";
+            renderHoldingChart(transformData(holding)) 
+        }
+
+        if(Object.keys(creditRating).length > 0) {
+            creditChartWrap.style.display = "none";
+            renderCreditChart(sendingPieData);
+        }
+
+        if(Object.keys(newCreditRatingData).length > 0) {
+            assetChartWrap.style.display = "none";
+            renderAssetChart(newCreditRatingData);
+        }
+
+        // Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
+        // Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
 
         // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
-        Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
+        // Object.keys(newCreditRatingData).length > 0 ? renderAssetChart(newCreditRatingData) : assetChartWrap.style.display = "flex";
 
     } catch (error) {
         holdingChartWrap.style.display = "flex";
