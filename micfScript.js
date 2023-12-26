@@ -353,20 +353,6 @@ function renderLoop(data) {
     if (overAllCreditRating) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
 
-
-        // styling the labels to wrap
-        // Assuming textElement is your SVG <text> element
-        const textElement = document.querySelector('.bar-graph-x-axis');
-
-        // Set the desired text length and length adjustment
-        const textLengthValue = 100;
-        const lengthAdjustValue = 'spacingAndGlyphs';
-
-        // Set the properties on the text element
-        textElement.setAttribute('textLength', textLengthValue);
-        textElement.setAttribute('lengthAdjust', lengthAdjustValue);
-
-
         if (portfolioDataContainer) {
             // Clear existing content by removing all child elements
             while (portfolioDataContainer.firstChild) {
