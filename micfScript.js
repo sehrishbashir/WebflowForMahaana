@@ -93,12 +93,12 @@ function scrollHandler() {
                 tabWrapper.style.paddingTop = '0';
             }
         }
-        
+
         function animateFadeOut(element) {
             element.style.transition = 'opacity 0.5s'; // Add transition for fading out
             element.style.opacity = '0';
             tabWrapper.style.paddingTop = '0';
-        
+
             // After the animation duration, remove the fixed class
             setTimeout(() => {
                 element.classList.remove("fixed");
@@ -106,7 +106,7 @@ function scrollHandler() {
                 element.style.opacity = '1'; // Reset opacity
             }, 500); // Adjust the duration (in milliseconds) based on your animation duration
         }
-        
+
         // function obCallback(payload) {
         //     const scrollPosition = window.scrollY + window.innerHeight;
         //     const bottomOffset = 50; // Adjust this value based on your requirements //finetune bottomoffset value
@@ -320,6 +320,20 @@ function renderLoop(data) {
     // NEW ASSET ALLOCATION LIST
     if (currentAssetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+
+
+        // styling the labels to wrap
+        // Assuming textElement is your SVG <text> element
+        const textElement = document.querySelector('.bar-graph-x-axis');
+
+        // Set the desired text length and length adjustment
+        const textLengthValue = 100;
+        const lengthAdjustValue = 'spacingAndGlyphs';
+
+        // Set the properties on the text element
+        textElement.setAttribute('textLength', textLengthValue);
+        textElement.setAttribute('lengthAdjust', lengthAdjustValue);
+
 
         if (portfolioDataContainer) {
             // Clear existing content by removing all child elements
