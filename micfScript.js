@@ -439,13 +439,11 @@ function renderLoop(data) {
 //      `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
 
 //adding event lister for the offering Document
-const offeringDocumentWrapper = document.getElementById('offering-document');
-if (offeringDocumentWrapper) {
-    offeringDocumentWrapper.addEventListener('click', handleOfferingDocumentClicked);
-}
-const handleOfferingDocumentClicked = (URL) =>{
-    console.log(URL);
-}
+// const offeringDocumentWrapper = document.getElementById('offering-document');
+// if (offeringDocumentWrapper) {
+//     offeringDocumentWrapper.addEventListener('click', handleOfferingDocumentClicked);
+// }
+
 async function fetchData() {
     // Create the loader
     const loader = createLoader();
@@ -494,7 +492,7 @@ async function fetchData() {
         };
 
         if (offeringDocumentList.length > 0) {
-            handleOfferingDocumentClicked(offeringDocumentList[0])
+            // handleOfferingDocumentClicked(offeringDocumentList[0])
             offeringDocumentList.pop();
             reportWrap.style.display = "none";
         }
