@@ -440,8 +440,8 @@ function renderLoop(data) {
 
 //adding event lister for the offering Document
 const offeringDocumentWrapper = document.getElementById('offering-document');
-if (offeringDocument) {
-    offeringDocument.addEventListener('click', handleOfferingDocumentClicked);
+if (offeringDocumentWrapper) {
+    offeringDocumentWrapper.addEventListener('click', handleOfferingDocumentClicked);
 }
 const handleOfferingDocumentClicked = (URL) =>{
     console.log(URL);
