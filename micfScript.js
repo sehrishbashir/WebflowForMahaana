@@ -439,7 +439,7 @@ function renderLoop(data) {
 //      `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
 
 //adding event lister for the offering Document
-const offeringDocumentWrapper = document.querySelector('offering-document');
+const offeringDocumentWrapper = document.getElementById('offering-document');
 if (offeringDocument) {
     offeringDocument.addEventListener('click', handleOfferingDocumentClicked);
 }
