@@ -467,7 +467,7 @@ async function fetchData() {
 
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => {
-            element.textContent = "as of" + " " + moment(fmrDate, 'DD-MMM-YYYY').format('D MMM YYYY')
+            element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY')
         });
 
         const contentMapping = {
