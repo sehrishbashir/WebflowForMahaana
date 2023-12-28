@@ -141,7 +141,49 @@ const requiredMessage = "Please enter message";
 const invalidEmail = "Invalid email address";
 const userAddedMsg = "User has already been added to the waitlist";
 
+// ------------------MIX_PANEL TRACKING------------------- //
+
+const mixPannelTrackerEventName = {
+
+    // Contact Us Events
+    contact_us_submitted: "contact_us_submitted",
+    contact_us_failed: "contact_us_failed",
+
+    // Join Waitlist Events
+    join_waitlist_submitted: "join_waitlist_submitted",
+    join_waitlist_failed: "join_waitlist_failed",
+};
+
+const mixPanelActions = {
+    // ... (your existing actions)
+
+    // Contact Us Actions
+    contactUsSubmitted: () => {
+        // window.mixpanel.track(mixPannelTrackerEventName.contact_us_submitted, props);
+        console.log(mixPannelTrackerEventName.contact_us_submitted)
+    },
+
+    contactUsFailed: () => {
+        // window.mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
+        console.log(mixPannelTrackerEventName.contact_us_failed)
+    },
+
+    // Join Waitlist Actions
+    joinWaitlistSubmitted: () => {
+        // window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
+        console.log(mixPannelTrackerEventName.join_waitlist_submitted)
+    },
+
+    joinWaitlistFailed: () => {
+        // window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
+        console.log(mixPannelTrackerEventName.join_waitlist_failed)
+
+    },
+
+};
+
 // ---------------------------------------------- //
+
 
 
 // ---------------- FORM HELPERS ---------------- //
@@ -355,6 +397,8 @@ Webflow.push(function () {
                     showElements(wlForm);
                     wlForm.reset()
                 }, 3000)
+                mixPanelActions.joinWaitlistSubmitted();
+                console.log(wlEmailInput.value)
             }
             function handleError(errorData, errorCode) {
                 showElements(wlForm);
@@ -367,6 +411,8 @@ Webflow.push(function () {
                     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
                     showElements(wlError)
                 }
+                mixPanelActions.joinWaitlistFailed();
+                console.log(wlEmailInput.value)
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
             return false;
@@ -409,6 +455,8 @@ Webflow.push(function () {
                 setTimeout(() => {
                     hideElements(cuSuccessModal);
                 }, 3000)
+                mixPanelActions.contactUsSubmitted();
+                console.log(cuEmail);
             }
             function handleError(errorData) {
                 handleBtnStatus(gitSubmit, 'Send');
@@ -419,6 +467,8 @@ Webflow.push(function () {
                     cuErrorText.innerText = errorData;
                     showElements(cuError)
                 }
+                mixPanelActions.contactUsFailed();
+                console.log(cuEmail)
             }
             handleDisabled(inputs, true)
             handleFormSubmission(`${mahaanaInvitee}/api/Message`, formData, inputs, handleSuccess, handleError);
