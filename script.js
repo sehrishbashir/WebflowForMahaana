@@ -8,7 +8,7 @@
 // const INVITE_MAHANIERS = "https://stg-mahaana-dfa-invitemahaniers.azurewebsites.net"
 // const DOMAIN_URL = "https://mahaana.webflow.io/"
 
-const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
+const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND, MIXPANEL_API_TOKEN } = window.env
 
 currentDomain = window.location.hostname;
 corporate = CORPORATE;
@@ -17,13 +17,16 @@ individual = INDIVIDUAL;
 mahaanaWealthCashFund = CASHFUND
 mahaanaInvitee = INVITE_MAHANIERS
 domainURL = DOMAIN_URL
-
+api_Token = MIXPANEL_API_TOKEN
 
 if (window.mixpanel) {
     // Mixpanel is loaded, you can use its methods here
     console.log("mixmanel initialized")
   } else {
-    console.error('Mixpanel is not loaded.');
+    window.mixpanel.init(api_Token);
+    console.log("mixmanel manually initialized")
+    if(window.mixpanel){console.log("initialized manually succefull")} 
+    else{console.log("initialized manually failed")}
   }
 // if (!currentDomain.includes('webflow')) {
 //     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
