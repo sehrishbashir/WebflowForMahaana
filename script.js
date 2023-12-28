@@ -158,25 +158,25 @@ const mixPanelActions = {
     // ... (your existing actions)
 
     // Contact Us Actions
-    contactUsSubmitted: () => {
-        // window.mixpanel.track(mixPannelTrackerEventName.contact_us_submitted, props);
-        console.log(mixPannelTrackerEventName.contact_us_submitted)
+    contactUsSubmitted: (props) => {
+        window.mixpanel.track(mixPannelTrackerEventName.contact_us_submitted, props);
+        // console.log(mixPannelTrackerEventName.contact_us_submitted)
     },
 
     contactUsFailed: () => {
-        // window.mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
-        console.log(mixPannelTrackerEventName.contact_us_failed)
+        window.mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
+        // console.log(mixPannelTrackerEventName.contact_us_failed)
     },
 
     // Join Waitlist Actions
     joinWaitlistSubmitted: () => {
-        // window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
-        console.log(mixPannelTrackerEventName.join_waitlist_submitted)
+        window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
+        // console.log(mixPannelTrackerEventName.join_waitlist_submitted)
     },
 
     joinWaitlistFailed: () => {
-        // window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
-        console.log(mixPannelTrackerEventName.join_waitlist_failed)
+        window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
+        // console.log(mixPannelTrackerEventName.join_waitlist_failed)
 
     },
 
@@ -397,8 +397,8 @@ Webflow.push(function () {
                     showElements(wlForm);
                     wlForm.reset()
                 }, 3000)
-                mixPanelActions.joinWaitlistSubmitted();
-                console.log(wlEmailInput.value)
+                mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
+                // console.log(wlEmailInput.value)
             }
             function handleError(errorData, errorCode) {
                 showElements(wlForm);
@@ -411,8 +411,8 @@ Webflow.push(function () {
                     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
                     showElements(wlError)
                 }
-                mixPanelActions.joinWaitlistFailed();
-                console.log(wlEmailInput.value)
+                mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
+                // console.log(wlEmailInput.value)
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
             return false;
@@ -455,8 +455,8 @@ Webflow.push(function () {
                 setTimeout(() => {
                     hideElements(cuSuccessModal);
                 }, 3000)
-                mixPanelActions.contactUsSubmitted();
-                console.log(cuEmail);
+                mixPanelActions.contactUsSubmitted(cuEmail);
+                // console.log(cuEmail);
             }
             function handleError(errorData) {
                 handleBtnStatus(gitSubmit, 'Send');
@@ -467,8 +467,8 @@ Webflow.push(function () {
                     cuErrorText.innerText = errorData;
                     showElements(cuError)
                 }
-                mixPanelActions.contactUsFailed();
-                console.log(cuEmail)
+                mixPanelActions.contactUsFailed(cuEmail);
+                // console.log(cuEmail)
             }
             handleDisabled(inputs, true)
             handleFormSubmission(`${mahaanaInvitee}/api/Message`, formData, inputs, handleSuccess, handleError);
