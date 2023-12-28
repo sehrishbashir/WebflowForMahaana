@@ -17,7 +17,7 @@ individual = INDIVIDUAL;
 mahaanaWealthCashFund = CASHFUND
 mahaanaInvitee = INVITE_MAHANIERS
 domainURL = DOMAIN_URL
-api_Token = MIXPANEL_API_TOKEN
+api_Token = MIXPANEL_API_TOKEN;
 
 (function (f, b) { 
     if (!b.__SV) { 
