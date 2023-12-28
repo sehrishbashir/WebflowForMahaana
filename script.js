@@ -163,18 +163,18 @@ const mixPanelActions = {
         // console.log(mixPannelTrackerEventName.contact_us_submitted)
     },
 
-    contactUsFailed: () => {
+    contactUsFailed: (props) => {
         window.mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
         // console.log(mixPannelTrackerEventName.contact_us_failed)
     },
 
     // Join Waitlist Actions
-    joinWaitlistSubmitted: () => {
+    joinWaitlistSubmitted: (props) => {
         window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
         // console.log(mixPannelTrackerEventName.join_waitlist_submitted)
     },
 
-    joinWaitlistFailed: () => {
+    joinWaitlistFailed: (props) => {
         window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
         // console.log(mixPannelTrackerEventName.join_waitlist_failed)
 
