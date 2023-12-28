@@ -18,6 +18,13 @@ mahaanaWealthCashFund = CASHFUND
 mahaanaInvitee = INVITE_MAHANIERS
 domainURL = DOMAIN_URL
 
+
+if (window.mixpanel) {
+    // Mixpanel is loaded, you can use its methods here
+    console.log("mixmanel initialized")
+  } else {
+    console.error('Mixpanel is not loaded.');
+  }
 // if (!currentDomain.includes('webflow')) {
 //     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
 //     mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
