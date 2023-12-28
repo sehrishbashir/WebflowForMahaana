@@ -397,12 +397,13 @@ Webflow.push(function () {
                     showElements(wlForm);
                     wlForm.reset()
                 }, 3000)
-                if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                    window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                    mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
-                } else {
-                    console.error("Mixpanel API token not found in the environment.");
-                }
+                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
+                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
+                //     mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
+                // } else {
+                //     console.error("Mixpanel API token not found in the environment.");
+                // }
+                mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
 
 
 
@@ -420,12 +421,14 @@ Webflow.push(function () {
                     showElements(wlError)
                 }
 
-                if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                    window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                    mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
-                } else {
-                    console.error("Mixpanel API token not found in the environment.");
-                }
+                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
+                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
+                //     mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
+                // } else {
+                //     console.error("Mixpanel API token not found in the environment.");
+                // }
+                mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
+
                 // console.log(wlEmailInput.value)
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
@@ -470,12 +473,14 @@ Webflow.push(function () {
                     hideElements(cuSuccessModal);
                 }, 3000)
 
-                if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                    window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                    mixPanelActions.contactUsSubmitted(cuEmail);
-                } else {
-                    console.error("Mixpanel API token not found in the environment.");
-                }
+                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
+                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
+                //     mixPanelActions.contactUsSubmitted(cuEmail);
+                // } else {
+                //     console.error("Mixpanel API token not found in the environment.");
+                // }
+                mixPanelActions.contactUsSubmitted(cuEmail);
+
                 // console.log(cuEmail);
             }
             function handleError(errorData) {
@@ -487,12 +492,14 @@ Webflow.push(function () {
                     cuErrorText.innerText = errorData;
                     showElements(cuError)
                 }
-                if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                    window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                    mixPanelActions.contactUsFailed(cuEmail);
-                } else {
-                    console.error("Mixpanel API token not found in the environment.");
-                }
+                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
+                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
+                //     mixPanelActions.contactUsFailed(cuEmail);
+                // } else {
+                //     console.error("Mixpanel API token not found in the environment.");
+                // }
+                mixPanelActions.contactUsFailed(cuEmail);
+
                 // console.log(cuEmail)
             }
             handleDisabled(inputs, true)
