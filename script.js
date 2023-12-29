@@ -485,7 +485,15 @@ Webflow.push(function () {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
                 // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                mixPanelActions.contactUsSubmitted(cuEmail);
+
+                const props = {
+                    email: cuEmail,
+                    info:{
+                        message: mixPannelTrackerEventName.contact_us_submitted,
+                        status: "200"
+                    }
+                }
+                mixPanelActions.contactUsForm(props);
 
                 // console.log(cuEmail);
             }
@@ -505,7 +513,15 @@ Webflow.push(function () {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
                 // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                mixPanelActions.contactUsFailed(cuEmail);
+                const props = {
+                    email: cuEmail,
+                    info:{
+                        message: wlErrorMsg.innerText,
+                        status: "200"
+                    }
+                }
+                mixPanelActions.contactUsForm(props);
+                
 
                 // console.log(cuEmail)
             }
