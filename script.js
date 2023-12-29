@@ -400,17 +400,18 @@ Webflow.push(function () {
                 }, 3000)
                 
                 // mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
+                let hashedMail;
+                hashTextWithSHA1(wlEmailInput.value).then(hash => {
+                    console.log('SHA-1 Hash:', hash);
+                    hashedMail = `${hash}`;
+                })
                 let props = {
-                    email:  wlEmailInput.value,
+                    email: hashedMail ,
                     info:{
                         message: mixPannelTrackerEventName.join_waitlist_submitted,
                         status: "200"
                     }
                 }
-                hashTextWithSHA1(wlEmailInput.value).then(hash => {
-                    console.log('SHA-1 Hash:', hash);
-                    props.email = `${hash}`;
-                })
                 console.log(props)
                 mixPanelActions.waitlistForm(props)
 }
