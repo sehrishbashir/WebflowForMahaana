@@ -161,32 +161,12 @@ const mixPanelActions = {
         window.mixpanel.identify(email)
         window.mixpanel.track("WaitList", info)
     },
-    // Contact Us Actions
-    contactUsSubmitted: (props) => {
-        mixpanel.track(mixPannelTrackerEventName.contact_us_submitted);
-        mixpanel.identify(props);
-        // console.log(mixPannelTrackerEventName.contact_us_submitted)
-    },
-
-    contactUsFailed: (props) => {
-        mixpanel.track(mixPannelTrackerEventName.contact_us_failed);
-        mixpanel.identify(props);
-        // console.log(mixPannelTrackerEventName.contact_us_failed)
-    },
-
-    // Join Waitlist Actions
-    joinWaitlistSubmitted: (props) => {
-        mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted);
-        mixpanel.identify(props);
-        // console.log(mixPannelTrackerEventName.join_waitlist_submitted)
-    },
-
-    joinWaitlistFailed: (props) => {
-        mixpanel.identify(props);
-        mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed);
-        // console.log(mixPannelTrackerEventName.join_waitlist_failed)
-
-    },
+    contactUsForm:(props)=>{
+        const {email, info} = props
+        console.log(props,"action",window)
+        window.mixpanel.identify(email)
+        window.mixpanel.track("WaitList", info)
+    }
 
 };
 
@@ -440,7 +420,9 @@ Webflow.push(function () {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
                 // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
+
+                console.log(wlErrorMsg, errorCode)
+                // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
                 // console.log(wlEmailInput.value)
             }
