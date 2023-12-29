@@ -165,7 +165,7 @@ const mixPanelActions = {
         const {email, info} = props
         console.log(props,"action",window)
         window.mixpanel.identify(email)
-        window.mixpanel.track("WaitList", info)
+        window.mixpanel.track(props.info.status === "200"?mixPannelTrackerEventName.contact_us_submitted:mixPannelTrackerEventName.contact_us_failed, info)
     }
 
 };
