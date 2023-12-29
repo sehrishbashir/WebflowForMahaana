@@ -404,15 +404,15 @@ Webflow.push(function () {
                 hashTextWithSHA1(wlEmailInput.value).then(hash => {
                     console.log('SHA-1 Hash:', hash);
                     hashedMail = `${hash}`;
-                })
-                let props = {
-                    email: hashedMail ,
-                    info:{
-                        message: mixPannelTrackerEventName.join_waitlist_submitted,
-                        status: "200"
+                    let props = {
+                        email: hashedMail ,
+                        info:{
+                            message: mixPannelTrackerEventName.join_waitlist_submitted,
+                            status: "200"
+                        }
                     }
-                }
-                console.log(props)
+                    console.log(props)
+                })
                 // mixPanelActions.waitlistForm(props)
 }
 
