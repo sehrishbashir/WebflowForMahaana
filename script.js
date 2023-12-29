@@ -388,7 +388,7 @@ Webflow.push(function () {
             const inputs = [wlNameInput, wlEmailInput, wlSubmit]
             handleDisabled(inputs, true)
 
-            function handleSuccess() {
+            async  function handleSuccess() {
                 handleBtnStatus(wlSubmit, 'Send');
                 handleDisabled(inputs, false);
                 hideElements(wlForm);
@@ -411,7 +411,7 @@ Webflow.push(function () {
                 }
 
                 let props = {
-                    email:  hashedMail(),
+                    email: await hashedMail(),
                     info:{
                         message: mixPannelTrackerEventName.join_waitlist_submitted,
                         status: "200"
