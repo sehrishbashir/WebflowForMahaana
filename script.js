@@ -159,7 +159,7 @@ const mixPanelActions = {
         const {email, info} = props
         console.log(props,"action",window)
         window.mixpanel.identify(email)
-        window.mixpanel.track("WaitList", info)
+        window.mixpanel.track(props.info.status === "200"?"WaitList_Successful":"WaitList_Failed", info)
     },
     contactUsForm:(props)=>{
         const {email, info} = props
@@ -421,14 +421,17 @@ Webflow.push(function () {
                 // }
                 // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 const errorElement = document.getElementById('waitlist-error-form-message');
-
-                // Check if the element exists
-                if (errorElement) {
-                    // Extract the inner text
-                    const errorMessage = errorElement.innerText;
-                    console.log(errorMessage); // This will log the extracted text
-                    console.log(errorMessage, errorCode)
+                const errorMessage = errorElement.innerText;
+                console.log(errorMessage, errorCode)
+                const props = {
+                    email: wlEmailInput.value,
+                    info:{
+                        message: errorMessage,
+                        status: errorCode
+                    }
                 }
+                mixPanelActions.waitlistForm(props)
+
                 // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
                 // console.log(wlEmailInput.value)
