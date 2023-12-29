@@ -444,7 +444,7 @@ Webflow.push(function () {
                 }
                 hashTextWithSHA1(errorMessage).then(hash => {
                     console.log('SHA-1 Hash:', hash);
-                    props.email = hash;
+                    props.email = `${hash}`;
                 })
                 console.log(props)
                 mixPanelActions.waitlistForm(props)
