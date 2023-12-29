@@ -436,14 +436,15 @@ Webflow.push(function () {
                 const errorMessage = errorElement.innerText;
                 console.log(errorMessage, errorCode)
                 const props = {
-                    email: wlEmailInput.value,
+                    email: "",
                     info:{
                         message: errorMessage,
                         status: errorCode
                     }
                 }
                 hashTextWithSHA1(errorMessage).then(hash => {
-                    console.log('SHA-1 Hash:', hash);
+                    // console.log('SHA-1 Hash:', hash);
+                    props.email = hash;
                 })
                 mixPanelActions.waitlistForm(props)
 
