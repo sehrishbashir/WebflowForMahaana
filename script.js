@@ -151,9 +151,13 @@ const mixPannelTrackerEventName = {
     join_waitlist_failed: "join_waitlist_failed",
 };
 
+
+
 const mixPanelActions = {
     // ... (your existing actions)
-
+    waitlistForm:(props)=>{
+        console.log(props)
+    },
     // Contact Us Actions
     contactUsSubmitted: (props) => {
         mixpanel.track(mixPannelTrackerEventName.contact_us_submitted);
@@ -399,18 +403,9 @@ Webflow.push(function () {
                     showElements(wlForm);
                     wlForm.reset()
                 }, 3000)
-                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                //     mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
-                // } else {
-                //     console.error("Mixpanel API token not found in the environment.");
-                // }
-                // mixpanel.init(api_Token, {debug: true, track_pageview: true, persistence: 'localStorage'});
- 
-                // // Set this to a unique identifier for the user performing the event.
-                // mixpanel.identify('USER_ID')
-                // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
+                
+                // mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
+                mixPanelActions.waitlistForm("abc")
 
 
 
