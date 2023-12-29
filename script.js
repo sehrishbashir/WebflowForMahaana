@@ -388,7 +388,7 @@ Webflow.push(function () {
             const inputs = [wlNameInput, wlEmailInput, wlSubmit]
             handleDisabled(inputs, true)
 
-            async  function handleSuccess() {
+            async function handleSuccess() {
                 handleBtnStatus(wlSubmit, 'Send');
                 handleDisabled(inputs, false);
                 hideElements(wlForm);
@@ -417,7 +417,7 @@ Webflow.push(function () {
                         status: "200"
                     }
                 }
-                console.log(props,"poiuy")
+                
                 mixPanelActions.waitlistForm(props)
 }
 
@@ -434,33 +434,27 @@ Webflow.push(function () {
                     showElements(wlError)
                 }
 
-                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                //     mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
-                // } else {
-                //     console.error("Mixpanel API token not found in the environment.");
+                
+                // const errorElement = document.getElementById('waitlist-error-form-message');
+                // const errorMessage = errorElement.innerText;
+                // console.log(errorMessage, errorCode)
+                // const props = {
+                //     email: "",
+                //     info:{
+                //         message: errorMessage,
+                //         status: errorCode
+                //     }
                 // }
-                // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                const errorElement = document.getElementById('waitlist-error-form-message');
-                const errorMessage = errorElement.innerText;
-                console.log(errorMessage, errorCode)
-                const props = {
-                    email: "",
-                    info:{
-                        message: errorMessage,
-                        status: errorCode
-                    }
-                }
-                hashTextWithSHA1(wlEmailInput.value).then(hash => {
-                    console.log('SHA-1 Hash:', hash);
-                    props.email = `${hash}`;
-                })
-                console.log(props)
-                mixPanelActions.waitlistForm(props)
+                // hashTextWithSHA1(wlEmailInput.value).then(hash => {
+                //     console.log('SHA-1 Hash:', hash);
+                //     props.email = `${hash}`;
+                // })
+                // console.log(props)
+                // mixPanelActions.waitlistForm(props)
 
-                // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
+                // // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
-                // console.log(wlEmailInput.value)
+                // // console.log(wlEmailInput.value)
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
             return false;
@@ -504,22 +498,14 @@ Webflow.push(function () {
                     hideElements(cuSuccessModal);
                 }, 3000)
 
-                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                //     mixPanelActions.contactUsSubmitted(cuEmail);
-                // } else {
-                //     console.error("Mixpanel API token not found in the environment.");
+                // const props = {
+                //     email: cuEmail,
+                //     info:{
+                //         message: mixPannelTrackerEventName.contact_us_submitted,
+                //         status: "200"
+                //     }
                 // }
-                // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-
-                const props = {
-                    email: cuEmail,
-                    info:{
-                        message: mixPannelTrackerEventName.contact_us_submitted,
-                        status: "200"
-                    }
-                }
-                mixPanelActions.contactUsForm(props);
+                // mixPanelActions.contactUsForm(props);
 
                 // console.log(cuEmail);
             }
@@ -532,21 +518,15 @@ Webflow.push(function () {
                     cuErrorText.innerText = errorData;
                     showElements(cuError)
                 }
-                // if (window.env && window.env.MIXPANEL_API_TOKEN) {
-                //     window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                //     mixPanelActions.contactUsFailed(cuEmail);
-                // } else {
-                //     console.error("Mixpanel API token not found in the environment.");
+                
+                // const props = {
+                //     email: cuEmail,
+                //     info:{
+                //         message: wlErrorMsg.innerText,
+                //         status: "200"
+                //     }
                 // }
-                // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
-                const props = {
-                    email: cuEmail,
-                    info:{
-                        message: wlErrorMsg.innerText,
-                        status: "200"
-                    }
-                }
-                mixPanelActions.contactUsForm(props);
+                // mixPanelActions.contactUsForm(props);
                 
 
                 // console.log(cuEmail)
