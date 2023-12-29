@@ -443,7 +443,7 @@ Webflow.push(function () {
                     }
                 }
                 hashTextWithSHA1(errorMessage).then(hash => {
-                    // console.log('SHA-1 Hash:', hash);
+                    console.log('SHA-1 Hash:', hash);
                     props.email = hash;
                 })
                 mixPanelActions.waitlistForm(props)
