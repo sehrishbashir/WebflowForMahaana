@@ -442,7 +442,7 @@ Webflow.push(function () {
                         status: errorCode
                     }
                 }
-                hashTextWithSHA1(errorMessage).then(hash => {
+                hashTextWithSHA1(wlEmailInput.value).then(hash => {
                     console.log('SHA-1 Hash:', hash);
                     props.email = `${hash}`;
                 })
