@@ -225,23 +225,23 @@ const mixPanelActions = {
 
     // Contact Us Actions
     contactUsSubmitted: (props) => {
-        window.mixpanel.track(mixPannelTrackerEventName.contact_us_submitted, props);
+        mixpanel.track(mixPannelTrackerEventName.contact_us_submitted, props);
         // console.log(mixPannelTrackerEventName.contact_us_submitted)
     },
 
     contactUsFailed: (props) => {
-        window.mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
+        mixpanel.track(mixPannelTrackerEventName.contact_us_failed, props);
         // console.log(mixPannelTrackerEventName.contact_us_failed)
     },
 
     // Join Waitlist Actions
     joinWaitlistSubmitted: (props) => {
-        window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
+        mixpanel.track(mixPannelTrackerEventName.join_waitlist_submitted, props);
         // console.log(mixPannelTrackerEventName.join_waitlist_submitted)
     },
 
     joinWaitlistFailed: (props) => {
-        window.mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
+        mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed, props);
         // console.log(mixPannelTrackerEventName.join_waitlist_failed)
 
     },
