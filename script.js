@@ -417,7 +417,7 @@ Webflow.push(function () {
                         status: "200"
                     }
                 }
-                console.log(props)
+                console.log(props,"poiuy")
                 mixPanelActions.waitlistForm(props)
 }
 
