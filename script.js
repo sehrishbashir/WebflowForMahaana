@@ -363,18 +363,15 @@ Webflow.push(function () {
 });
 
 
-function hashTextWithSHA1(text) {
-    // Hash the text using SHA-1
+async function hashTextWithSHA1(text) {
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
-    const hashBuffer = crypto.subtle.digestSync('SHA-1', data); // Use synchronous version
-
-    // Convert the hash to hex
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-
     return hashHex;
 }
+
 
 
 // WAITLIST FORM
