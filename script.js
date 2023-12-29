@@ -79,17 +79,17 @@ mixpanel.init(MIXPANEL_API_TOKEN, {debug: true, track_pageview: true, persistenc
 // Set this to a unique identifier for the user performing the event.
 // mixpanel.identify('USER_ID')
  
-// const mixpanel = window.mixpanel
-// if (mixpanel) {
-//     // Mixpanel is loaded, you can use its methods here
-//     console.log(mixpanel)
-//     console.log("mixmanel initialized")
-//   } else {
-//     mixpanel.init(api_Token);
-//     console.log("mixmanel manually initialized")
-//     if(mixpanel){console.log("initialized manually succefull")} 
-//     else{console.log("initialized manually failed")}
-//   }
+const mixpanel = window.mixpanel
+if (mixpanel) {
+    // Mixpanel is loaded, you can use its methods here
+    console.log(mixpanel)
+    console.log("mixmanel initialized")
+  } else {
+    mixpanel.init(api_Token);
+    console.log("mixmanel manually initialized")
+    if(mixpanel){console.log("initialized manually succefull")} 
+    else{console.log("initialized manually failed")}
+  }
 // if (!currentDomain.includes('webflow')) {
 //     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
 //     mahaanaInvitee = 'https://prod-mahaana-dfa-invitemahaniers.azurewebsites.net'
