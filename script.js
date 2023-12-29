@@ -442,7 +442,9 @@ Webflow.push(function () {
                         status: errorCode
                     }
                 }
-                console.log(hashTextWithSHA1(wlEmailInput.value))
+                hashTextWithSHA1(errorMessage).then(hash => {
+                    console.log('SHA-1 Hash:', hash);
+                })
                 mixPanelActions.waitlistForm(props)
 
                 // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
