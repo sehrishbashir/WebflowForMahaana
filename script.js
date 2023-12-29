@@ -415,6 +415,7 @@ Webflow.push(function () {
                         status: "200"
                     }
                 }
+                console.log("qwert")
                 mixPanelActions.waitlistForm(props)
 
 
