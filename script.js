@@ -77,6 +77,7 @@ api_Token = MIXPANEL_API_TOKEN;
 const mixpanel = window.mixpanel
 if (mixpanel) {
     // Mixpanel is loaded, you can use its methods here
+    console.log(mixpanel)
     console.log("mixmanel initialized")
   } else {
     mixpanel.init(api_Token);
