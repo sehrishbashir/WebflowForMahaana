@@ -413,7 +413,7 @@ Webflow.push(function () {
                     }
                 }
                 console.log(props)
-                mixPanelActions.waitlistForm(props)
+                // mixPanelActions.waitlistForm(props)
 }
 
 
