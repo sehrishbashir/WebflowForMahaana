@@ -157,7 +157,7 @@ const mixPanelActions = {
     // ... (your existing actions)
     waitlistForm:(props)=>{
         const {email, info} = props
-        console.log(props)
+        console.log(props,"action",window)
         window.mixpanel.identify(email)
         window.mixpanel.track("WaitList", info)
     },
