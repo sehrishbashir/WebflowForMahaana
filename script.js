@@ -250,8 +250,8 @@ const mixPanelActions = {
     },
 
     joinWaitlistFailed: (props) => {
-        mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed);
         mixpanel.identify(props);
+        mixpanel.track(mixPannelTrackerEventName.join_waitlist_failed);
         // console.log(mixPannelTrackerEventName.join_waitlist_failed)
 
     },
