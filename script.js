@@ -420,8 +420,15 @@ Webflow.push(function () {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
                 // window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
+                const errorElement = document.getElementById('waitlist-error-form-message');
 
-                console.log(wlErrorMsg, errorCode)
+                // Check if the element exists
+                if (errorElement) {
+                    // Extract the inner text
+                    const errorMessage = errorElement.innerText;
+                    console.log(errorMessage); // This will log the extracted text
+                    console.log(errorMessage, errorCode)
+                }
                 // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
                 // console.log(wlEmailInput.value)
