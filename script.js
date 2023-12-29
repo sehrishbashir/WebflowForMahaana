@@ -74,7 +74,7 @@ api_Token = MIXPANEL_API_TOKEN;
 })(document, window.mixpanel || []);
 
 // import mixpanel from 'mixpanel-browser';
-mixpanel.init(MIXPANEL_API_TOKEN, {debug: true, track_pageview: true, persistence: 'localStorage'});
+// mixpanel.init(MIXPANEL_API_TOKEN, {debug: true, track_pageview: true, persistence: 'localStorage'});
  
 // Set this to a unique identifier for the user performing the event.
 // mixpanel.identify('USER_ID')
