@@ -492,7 +492,7 @@ async function fetchData() {
 
         if (offeringDocumentList.length > 0) {
             // handleOfferingDocumentClicked(offeringDocumentList[0])
-            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[0].key.split('.')[0]}`;
+            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[1].key.split('.')[0]}`;
             offeringDocumentList.pop();
             reportWrap.style.display = "none";
         }

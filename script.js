@@ -469,6 +469,7 @@ Webflow.push(function () {
                 // } else {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
+                window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
 
 
@@ -493,6 +494,7 @@ Webflow.push(function () {
                 // } else {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
+                window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
                 // console.log(wlEmailInput.value)
@@ -545,6 +547,7 @@ Webflow.push(function () {
                 // } else {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
+                window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 mixPanelActions.contactUsSubmitted(cuEmail);
 
                 // console.log(cuEmail);
@@ -564,6 +567,7 @@ Webflow.push(function () {
                 // } else {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
+                window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 mixPanelActions.contactUsFailed(cuEmail);
 
                 // console.log(cuEmail)
