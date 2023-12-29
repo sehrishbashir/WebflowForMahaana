@@ -399,21 +399,26 @@ Webflow.push(function () {
                     wlForm.reset()
                 }, 3000)
                 
-                // mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
-                let hashedMail;
-                hashTextWithSHA1(wlEmailInput.value).then(hash => {
-                    console.log('SHA-1 Hash:', hash);
-                    hashedMail = `${hash}`;
-                    let props = {
-                        email: hashedMail ,
-                        info:{
-                            message: mixPannelTrackerEventName.join_waitlist_submitted,
-                            status: "200"
-                        }
+                async function hashedMail() {
+                    try {
+                        let hashedMail = await hashTextWithSHA1(wlEmailInput.value);
+                        console.log('SHA-1 Hash:', hashedMail);
+                        // Further processing or return the hashedMail value
+                        return hashedMail;
+                    } catch (error) {
+                        console.error('Error hashing the text:', error);
                     }
-                    console.log(props)
-                    mixPanelActions.waitlistForm(props)
-                })
+                }
+
+                let props = {
+                    email:  hashedMail(),
+                    info:{
+                        message: mixPannelTrackerEventName.join_waitlist_submitted,
+                        status: "200"
+                    }
+                }
+                console.log(props)
+                mixPanelActions.waitlistForm(props)
 }
 
 
