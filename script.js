@@ -17,7 +17,7 @@ individual = INDIVIDUAL;
 mahaanaWealthCashFund = CASHFUND
 mahaanaInvitee = INVITE_MAHANIERS
 domainURL = DOMAIN_URL
-api_Token = MIXPANEL_API_TOKEN;
+let api_Token = MIXPANEL_API_TOKEN;
 
 // (function (f, b) { 
 //     if (!b.__SV) { 
@@ -89,11 +89,10 @@ if (mixpanel) {
     // Mixpanel is loaded, you can use its methods here
     console.log(mixpanel)
     console.log("mixmanel initialized")
-  } else {
     mixpanel.init(api_Token);
-    console.log("mixmanel manually initialized")
-    if(mixpanel){console.log("initialized manually succefull")} 
-    else{console.log("initialized manually failed")}
+  } else {
+    console.log("not initialized")
+    
   }
 // if (!currentDomain.includes('webflow')) {
 //     mahaanaWealthCashFund = 'https://prod-mahaana-wealth-cashfund.azurewebsites.net'
