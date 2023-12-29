@@ -73,7 +73,12 @@ api_Token = MIXPANEL_API_TOKEN;
     } 
 })(document, window.mixpanel || []);
 
-
+import mixpanel from 'mixpanel-browser';
+mixpanel.init('YOUR_TOKEN', {debug: true, track_pageview: true, persistence: 'localStorage'});
+ 
+// Set this to a unique identifier for the user performing the event.
+mixpanel.identify('USER_ID')
+ 
 const mixpanel = window.mixpanel
 if (mixpanel) {
     // Mixpanel is loaded, you can use its methods here
@@ -470,6 +475,10 @@ Webflow.push(function () {
                 // } else {
                 //     console.error("Mixpanel API token not found in the environment.");
                 // }
+                mixpanel.init(api_Token, {debug: true, track_pageview: true, persistence: 'localStorage'});
+ 
+                // Set this to a unique identifier for the user performing the event.
+                mixpanel.identify('USER_ID')
                 window.mixpanel.init(window.env.MIXPANEL_API_TOKEN);
                 mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
 
