@@ -405,8 +405,14 @@ Webflow.push(function () {
                 }, 3000)
                 
                 // mixPanelActions.joinWaitlistSubmitted(wlEmailInput.value);
-                mixPanelActions.waitlistForm("abc")
-
+                const props = {
+                    name: "Waitlist",
+                    info:{
+                        message: mixPannelTrackerEventName.join_waitlist_submitted,
+                        status: "200"
+                    }
+                }
+                mixPanelActions.waitlistForm(props)
 
 
                 // console.log(wlEmailInput.value)
