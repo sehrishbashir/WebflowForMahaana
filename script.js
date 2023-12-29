@@ -407,12 +407,15 @@ Webflow.push(function () {
                         status: "200"
                     }
                 }
-                console.log("qwert")
+                hashTextWithSHA1(wlEmailInput.value).then(hash => {
+                    console.log('SHA-1 Hash:', hash);
+                    props.email = `${hash}`;
+                })
+                console.log(props)
                 mixPanelActions.waitlistForm(props)
+}
 
 
-                // console.log(wlEmailInput.value)
-            }
             function handleError(errorData, errorCode) {
                 showElements(wlForm);
                 hideElements(wlSucess)
