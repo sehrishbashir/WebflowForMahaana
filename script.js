@@ -156,7 +156,14 @@ const mixPannelTrackerEventName = {
 const mixPanelActions = {
     // ... (your existing actions)
     waitlistForm:(props)=>{
+        const [name, info] = props
         console.log(props)
+        mixpanel.identify(info.mail)
+        mixpanel.track(name, {
+            'Submission': info.message,
+            'status': info.status
+          })
+
     },
     // Contact Us Actions
     contactUsSubmitted: (props) => {
@@ -409,7 +416,8 @@ Webflow.push(function () {
                     name: "Waitlist",
                     info:{
                         message: mixPannelTrackerEventName.join_waitlist_submitted,
-                        status: "200"
+                        status: "200",
+                        mail: wlEmailInput.value
                     }
                 }
                 mixPanelActions.waitlistForm(props)
