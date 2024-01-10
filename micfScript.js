@@ -499,7 +499,7 @@ async function fetchData() {
             'shahr-e-advisor': fundInfo.shariahAdvisors,
             'custodian': fundInfo.custodian,
             'weightAverageTime': fundInfo.weightedAverageTime,
-            'ytd-mtd-values':`${fundInfo.monthlyTotalExpenseRatioWithoutLevy} % (MTD)\n${fundInfo.yearlyTotalExpenseRatioWithoutLevy} % (YTD)`
+            'ytd-mtd-values':`${fundInfo.monthlyTotalExpenseRatioWithoutLevy} % (MTD)<br>${fundInfo.yearlyTotalExpenseRatioWithoutLevy} % (YTD)`
         };
 
         if (offeringDocumentList.length > 0) {
