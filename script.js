@@ -663,7 +663,7 @@ const titleLimit = 50;
 truncateText(blogCardParaElements, paraLimit);
 truncateText(blogTitleElements, titleLimit);
 truncateText(blogParaElements2, paraLimit);
-truncateText(blogTitleElements2, titleLimit);
+// truncateText(blogTitleElements2, titleLimit);
 
 // ---------------------------------------------- //
 
