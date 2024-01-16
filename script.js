@@ -232,7 +232,9 @@ function validateInput(inputField, errorElement, errorMessage, minLength, type) 
         return false;
     }
     else if (type == "phoneNumber") {
-        console.log(">>>>>>>>>>>else")
+        console.log(">>>>>>>>>>>else", inputField.value)
+
+        // isValidPhoneNumber()
 
         errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
         showElements(errorElement);
