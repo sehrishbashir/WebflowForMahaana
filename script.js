@@ -11,18 +11,18 @@ domainURL = DOMAIN_URL;
 
 // let api_Token = MIXPANEL_API_TOKEN;
 
-(function (f, b) { if (!b.__SV) { var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) { function g(a, d) { var b = d.split("."); 2 == b.length && ((a = a[b[0]]), (d = b[1])); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))); }; } var a = b; "undefined" !== typeof c ? (a = b[c] = []) : (c = "mixpanel"); a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d; }; a.people.toString = function () { return a.toString(1) + ".people (stub)"; }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split( " "); for (h = 0; h < i.length; h++) g(a, i[h]); var j = "set set_once union unset remove delete".split(" "); a.get_group = function () { function b(c) { d[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); a.push([e, call2]); }; } for ( var d = {}, e = ["get_group"].concat( Array.prototype.slice.call(arguments, 0)), c = 0; c < j.length; c++) b(j[c]); return d; }; b._i.push([e, f, c]); }; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g); } })(document, window.mixpanel || []);
- 
+(function (f, b) { if (!b.__SV) { var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) { function g(a, d) { var b = d.split("."); 2 == b.length && ((a = a[b[0]]), (d = b[1])); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))); }; } var a = b; "undefined" !== typeof c ? (a = b[c] = []) : (c = "mixpanel"); a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d; }; a.people.toString = function () { return a.toString(1) + ".people (stub)"; }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" "); for (h = 0; h < i.length; h++) g(a, i[h]); var j = "set set_once union unset remove delete".split(" "); a.get_group = function () { function b(c) { d[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); a.push([e, call2]); }; } for (var d = {}, e = ["get_group"].concat(Array.prototype.slice.call(arguments, 0)), c = 0; c < j.length; c++) b(j[c]); return d; }; b._i.push([e, f, c]); }; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g); } })(document, window.mixpanel || []);
+
 const mixpanel = window.mixpanel
 if (mixpanel) {
     // Mixpanel is loaded, you can use its methods here
     console.log(mixpanel)
     console.log("mixmanel initialized")
     mixpanel.init(api_Token);
-  } else {
+} else {
     console.log("not initialized")
-    
-  }
+
+}
 
 // ---------------------------------------------- //
 
@@ -157,17 +157,17 @@ const mixPannelTrackerEventName = {
 
 const mixPanelActions = {
     // ... (your existing actions)
-    waitlistForm:(props)=>{
-        const {email, info} = props
-        console.log(props,"action",window)
+    waitlistForm: (props) => {
+        const { email, info } = props
+        console.log(props, "action", window)
         window.mixpanel.identify(email)
-        window.mixpanel.track(props.info.status === "200"?"WaitList_Successful":"WaitList_Failed", info)
+        window.mixpanel.track(props.info.status === "200" ? "WaitList_Successful" : "WaitList_Failed", info)
     },
-    contactUsForm:(props)=>{
-        const {email, info} = props
-        console.log(props,"action",window)
+    contactUsForm: (props) => {
+        const { email, info } = props
+        console.log(props, "action", window)
         window.mixpanel.identify(email)
-        window.mixpanel.track(props.info.status === "200"?mixPannelTrackerEventName.contact_us_submitted:mixPannelTrackerEventName.contact_us_failed, info)
+        window.mixpanel.track(props.info.status === "200" ? mixPannelTrackerEventName.contact_us_submitted : mixPannelTrackerEventName.contact_us_failed, info)
     }
 
 };
@@ -190,6 +190,12 @@ function handleBtnStatus(btn, status) { btn.value = status }
 
 // VALIDATORS
 function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email) }
+
+function isValidPhoneNumber(number) {
+    const phoneRegex = /^03\d{9}$/;
+    return phoneRegex.test(number);
+}
+
 function setupInputValidation(inputField, errorElement) {
     if (inputField) {
         inputField.addEventListener('input', function () {
@@ -283,7 +289,7 @@ const GIFormElements = [
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
     { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail },
-    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: 11 }
+    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: isValidPhoneNumber }
 ];
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
@@ -389,7 +395,7 @@ Webflow.push(function () {
             const formData = { name: wlNameInput.value, email: wlEmailInput.value, PhoneNumber: wlContactInput.value };
 
             handleBtnStatus(wlSubmit, 'Please wait ...');
-            const inputs = [wlNameInput, wlEmailInput, wlContactInput,wlSubmit]
+            const inputs = [wlNameInput, wlEmailInput, wlContactInput, wlSubmit]
             handleDisabled(inputs, true)
 
             async function handleSuccess() {
@@ -402,7 +408,7 @@ Webflow.push(function () {
                     showElements(wlForm);
                     wlForm.reset()
                 }, 3000)
-                
+
                 async function hashedMail() {
                     try {
                         let hashedMail = await hashTextWithSHA1(wlEmailInput.value);
@@ -416,14 +422,14 @@ Webflow.push(function () {
 
                 let props = {
                     email: await hashedMail(),
-                    info:{
+                    info: {
                         message: mixPannelTrackerEventName.join_waitlist_submitted,
                         status: "200"
                     }
                 }
-                
+
                 mixPanelActions.waitlistForm(props)
-}
+            }
 
 
             function handleError(errorData, errorCode) {
@@ -431,14 +437,14 @@ Webflow.push(function () {
                 hideElements(wlSucess)
                 handleBtnStatus(wlSubmit, 'Send');
                 if (errorData.charAt(0) == "{") {
-                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError,wlContactError)
+                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError, wlContactError)
                 }
                 else {
                     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
                     showElements(wlError)
                 }
 
-                
+
                 // const errorElement = document.getElementById('waitlist-error-form-message');
                 // const errorMessage = errorElement.innerText;
                 // console.log(errorMessage, errorCode)
@@ -522,7 +528,7 @@ Webflow.push(function () {
                     cuErrorText.innerText = errorData;
                     showElements(cuError)
                 }
-                
+
                 // const props = {
                 //     email: cuEmail,
                 //     info:{
@@ -531,7 +537,7 @@ Webflow.push(function () {
                 //     }
                 // }
                 // mixPanelActions.contactUsForm(props);
-                
+
 
                 // console.log(cuEmail)
             }
