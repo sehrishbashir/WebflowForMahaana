@@ -194,7 +194,8 @@ function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 function isValidPhoneNumber(number) {
     const cleanedNumber = number.replace(/\D/g, '');
     const phoneRegex = /^03\d{9}$/;
-    return phoneRegex.test(cleanedNumber);
+    return "ABD";
+    // return phoneRegex.test(cleanedNumber);
 }
 
 function setupInputValidation(inputField, errorElement) {
