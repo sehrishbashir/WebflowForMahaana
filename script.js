@@ -212,11 +212,7 @@ function handleInputValidation(inputField, errorElement) { inputField.addEventLi
 function validateInput(inputField, errorElement, errorMessage, minLength, type) {
     const trimmedValue = inputField.value.trim();
 
-    console.log(">>>>>>>>>>>if", minLength, inputField)
-
     if (trimmedValue === '') {
-
-        console.log(">>>>>>>>>>>if")
         errorElement.innerHTML = errorMessage;
         showElements(errorElement);
         inputField.classList.add('input-error');
@@ -224,8 +220,6 @@ function validateInput(inputField, errorElement, errorMessage, minLength, type) 
 
     }
     else if (minLength && trimmedValue.length < minLength) {
-        console.log(">>>>>>>>>>>else")
-
         errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
         showElements(errorElement);
         inputField.classList.add('input-error');
@@ -233,13 +227,14 @@ function validateInput(inputField, errorElement, errorMessage, minLength, type) 
     }
     else if (type == "phoneNumber") {
         const numberValidate = isValidPhoneNumber(inputField.value)
-
-        console.log(">>>>>>>>>>>numberValidate", numberValidate)
-
-        errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
-        showElements(errorElement);
-        inputField.classList.add('input-error');
-        return false;
+        if (!numberValidate) {
+            errorElement.innerHTML = 'Not a valid number';
+            showElements(errorElement);
+            inputField.classList.add('input-error');
+        }
+        else {
+            return true;
+        }
     }
 
     return true;
