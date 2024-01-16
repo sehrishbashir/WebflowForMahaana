@@ -385,10 +385,7 @@ Webflow.push(function () {
 
         if (inputValidations.every((isValid) => isValid)) {
             $(document).off('submit');
-            const formData = { name: wlNameInput.value, email: wlEmailInput.value, phoneNumber: wlContactInput.value };
-
-            console.log("formData", formData)
-
+            const formData = { name: wlNameInput.value, email: wlEmailInput.value, PhoneNumber: wlContactInput.value };
             handleBtnStatus(wlSubmit, 'Please wait ...');
             const inputs = [wlNameInput, wlEmailInput, wlContactInput,wlSubmit]
             handleDisabled(inputs, true)
