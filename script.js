@@ -191,9 +191,19 @@ function handleBtnStatus(btn, status) { btn.value = status }
 // VALIDATORS
 function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email) }
 
+// function isValidPhoneNumber(string) {
+//     const phoneRegex = /^03\d{9}$/;
+//     return phoneRegex.test(number);
+// }
+
 function isValidPhoneNumber(number) {
+    // Remove any non-digit characters
+    const cleanedNumber = number.replace(/\D/g, '');
+
+    // Check if the cleaned number has a length of 11 and starts with '03'
     const phoneRegex = /^03\d{9}$/;
-    return phoneRegex.test(number);
+
+    return phoneRegex.test(cleanedNumber);
 }
 
 function setupInputValidation(inputField, errorElement) {
