@@ -191,18 +191,9 @@ function handleBtnStatus(btn, status) { btn.value = status }
 // VALIDATORS
 function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email) }
 
-// function isValidPhoneNumber(string) {
-//     const phoneRegex = /^03\d{9}$/;
-//     return phoneRegex.test(number);
-// }
-
 function isValidPhoneNumber(number) {
-    // Remove any non-digit characters
     const cleanedNumber = number.replace(/\D/g, '');
-
-    // Check if the cleaned number has a length of 11 and starts with '03'
     const phoneRegex = /^03\d{9}$/;
-
     return phoneRegex.test(cleanedNumber);
 }
 
@@ -215,21 +206,29 @@ function setupInputValidation(inputField, errorElement) {
         return { inputField, errorElement }
     }
 }
+
 function handleInputValidation(inputField, errorElement) { inputField.addEventListener('input', function () { if (inputField.value !== '') { hideElements(errorElement); inputField.classList.remove('input-error') } }) }
+
 function validateInput(inputField, errorElement, errorMessage, minLength) {
     const trimmedValue = inputField.value.trim();
+
     if (trimmedValue === '') {
+
+        console.log(">>>>>>>>>>>if")
         errorElement.innerHTML = errorMessage;
         showElements(errorElement);
         inputField.classList.add('input-error');
         return false;
 
     } else if (minLength && trimmedValue.length < minLength) {
+        console.log(">>>>>>>>>>>else")
+
         errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
         showElements(errorElement);
         inputField.classList.add('input-error');
         return false;
     }
+
     return true;
 }
 
@@ -441,8 +440,12 @@ Webflow.push(function () {
                 mixPanelActions.waitlistForm(props)
             }
 
-
             function handleError(errorData, errorCode) {
+
+                console.log("errorData, errorCode", errorData, errorCode)
+
+
+
                 showElements(wlForm);
                 hideElements(wlSucess)
                 handleBtnStatus(wlSubmit, 'Send');
