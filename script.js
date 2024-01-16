@@ -1,12 +1,12 @@
 const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
 
 currentDomain = window.location.hostname;
-corporate = CORPORATE;
-individual = INDIVIDUAL;
+// corporate = CORPORATE;
+// individual = INDIVIDUAL;
 
-mahaanaWealthCashFund = CASHFUND
-mahaanaInvitee = INVITE_MAHANIERS
-domainURL = DOMAIN_URL;
+// mahaanaWealthCashFund = CASHFUND
+// mahaanaInvitee = INVITE_MAHANIERS
+// domainURL = DOMAIN_URL;
 
 
 // let api_Token = MIXPANEL_API_TOKEN;
