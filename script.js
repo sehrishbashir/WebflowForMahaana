@@ -212,6 +212,8 @@ function handleInputValidation(inputField, errorElement) { inputField.addEventLi
 function validateInput(inputField, errorElement, errorMessage, minLength) {
     const trimmedValue = inputField.value.trim();
 
+    console.log(">>>>>>>>>>>if", minLength, inputField)
+
     if (trimmedValue === '') {
 
         console.log(">>>>>>>>>>>if")
