@@ -429,7 +429,7 @@ Webflow.push(function () {
                 hideElements(wlSucess)
                 handleBtnStatus(wlSubmit, 'Send');
                 if (errorData.charAt(0) == "{") {
-                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError)
+                    handleErrorList(wlError, wlErrorMsg, errorData, wlEmailError, wlNameError,wlContactError)
                 }
                 else {
                     wlErrorMsg.innerText = errorCode == 409 ? userAddedMsg : errorData;
