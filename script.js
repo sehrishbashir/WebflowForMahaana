@@ -452,8 +452,6 @@ Webflow.push(function () {
 
                 console.log("errorData, errorCode", errorData, errorCode)
 
-
-
                 showElements(wlForm);
                 hideElements(wlSucess)
                 handleBtnStatus(wlSubmit, 'Send');
@@ -468,7 +466,6 @@ Webflow.push(function () {
 
                 // const errorElement = document.getElementById('waitlist-error-form-message');
                 // const errorMessage = errorElement.innerText;
-                // console.log(errorMessage, errorCode)
                 // const props = {
                 //     email: "",
                 //     info:{
@@ -480,12 +477,9 @@ Webflow.push(function () {
                 //     console.log('SHA-1 Hash:', hash);
                 //     props.email = `${hash}`;
                 // })
-                // console.log(props)
                 // mixPanelActions.waitlistForm(props)
+                // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
 
-                // // mixPanelActions.joinWaitlistFailed(wlEmailInput.value);
-
-                // // console.log(wlEmailInput.value)
             }
             handleFormSubmission(`${mahaanaInvitee}/api/WaitList`, formData, inputs, handleSuccess, handleError);
             return false;
