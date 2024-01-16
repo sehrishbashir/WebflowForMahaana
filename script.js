@@ -194,8 +194,7 @@ function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 function isValidPhoneNumber(number) {
     const cleanedNumber = number.replace(/\D/g, '');
     const phoneRegex = /^03\d{9}$/;
-    return "ABD";
-    // return phoneRegex.test(cleanedNumber);
+    return phoneRegex.test(cleanedNumber);
 }
 
 function setupInputValidation(inputField, errorElement) {
@@ -210,7 +209,7 @@ function setupInputValidation(inputField, errorElement) {
 
 function handleInputValidation(inputField, errorElement) { inputField.addEventListener('input', function () { if (inputField.value !== '') { hideElements(errorElement); inputField.classList.remove('input-error') } }) }
 
-function validateInput(inputField, errorElement, errorMessage, minLength) {
+function validateInput(inputField, errorElement, errorMessage, minLength, type) {
     const trimmedValue = inputField.value.trim();
 
     console.log(">>>>>>>>>>>if", minLength, inputField)
@@ -223,7 +222,16 @@ function validateInput(inputField, errorElement, errorMessage, minLength) {
         inputField.classList.add('input-error');
         return false;
 
-    } else if (minLength && trimmedValue.length < minLength) {
+    }
+    else if (minLength && trimmedValue.length < minLength) {
+        console.log(">>>>>>>>>>>else")
+
+        errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
+        showElements(errorElement);
+        inputField.classList.add('input-error');
+        return false;
+    }
+    else if (type == "phoneNumber") {
         console.log(">>>>>>>>>>>else")
 
         errorElement.innerHTML = 'Please enter at least ' + minLength + ' characters';
@@ -267,7 +275,7 @@ function hideErrorMessage(errorElement, inputField) { hideElements(errorElement)
 // INITIALIZER
 function handleInitForm(elements) {
     elements.forEach((field) => { field.inputField.classList.remove('input-error'); hideElements(field.errorElement) });
-    const inputValidations = elements.map((field) => validateInput(field.inputField, field.errorElement, field.message, field.validator));
+    const inputValidations = elements.map((field) => validateInput(field.inputField, field.errorElement, field.message, field.validator, field.type));
     return inputValidations;
 }
 
@@ -301,7 +309,7 @@ const GIFormElements = [
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
     { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail },
-    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: isValidPhoneNumber }
+    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: 11, type: "phoneNumber" }
 ];
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
