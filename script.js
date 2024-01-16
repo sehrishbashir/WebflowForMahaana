@@ -282,7 +282,8 @@ const GIFormElements = [
 ];
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
-    { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail }
+    { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail },
+    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: 11 }
 ];
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
@@ -386,8 +387,6 @@ Webflow.push(function () {
         if (inputValidations.every((isValid) => isValid)) {
             $(document).off('submit');
             const formData = { name: wlNameInput.value, email: wlEmailInput.value, PhoneNumber: wlContactInput.value };
-
-            console.log("formData", formData)
 
             handleBtnStatus(wlSubmit, 'Please wait ...');
             const inputs = [wlNameInput, wlEmailInput, wlContactInput,wlSubmit]
