@@ -109,8 +109,10 @@ const wlErrorMsg = document.querySelector('#waitlist-error-form-message');
 const wlSubmit = document.querySelector('#waitlist-submit');
 const wlNameInput = document.querySelector('#waitlist-name');
 const wlEmailInput = document.querySelector('#waitlist-email');
+const wlContactInput = document.querySelector('#waitlist-contact');
 const wlNameError = document.querySelector('#waitlist-name-error');
 const wlEmailError = document.querySelector('#waitlist-email-error');
+const wlContactError = document.querySelector('#waitlist-contact-error');
 
 // CONTACT US FORM FIELS
 const cuForm = document.getElementById('wf-form-contact-us');
@@ -383,9 +385,9 @@ Webflow.push(function () {
 
         if (inputValidations.every((isValid) => isValid)) {
             $(document).off('submit');
-            const formData = { name: wlNameInput.value, email: wlEmailInput.value };
+            const formData = { name: wlNameInput.value, email: wlEmailInput.value, mobileNumber: wlContactInput };
             handleBtnStatus(wlSubmit, 'Please wait ...');
-            const inputs = [wlNameInput, wlEmailInput, wlSubmit]
+            const inputs = [wlNameInput, wlEmailInput, wlContactInput,wlSubmit]
             handleDisabled(inputs, true)
 
             async function handleSuccess() {
