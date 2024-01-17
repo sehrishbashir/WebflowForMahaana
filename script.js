@@ -1,4 +1,4 @@
-const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
+// const { CORPORATE, INDIVIDUAL, INVITE_MAHANIERS, DOMAIN_URL, HC_ORGANIZATION, HC_APPID, CASHFUND } = window.env
 
 currentDomain = window.location.hostname;
 // corporate = CORPORATE;
@@ -409,7 +409,7 @@ Webflow.push(function () {
 
         if (inputValidations.every((isValid) => isValid)) {
             $(document).off('submit');
-            const formData = { name: wlNameInput.value, email: wlEmailInput.value, PhoneNumber: wlContactInput.value };
+            const formData = { name: wlNameInput.value, email: wlEmailInput.value, phoneNumber: wlContactInput.value };
 
             handleBtnStatus(wlSubmit, 'Please wait ...');
             const inputs = [wlNameInput, wlEmailInput, wlContactInput, wlSubmit]
