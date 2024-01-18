@@ -403,9 +403,9 @@ async function hashTextWithSHA1(text) {
 // WAITLIST FORM
 var Webflow = Webflow || [];
 Webflow.push(function () {
-    $('form#waitlist-form').submit(function (evt) {
+    $('form#waitlist-form').submit(async function (evt) {
         evt.preventDefault();
-        const inputValidations = handleInitForm(WLFormElements);
+        const inputValidations = await handleInitForm(WLFormElements);
 
         if (inputValidations.every((isValid) => isValid)) {
             $(document).off('submit');
