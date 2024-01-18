@@ -208,17 +208,7 @@ function setupInputValidation(inputField, errorElement) {
 }
 
 function handleInputValidation(inputField, errorElement) { inputField.addEventListener('input', function () { if (inputField.value !== '') { hideElements(errorElement); inputField.classList.remove('input-error') } }) }
-function validatePhoneNumber(inputField, errorElement) {
-    const numberValidate = isValidPhoneNumber(inputField.value);
-    if (!numberValidate) {
-        errorElement.innerHTML = 'Not a valid number';
-        showElements(errorElement);
-        inputField.classList.add('input-error');
-        return false;
-    }
-    return true;
-}
-function validateInput(inputField, errorElement, errorMessage, minLength, validator) {
+function validateInput(inputField, errorElement, errorMessage, minLength, type) {
     const trimmedValue = inputField.value.trim();
 
     if (trimmedValue === '') {
@@ -234,20 +224,18 @@ function validateInput(inputField, errorElement, errorMessage, minLength, valida
         inputField.classList.add('input-error');
         return false;
     }
-    // else if (type == "phoneNumber") {
-    //     const numberValidate = isValidPhoneNumber(inputField.value)
-    //     if (!numberValidate) {
-    //         errorElement.innerHTML = 'Not a valid number';
-    //         showElements(errorElement);
-    //         inputField.classList.add('input-error');
-    //     }
-    //     else {
-    //         return true;
-    //     }
-    // }
-    else if (validator) {
-        return validator(inputField, errorElement);
+    else if (type == "phoneNumber") {
+        const numberValidate = isValidPhoneNumber(inputField.value)
+        if (!numberValidate) {
+            errorElement.innerHTML = 'Not a valid number';
+            showElements(errorElement);
+            inputField.classList.add('input-error');
+        }
+        else {
+            return true;
+        }
     }
+
 
     return true;
 }
@@ -318,10 +306,7 @@ const GIFormElements = [
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
     { inputField: wlEmailInput, errorElement: wlEmailError, message: emailMsg, validator: isValidEmail },
-    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: (field, error) => validatePhoneNumber(field, error)
-        // validator: 11,
-        //  type: "phoneNumber"
-         },
+    { inputField: wlContactInput, errorElement: wlContactError, message: phoneMsg, validator: 11, type: "phoneNumber"},
 ];
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
