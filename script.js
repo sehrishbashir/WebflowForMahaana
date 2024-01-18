@@ -230,6 +230,7 @@ function validateInput(inputField, errorElement, errorMessage, minLength, type) 
             errorElement.innerHTML = 'Not a valid number';
             showElements(errorElement);
             inputField.classList.add('input-error');
+            return false
         }
         else {
             return true;
