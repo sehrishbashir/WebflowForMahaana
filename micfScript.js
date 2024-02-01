@@ -577,6 +577,20 @@ async function fetchData() {
     }
     setTimeout(() => {
         loader.style.display = 'none';
+        const fragmentIdentifier = window.location.hash;
+
+        if (fragmentIdentifier) {
+            // Remove the '#' symbol from the fragment identifier
+            const targetId = fragmentIdentifier.substring(1);
+    
+            // Find the target element by its id
+            const targetElement = document.getElementById(targetId);
+    
+            // Scroll to the target element if it exists
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     }, 1000);
 }
 
