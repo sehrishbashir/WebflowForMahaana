@@ -45,6 +45,17 @@ function createLoader() {
 }
 // ---------------------------------------------- //
 
+
+
+
+
+// YTD & MTD FIELDS
+// const ytdMtdField = document.getElementById("ytd-mtd-values");
+// const ytdValue = 
+// const mtdValue = 
+// ytdMtdField.innerText = `${ytdValue} % (MTD)\n${mtdValue} % (YTD)`;
+
+
 // HEAD
 function tabStopHandler() {
     Webflow.push(function () {
@@ -435,6 +446,14 @@ function renderLoop(data) {
     }
 }
 
+
+//      `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
+
+//adding event lister for the offering Document
+const offeringDocumentWrapper = document.getElementById('offering-document');
+
+
+
 async function fetchData() {
     // Create the loader
     const loader = createLoader();
@@ -480,9 +499,13 @@ async function fetchData() {
             'shahr-e-advisor': fundInfo.shariahAdvisors,
             'custodian': fundInfo.custodian,
             'weightAverageTime': fundInfo.weightedAverageTime,
+            'totalMonthlyExpenseRatioWithoutLevy':`${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
+            'totalYearlyExpenseRatioWithoutLevy':`${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
         };
 
         if (offeringDocumentList.length > 0) {
+            // handleOfferingDocumentClicked(offeringDocumentList[0])
+            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length-1].key.split('.')[0]}`;
             offeringDocumentList.pop();
             reportWrap.style.display = "none";
         }
@@ -554,6 +577,20 @@ async function fetchData() {
     }
     setTimeout(() => {
         loader.style.display = 'none';
+        const fragmentIdentifier = window.location.hash;
+
+        if (fragmentIdentifier) {
+            // Remove the '#' symbol from the fragment identifier
+            const targetId = fragmentIdentifier.substring(1);
+    
+            // Find the target element by its id
+            const targetElement = document.getElementById(targetId);
+    
+            // Scroll to the target element if it exists
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     }, 1000);
 }
 
