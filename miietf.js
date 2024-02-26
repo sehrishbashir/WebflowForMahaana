@@ -15,6 +15,7 @@ const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-
 const holdingChart = document.querySelector('#top-holdings-chart');
 
 const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+const assetList = document.querySelector('#asset-allocation-chart-wrapper .assetallocation-list');
 
 const distributionBodyRow = document.querySelector('.distribution-body');
 const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
@@ -355,6 +356,7 @@ async function fetchData() {
 
         if (Object.keys(assetAllocation).length > 0) {
             assetChartWrap.style.display = "none";
+            assetList.style.display = "flex";
             renderAssetChart(transformData(assetAllocation));
         }
 
