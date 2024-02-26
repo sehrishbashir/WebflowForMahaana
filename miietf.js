@@ -78,8 +78,6 @@ function renderLoop(data) {
         }
     }
     if (distributions?.length > 0) {
-
-        console.log("distributions",distributions, distributions?.length)
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
@@ -236,7 +234,7 @@ async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const data = demoData;
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions } = data;
+        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, assetAllocation, holding, distributions } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate'); 
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
@@ -278,30 +276,28 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             setTextContent(elementId, contentMapping[elementId])
         }
-        data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+        data.assetAllocation = transformData(assetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
 
-        const assetAllocationData = {
-            "currentAssetAllocation": currentAssetAllocation,
-            "lastAssetAllocation": lastAssetAllocation
-        };
+        // const assetAllocationData = {
+        //     "currentAssetAllocation": currentAssetAllocation,
+        //     "lastAssetAllocation": lastAssetAllocation
+        // };
 
-        const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-        const overallAssetAllocationData = assetClasses
-            .map(assetClass => ({
-                name: assetClass,
-                current: assetAllocationData.currentAssetAllocation[assetClass],
-                last: assetAllocationData.lastAssetAllocation[assetClass]
-            }))
-            .filter(data => data.current > 0 || data.last > 0);
+        // const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+        // const overallAssetAllocationData = assetClasses
+        //     .map(assetClass => ({
+        //         name: assetClass,
+        //         current: assetAllocationData.currentAssetAllocation[assetClass],
+        //         last: assetAllocationData.lastAssetAllocation[assetClass]
+        //     }))
+        //     .filter(data => data.current > 0 || data.last > 0);
 
-        data.overAllCreditRating = overallAssetAllocationData;
+        // data.overAllCreditRating = overallAssetAllocationData;
 
         renderLoop(data);
-
-        const sendingPieData = transformData(creditRating)
 
         if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
@@ -314,15 +310,16 @@ async function fetchData() {
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
-            renderCreditChart(sendingPieData);
+            renderCreditChart(transformData(creditRating));
         } else {
             creditChart.style.border = 0;
         }
 
         if (Object.keys(overallAssetAllocationData).length > 0) {
             assetChartWrap.style.display = "none";
-            renderAssetChart(overallAssetAllocationData);
+            renderAssetChart(transformData(assetAllocation));
         }
+
     } catch (error) {
         console.error('>>>>>>Error', error);
         creditChart.style.border = 0;
