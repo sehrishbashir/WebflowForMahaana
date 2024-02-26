@@ -168,7 +168,7 @@ const demoData = {
         "fundManager": "Mahaana Wealth Limited",
 
         // New
-        "Authorized Participant": "JS Global Capital Limited",
+        "authorizedParticipant": "JS Global Capital Limited",
 
         // Not used anymore
         "totalExpenseRatio": null,
