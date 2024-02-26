@@ -45,9 +45,65 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 // const setTextContent = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
 
 function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data; const dataMappings = [{ elementClass: '.asset-allocation', data: currentAssetAllocation }, { elementClass: '.credit-quality', data: creditRating }, { elementClass: '.top-holdings', data: holding }]; const dataMappingsUpdated = [{ elementClass: '.credit-list', data: creditRating }, { elementClass: '.holding-list', data: holding }]; dataMappings.forEach(({ elementClass, data }) => { const bodyRow = document.querySelector(elementClass); populateTableData(data, bodyRow) }); dataMappingsUpdated.forEach(({ elementClass, data }) => { const bodyRow = document.querySelector(elementClass); if (Object.keys(data).length > 0) { compositionList(data, bodyRow) } else { bodyRow.style.display = "none" } }); if (performances) { const performanceBodyRow = document.querySelector('.performance-body'); if (performanceBodyRow) { performances.forEach(data => { const row = document.createElement('div'); row.classList.add('performance-body-row'); const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row) }) } } if (distributions) { distributionWrap.style.display = "none"; if (distributionBodyRow) { distributions.forEach((data) => { const row = document.createElement('div'); row.classList.add('distribution-body-row'); const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`; row.innerHTML = html; distributionBodyRow.appendChild(row) }) } }
+    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
+    const dataMappings = [
+        { elementClass: '.asset-allocation', data: currentAssetAllocation },
+        { elementClass: '.credit-quality', data: creditRating },
+        { elementClass: '.top-holdings', data: holding }
+    ];
+
+    const dataMappingsUpdated = [
+        { elementClass: '.credit-list', data: creditRating },
+        { elementClass: '.holding-list', data: holding }
+    ];
+
+    dataMappings.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        populateTableData(data, bodyRow)
+    });
+
+    dataMappingsUpdated.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        if (Object.keys(data).length > 0) { compositionList(data, bodyRow) } else { bodyRow.style.display = "none" }
+    });
+
+    if (performances) {
+        const performanceBodyRow = document.querySelector('.performance-body');
+        if (performanceBodyRow) {
+            performances.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('performance-body-row');
+                const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
+            })
+        }
+    }
+    if (distributions) {
+
+        console.log("distributions",distributions, distributions?.length)
+        distributionWrap.style.display = "none";
+        if (distributionBodyRow) {
+            distributions.forEach((data) => {
+                const row = document.createElement('div');
+                row.classList.add('distribution-body-row');
+                const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`; row.innerHTML = html; distributionBodyRow.appendChild(row)
+            })
+        }
+    }
     function populateTableData(data, container) { data.forEach((item) => { const row = document.createElement('div'); row.classList.add('portfolio-body-row'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`; row.innerHTML = html; if (container) { container.appendChild(row) } }) } if (performances) { const performanceContentArea = document.querySelector('.performace-new-table'); if (performanceContentArea) { while (performanceContentArea.firstChild) { performanceContentArea.removeChild(performanceContentArea.firstChild); } performances.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B"; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row); }) } }
-    if (overAllCreditRating) { const portfolioDataContainer = document.querySelector('.portfolio-data-container'); if (portfolioDataContainer) { while (portfolioDataContainer.firstChild) { portfolioDataContainer.removeChild(portfolioDataContainer.firstChild) } overAllCreditRating.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`; row.innerHTML = html; portfolioDataContainer.appendChild(row) }) } }
+
+    if (overAllCreditRating) {
+        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+        if (portfolioDataContainer) {
+            while (portfolioDataContainer.firstChild) {
+                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
+            }
+            overAllCreditRating.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`; row.innerHTML = html; portfolioDataContainer.appendChild(row)
+            })
+        }
+    }
     function compositionList(data, container) { if (container) { while (container.firstChild) { container.removeChild(container.firstChild); } data.forEach((item, index) => { const row = document.createElement('div'); row.classList.add('table-item'); row.classList.add('no-min-width'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631']; const selectedColor = PIE_COLORS[index]; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row); }) } }
 }
 
@@ -75,7 +131,7 @@ const demoData = {
         "fundManager": "Mahaana Wealth Limited",
 
         // New
-        "Authorized Participant": "JS Global Capital Limited",
+        "authorizedParticipant": "JS Global Capital Limited",
 
         // Not used anymore
         "totalExpenseRatio": null,
@@ -202,11 +258,7 @@ async function fetchData() {
             'managementFee': fundInfo.managementFee,
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
-            'shahr-e-advisor': fundInfo.shariahAdvisors,
-            'custodian': fundInfo.custodian,
-            'weightAverageTime': fundInfo.weightedAverageTime,
-            'totalMonthlyExpenseRatioWithoutLevy': `${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
-            'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
+            'authorizedParticipant': fundInfo.authorizedParticipant,
         };
 
         if (offeringDocumentList.length > 0) {
@@ -7961,7 +8013,7 @@ function getFundData2(duration) {
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
-            renderFundChart(demoPerformaceData); 
+            renderFundChart(demoPerformaceData);
             const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
             if (totalReturnDate) {
                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
@@ -8002,9 +8054,9 @@ function displayReports(reportsData) {
 
 }
 
-function goToPage(page) {if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) {currentPage = page; window.currentPage = displayReports(reportsData)}}
-const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 },{ key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
-const durationContainerNew = document.getElementById('new-graph-duration');if (durationContainerNew) {while (durationContainerNew.firstChild) {durationContainerNew.removeChild(durationContainerNew.firstChild);}graphDur.forEach(item => {const durationDiv = document.createElement('div');durationDiv.className = 'duration';durationDiv.textContent = item.key;if (item.key === '3M') {durationDiv.classList.add('selected')}durationDiv.addEventListener('click', () => {const selectedDiv = document.querySelector('.duration.selected');if (selectedDiv) {selectedDiv.classList.remove('selected')}durationDiv.classList.add('selected');getFundData2(item.value);});if (durationContainerNew) {durationContainerNew.appendChild(durationDiv);}});const svgDiv = document.createElement('div');svgDiv.className = 'html-embed-50 w-embed';svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`;durationContainerNew.appendChild(svgDiv);}
+function goToPage(page) { if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) { currentPage = page; window.currentPage = displayReports(reportsData) } }
+const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 }, { key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
+const durationContainerNew = document.getElementById('new-graph-duration'); if (durationContainerNew) { while (durationContainerNew.firstChild) { durationContainerNew.removeChild(durationContainerNew.firstChild); } graphDur.forEach(item => { const durationDiv = document.createElement('div'); durationDiv.className = 'duration'; durationDiv.textContent = item.key; if (item.key === '3M') { durationDiv.classList.add('selected') } durationDiv.addEventListener('click', () => { const selectedDiv = document.querySelector('.duration.selected'); if (selectedDiv) { selectedDiv.classList.remove('selected') } durationDiv.classList.add('selected'); getFundData2(item.value); }); if (durationContainerNew) { durationContainerNew.appendChild(durationDiv); } }); const svgDiv = document.createElement('div'); svgDiv.className = 'html-embed-50 w-embed'; svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`; durationContainerNew.appendChild(svgDiv); }
 
 
 // ---------------------------------------------- //
