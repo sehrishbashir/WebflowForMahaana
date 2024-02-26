@@ -276,6 +276,7 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             setTextContent(elementId, contentMapping[elementId])
         }
+        
         data.assetAllocation = transformData(assetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
@@ -315,10 +316,10 @@ async function fetchData() {
             creditChart.style.border = 0;
         }
 
-        if (Object.keys(overallAssetAllocationData).length > 0) {
-            assetChartWrap.style.display = "none";
-            renderAssetChart(transformData(assetAllocation));
-        }
+        // if (Object.keys(overallAssetAllocationData).length > 0) {
+        //     assetChartWrap.style.display = "none";
+        //     renderAssetChart(assetAllocation);
+        // }
 
     } catch (error) {
         console.error('>>>>>>Error', error);
