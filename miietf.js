@@ -48,7 +48,7 @@ function renderLoop(data) {
     const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
 
     const dataMappingsUpdated = [
-        { elementClass: '.assetAllocation-list', data: assetAllocation },
+        { elementClass: '.assetallocation-list', data: assetAllocation },
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
