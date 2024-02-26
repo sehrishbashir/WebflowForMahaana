@@ -113,7 +113,7 @@ function renderLoop(data) {
                 <div class="table-content-area">
                     <div style="display: flex; gap: 14px">
                         <div class="div-block-101" style="display: flex;">
-                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}/></svg>
+                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
                         <div>
                         <div class="text-block-37">${data.key}</div>
                         <div class="text-block-38">${returnVal}%</div>
