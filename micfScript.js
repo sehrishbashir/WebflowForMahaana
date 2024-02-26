@@ -690,10 +690,10 @@ function goToPage(page) {
     }
 }
 
-const graphDur = [
-    { key: '1M', value: 0 }, { key: '3M', value: 3 },
-    { key: '1Y', value: 12 }, { key: '3Y', value: 12 }
-];
+// const graphDur = [
+//     { key: '1M', value: 0 }, { key: '3M', value: 3 },
+//     { key: '1Y', value: 12 }, { key: '3Y', value: 12 }
+// ];
 
 const durationContainer = document.getElementById('graph-duration');
 
