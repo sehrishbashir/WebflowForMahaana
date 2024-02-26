@@ -235,8 +235,8 @@ async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        const data = await response.json();
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions } = demoData;
+        const data = demoData;
+        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate'); Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
         const contentMapping = {
