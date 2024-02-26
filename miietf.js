@@ -102,10 +102,13 @@ function renderLoop(data) {
             while (portfolioDataContainer.firstChild) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
-            assetAllocation.forEach(data => {
+            assetAllocation.forEach((data, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
+                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+                const selectedColor = PIE_COLORS[index];
+
                 const html = `
                 <div class="table-content-area">
                     <div style="display: flex; gap: 14px">
