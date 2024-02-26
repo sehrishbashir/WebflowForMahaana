@@ -56,403 +56,21 @@ function createLoader() {
 // ytdMtdField.innerText = `${ytdValue} % (MTD)\n${mtdValue} % (YTD)`;
 
 
-// HEAD
-function tabStopHandler() {
-    Webflow.push(function () {
-        let sectionLinks = document.querySelectorAll('.tab-item');
-        sectionLinks.forEach(function (link) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                $(document).off('click')
-            })
-        })
-    })
-}
+// function tabStopHandler() {Webflow.push(function () {let sectionLinks = document.querySelectorAll('.tab-item');sectionLinks.forEach(function (link) {link.addEventListener('click', function (event) {event.preventDefault();$(document).off('click')})})})}
+// function tabHandler() {const tabLinks = document.querySelectorAll(".tab-item"); const header = document.querySelector(".navbar-3"); const headerHeight = header.getBoundingClientRect().height;function handleTabLinkClick(targetSection) {const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed'); const offset = !isTabBarFixed ? -headerHeight - 170 : -190; const targetSectionRect = targetSection.getBoundingClientRect();window.scrollTo({ top: targetSectionRect.top + window.scrollY + offset, behavior: "smooth" });const sectionId = targetSection.id;if (sectionId) {const updatedUrl = new URL(window.location.href);updatedUrl.searchParams.set("section", sectionId);window.history.replaceState(null, null, updatedUrl);}}tabLinks.forEach(link => {link.addEventListener("click", function (event) {event.preventDefault();const targetSection = document.querySelector(link.getAttribute("href"));handleTabLinkClick(targetSection);const tabsMenu = document.querySelector('.tabs-menu');tabsMenu.classList.add("fixed");});});}
+// function scrollHandler() {const tabsMenu = document.querySelector('.tabs-menu');const tabContent = document.querySelector('.tabs-content');const tabWrapper = document.querySelector('#tab-wrapper');const sections = document.querySelectorAll(".tab-content-container");const tabLinks = document.querySelectorAll(".tab-item");let isTabBarFixed;if (tabsMenu) {isTabBarFixed = tabsMenu.classList.contains('fixed');function obCallback(payload) {if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {tabsMenu.classList.add("fixed");tabWrapper.style.paddingTop = '64px';}else {tabsMenu.classList.remove("fixed");tabWrapper.style.paddingTop = '0';}}const ob = new IntersectionObserver(obCallback);ob.observe(tabContent);const options = { threshold: 0.2 };const observer = new IntersectionObserver((entries) => {entries.forEach(entry => {if (entry.isIntersecting) {const offset = !isTabBarFixed ? 250 : 200;const targetId = entry.target.id;const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {tabLinks.forEach(link => link.classList.remove("active"));targetTabLinks.forEach(link => link.classList.add("active"));} else {targetTabLinks.forEach(link => link.classList.remove("active"));}}});}, options);sections.forEach((section) => {observer.observe(section);});} }
+// function removePer(str) {if (String(str).includes('%')) return str.replace('%', '');else return str}
+// function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
+// const setTextContent = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
 
-function tabHandler() {
-    const tabLinks = document.querySelectorAll(".tab-item");
-    const header = document.querySelector(".navbar-3");
+function renderLoop(data) {const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;const dataMappings = [{ elementClass: '.asset-allocation', data: currentAssetAllocation },{ elementClass: '.credit-quality', data: creditRating },{ elementClass: '.top-holdings', data: holding }];const dataMappingsUpdated = [{ elementClass: '.credit-list', data: creditRating },{ elementClass: '.holding-list', data: holding }];dataMappings.forEach(({ elementClass, data }) => {const bodyRow = document.querySelector(elementClass);populateTableData(data, bodyRow)});dataMappingsUpdated.forEach(({ elementClass, data }) => {const bodyRow = document.querySelector(elementClass);if (Object.keys(data).length > 0) {compositionList(data, bodyRow)} else {bodyRow.style.display = "none"}});if (performances) {const performanceBodyRow = document.querySelector('.performance-body');if (performanceBodyRow) {performances.forEach(data => {const row = document.createElement('div');row.classList.add('performance-body-row');const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`;row.innerHTML = html;performanceBodyRow.appendChild(row)})}}if (distributions) {distributionWrap.style.display = "none";if (distributionBodyRow) {distributions.forEach((data) => {const row = document.createElement('div');row.classList.add('distribution-body-row');const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;row.innerHTML = html;distributionBodyRow.appendChild(row)})}}
+function populateTableData(data, container) {data.forEach((item) => {const row = document.createElement('div');row.classList.add('portfolio-body-row');const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`;row.innerHTML = html;if (container) { container.appendChild(row) }})}if (performances) {const performanceContentArea = document.querySelector('.performace-new-table');if (performanceContentArea) {while (performanceContentArea.firstChild) {performanceContentArea.removeChild(performanceContentArea.firstChild);}performances.forEach(data => {const row = document.createElement('div');row.classList.add('table-item');const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";const html=`<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`;row.innerHTML = html;performanceContentArea.appendChild(row);})}}
+if (overAllCreditRating) {const portfolioDataContainer = document.querySelector('.portfolio-data-container');if (portfolioDataContainer) {while (portfolioDataContainer.firstChild) {portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)}overAllCreditRating.forEach(data => {const row = document.createElement('div');row.classList.add('table-item');const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`;row.innerHTML = html;portfolioDataContainer.appendChild(row)})}}
+function compositionList(data, container) {if (container) {while (container.firstChild) {container.removeChild(container.firstChild);}data.forEach((item, index) => {const row = document.createElement('div');row.classList.add('table-item');row.classList.add('no-min-width');const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];const selectedColor = PIE_COLORS[index];const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`;row.innerHTML = html;container.appendChild(row);})}}}
 
-    if (header) {
-        const headerHeight = header.getBoundingClientRect().height;
-
-        function handleTabLinkClick(targetSection) {
-            const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
-            const offset = !isTabBarFixed ? -headerHeight - 170 : -190;
-            // const offset = isTabBarFixed ? -headerHeight - 190 : -headerHeight - 170; // Adjusted offset
-            const targetSectionRect = targetSection.getBoundingClientRect();
-
-            window.scrollTo({
-                top: targetSectionRect.top + window.scrollY + offset,
-                behavior: "smooth"
-            });
-
-            const sectionId = targetSection.id;
-            if (sectionId) {
-                const updatedUrl = new URL(window.location.href);
-                updatedUrl.searchParams.set("section", sectionId);
-                window.history.replaceState(null, null, updatedUrl);
-            }
-        }
-
-        tabLinks.forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                const targetSection = document.querySelector(link.getAttribute("href"));
-                handleTabLinkClick(targetSection)
-                const tabsMenu = document.querySelector('.tabs-menu')
-                tabsMenu.classList.add("fixed");
-            });
-        });
-    }
-}
-
-function scrollHandler() {
-    const tabsMenu = document.querySelector('.tabs-menu');
-    const tabContent = document.querySelector('.tabs-content');
-    const tabWrapper = document.querySelector('#tab-wrapper');
-    const sections = document.querySelectorAll(".tab-content-container");
-    const tabLinks = document.querySelectorAll(".tab-item");
-
-    let isTabBarFixed;
-    if (tabsMenu) {
-        isTabBarFixed = tabsMenu.classList.contains('fixed');
-
-        function obCallback(payload) {
-            if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {
-                tabsMenu.classList.add("fixed");
-                tabWrapper.style.paddingTop = '64px';
-
-            }
-            else {
-                tabsMenu.classList.remove("fixed");
-                tabWrapper.style.paddingTop = '0';
-            }
-        }
-
-        function animateFadeOut(element) {
-            element.style.transition = 'opacity 0.5s'; // Add transition for fading out
-            element.style.opacity = '0';
-            tabWrapper.style.paddingTop = '0';
-
-            // After the animation duration, remove the fixed class
-            setTimeout(() => {
-                element.classList.remove("fixed");
-                element.style.transition = ''; // Reset transition property
-                element.style.opacity = '1'; // Reset opacity
-            }, 500); // Adjust the duration (in milliseconds) based on your animation duration
-        }
-
-        // function obCallback(payload) {
-        //     const scrollPosition = window.scrollY + window.innerHeight;
-        //     const bottomOffset = 50; // Adjust this value based on your requirements //finetune bottomoffset value
-        //     const bottomThreshold = tabContent.offsetTop + tabContent.offsetHeight - bottomOffset;
-
-        //     if (scrollPosition > bottomThreshold && window.innerWidth >= 768) {
-        //         tabsMenu.style.transition = 'opacity 0.5s'; // Add transition for fading out
-        //         tabsMenu.style.opacity = '0';
-        //         tabWrapper.style.paddingTop = '0';
-
-        //         // After the animation duration, remove the fixed class
-        //         setTimeout(() => {
-        //             tabsMenu.classList.remove("fixed");
-        //             tabsMenu.style.transition = ''; // Reset transition property
-        //             tabsMenu.style.opacity = '1'; // Reset opacity
-        //         }, 500); // Adjust the duration (in milliseconds) based on your animation duration
-        //         // tabsMenu.classList.remove("fixed");
-        //         // tabWrapper.style.paddingTop = '0';
-        //     }
-        //     else {
-        //         tabsMenu.classList.add("fixed");
-        //         tabWrapper.style.paddingTop = '64px';
-        //     }
-        // }
-
-        const ob = new IntersectionObserver(obCallback);
-        ob.observe(tabContent);
-        const options = { threshold: 0.2 };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const offset = !isTabBarFixed ? 250 : 200;
-                    const targetId = entry.target.id;
-                    const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);
-                    if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {
-                        tabLinks.forEach(link => link.classList.remove("active"));
-                        targetTabLinks.forEach(link => link.classList.add("active"));
-                    } else {
-                        targetTabLinks.forEach(link => link.classList.remove("active"));
-                    }
-                }
-            });
-        }, options)
-        sections.forEach((section) => {
-            observer.observe(section);
-        });
-    } else {
-        // Handle the case where '.tabs-menu' is not found in the DOM
-    }
-    // const isTabBarFixed = document.querySelector('.tabs-menu').classList.contains('fixed');
-}
-
-function removePer(str) {
-    if (String(str).includes('%')) return str.replace('%', '')
-    else return str
-}
-
-function transformData(data, type) {
-    return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);
-}
-
-const setTextContent = (elementId, content) => {
-    const element = document.getElementById(elementId);
-    if (element) { element.textContent = content; }
-};
-
-function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
-
-    const dataMappings = [
-        { elementClass: '.asset-allocation', data: currentAssetAllocation },
-        { elementClass: '.credit-quality', data: creditRating },
-        { elementClass: '.top-holdings', data: holding }
-    ];
-
-    const dataMappingsUpdated = [
-        { elementClass: '.credit-list', data: creditRating },
-        { elementClass: '.holding-list', data: holding }
-    ];
-
-    dataMappings.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        populateTableData(data, bodyRow)
-    });
-
-    dataMappingsUpdated.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) {
-            compositionList(data, bodyRow)
-        } else {
-            bodyRow.style.display = "none"
-        }
-
-    });
-
-    if (performances) {
-        const performanceBodyRow = document.querySelector('.performance-body');
-
-        if (performanceBodyRow) {
-            performances.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('performance-body-row');
-                const html = `
-            <div class="performance-body-cell flex-1 right-align">
-                <span class="per-body-title">${data.name || '-'}</span>
-            </div>
-            <div class="performance-body-cell">
-                <span class="per-body-title">${data.mtd || '-'}</span>
-            </div>
-            <div class="performance-body-cell">
-                <span class="per-body-title">${data.ytd || '-'}</span>
-            </div>
-            <div class="performance-body-cell">
-                <span class="per-body-title">${data.days90 || '-'}</span>
-            </div>
-            <div class="performance-body-cell">
-                <span class="per-body-title">${data.days365 || '-'}</span>
-            </div>`;
-                row.innerHTML = html;
-                performanceBodyRow.appendChild(row)
-            })
-        }
-
-    }
-
-
-    if (distributions) {
-        distributionWrap.style.display = "none";
-        if (distributionBodyRow) {
-            distributions.forEach((data) => {
-                const row = document.createElement('div');
-                row.classList.add('distribution-body-row');
-
-                const html = `
-            <div class="distribution-body-cell flex-1 right-align">
-                <span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span>
-            </div>
-            <div class="distribution-body-cell">
-                <span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span>
-            </div>`;
-                row.innerHTML = html;
-                distributionBodyRow.appendChild(row)
-            })
-        }
-    }
-
-    function populateTableData(data, container) {
-        data.forEach((item) => {
-            const row = document.createElement('div');
-            row.classList.add('portfolio-body-row');
-            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-            const html = `
-            <div class="portfolio-body-cell flex-1">
-                <span class="port-body-title">${item.key}</span>
-            </div>
-            <div class="portfolio-body-cell">
-                <span class="port-body-title">${returnVal}</span>
-            </div>`;
-
-            row.innerHTML = html;
-            if (container) { container.appendChild(row) }
-        })
-    }
-
-    // NEW PERFROMANCE LIST
-    if (performances) {
-        const performanceContentArea = document.querySelector('.performace-new-table');
-
-        if (performanceContentArea) {
-            // Clear existing content by removing all child elements
-            while (performanceContentArea.firstChild) {
-                performanceContentArea.removeChild(performanceContentArea.firstChild);
-            }
-
-            performances.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-
-                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
-
-                const html = `
-                    <div class="div-block-98" style="background-color: ${selectedColor}"></div>
-                    <div class="table-content-area">
-                        <h3 class="table-title">${data.name || '-'}</h3>
-                        <div class="div-block-99">
-                            <div class="div-block-100">
-                                <div class="text-block-37">MTD</div>
-                                <div class="text-block-38">${data.mtd || '-'}</div>
-                            </div>
-                            <div class="div-block-100">
-                                <div class="text-block-37">YTD</div>
-                                <div class="text-block-38">${data.ytd || '-'}</div>
-                            </div>
-                            <div class="div-block-100">
-                                <div class="text-block-37">90 DAYS</div>
-                                <div class="text-block-38">${data.days90 || '-'}</div>
-                            </div>
-                            <div class="div-block-100">
-                                <div class="text-block-37">1Y</div>
-                                <div class="text-block-38">${data.days365 || '-'}</div>
-                            </div>
-                        </div>
-                    </div>
-                `
-                row.innerHTML = html;
-                performanceContentArea.appendChild(row)
-            })
-        }
-    }
-
-    // NEW ASSET ALLOCATION LIST
-    if (overAllCreditRating) {
-        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
-
-        if (portfolioDataContainer) {
-            // Clear existing content by removing all child elements
-            while (portfolioDataContainer.firstChild) {
-                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild);
-            }
-
-            overAllCreditRating.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-
-                const html = `
-                    <div class="table-content-area">
-                        <h3 class="table-title">${data.name}</h3>
-                        <div style="display: flex; gap: 14px">
-                            <div class="div-block-101" style="display: flex;">
-                                <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
-                                    <circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/>
-                                </svg>
-                                <div>
-                                    <div class="text-block-37">THIS MONTH</div>
-                                    <div class="text-block-38">${data.current}%</div>
-                                </div>
-                            </div>
-                            <div class="div-block-101" style="display: flex;">
-                                <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
-                                    <circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/>
-                                </svg>
-                                <div>
-                                    <div class="text-block-37">LAST MONTH</div>
-                                    <div class="text-block-38">${data.last}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-
-                row.innerHTML = html;
-                portfolioDataContainer.appendChild(row)
-            })
-        }
-        // <div>
-        //     <div class="text-block-37">LAST MONTH</div>
-        //     <div class="text-block-38">20%</div>
-        // </div>
-    }
-
-    // NEW CREDIT & TOP HOLDING LIST
-    function compositionList(data, container) {
-        if (container) {
-
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-
-            const maxItemValue = Math.max(...data.map(item => item.value));
-
-            data.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-                row.classList.add('no-min-width');
-
-                const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2)
-                // const selectedColor = maxItemValue == returnVal ? "#432F87" : "#53B1FD";
-
-                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
-                const selectedColor = PIE_COLORS[index]
-
-                const html = `
-                    <div class="div-block-98" style="background-color: ${selectedColor}"></div>
-                    <div class="table-content-area">
-                        <div class="text-block-37" style="margin-bottom: 2px">${item.key}</div>
-                        <div class="text-block-39">${returnVal}%</div>
-                    </div>
-                `;
-
-                row.innerHTML = html;
-                container.appendChild(row)
-            })
-        }
-    }
-}
-
-
-//      `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
 
 //adding event lister for the offering Document
 const offeringDocumentWrapper = document.getElementById('offering-document');
-
-
 
 async function fetchData() {
     // Create the loader
@@ -499,13 +117,13 @@ async function fetchData() {
             'shahr-e-advisor': fundInfo.shariahAdvisors,
             'custodian': fundInfo.custodian,
             'weightAverageTime': fundInfo.weightedAverageTime,
-            'totalMonthlyExpenseRatioWithoutLevy':`${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
-            'totalYearlyExpenseRatioWithoutLevy':`${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
+            'totalMonthlyExpenseRatioWithoutLevy': `${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
+            'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
         };
 
         if (offeringDocumentList.length > 0) {
             // handleOfferingDocumentClicked(offeringDocumentList[0])
-            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length-1].key.split('.')[0]}`;
+            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
             offeringDocumentList.pop();
             reportWrap.style.display = "none";
         }
@@ -582,10 +200,10 @@ async function fetchData() {
         if (fragmentIdentifier) {
             // Remove the '#' symbol from the fragment identifier
             const targetId = fragmentIdentifier.substring(1);
-    
+
             // Find the target element by its id
             const targetElement = document.getElementById(targetId);
-    
+
             // Scroll to the target element if it exists
             if (targetElement) {
                 targetElement.scrollIntoView({ behavior: 'smooth' });
