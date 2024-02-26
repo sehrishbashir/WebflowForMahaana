@@ -397,7 +397,7 @@ function displayReports(reportsData) {
     const displayedData = reportsData?.slice(startIndex, endIndex) || [];
 
     if (reportsBodyContainer) {
-        reportsBodyContainer.innerHTML = '';
+        // reportsBodyContainer.innerHTML = '';
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
             const row = document.createElement('div');
