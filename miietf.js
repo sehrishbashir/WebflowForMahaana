@@ -349,7 +349,7 @@ fetchData();
 getFundData();
 
 // BODY
-// var currentUrl = window.location.href;var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, '');if (currentUrl !== updatedUrl) {window.history.replaceState(null, null, updatedUrl);};$(document).ready(function () {$('.tab-item').click(function (event) {event.stopPropagation();});$("html, body").animate({ scrollTop: 0 }, "slow");$(window).on('load', function () {$(".tab-item").removeClass("w--current", "active")});});document.addEventListener("DOMContentLoaded", function () {tabStopHandler();tabHandler();});document.addEventListener("scroll", scrollHandler);
+var currentUrl = window.location.href;var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, '');if (currentUrl !== updatedUrl) {window.history.replaceState(null, null, updatedUrl);};$(document).ready(function () {$('.tab-item').click(function (event) {event.stopPropagation();});$("html, body").animate({ scrollTop: 0 }, "slow");$(window).on('load', function () {$(".tab-item").removeClass("w--current", "active")});});document.addEventListener("DOMContentLoaded", function () {tabStopHandler();tabHandler();});document.addEventListener("scroll", scrollHandler);
 
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate };
 
