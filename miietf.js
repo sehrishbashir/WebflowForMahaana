@@ -27,6 +27,8 @@ const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-blo
 
 const offeringDocumentWrapper = document.getElementById('offering-document');
 
+const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+
 // ---------------- LOADER ---------------- //
 function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
 // ---------------------------------------------- //
@@ -108,7 +110,6 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
-                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
                 const selectedColor = PIE_COLORS[index];
 
                 const html = `
@@ -136,7 +137,6 @@ function renderLoop(data) {
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
                 const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
                 const selectedColor = PIE_COLORS[index];
                 const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row);
             })
