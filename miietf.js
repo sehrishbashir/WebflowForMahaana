@@ -78,6 +78,8 @@ function renderLoop(data) {
         }
     }
     if (distributions?.length > 0) {
+
+        console.log("distributions",distributions, distributions?.length)
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
@@ -276,7 +278,6 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             setTextContent(elementId, contentMapping[elementId])
         }
-        
         data.assetAllocation = transformData(assetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
@@ -300,6 +301,14 @@ async function fetchData() {
 
         renderLoop(data);
 
+        // if (Object.keys(holding).length > 0) {
+        //     holdingChartWrap.style.display = "none";
+        //     holdingList.style.display = "flex";
+        //     renderHoldingChart(transformData(holding))
+        // } else {
+        //     holdingChart.style.border = 0
+        // }
+
         if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
             holdingList.style.display = "flex";
@@ -318,7 +327,7 @@ async function fetchData() {
 
         // if (Object.keys(overallAssetAllocationData).length > 0) {
         //     assetChartWrap.style.display = "none";
-        //     renderAssetChart(assetAllocation);
+        //     renderAssetChart(overallAssetAllocationData);
         // }
 
     } catch (error) {
