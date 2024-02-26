@@ -46,21 +46,21 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 
 function renderLoop(data) {
     const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
-    const dataMappings = [
-        { elementClass: '.asset-allocation', data: currentAssetAllocation },
-        { elementClass: '.credit-quality', data: creditRating },
-        { elementClass: '.top-holdings', data: holding }
-    ];
+    // const dataMappings = [
+    //     { elementClass: '.asset-allocation', data: currentAssetAllocation },
+    //     { elementClass: '.credit-quality', data: creditRating },
+    //     { elementClass: '.top-holdings', data: holding }
+    // ];
 
     const dataMappingsUpdated = [
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
 
-    dataMappings.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        populateTableData(data, bodyRow)
-    });
+    // dataMappings.forEach(({ elementClass, data }) => {
+    //     const bodyRow = document.querySelector(elementClass);
+    //     populateTableData(data, bodyRow)
+    // });
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
