@@ -126,7 +126,7 @@ function scrollHandler() {
             }
             else {
                 tabsMenu.classList.remove("fixed");
-                tabWrapper.style.paddingTop = '0';
+                tabWrapper.style.paddingTop = '10px';
             }
         }
 
