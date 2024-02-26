@@ -22,7 +22,7 @@ const distributionWrap = document.querySelector('.distribution-body .flex-block-
 const reportsBodyContainer = document.querySelector('.reports-body');
 const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
-// const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
+const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
 const offeringDocumentWrapper = document.getElementById('offering-document');
 
