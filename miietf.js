@@ -175,176 +175,111 @@ const demoData = {
     ]
 }
 
-async function fetchData() {
-    // Create the loader
-    const loader = createLoader();
+async function fetchData(){let e=createLoader();e.style.display="flex";try{let t=await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);if(!t.ok)throw Error("Network response was not ok");let a=await t.json(),{offeringDocumentList:n,fmrDate:l,fundInfo:s,performances:o,monthToDateExpense:i,overview:r,currentAssetAllocation:y,lastAssetAllocation:d,creditRating:c,holding:h,distributions:u}=demoData,m=document.querySelectorAll("body #fmrDate");Array.from(m).forEach(e=>{e.textContent="as of "+moment(l,"YYYY-MM-DD").format("D MMM YYYY")});let f={"asset-name":r?.name,"asset-class":s.fundCategory,"expense-ratio-mtd":`${s.monthlyTotalExpenseRatio}%`,"expense-ratio-ytd":`${s.yearlyTotalExpenseRatio}%`,"micf-mtd":`${i.key.toFixed(2)}%`,"mtd-date":`as of ${moment(i.value).format("D MMM YYYY")}`,"nav-price":`${r.navPerUnit.includes(".")?Number(r.navPerUnit).toFixed(4):Number(r.navPerUnit)}`,"nav-date":`as of ${moment(r.navDate,"YYYY/MM/DD").format("D MMM YYYY")}`,productSummary:r.assetCategory,fundManager:s.fundManager,netAssets:s.netAssets,launchDate:s.launchDate||"-",fundCategory:s.fundCategory,investmentObjective:s.investmentObjective,benchmark:s.benchmark,managementFee:s.managementFee,fundAuditors:s.fundAuditors,fundStabilityRating:s.fundStabilityRating,"shahr-e-advisor":s.shariahAdvisors,custodian:s.custodian,weightAverageTime:s.weightedAverageTime,totalMonthlyExpenseRatioWithoutLevy:`${s.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,totalYearlyExpenseRatioWithoutLevy:`${s.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`};for(let g in n.length>0&&(offeringDocumentWrapper.href=`${mahaanaWealthCashFund}/api/Document/${n[n.length-1].key.split(".")[0]}`,n.pop(),n.length>1&&(reportWrap.style.display="none")),reportsData=n,displayReports(n),n.length>5&&renderPagination(n),f)setTextContent(g,f[g]);a.currentAssetAllocation=transformData(y,"table"),a.creditRating=transformData(c,"table"),a.holding=transformData(h,"table");let p={currentAssetAllocation:y,lastAssetAllocation:d},Y=Object.keys(p.currentAssetAllocation),v=Y.map(e=>({name:e,current:p.currentAssetAllocation[e],last:p.lastAssetAllocation[e]})).filter(e=>e.current>0||e.last>0);a.overAllCreditRating=v,renderLoop(a);let A=transformData(c);Object.keys(h).length>0?(holdingChartWrap.style.display="none",holdingList.style.display="flex",renderHoldingChart(transformData(h))):holdingChart.style.border=0,Object.keys(c).length>0?(creditChartWrap.style.display="none",creditList.style.display="flex",renderCreditChart(A)):creditChart.style.border=0,Object.keys(v).length>0&&(assetChartWrap.style.display="none",renderAssetChart(v))}catch(M){console.error(">>>>>>Error",M),creditChart.style.border=0,holdingChart.style.border=0}setTimeout(()=>{e.style.display="none";let t=window.location.hash;if(t){let a=t.substring(1),n=document.getElementById(a);n&&n.scrollIntoView({behavior:"smooth"})}},1e3)}
 
-    // Display the loader
-    loader.style.display = 'flex';
+// async function fetchData() {
+// const loader = createLoader();loader.style.display = 'flex';
+// try {const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);if (!response.ok) {throw new Error('Network response was not ok')};
+// const data = await response.json();
+// const {offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview,currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions} = demoData;
+// let fmrDateElement = document.querySelectorAll('body #fmrDate');Array.from(fmrDateElement).forEach(element => {element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY')});
+// const contentMapping = {
+// 'asset-name': overview?.name,'asset-class': fundInfo.fundCategory,'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,'productSummary': overview.assetCategory,'fundManager': fundInfo.fundManager,'netAssets': fundInfo.netAssets,'launchDate': fundInfo.launchDate || '-',
+// 'fundCategory': fundInfo.fundCategory,'investmentObjective': fundInfo.investmentObjective,'benchmark': fundInfo.benchmark,'managementFee': fundInfo.managementFee,'fundAuditors': fundInfo.fundAuditors,'fundStabilityRating': fundInfo.fundStabilityRating,'shahr-e-advisor': fundInfo.shariahAdvisors,'custodian': fundInfo.custodian,
+// 'weightAverageTime': fundInfo.weightedAverageTime,'totalMonthlyExpenseRatioWithoutLevy': `${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
+//             'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
+//         };
 
-    try {
-        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok')
-        }
-        const data = await response.json();
-
-        const {
-            offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview,
-            currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions
-        } = demoData;
-
-        let fmrDateElement = document.querySelectorAll('body #fmrDate');
-        Array.from(fmrDateElement).forEach(element => {
-            element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY')
-        });
-
-        const contentMapping = {
-            'asset-name': overview?.name,
-            'asset-class': fundInfo.fundCategory,
-            'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,
-            'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
-            'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-            'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
-            'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-            'productSummary': overview.assetCategory,
-            'fundManager': fundInfo.fundManager,
-            'netAssets': fundInfo.netAssets,
-            'launchDate': fundInfo.launchDate || '-',
-            'fundCategory': fundInfo.fundCategory,
-            'investmentObjective': fundInfo.investmentObjective,
-            'benchmark': fundInfo.benchmark,
-            'managementFee': fundInfo.managementFee,
-            'fundAuditors': fundInfo.fundAuditors,
-            'fundStabilityRating': fundInfo.fundStabilityRating,
-            'shahr-e-advisor': fundInfo.shariahAdvisors,
-            'custodian': fundInfo.custodian,
-            'weightAverageTime': fundInfo.weightedAverageTime,
-            'totalMonthlyExpenseRatioWithoutLevy': `${fundInfo.monthlyTotalExpenseRatioWithoutLevy}% (MTD)`,
-            'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
-        };
-
-        if (offeringDocumentList.length > 0) {
-            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-            offeringDocumentList.pop();
-            if (offeringDocumentList.length > 1) {
-                reportWrap.style.display = "none";
-            }
-        }
-        reportsData = offeringDocumentList;
-
-        displayReports(offeringDocumentList);
-
-        offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
-
-        for (const elementId in contentMapping) {
-            setTextContent(elementId, contentMapping[elementId])
-        }
-        data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
-        data.creditRating = transformData(creditRating, 'table');
-        data.holding = transformData(holding, 'table');
-
-
-        const assetAllocationData = {
-            "currentAssetAllocation": currentAssetAllocation,
-            "lastAssetAllocation": lastAssetAllocation
-        };
-
-        const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-        const overallAssetAllocationData = assetClasses
-            .map(assetClass => ({
-                name: assetClass,
-                current: assetAllocationData.currentAssetAllocation[assetClass],
-                last: assetAllocationData.lastAssetAllocation[assetClass]
-            }))
-            .filter(data => data.current > 0 || data.last > 0);
-
-        data.overAllCreditRating = overallAssetAllocationData;
-
-        renderLoop(data);
-
-        const sendingPieData = transformData(creditRating)
-
-        if (Object.keys(holding).length > 0) {
-            holdingChartWrap.style.display = "none";
-            holdingList.style.display = "flex";
-            renderHoldingChart(transformData(holding))
-        } else {
-            holdingChart.style.border = 0
-        }
-
-        if (Object.keys(creditRating).length > 0) {
-            creditChartWrap.style.display = "none";
-            creditList.style.display = "flex";
-            renderCreditChart(sendingPieData);
-        } else {
-            creditChart.style.border = 0;
-        }
-
-        if (Object.keys(overallAssetAllocationData).length > 0) {
-            assetChartWrap.style.display = "none";
-            renderAssetChart(overallAssetAllocationData);
-        }
-    } catch (error) {
-        console.error('>>>>>>Error', error);
-        creditChart.style.border = 0;
-        holdingChart.style.border = 0;
-    }
-    setTimeout(() => {
-        loader.style.display = 'none';
-        const fragmentIdentifier = window.location.hash;
-
-        if (fragmentIdentifier) {
-            // Remove the '#' symbol from the fragment identifier
-            const targetId = fragmentIdentifier.substring(1);
-
-            // Find the target element by its id
-            const targetElement = document.getElementById(targetId);
-
-            // Scroll to the target element if it exists
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    }, 1000);
-}
-
-// function getFundData(duration) {
-
-//     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
-
-//     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
-
-//     fetch(url, {
-//         method: 'GET', headers: { 'Content-Type': 'application/json' }
-//     })
-//         .then((response) => {
-//             if (!response.ok) {
-//                 return response.json().then((errorData) => {
-//                     throw new Error(errorData.message || 'Unknown error occurred.')
-//                 });
+//         if (offeringDocumentList.length > 0) {
+//             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+//             offeringDocumentList.pop();
+//             if (offeringDocumentList.length > 1) {
+//                 reportWrap.style.display = "none";
 //             }
-//             return response.json();
+//         }
+//         reportsData = offeringDocumentList;
 
-//         }).then((data) => {
-//             poerformanceWrap.style.display = "none";
-//             let totalReturnDate = document.querySelector('#totalReturnsDate');
+//         displayReports(offeringDocumentList);
 
-//             renderFundChart(data);
+//         offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
 
-//             const lastDate = data[data.length - 1].date;
+//         for (const elementId in contentMapping) {
+//             setTextContent(elementId, contentMapping[elementId])
+//         }
+//         data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+//         data.creditRating = transformData(creditRating, 'table');
+//         data.holding = transformData(holding, 'table');
 
-//             if (totalReturnDate) {
-//                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+
+//         const assetAllocationData = {
+//             "currentAssetAllocation": currentAssetAllocation,
+//             "lastAssetAllocation": lastAssetAllocation
+//         };
+
+//         const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+//         const overallAssetAllocationData = assetClasses
+//             .map(assetClass => ({
+//                 name: assetClass,
+//                 current: assetAllocationData.currentAssetAllocation[assetClass],
+//                 last: assetAllocationData.lastAssetAllocation[assetClass]
+//             }))
+//             .filter(data => data.current > 0 || data.last > 0);
+
+//         data.overAllCreditRating = overallAssetAllocationData;
+
+//         renderLoop(data);
+
+//         const sendingPieData = transformData(creditRating)
+
+//         if (Object.keys(holding).length > 0) {
+//             holdingChartWrap.style.display = "none";
+//             holdingList.style.display = "flex";
+//             renderHoldingChart(transformData(holding))
+//         } else {
+//             holdingChart.style.border = 0
+//         }
+
+//         if (Object.keys(creditRating).length > 0) {
+//             creditChartWrap.style.display = "none";
+//             creditList.style.display = "flex";
+//             renderCreditChart(sendingPieData);
+//         } else {
+//             creditChart.style.border = 0;
+//         }
+
+//         if (Object.keys(overallAssetAllocationData).length > 0) {
+//             assetChartWrap.style.display = "none";
+//             renderAssetChart(overallAssetAllocationData);
+//         }
+//     } catch (error) {
+//         console.error('>>>>>>Error', error);
+//         creditChart.style.border = 0;
+//         holdingChart.style.border = 0;
+//     }
+//     setTimeout(() => {
+//         loader.style.display = 'none';
+//         const fragmentIdentifier = window.location.hash;
+
+//         if (fragmentIdentifier) {
+//             // Remove the '#' symbol from the fragment identifier
+//             const targetId = fragmentIdentifier.substring(1);
+
+//             // Find the target element by its id
+//             const targetElement = document.getElementById(targetId);
+
+//             // Scroll to the target element if it exists
+//             if (targetElement) {
+//                 targetElement.scrollIntoView({ behavior: 'smooth' });
 //             }
-
-//         }).catch((error) => {
-//             console.error('Error occurred:', error)
-//         })
+//         }
+//     }, 1000);
 // }
-fetchData();
+
+// function getFundData(duration) {const params = typeof duration == 'object' || duration == undefined ? 3 : duration;const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;fetch(url, {method: 'GET', headers: { 'Content-Type': 'application/json' }}).then((response) => {if (!response.ok) {return response.json().then((errorData) => {throw new Error(errorData.message || 'Unknown error occurred.')});}return response.json();}).then((data) => {poerformanceWrap.style.display = "none";let totalReturnDate = document.querySelector('#totalReturnsDate');renderFundChart(data);const lastDate = data[data.length - 1].date;if (totalReturnDate) {totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;}}).catch((error) => {console.error('Error occurred:', error)})}
 // getFundData();
+
+fetchData();
+
 
 // BODY
 var currentUrl = window.location.href;var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, '');if (currentUrl !== updatedUrl) {window.history.replaceState(null, null, updatedUrl);};$(document).ready(function () {$('.tab-item').click(function (event) {event.stopPropagation();});$("html, body").animate({ scrollTop: 0 }, "slow");$(window).on('load', function () {$(".tab-item").removeClass("w--current", "active")});});document.addEventListener("DOMContentLoaded", function () {tabStopHandler();tabHandler();});document.addEventListener("scroll", scrollHandler);
@@ -373,8 +308,6 @@ if (reportsBodyContainer) {
 
 // function goToPage(page) {if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) {currentPage = page; window.currentPage = displayReports(reportsData)}}
 // const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 },{ key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
-
-
 // const durationContainerNew = document.getElementById('new-graph-duration');if (durationContainerNew) {while (durationContainerNew.firstChild) {durationContainerNew.removeChild(durationContainerNew.firstChild);}graphDur.forEach(item => {const durationDiv = document.createElement('div');durationDiv.className = 'duration';durationDiv.textContent = item.key;if (item.key === '3M') {durationDiv.classList.add('selected')}durationDiv.addEventListener('click', () => {const selectedDiv = document.querySelector('.duration.selected');if (selectedDiv) {selectedDiv.classList.remove('selected')}durationDiv.classList.add('selected');getFundData(item.value);});if (durationContainerNew) {durationContainerNew.appendChild(durationDiv);}});const svgDiv = document.createElement('div');svgDiv.className = 'html-embed-50 w-embed';svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`;durationContainerNew.appendChild(svgDiv);}
 
 
