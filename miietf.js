@@ -45,7 +45,7 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 // const setTextContent = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
 
 function renderLoop(data) {
-    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
+    const { performances, holding, creditRating, distributions, overAllCreditRating } = data;
 
     const dataMappingsUpdated = [
         { elementClass: '.credit-list', data: creditRating },
@@ -77,14 +77,6 @@ function renderLoop(data) {
             })
         }
     }
-    function populateTableData(data, container) {
-        data.forEach((item) => {
-            const row = document.createElement('div');
-            row.classList.add('portfolio-body-row');
-            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-            const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`; row.innerHTML = html; if (container) { container.appendChild(row) }
-        })
-    }
 
     if (performances) {
         const performanceContentArea = document.querySelector('.performace-new-table');
@@ -103,20 +95,36 @@ function renderLoop(data) {
         }
     }
 
-    if (overAllCreditRating) {
+    if (assetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
         if (portfolioDataContainer) {
             while (portfolioDataContainer.firstChild) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
-            overAllCreditRating.forEach(data => {
+            assetAllocation.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`; row.innerHTML = html; portfolioDataContainer.appendChild(row)
             })
         }
     }
-    function compositionList(data, container) { if (container) { while (container.firstChild) { container.removeChild(container.firstChild); } data.forEach((item, index) => { const row = document.createElement('div'); row.classList.add('table-item'); row.classList.add('no-min-width'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631']; const selectedColor = PIE_COLORS[index]; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row); }) } }
+
+    function compositionList(data, container) {
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                row.classList.add('no-min-width');
+                const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+                const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+                const selectedColor = PIE_COLORS[index];
+                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row);
+            })
+        }
+    }
 }
 
 const demoData = {
@@ -248,7 +256,7 @@ async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const data = demoData;
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
+        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
@@ -341,7 +349,6 @@ async function fetchData() {
         // }
 
     } catch (error) {
-        console.error('>>>>>>Error', error);
         creditChart.style.border = 0;
         holdingChart.style.border = 0;
     }
