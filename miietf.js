@@ -46,21 +46,11 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 
 function renderLoop(data) {
     const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;
-    // const dataMappings = [
-    //     { elementClass: '.asset-allocation', data: currentAssetAllocation },
-    //     { elementClass: '.credit-quality', data: creditRating },
-    //     { elementClass: '.top-holdings', data: holding }
-    // ];
 
     const dataMappingsUpdated = [
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
-
-    // dataMappings.forEach(({ elementClass, data }) => {
-    //     const bodyRow = document.querySelector(elementClass);
-    //     populateTableData(data, bodyRow)
-    // });
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
@@ -258,7 +248,7 @@ async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const data = demoData;
-        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, assetAllocation, holding, distributions } = data;
+        const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
@@ -323,14 +313,6 @@ async function fetchData() {
 
         renderLoop(data);
 
-        // if (Object.keys(holding).length > 0) {
-        //     holdingChartWrap.style.display = "none";
-        //     holdingList.style.display = "flex";
-        //     renderHoldingChart(transformData(holding))
-        // } else {
-        //     holdingChart.style.border = 0
-        // }
-
         if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
             holdingList.style.display = "flex";
@@ -346,6 +328,12 @@ async function fetchData() {
         } else {
             creditChart.style.border = 0;
         }
+
+        if (Object.keys(assetAllocation).length > 0) {
+            assetChartWrap.style.display = "none";
+            renderAssetChart(transformData(assetAllocation));
+        }
+
 
         // if (Object.keys(overallAssetAllocationData).length > 0) {
         //     assetChartWrap.style.display = "none";
