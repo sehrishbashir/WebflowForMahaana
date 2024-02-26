@@ -55,7 +55,10 @@ function renderLoop(data) {
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) { compositionList(data, bodyRow) } else { bodyRow.style.display = "none" }
+        if (Object.keys(data).length > 0) { 
+            compositionList(data, bodyRow) 
+        } 
+        // else { bodyRow.style.display = "none" }
     });
 
     if (performances) {
