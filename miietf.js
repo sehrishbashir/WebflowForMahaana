@@ -78,8 +78,6 @@ function renderLoop(data) {
         }
     }
     if (distributions?.length > 0) {
-
-        console.log("distributions",distributions, distributions?.length)
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
@@ -89,7 +87,31 @@ function renderLoop(data) {
             })
         }
     }
-    function populateTableData(data, container) { data.forEach((item) => { const row = document.createElement('div'); row.classList.add('portfolio-body-row'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`; row.innerHTML = html; if (container) { container.appendChild(row) } }) } if (performances) { const performanceContentArea = document.querySelector('.performace-new-table'); if (performanceContentArea) { while (performanceContentArea.firstChild) { performanceContentArea.removeChild(performanceContentArea.firstChild); } performances.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B"; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row); }) } }
+    function populateTableData(data, container) {
+        data.forEach((item) => {
+            const row = document.createElement('div');
+            row.classList.add('portfolio-body-row');
+            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+            const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`; row.innerHTML = html; if (container) { container.appendChild(row) }
+        })
+    }
+
+    if (performances) {
+        const performanceContentArea = document.querySelector('.performace-new-table');
+        if (performanceContentArea) {
+
+            while (performanceContentArea.firstChild) {
+                performanceContentArea.removeChild(performanceContentArea.firstChild);
+            }
+
+            performances.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
+                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
+            })
+        }
+    }
 
     if (overAllCreditRating) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
@@ -131,7 +153,7 @@ const demoData = {
         "fundManager": "Mahaana Wealth Limited",
 
         // New
-        "authorizedParticipant": "JS Global Capital Limited",
+        "Authorized Participant": "JS Global Capital Limited",
 
         // Not used anymore
         "totalExpenseRatio": null,
@@ -219,7 +241,7 @@ const demoData = {
     ],
     "benchmarkData": null,
     "monthToDateExpense": {
-        "key": 20.356251512386085191877156930,
+        "key": -7.05,
         "value": "2024-02-22T00:00:00Z"
     },
     "offeringDocumentList": [
@@ -237,7 +259,7 @@ async function fetchData() {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const data = demoData;
         const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, assetAllocation, holding, distributions } = data;
-        let fmrDateElement = document.querySelectorAll('body #fmrDate'); 
+        let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
         const contentMapping = {
