@@ -77,7 +77,7 @@ function renderLoop(data) {
             })
         }
     }
-    if (distributions) {
+    if (distributions?.length > 0) {
 
         console.log("distributions",distributions, distributions?.length)
         distributionWrap.style.display = "none";
@@ -237,7 +237,8 @@ async function fetchData() {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const data = demoData;
         const { offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview, currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions } = data;
-        let fmrDateElement = document.querySelectorAll('body #fmrDate'); Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+        let fmrDateElement = document.querySelectorAll('body #fmrDate'); 
+        Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
         const contentMapping = {
             'asset-name': overview?.name,
