@@ -22,7 +22,7 @@ const distributionWrap = document.querySelector('.distribution-body .flex-block-
 const reportsBodyContainer = document.querySelector('.reports-body');
 const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
-const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
+// const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
 // ---------------- LOADER ---------------- //
 function createLoader() {
@@ -594,41 +594,41 @@ async function fetchData() {
     }, 1000);
 }
 
-function getFundData(duration) {
+// function getFundData(duration) {
 
-    const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
+//     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
 
-    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
+//     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
 
-    fetch(url, {
-        method: 'GET', headers: { 'Content-Type': 'application/json' }
-    })
-        .then((response) => {
-            if (!response.ok) {
-                return response.json().then((errorData) => {
-                    throw new Error(errorData.message || 'Unknown error occurred.')
-                });
-            }
-            return response.json();
+//     fetch(url, {
+//         method: 'GET', headers: { 'Content-Type': 'application/json' }
+//     })
+//         .then((response) => {
+//             if (!response.ok) {
+//                 return response.json().then((errorData) => {
+//                     throw new Error(errorData.message || 'Unknown error occurred.')
+//                 });
+//             }
+//             return response.json();
 
-        }).then((data) => {
-            poerformanceWrap.style.display = "none";
-            let totalReturnDate = document.querySelector('#totalReturnsDate');
+//         }).then((data) => {
+//             poerformanceWrap.style.display = "none";
+//             let totalReturnDate = document.querySelector('#totalReturnsDate');
 
-            renderFundChart(data);
+//             renderFundChart(data);
 
-            const lastDate = data[data.length - 1].date;
+//             const lastDate = data[data.length - 1].date;
 
-            if (totalReturnDate) {
-                totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
-            }
+//             if (totalReturnDate) {
+//                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+//             }
 
-        }).catch((error) => {
-            console.error('Error occurred:', error)
-        })
-}
+//         }).catch((error) => {
+//             console.error('Error occurred:', error)
+//         })
+// }
 fetchData();
-getFundData();
+// getFundData();
 
 // BODY
 var currentUrl = window.location.href;
