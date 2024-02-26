@@ -29,7 +29,7 @@ const offeringDocumentWrapper = document.getElementById('offering-document');
 const durationContainer = document.getElementById('graph-duration');
 
 // ---------------- LOADER ---------------- //
-// function createLoader() {const loaderWrapper = document.createElement('div');loaderWrapper.id = 'loader-wrapper';loaderWrapper.className = 'loader-wrapper';const loaderElement = document.createElement('div');loaderElement.className = 'loader';loaderWrapper.appendChild(loaderElement);document.body.appendChild(loaderWrapper);return loaderWrapper;}
+function createLoader() {const loaderWrapper = document.createElement('div');loaderWrapper.id = 'loader-wrapper';loaderWrapper.className = 'loader-wrapper';const loaderElement = document.createElement('div');loaderElement.className = 'loader';loaderWrapper.appendChild(loaderElement);document.body.appendChild(loaderWrapper);return loaderWrapper;}
 // ---------------------------------------------- //
 
 // YTD & MTD FIELDS
