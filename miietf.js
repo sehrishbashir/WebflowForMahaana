@@ -116,7 +116,7 @@ function renderLoop(data) {
                         <div class="text-block-38">${returnVal}%</div>
                     </div>
                 </div>
-                `;
+                    <div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`;
                 row.innerHTML = html;
                 portfolioDataContainer.appendChild(row)
             })
