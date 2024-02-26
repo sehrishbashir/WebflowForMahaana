@@ -231,16 +231,16 @@ async function fetchData() {
             'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
         };
 
-        if (offeringDocumentList.length > 0) {
-            // handleOfferingDocumentClicked(offeringDocumentList[0])
-            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-            offeringDocumentList.pop();
-            if (offeringDocumentList.length > 1) {
-                reportWrap.style.display = "none";
-            } else {
-                reportWrap.style.display = "flex";
-            }
-        }
+        // if (offeringDocumentList.length > 0) {
+        //     // handleOfferingDocumentClicked(offeringDocumentList[0])
+        //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+        //     offeringDocumentList.pop();
+        //     if (offeringDocumentList.length > 1) {
+        //         reportWrap.style.display = "none";
+        //     } else {
+        //         reportWrap.style.display = "flex";
+        //     }
+        // }
         reportsData = offeringDocumentList;
 
         displayReports(offeringDocumentList);
