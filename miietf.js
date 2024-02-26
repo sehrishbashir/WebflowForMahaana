@@ -63,14 +63,140 @@ function createLoader() {
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
 // const setTextContent = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
 
-function renderLoop(data) {const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data;const dataMappings = [{ elementClass: '.asset-allocation', data: currentAssetAllocation },{ elementClass: '.credit-quality', data: creditRating },{ elementClass: '.top-holdings', data: holding }];const dataMappingsUpdated = [{ elementClass: '.credit-list', data: creditRating },{ elementClass: '.holding-list', data: holding }];dataMappings.forEach(({ elementClass, data }) => {const bodyRow = document.querySelector(elementClass);populateTableData(data, bodyRow)});dataMappingsUpdated.forEach(({ elementClass, data }) => {const bodyRow = document.querySelector(elementClass);if (Object.keys(data).length > 0) {compositionList(data, bodyRow)} else {bodyRow.style.display = "none"}});if (performances) {const performanceBodyRow = document.querySelector('.performance-body');if (performanceBodyRow) {performances.forEach(data => {const row = document.createElement('div');row.classList.add('performance-body-row');const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`;row.innerHTML = html;performanceBodyRow.appendChild(row)})}}if (distributions) {distributionWrap.style.display = "none";if (distributionBodyRow) {distributions.forEach((data) => {const row = document.createElement('div');row.classList.add('distribution-body-row');const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;row.innerHTML = html;distributionBodyRow.appendChild(row)})}}
-function populateTableData(data, container) {data.forEach((item) => {const row = document.createElement('div');row.classList.add('portfolio-body-row');const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`;row.innerHTML = html;if (container) { container.appendChild(row) }})}if (performances) {const performanceContentArea = document.querySelector('.performace-new-table');if (performanceContentArea) {while (performanceContentArea.firstChild) {performanceContentArea.removeChild(performanceContentArea.firstChild);}performances.forEach(data => {const row = document.createElement('div');row.classList.add('table-item');const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";const html=`<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`;row.innerHTML = html;performanceContentArea.appendChild(row);})}}
-if (overAllCreditRating) {const portfolioDataContainer = document.querySelector('.portfolio-data-container');if (portfolioDataContainer) {while (portfolioDataContainer.firstChild) {portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)}overAllCreditRating.forEach(data => {const row = document.createElement('div');row.classList.add('table-item');const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`;row.innerHTML = html;portfolioDataContainer.appendChild(row)})}}
-function compositionList(data, container) {if (container) {while (container.firstChild) {container.removeChild(container.firstChild);}data.forEach((item, index) => {const row = document.createElement('div');row.classList.add('table-item');row.classList.add('no-min-width');const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];const selectedColor = PIE_COLORS[index];const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`;row.innerHTML = html;container.appendChild(row);})}}}
+function renderLoop(data) {
+    const { performances, currentAssetAllocation, holding, creditRating, distributions, overAllCreditRating } = data; const dataMappings = [{ elementClass: '.asset-allocation', data: currentAssetAllocation }, { elementClass: '.credit-quality', data: creditRating }, { elementClass: '.top-holdings', data: holding }]; const dataMappingsUpdated = [{ elementClass: '.credit-list', data: creditRating }, { elementClass: '.holding-list', data: holding }]; dataMappings.forEach(({ elementClass, data }) => { const bodyRow = document.querySelector(elementClass); populateTableData(data, bodyRow) }); dataMappingsUpdated.forEach(({ elementClass, data }) => { const bodyRow = document.querySelector(elementClass); if (Object.keys(data).length > 0) { compositionList(data, bodyRow) } else { bodyRow.style.display = "none" } }); if (performances) { const performanceBodyRow = document.querySelector('.performance-body'); if (performanceBodyRow) { performances.forEach(data => { const row = document.createElement('div'); row.classList.add('performance-body-row'); const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row) }) } } if (distributions) { distributionWrap.style.display = "none"; if (distributionBodyRow) { distributions.forEach((data) => { const row = document.createElement('div'); row.classList.add('distribution-body-row'); const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`; row.innerHTML = html; distributionBodyRow.appendChild(row) }) } }
+    function populateTableData(data, container) { data.forEach((item) => { const row = document.createElement('div'); row.classList.add('portfolio-body-row'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const html = `<div class="portfolio-body-cell flex-1"><span class="port-body-title">${item.key}</span></div><div class="portfolio-body-cell"><span class="port-body-title">${returnVal}</span></div>`; row.innerHTML = html; if (container) { container.appendChild(row) } }) } if (performances) { const performanceContentArea = document.querySelector('.performace-new-table'); if (performanceContentArea) { while (performanceContentArea.firstChild) { performanceContentArea.removeChild(performanceContentArea.firstChild); } performances.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B"; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row); }) } }
+    if (overAllCreditRating) { const portfolioDataContainer = document.querySelector('.portfolio-data-container'); if (portfolioDataContainer) { while (portfolioDataContainer.firstChild) { portfolioDataContainer.removeChild(portfolioDataContainer.firstChild) } overAllCreditRating.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`; row.innerHTML = html; portfolioDataContainer.appendChild(row) }) } }
+    function compositionList(data, container) { if (container) { while (container.firstChild) { container.removeChild(container.firstChild); } data.forEach((item, index) => { const row = document.createElement('div'); row.classList.add('table-item'); row.classList.add('no-min-width'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631']; const selectedColor = PIE_COLORS[index]; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row); }) } }
+}
 
 
 //adding event lister for the offering Document
 const offeringDocumentWrapper = document.getElementById('offering-document');
+
+const demoData = {
+    "id": "65d832484b0efa092190560b",
+    "overview": {
+        "name": "Mahaana Islamic Index ETF",
+        "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
+        "question": "What is Mahaana Islamic Cash Fund (MICF)?",
+        "description": "",
+        "navDate": "2024/02/22",
+        "navPerUnit": "10735.3598"
+    },
+    "fundInfo": {
+        "netAssets": "PKR 25 mn",
+        "launchDate": "Mar 04, 2024",
+        "fundCategory": "Open-end Shariah Compliant Equity ETF",
+        "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost.",
+        "benchmark": "Mahaana Islamic Index",
+        "managementFee": "Up to 1% of average net assets during the month",
+        "monthlyTotalExpenseRatio": 0.20,
+        "yearlyTotalExpenseRatio": 0.20,
+        "fundAuditors": "BDO Ebrahim & Co.",
+        "fundStabilityRating": "N/A",
+        "fundManager": "Mahaana Wealth Limited",
+
+        // New
+        "Authorized Participant": "JS Global Capital Limited",
+
+        // Not used anymore
+        "totalExpenseRatio": null,
+        "totalExpenseRatioWithoutLevy": null,
+        "monthlyTotalExpenseRatioWithoutLevy": 0.07,
+        "yearlyTotalExpenseRatioWithoutLevy": 0.07,
+        "weightedAverageTime": "47.00",
+        "custodian": "Central Depository Company of Pakistan Limited",
+        "shariahAdvisors": "Al Hilal Shariah Advisors"
+    },
+    "fmrDate": "2024-02-29",
+
+    // New section instead of asset allocation but like credit quality
+    "assetAllocation": {
+        "Equity": "97.50",
+        "Cash": "2.00",
+        "Other assets ": "0.50"
+    },
+
+    // Not used anymore
+    "currentAssetAllocation": {
+        "Bank Deposits": 34.22,
+        "GoP Ijarah Sukuks": 60.59,
+        "Short Term Sukuk": 0.00,
+        "Certificate of Investments": 0.00,
+        "Other assets ": 5.19
+    },
+    // Not used anymore
+    "lastAssetAllocation": {
+        "Bank Deposits": 34.66,
+        "GoP Ijarah Sukuks": 61.88,
+        "Short Term Sukuk": 0.00,
+        "Certificate of Investments": 0.00,
+        "Other assets ": 3.46
+    },
+
+    // "Credit quality" rename to "Sector allocation"
+    "creditRating": {
+        "OIL & GAS EXPLORATION COMPANIES": "17.65",
+        "CEMENT": "17.09",
+        "FERTILIZER": "16.06",
+        "TECHNOLOGY & COMMUNICATION": "11.67",
+        "POWER GENERATION & DISTRIBUTION": "9.53",
+        "Others": "25.50"
+    },
+    "holding": {
+        "Systems Limited": "11",
+        "Engro Corporation": "10",
+        "Hub Power Energy Company": "10",
+        "Lucky Cement Limited": "8",
+        "Oil & Gas Development Company": "7",
+        "Engro Fertilizers Limited": "6",
+        "Pakistan Petroleum Limited": "6",
+        "Meezan Bank Limited": "6",
+        "Mari Petroleum Limited": "5",
+        "Millat Tractors Limited": "4"
+    },
+    "distribution": {},
+    "distributions": [],
+    "performances": [
+        {
+            "name": "MIIETF return (annualized)",
+            "lastUpdatedOn": null,
+            "mtd": "-7.10%",
+            "ytd": "6.45%",
+            "days30": null,
+            "days90": "-7.10%",
+            "days365": null,
+            "years3": null,
+            "years5": null,
+            "inception": null
+        },
+        {
+            "name": "Benchmark return (annualized)",
+            "lastUpdatedOn": null,
+            "mtd": "-7.05%",
+            "ytd": "6.55%",
+            "days30": null,
+            "days90": "-7.05%",
+            "days365": null,
+            "years3": null,
+            "years5": null,
+            "inception": null
+        }
+    ],
+    "benchmarkData": null,
+    "monthToDateExpense": {
+        "key": 20.356251512386085191877156930,
+        "value": "2024-02-22T00:00:00Z"
+    },
+    "offeringDocumentList": [
+        {
+            "key": "OfferingDocument.pdf",
+            "value": "#",
+            "name": "OfferingDocument.pdf"
+        }
+    ]
+}
 
 async function fetchData() {
     // Create the loader
@@ -89,7 +215,7 @@ async function fetchData() {
         const {
             offeringDocumentList, fmrDate, fundInfo, performances, monthToDateExpense, overview,
             currentAssetAllocation, lastAssetAllocation, creditRating, holding, distributions
-        } = data;
+        } = demoData;
 
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => {
@@ -97,6 +223,7 @@ async function fetchData() {
         });
 
         const contentMapping = {
+            'asset-name': overview?.name,
             'asset-class': fundInfo.fundCategory,
             'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,
             'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
