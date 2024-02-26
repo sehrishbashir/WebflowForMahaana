@@ -22,15 +22,15 @@ const distributionWrap = document.querySelector('.distribution-body .flex-block-
 const reportsBodyContainer = document.querySelector('.reports-body');
 const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
-const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23')
+const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
+
+const offeringDocumentWrapper = document.getElementById('offering-document');
+
+const durationContainer = document.getElementById('graph-duration');
 
 // ---------------- LOADER ---------------- //
 // function createLoader() {const loaderWrapper = document.createElement('div');loaderWrapper.id = 'loader-wrapper';loaderWrapper.className = 'loader-wrapper';const loaderElement = document.createElement('div');loaderElement.className = 'loader';loaderWrapper.appendChild(loaderElement);document.body.appendChild(loaderWrapper);return loaderWrapper;}
 // ---------------------------------------------- //
-
-
-
-
 
 // YTD & MTD FIELDS
 // const ytdMtdField = document.getElementById("ytd-mtd-values");
@@ -52,10 +52,6 @@ function renderLoop(data) {
     if (overAllCreditRating) { const portfolioDataContainer = document.querySelector('.portfolio-data-container'); if (portfolioDataContainer) { while (portfolioDataContainer.firstChild) { portfolioDataContainer.removeChild(portfolioDataContainer.firstChild) } overAllCreditRating.forEach(data => { const row = document.createElement('div'); row.classList.add('table-item'); const html = `<div class="table-content-area"><h3 class="table-title">${data.name}</h3><div style="display: flex; gap: 14px"><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#432F87"/></svg><div><div class="text-block-37">THIS MONTH</div><div class="text-block-38">${data.current}%</div></div></div><div class="div-block-101" style="display: flex;"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#FF7D84"/></svg><div><div class="text-block-37">LAST MONTH</div><div class="text-block-38">${data.last}%</div></div></div></div></div>`; row.innerHTML = html; portfolioDataContainer.appendChild(row) }) } }
     function compositionList(data, container) { if (container) { while (container.firstChild) { container.removeChild(container.firstChild); } data.forEach((item, index) => { const row = document.createElement('div'); row.classList.add('table-item'); row.classList.add('no-min-width'); const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2); const PIE_COLORS = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631']; const selectedColor = PIE_COLORS[index]; const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row); }) } }
 }
-
-
-//adding event lister for the offering Document
-const offeringDocumentWrapper = document.getElementById('offering-document');
 
 const demoData = {
     "id": "65d832484b0efa092190560b",
@@ -353,41 +349,12 @@ fetchData();
 getFundData();
 
 // BODY
-var currentUrl = window.location.href;
-var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, '');
+// var currentUrl = window.location.href;var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, '');if (currentUrl !== updatedUrl) {window.history.replaceState(null, null, updatedUrl);};$(document).ready(function () {$('.tab-item').click(function (event) {event.stopPropagation();});$("html, body").animate({ scrollTop: 0 }, "slow");$(window).on('load', function () {$(".tab-item").removeClass("w--current", "active")});});document.addEventListener("DOMContentLoaded", function () {tabStopHandler();tabHandler();});document.addEventListener("scroll", scrollHandler);
 
-if (currentUrl !== updatedUrl) {
-    window.history.replaceState(null, null, updatedUrl);
-}
+function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate };
 
-$(document).ready(function () {
-    $('.tab-item').click(function (event) {
-        event.stopPropagation();
-    });
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-    $(window).on('load', function () {
-        $(".tab-item").removeClass("w--current", "active")
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    tabStopHandler();
-    tabHandler();
-});
-
-document.addEventListener("scroll", scrollHandler)
-
-function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate }
-
-
-
-function displayReports(reportsData) {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const displayedData = reportsData?.slice(startIndex, endIndex) || [];
-
-    if (reportsBodyContainer) {
-        // reportsBodyContainer.innerHTML = '';
+function displayReports(reportsData) {const startIndex = (currentPage - 1) * itemsPerPage;const endIndex = startIndex + itemsPerPage;const displayedData = reportsData?.slice(startIndex, endIndex) || [];
+if (reportsBodyContainer) {
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
             const row = document.createElement('div');
@@ -406,18 +373,10 @@ function displayReports(reportsData) {
 
 }
 
-function goToPage(page) {
-    if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) {
-        currentPage = page; window.currentPage = displayReports(reportsData)
-    }
-}
+// function goToPage(page) {if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) {currentPage = page; window.currentPage = displayReports(reportsData)}}
+// const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 },{ key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
 
-const graphDur = [
-    { key: '1M', value: 0 }, { key: '3M', value: 3 },
-    { key: '1Y', value: 12 }, { key: '3Y', value: 12 }
-];
 
-const durationContainer = document.getElementById('graph-duration');
 
 if (durationContainer) {
     graphDur.forEach(item => {
@@ -490,8 +449,3 @@ if (durationContainerNew) {
 
 
 // ---------------------------------------------- //
-
-
-// const kFormatter = (num) => { let formattedNumber; num = Math.abs(num); if (num >= 1000000000) { formattedNumber = (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B'; } else if (num >= 1000000) { formattedNumber = (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'; } else if (num >= 10000) { formattedNumber = (num / 10000).toFixed(1).replace(/\.0$/, '') + 'K'; } else { formattedNumber = num.toLocaleString(); } return formattedNumber; }
-
-
