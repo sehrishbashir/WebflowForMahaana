@@ -231,16 +231,13 @@ async function fetchData() {
             'totalYearlyExpenseRatioWithoutLevy': `${fundInfo.yearlyTotalExpenseRatioWithoutLevy}% (YTD)`,
         };
 
-        // if (offeringDocumentList.length > 0) {
-        //     // handleOfferingDocumentClicked(offeringDocumentList[0])
-        //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-        //     offeringDocumentList.pop();
-        //     if (offeringDocumentList.length > 1) {
-        //         reportWrap.style.display = "none";
-        //     } else {
-        //         reportWrap.style.display = "flex";
-        //     }
-        // }
+        if (offeringDocumentList.length > 0) {
+            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+            offeringDocumentList.pop();
+            if (offeringDocumentList.length > 1) {
+                reportWrap.style.display = "none";
+            }
+        }
         reportsData = offeringDocumentList;
 
         displayReports(offeringDocumentList);
@@ -295,13 +292,6 @@ async function fetchData() {
             assetChartWrap.style.display = "none";
             renderAssetChart(overallAssetAllocationData);
         }
-
-        // Object.keys(holding).length > 0 ? renderHoldingChart(transformData(holding)) : (holdingChartWrap.style.display = "flex", holdingList.style.display = "none");
-        // Object.keys(creditRating).length > 0 ? renderCreditChart(sendingPieData) : (creditChartWrap.style.display = "flex", creditList.style.display = "none");
-
-        // currentAssetAllocation && renderAssetChart(transformData(currentAssetAllocation))
-        // Object.keys(overallAssetAllocationData).length > 0 ? renderAssetChart(overallAssetAllocationData) : assetChartWrap.style.display = "flex";
-
     } catch (error) {
         console.error('>>>>>>Error', error);
         creditChart.style.border = 0;
