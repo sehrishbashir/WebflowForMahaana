@@ -237,6 +237,8 @@ async function fetchData() {
             offeringDocumentList.pop();
             if (offeringDocumentList.length > 1) {
                 reportWrap.style.display = "none";
+            } else {
+                reportWrap.style.display = "flex";
             }
         }
         reportsData = offeringDocumentList;
