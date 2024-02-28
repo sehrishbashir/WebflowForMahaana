@@ -45,7 +45,7 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 // function scrollHandler() {const tabsMenu = document.querySelector('.tabs-menu');const tabContent = document.querySelector('.tabs-content');const tabWrapper = document.querySelector('#tab-wrapper');const sections = document.querySelectorAll(".tab-content-container");const tabLinks = document.querySelectorAll(".tab-item");let isTabBarFixed;if (tabsMenu) {isTabBarFixed = tabsMenu.classList.contains('fixed');function obCallback(payload) {if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {tabsMenu.classList.add("fixed");tabWrapper.style.paddingTop = '64px';}else {tabsMenu.classList.remove("fixed");tabWrapper.style.paddingTop = '0';}}const ob = new IntersectionObserver(obCallback);ob.observe(tabContent);const options = { threshold: 0.2 };const observer = new IntersectionObserver((entries) => {entries.forEach(entry => {if (entry.isIntersecting) {const offset = !isTabBarFixed ? 250 : 200;const targetId = entry.target.id;const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {tabLinks.forEach(link => link.classList.remove("active"));targetTabLinks.forEach(link => link.classList.add("active"));} else {targetTabLinks.forEach(link => link.classList.remove("active"));}}});}, options);sections.forEach((section) => {observer.observe(section);});} }
 // function removePer(str) {if (String(str).includes('%')) return str.replace('%', '');else return str}
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
-// const setTextContent = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
+const setTextContent2 = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
 
 function renderLoop(data) {
     const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
@@ -315,7 +315,7 @@ async function fetchData() {
         offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
 
         for (const elementId in contentMapping) {
-            setTextContent(elementId, contentMapping[elementId])
+            setTextContent2(elementId, contentMapping[elementId])
         }
         data.assetAllocation = transformData(assetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
@@ -8100,7 +8100,7 @@ function displayReports(reportsData) {
 }
 
 function goToPage(page) { if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) { currentPage = page; window.currentPage = displayReports(reportsData) } }
-const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 }, { key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
+// const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 }, { key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
 const durationContainerNew = document.getElementById('new-graph-duration'); if (durationContainerNew) { while (durationContainerNew.firstChild) { durationContainerNew.removeChild(durationContainerNew.firstChild); } graphDur.forEach(item => { const durationDiv = document.createElement('div'); durationDiv.className = 'duration'; durationDiv.textContent = item.key; if (item.key === '3M') { durationDiv.classList.add('selected') } durationDiv.addEventListener('click', () => { const selectedDiv = document.querySelector('.duration.selected'); if (selectedDiv) { selectedDiv.classList.remove('selected') } durationDiv.classList.add('selected'); getFundData2(item.value); }); if (durationContainerNew) { durationContainerNew.appendChild(durationDiv); } }); const svgDiv = document.createElement('div'); svgDiv.className = 'html-embed-50 w-embed'; svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`; durationContainerNew.appendChild(svgDiv); }
 
 
