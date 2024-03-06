@@ -409,10 +409,6 @@ async function fetchData() {
         // console.log(data.creditRating, "opop =>1")
 
         const data = dataJson;
-        console.log(demoData, "opop =>12")
-        console.log(data, "opop =>13")
-        // console.log(dataJson, "opop =>14")
-
 
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
