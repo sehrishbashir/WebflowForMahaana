@@ -62,7 +62,7 @@ function renderLoop(data) {
         else { bodyRow.style.display = "none" }
     });
 
-    if (performances) {
+    if (performances?.length > 0) {
         const performanceBodyRow = document.querySelector('.performance-body');
         if (performanceBodyRow) {
             performances.forEach(data => {
