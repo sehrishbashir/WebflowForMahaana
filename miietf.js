@@ -99,7 +99,7 @@ function renderLoop(data) {
             })
         }
     }
-
+    console.log(currentAssetAllocation ,"currentAssetAllocation")
     if (currentAssetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
         if (portfolioDataContainer) {
