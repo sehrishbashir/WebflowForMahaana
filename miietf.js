@@ -274,11 +274,10 @@ async function fetchData() {
         // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        console.log( response, "opop")
-        const data1 = await response.json()
-        console.log( data1, "opop =>1")
+        const dataJson = await response.json()
+        console.log( dataJson, "opop =>1")
 
-        const data = demoData;
+        const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
