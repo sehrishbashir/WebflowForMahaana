@@ -274,7 +274,7 @@ async function fetchData() {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         const dataJson = await response.json()
-        console.log( dataJson, "opop =>1")
+        console.log(dataJson, "opop =>1")
 
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
@@ -8051,6 +8051,7 @@ const demoPerformaceData = [
 function getFundData2(duration) {
     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
+    let responseData = []
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) {
@@ -8058,13 +8059,16 @@ function getFundData2(duration) {
                     throw new Error(errorData.message || 'Unknown error occurred.')
                 });
             }
+            responseData = response.json()
             return response.json();
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
             renderFundChart(demoPerformaceData);
-            console.log(data , "demoPerformaceData")
-            console.log(demoPerformaceData , "demoPerformaceData")
+            
+            console.log(responseData, "demoPerformaceData")
+            console.log(data, "demoPerformaceData")
+            console.log(demoPerformaceData, "demoPerformaceData")
 
             const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
             if (totalReturnDate) {
