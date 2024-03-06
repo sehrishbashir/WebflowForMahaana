@@ -458,7 +458,7 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             createText(elementId, contentMapping[elementId])
         }
-        data.assetAllocation = transformData(assetAllocation, 'table');
+        // data.assetAllocation = transformData(assetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
