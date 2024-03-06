@@ -61,7 +61,7 @@ function renderLoop(data) {
         if (Object.keys(data).length > 0) { compositionList(data, bodyRow) }
         else { bodyRow.style.display = "none" }
     });
-
+    console.log("a-outside" , performances)
     if (performances?.length > 0) {
         const performanceBodyRow = document.querySelector('.performance-body');
         if (performanceBodyRow) {
