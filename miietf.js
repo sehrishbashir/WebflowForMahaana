@@ -271,7 +271,7 @@ function renderLoop(data) {
 const demoData = {
     "id": "65d832484b0efa092190560b",
     "overview": {
-        "name": "Mahaana",
+        "name": "Mahaana Abc",
         "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets. ",
         "question": "What is Mahaana Islamic Index ETF (MIIETF)?",
         "description": "",
@@ -300,11 +300,11 @@ const demoData = {
         "authorizedParticipant": null
     },
     "fmrDate": "2024-02-29",
-    "currentAssetAllocation": {
-        "Equity": 97.5,
-        "Cash": 2,
-        "Other assets ": 0.5
-    },
+    // "currentAssetAllocation": {
+    //     "Equity": 97.5,
+    //     "Cash": 2,
+    //     "Other assets ": 0.5
+    // },
     "assetAllocation": {
         "Equity": "97.50",
         "Cash": "2.00",
