@@ -147,7 +147,7 @@ function renderLoop(data) {
 const demoData = {
     "id": "65d832484b0efa092190560b",
     "overview": {
-        "name": "Mahaana Islamic Index ETFs",
+        "name": "Mahaana Islamic Index ETF",
         "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
         "question": "What is Mahaana Islamic Cash Fund (MICF)?",
         "description": "",
@@ -271,7 +271,8 @@ const demoData = {
 async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
-        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        console.log(response,"opop")
         const data = demoData;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
