@@ -275,7 +275,7 @@ async function fetchData() {
 
         const dataJson = await response.json()
         console.log(dataJson, "opop =>1")
-        console.log(data.creditRating, "opop =>1")
+        // console.log(data.creditRating, "opop =>1")
 
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
