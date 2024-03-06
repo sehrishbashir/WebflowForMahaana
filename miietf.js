@@ -491,6 +491,7 @@ async function fetchData() {
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
+            console.log(creditRating,"creditRating")
             renderCreditChart(transformData(creditRating));
         } else {
             creditChart.style.border = 0;
