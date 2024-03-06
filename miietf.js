@@ -271,7 +271,7 @@ function renderLoop(data) {
 const demoData = {
     "id": "65d832484b0efa092190560b",
     "overview": {
-        "name": "Mahaanac",
+        "name": "Mahaana  ac",
         "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets. ",
         "question": "What is Mahaana Islamic Index ETF (MIIETF)?",
         "description": "",
@@ -339,24 +339,24 @@ const demoData = {
     "distributions": [],
     "performances": [
         {
-            "name": null,
+            "name": "MIIETF return (annualized)",
             "lastUpdatedOn": null,
-            "mtd": "20.50%",
-            "ytd": "23.11%",
+            "mtd": "-7.10%",
+            "ytd": "6.45%",
             "days30": null,
-            "days90": "19.90%",
+            "days90": "-7.10%",
             "days365": null,
             "years3": null,
             "years5": null,
             "inception": null
         },
         {
-            "name": "Benchmark return",
+            "name": "Benchmark return (annualized)",
             "lastUpdatedOn": null,
-            "mtd": "11.25%",
-            "ytd": "10.19%",
+            "mtd": "-7.05%",
+            "ytd": "6.55%",
             "days30": null,
-            "days90": "11.25%",
+            "days90": "-7.05%",
             "days365": null,
             "years3": null,
             "years5": null,
@@ -407,8 +407,8 @@ async function fetchData() {
         // const dataJson = await response.json()
         // console.log(data.creditRating, "opop =>1")
 
-        const data =  demoData;
-        console.log(demoData, "opop =>12" )
+        const data = demoData;
+        console.log(demoData, "opop =>12")
         console.log(data, "opop =>13")
         // console.log(dataJson, "opop =>14")
 
@@ -487,11 +487,11 @@ async function fetchData() {
         // } else {
         //     holdingChart.style.border = 0
         // }
-        console.log(creditRating,"creditRatingOut")
+        console.log(creditRating, "creditRatingOut")
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
-            console.log(creditRating,"creditRatingIn")
+            console.log(creditRating, "creditRatingIn")
             renderCreditChart(transformData(creditRating));
         } else {
             creditChart.style.border = 0;
