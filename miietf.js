@@ -61,7 +61,7 @@ function renderLoop(data) {
         if (Object.keys(data).length > 0) { compositionList(data, bodyRow) }
         else { bodyRow.style.display = "none" }
     });
-    console.log("a-outside" , performances)
+    console.log("a-outside", performances)
     if (performances?.length > 0) {
         const performanceBodyRow = document.querySelector('.performance-body');
         if (performanceBodyRow) {
@@ -72,7 +72,7 @@ function renderLoop(data) {
             })
         }
     }
-    if (distributions?.length > 0) {
+    if (distributions) {
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
             distributions.forEach((data) => {
@@ -268,7 +268,7 @@ function renderLoop(data) {
 //     ]
 // }
 
-const demoData ={
+const demoData = {
     "id": "65dd8ef568447f58938fb300",
     "overview": {
         "name": "Mahaana Islamic",
@@ -340,25 +340,49 @@ const demoData ={
     },
     "distributions": [],
     "performances": [
-        {
-            "name": "Benchmark return 2",
+        // {
+        //     "name": "Benchmark return 2",
+        //     "lastUpdatedOn": null,
+        //     "mtd": "20.44%",
+        //     "ytd": "23.12%",
+        //     "days30": null,
+        //     "days90": "19.90%",
+        //     "days365": null,
+        //     "years3": null,
+        //     "years5": null,
+        //     "inception": null
+        // },
+        // {
+        //     "name": "Benchmark return",
+        //     "lastUpdatedOn": null,
+        //     "mtd": "11.25%",
+        //     "ytd": "10.20%",
+        //     "days30": null,
+        //     "days90": "11.26%",
+        //     "days365": null,
+        //     "years3": null,
+        //     "years5": null,
+        //     "inception": null
+        // }
+                 {
+            "name": "MIIETF return (annualized)",
             "lastUpdatedOn": null,
-            "mtd": "20.44%",
-            "ytd": "23.12%",
+            "mtd": "-7.10%",
+            "ytd": "6.45%",
             "days30": null,
-            "days90": "19.90%",
+            "days90": "-7.10%",
             "days365": null,
             "years3": null,
             "years5": null,
             "inception": null
         },
         {
-            "name": "Benchmark return",
+            "name": "Benchmark return (annualized)",
             "lastUpdatedOn": null,
-            "mtd": "11.25%",
-            "ytd": "10.20%",
+            "mtd": "-7.05%",
+            "ytd": "6.55%",
             "days30": null,
-            "days90": "11.26%",
+            "days90": "-7.05%",
             "days365": null,
             "years3": null,
             "years5": null,
@@ -410,8 +434,8 @@ async function fetchData() {
         // const dataJson = await response.json()
         // console.log(data.creditRating, "opop =>1")
 
-        const data =  demoData;
-        console.log(demoData, "opop =>12" )
+        const data = demoData;
+        console.log(demoData, "opop =>12")
         console.log(data, "opop =>13")
         // console.log(dataJson, "opop =>14")
 
