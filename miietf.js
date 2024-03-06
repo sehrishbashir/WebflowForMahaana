@@ -49,7 +49,7 @@ const createText = (elementId, content) => { const element = document.getElement
 
 function renderLoop(data) {
     const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
-
+    console.log(data, 'poiu')
     const dataMappingsUpdated = [
         { elementClass: '.assetallocation-list', data: assetAllocation },
         { elementClass: '.credit-list', data: creditRating },
