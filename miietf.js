@@ -330,14 +330,7 @@ const demoData = {
         "Mari Petroleum Limited": "5.18%",
         "Millat Tractors Limited": "4.34%"
     },
-    "distribution": {
-        "payoutDate": "0",
-        "payoutPerUnit": 0,
-        "exNav": 0,
-        "yield": 0,
-        "type": null,
-        "recordDate": null
-    },
+    "distribution": {},
     "distributions": [],
     "performances": [
         {
