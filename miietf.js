@@ -277,7 +277,7 @@ async function fetchData() {
         const dataJson = await response.json()
         console.log( dataJson, "opop =>1")
 
-        const data = dataJson;
+        const data = demoData;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
