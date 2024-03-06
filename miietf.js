@@ -278,7 +278,7 @@ async function fetchData() {
         // const dataJson = await response.json()
         // console.log(data.creditRating, "opop =>1")
 
-        const data =  await response.json();
+        const data =  demoData;
         console.log(demoData, "opop =>12" )
         console.log(data, "opop =>13")
         // console.log(dataJson, "opop =>14")
