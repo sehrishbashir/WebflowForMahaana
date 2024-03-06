@@ -480,13 +480,13 @@ async function fetchData() {
 
         renderLoop(data);
 
-        if (Object.keys(holding).length > 0) {
-            holdingChartWrap.style.display = "none";
-            holdingList.style.display = "flex";
-            renderHoldingChart(transformData(holding))
-        } else {
-            holdingChart.style.border = 0
-        }
+        // if (Object.keys(holding).length > 0) {
+        //     holdingChartWrap.style.display = "none";
+        //     holdingList.style.display = "flex";
+        //     renderHoldingChart(transformData(holding))
+        // } else {
+        //     holdingChart.style.border = 0
+        // }
 
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
@@ -496,11 +496,11 @@ async function fetchData() {
             creditChart.style.border = 0;
         }
 
-        if (Object.keys(assetAllocation).length > 0) {
-            assetChartWrap.style.display = "none";
-            assetList.style.display = "flex";
-            renderAssetChart(transformData(assetAllocation));
-        }
+        // if (Object.keys(assetAllocation).length > 0) {
+        //     assetChartWrap.style.display = "none";
+        //     assetList.style.display = "flex";
+        //     renderAssetChart(transformData(assetAllocation));
+        // }
 
 
         // if (Object.keys(overallAssetAllocationData).length > 0) {
