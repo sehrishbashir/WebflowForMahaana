@@ -8051,7 +8051,6 @@ const demoPerformaceData = [
 function getFundData2(duration) {
     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
-    let responseData = []
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) {
@@ -8059,16 +8058,12 @@ function getFundData2(duration) {
                     throw new Error(errorData.message || 'Unknown error occurred.')
                 });
             }
-            responseData = response.json()
             return response.json();
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
+            console.log(data,"poi")
             renderFundChart(demoPerformaceData);
-            
-            console.log(responseData, "demoPerformaceData")
-            console.log(data, "demoPerformaceData")
-            console.log(demoPerformaceData, "demoPerformaceData")
 
             const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
             if (totalReturnDate) {
