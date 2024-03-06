@@ -323,7 +323,7 @@ async function fetchData() {
             createText(elementId, contentMapping[elementId])
         }
         data.assetAllocation = transformData(assetAllocation, 'table');
-        // data.creditRating = transformData(creditRating, 'table');
+        data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
 
