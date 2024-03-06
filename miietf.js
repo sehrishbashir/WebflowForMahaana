@@ -268,7 +268,7 @@ const demoData = {
     ]
 }
 
-const data =[]
+let data =[]
 
 async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
