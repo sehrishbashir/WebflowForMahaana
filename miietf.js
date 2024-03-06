@@ -48,10 +48,10 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data) {
-    const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
+    const { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
 
     const dataMappingsUpdated = [
-        { elementClass: '.assetallocation-list', data: assetAllocation },
+        { elementClass: '.assetallocation-list', data: currentAssetAllocation },
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
@@ -100,13 +100,13 @@ function renderLoop(data) {
         }
     }
 
-    if (assetAllocation) {
+    if (currentAssetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
         if (portfolioDataContainer) {
             while (portfolioDataContainer.firstChild) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
-            assetAllocation.forEach((data, index) => {
+            currentAssetAllocation.forEach((data, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
@@ -278,7 +278,7 @@ async function fetchData() {
         console.log( dataJson, "opop =>1")
 
         const data = dataJson;
-        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
+        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
@@ -322,7 +322,7 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             createText(elementId, contentMapping[elementId])
         }
-        data.assetAllocation = transformData(assetAllocation, 'table');
+        data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
@@ -361,10 +361,10 @@ async function fetchData() {
             creditChart.style.border = 0;
         }
 
-        if (Object.keys(assetAllocation).length > 0) {
+        if (Object.keys(currentAssetAllocation).length > 0) {
             assetChartWrap.style.display = "none";
             assetList.style.display = "flex";
-            renderAssetChart(transformData(assetAllocation));
+            renderAssetChart(transformData(currentAssetAllocation));
         }
 
 
