@@ -68,7 +68,7 @@ const demoData = {
         "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost.",
         "benchmark": "Mahaana Islamic Index",
         "managementFee": "Up to 1% of average net assets during the month",
-        "monthlyTotalExpenseRatio": 0.20,
+        "monthlyTotalExpenseRatio": 0.40,
         "yearlyTotalExpenseRatio": 0.20,
         "fundAuditors": "BDO Ebrahim & Co.",
         "fundStabilityRating": "N/A",
