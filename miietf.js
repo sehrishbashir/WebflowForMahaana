@@ -324,16 +324,16 @@ const demoData = {
         "Others": "25.50"
     },
     "holding": {
-        "Systems Limited": "10.87%",
-        "Engro Corporation": "9.76%",
-        "Hub Power Energy Company": "9.53%",
-        "Lucky Cement Limited": "7.71%",
-        "Oil & Gas Development Company": "6.89%",
-        "Engro Fertilizers Limited": "6.29%",
-        "Pakistan Petroleum Limited": "5.59%",
-        "Meezan Bank Limited": "5.56%",
-        "Mari Petroleum Limited": "5.18%",
-        "Millat Tractors Limited": "4.34%"
+        "Systems Limited": "11",
+        "Engro Corporation": "10",
+        "Hub Power Energy Company": "10",
+        "Lucky Cement Limited": "8",
+        "Oil & Gas Development Company": "7",
+        "Engro Fertilizers Limited": "6",
+        "Pakistan Petroleum Limited": "6",
+        "Meezan Bank Limited": "6",
+        "Mari Petroleum Limited": "5",
+        "Millat Tractors Limited": "4"
     },
     "distribution": {},
     "distributions": [],
