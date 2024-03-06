@@ -49,12 +49,12 @@ const createText = (elementId, content) => { const element = document.getElement
 
 function renderLoop(data) {
     const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
+    console.log(data, 'poiu')
     const dataMappingsUpdated = [
         { elementClass: '.assetallocation-list', data: assetAllocation },
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
-    console.log(dataMappingsUpdated, 'poiu')
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
@@ -144,177 +144,68 @@ function renderLoop(data) {
     }
 }
 
-// const demoData = {
-//     "id": "65d832484b0efa092190560b",
-//     "overview": {
-//         "name": "Mahaana Islamic Index ETF",
-//         "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
-//         "question": "What is Mahaana Islamic Cash Fund (MICF)?",
-//         "description": "",
-//         "navDate": "2024/02/22",
-//         "navPerUnit": "10735.3598"
-//     },
-//     "fundInfo": {
-//         "netAssets": "PKR 25 mn",
-//         "launchDate": "Mar 04, 2024",
-//         "fundCategory": "Open-end Shariah Compliant Equity ETF",
-//         "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost.",
-//         "benchmark": "Mahaana Islamic Index",
-//         "managementFee": "Up to 1% of average net assets during the month",
-//         "monthlyTotalExpenseRatio": 0.20,
-//         "yearlyTotalExpenseRatio": 0.20,
-//         "fundAuditors": "BDO Ebrahim & Co.",
-//         "fundStabilityRating": "N/A",
-//         "fundManager": "Mahaana Wealth Limited",
-
-//         // New
-//         "authorizedParticipant": "JS Global Capital Limited",
-
-//         // Not used anymore
-//         "totalExpenseRatio": null,
-//         "totalExpenseRatioWithoutLevy": null,
-//         "monthlyTotalExpenseRatioWithoutLevy": 0.07,
-//         "yearlyTotalExpenseRatioWithoutLevy": 0.07,
-//         "weightedAverageTime": "47.00",
-//         "custodian": "Central Depository Company of Pakistan Limited",
-//         "shariahAdvisors": "Al Hilal Shariah Advisors"
-//     },
-//     "fmrDate": "2024-02-29",
-
-//     // New section instead of asset allocation but like credit quality
-//     "assetAllocation": {
-//         "Equity": "97.50",
-//         "Cash": "2.00",
-//         "Other assets ": "0.50"
-//     },
-
-//     // Not used anymore
-//     "currentAssetAllocation": {
-//         "Bank Deposits": 34.22,
-//         "GoP Ijarah Sukuks": 60.59,
-//         "Short Term Sukuk": 0.00,
-//         "Certificate of Investments": 0.00,
-//         "Other assets ": 5.19
-//     },
-//     // Not used anymore
-//     "lastAssetAllocation": {
-//         "Bank Deposits": 34.66,
-//         "GoP Ijarah Sukuks": 61.88,
-//         "Short Term Sukuk": 0.00,
-//         "Certificate of Investments": 0.00,
-//         "Other assets ": 3.46
-//     },
-
-//     // "Credit quality" rename to "Sector allocation"
-//     "creditRating": {
-//         "OIL & GAS EXPLORATION COMPANIES": "17.65",
-//         "CEMENT": "17.09",
-//         "FERTILIZER": "16.06",
-//         "TECHNOLOGY & COMMUNICATION": "11.67",
-//         "POWER GENERATION & DISTRIBUTION": "9.53",
-//         "Others": "25.50"
-//     },
-//     "holding": {
-//         "Systems Limited": "11",
-//         "Engro Corporation": "10",
-//         "Hub Power Energy Company": "10",
-//         "Lucky Cement Limited": "8",
-//         "Oil & Gas Development Company": "7",
-//         "Engro Fertilizers Limited": "6",
-//         "Pakistan Petroleum Limited": "6",
-//         "Meezan Bank Limited": "6",
-//         "Mari Petroleum Limited": "5",
-//         "Millat Tractors Limited": "4"
-//     },
-//     "distribution": {},
-//     "distributions": [],
-//     "performances": [
-//         {
-//             "name": "MIIETF return (annualized)",
-//             "lastUpdatedOn": null,
-//             "mtd": "-7.10%",
-//             "ytd": "6.45%",
-//             "days30": null,
-//             "days90": "-7.10%",
-//             "days365": null,
-//             "years3": null,
-//             "years5": null,
-//             "inception": null
-//         },
-//         {
-//             "name": "Benchmark return (annualized)",
-//             "lastUpdatedOn": null,
-//             "mtd": "-7.05%",
-//             "ytd": "6.55%",
-//             "days30": null,
-//             "days90": "-7.05%",
-//             "days365": null,
-//             "years3": null,
-//             "years5": null,
-//             "inception": null
-//         }
-//     ],
-//     "benchmarkData": null,
-//     "monthToDateExpense": {
-//         "key": -7.05,
-//         "value": "2024-02-22T00:00:00Z"
-//     },
-//     "offeringDocumentList": [
-//         {
-//             "key": "OfferingDocument.pdf",
-//             "value": "#",
-//             "name": "OfferingDocument.pdf"
-//         }
-//     ]
-// }
-
 const demoData = {
     "id": "65d832484b0efa092190560b",
     "overview": {
-        "name": "Mahaana  ac",
-        "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets. ",
-        "question": "What is Mahaana Islamic Index ETF (MIIETF)?",
+        "name": "Mahaana Islamic Index ETF",
+        "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
+        "question": "What is Mahaana Islamic Cash Fund (MICF)?",
         "description": "",
-        "navDate": "2024/03/05",
-        "navPerUnit": "104.9024"
+        "navDate": "2024/02/22",
+        "navPerUnit": "10735.3598"
     },
     "fundInfo": {
         "netAssets": "PKR 25 mn",
         "launchDate": "Mar 04, 2024",
         "fundCategory": "Open-end Shariah Compliant Equity ETF",
-        "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost. ",
-        "benchmark": "Mahaana Islamic Index ",
-        "managementFee": "Mahaana Wealth Limited",
+        "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost.",
+        "benchmark": "Mahaana Islamic Index",
+        "managementFee": "Up to 1% of average net assets during the month",
+        "monthlyTotalExpenseRatio": 0.20,
+        "yearlyTotalExpenseRatio": 0.20,
+        "fundAuditors": "BDO Ebrahim & Co.",
+        "fundStabilityRating": "N/A",
+        "fundManager": "Mahaana Wealth Limited",
+
+        // New
+        "authorizedParticipant": "JS Global Capital Limited",
+
+        // Not used anymore
         "totalExpenseRatio": null,
-        "monthlyTotalExpenseRatio": 0,
-        "yearlyTotalExpenseRatio": 0,
         "totalExpenseRatioWithoutLevy": null,
-        "monthlyTotalExpenseRatioWithoutLevy": 0,
-        "yearlyTotalExpenseRatioWithoutLevy": 0,
-        "weightedAverageTime": "",
-        "fundAuditors": "JS Global Capital Limited",
-        "custodian": "Up to 1% of average net assets during the month",
-        "shariahAdvisors": "0.20% (MTD)\n0.20% (YTD)",
-        "fundStabilityRating": "BDO Ebrahim & Co.",
-        "fundManager": "N/A",
-        "authorizedParticipant": null
+        "monthlyTotalExpenseRatioWithoutLevy": 0.07,
+        "yearlyTotalExpenseRatioWithoutLevy": 0.07,
+        "weightedAverageTime": "47.00",
+        "custodian": "Central Depository Company of Pakistan Limited",
+        "shariahAdvisors": "Al Hilal Shariah Advisors"
     },
     "fmrDate": "2024-02-29",
-    // "currentAssetAllocation": {
-    //     "Equity": 97.5,
-    //     "Cash": 2,
-    //     "Other assets ": 0.5
-    // },
+
+    // New section instead of asset allocation but like credit quality
     "assetAllocation": {
         "Equity": "97.50",
         "Cash": "2.00",
         "Other assets ": "0.50"
     },
-    "lastAssetAllocation": {
-        "Equity": 0,
-        "Cash": 0,
-        "Other assets ": 0
+
+    // Not used anymore
+    "currentAssetAllocation": {
+        "Bank Deposits": 34.22,
+        "GoP Ijarah Sukuks": 60.59,
+        "Short Term Sukuk": 0.00,
+        "Certificate of Investments": 0.00,
+        "Other assets ": 5.19
     },
+    // Not used anymore
+    "lastAssetAllocation": {
+        "Bank Deposits": 34.66,
+        "GoP Ijarah Sukuks": 61.88,
+        "Short Term Sukuk": 0.00,
+        "Certificate of Investments": 0.00,
+        "Other assets ": 3.46
+    },
+
+    // "Credit quality" rename to "Sector allocation"
     "creditRating": {
         "OIL & GAS EXPLORATION COMPANIES": "17.65",
         "CEMENT": "17.09",
@@ -364,39 +255,19 @@ const demoData = {
         }
     ],
     "benchmarkData": null,
-    "etfBenchmarkData": null,
     "monthToDateExpense": {
-        "key": 20.49885526647017,
-        "value": "2024-03-04T00:00:00Z"
+        "key": -7.05,
+        "value": "2024-02-22T00:00:00Z"
     },
     "offeringDocumentList": [
         {
-            "key": "FMR_Feb_2024.pdf",
-            "value": "TermAndConditions/FMR_Feb_2024.pdf",
-            "name": "FMR_Feb_2024.pdf"
-        },
-        {
-            "key": "FMR_Jan_2024.pdf",
-            "value": "TermAndConditions/FMR_Jan_2024.pdf",
-            "name": "FMR_Jan_2024.pdf"
-        },
-        {
-            "key": "FMR_Dec_2023.pdf",
-            "value": "TermAndConditions/FMR_Dec_2023.pdf",
-            "name": "FMR_Dec_2023.pdf"
-        },
-        {
-            "key": "FMR_Nov_2023.pdf",
-            "value": "TermAndConditions/FMR_Nov_2023.pdf",
-            "name": "FMR_Nov_2023.pdf"
-        },
-        {
             "key": "OfferingDocument.pdf",
-            "value": "TermAndConditions/OfferingDocument.pdf",
+            "value": "#",
             "name": "OfferingDocument.pdf"
         }
     ]
 }
+
 
 
 async function fetchData() {
@@ -407,8 +278,8 @@ async function fetchData() {
         // const dataJson = await response.json()
         // console.log(data.creditRating, "opop =>1")
 
-        const data = demoData;
-        console.log(demoData, "opop =>12")
+        const data =  await response.json();
+        console.log(demoData, "opop =>12" )
         console.log(data, "opop =>13")
         // console.log(dataJson, "opop =>14")
 
@@ -480,18 +351,17 @@ async function fetchData() {
 
         renderLoop(data);
 
-        // if (Object.keys(holding).length > 0) {
-        //     holdingChartWrap.style.display = "none";
-        //     holdingList.style.display = "flex";
-        //     renderHoldingChart(transformData(holding))
-        // } else {
-        //     holdingChart.style.border = 0
-        // }
-        console.log(creditRating, "creditRatingOut")
+        if (Object.keys(holding).length > 0) {
+            holdingChartWrap.style.display = "none";
+            holdingList.style.display = "flex";
+            renderHoldingChart(transformData(holding))
+        } else {
+            holdingChart.style.border = 0
+        }
+
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
-            console.log(creditRating, "creditRatingIn")
             renderCreditChart(transformData(creditRating));
         } else {
             creditChart.style.border = 0;
