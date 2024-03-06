@@ -274,7 +274,7 @@ async function fetchData() {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         const dataJson = await response.json()
-        console.log(dataJson, "opop =>1")
+        console.log(dataJson, "opop =>12")
         // console.log(data.creditRating, "opop =>1")
 
         const data = dataJson;
