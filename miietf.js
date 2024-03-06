@@ -487,11 +487,11 @@ async function fetchData() {
         // } else {
         //     holdingChart.style.border = 0
         // }
-
+        console.log(creditRating,"creditRatingOut")
         if (Object.keys(creditRating).length > 0) {
             creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
-            console.log(creditRating,"creditRating")
+            console.log(creditRating,"creditRatingIn")
             renderCreditChart(transformData(creditRating));
         } else {
             creditChart.style.border = 0;
