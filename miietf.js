@@ -275,13 +275,13 @@ async function fetchData() {
     try {
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
-        const dataJson = await response.json()
+        // const dataJson = await response.json()
         // console.log(data.creditRating, "opop =>1")
 
         const data =  await response.json();
         console.log(demoData, "opop =>12" )
         console.log(data, "opop =>13")
-        console.log(dataJson, "opop =>14")
+        // console.log(dataJson, "opop =>14")
 
 
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
