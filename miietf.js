@@ -90,7 +90,7 @@ function renderLoop(data) {
             while (performanceContentArea.firstChild) {
                 performanceContentArea.removeChild(performanceContentArea.firstChild);
             }
-            console.log(performances ,"performances")
+            console.log(performances, "performances")
             performances.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
@@ -99,7 +99,7 @@ function renderLoop(data) {
             })
         }
     }
-   
+
     if (currentAssetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
         if (portfolioDataContainer) {
@@ -275,7 +275,7 @@ async function fetchData() {
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
-        console.log( dataJson, "opop =>1")
+        console.log(dataJson, "opop =>1")
 
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding } = data;
@@ -302,12 +302,10 @@ async function fetchData() {
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav':"100.45",
-            'market':'1458'
-            // 'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            // 'market': `${overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)}`,
+            'i-nav': `${(overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)) || '0'}`,
+            'market': `${(overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)) || '0'}`,
         };
-        console.log(contentMapping,"contentMapping")
+        console.log(contentMapping, "contentMapping")
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
             offeringDocumentList.pop();
