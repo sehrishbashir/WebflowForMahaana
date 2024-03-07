@@ -305,7 +305,7 @@ async function fetchData() {
             'i-nav': "10,046",
             'market': "10,047"
         };
-
+        console.log(contentMapping,"contentMapping")
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
             offeringDocumentList.pop();
