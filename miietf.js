@@ -271,9 +271,9 @@ const demoData = {
 async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
-        // const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
-        const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
         console.log( dataJson, "opop =>1")
 
@@ -302,8 +302,8 @@ async function fetchData() {
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav': "10,046",
-            'market': "10,047"
+            'i-nav': "check",
+            'market': "check"
         };
         console.log(contentMapping,"contentMapping")
         if (offeringDocumentList.length > 0) {
