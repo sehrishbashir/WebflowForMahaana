@@ -303,7 +303,7 @@ async function fetchData() {
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'market': '0',
+            'market': `${(overview?.marketPrice && overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)) || '0'}`,
         };
         console.log(contentMapping, "contentMapping")
         if (offeringDocumentList.length > 0) {
