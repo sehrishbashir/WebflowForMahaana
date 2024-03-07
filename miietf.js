@@ -302,8 +302,8 @@ async function fetchData() {
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav': "10,045",
-            'market': "10,045"
+            'i-nav': "10,046",
+            'market': "10,047"
         };
 
         if (offeringDocumentList.length > 0) {
