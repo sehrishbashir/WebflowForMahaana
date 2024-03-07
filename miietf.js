@@ -302,8 +302,10 @@ async function fetchData() {
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'market': `${overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)}`,
+            'i-nav':"100.45",
+            'market':'1458'
+            // 'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            // 'market': `${overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)}`,
         };
         console.log(contentMapping,"contentMapping")
         if (offeringDocumentList.length > 0) {
