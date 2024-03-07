@@ -8062,8 +8062,8 @@ function getFundData2(duration) {
             console.log(data,"poi")
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
-            renderFundChart(data);
-            const lastDate = data[data.length - 1].date;
+            renderFundChart(demoPerformaceData);
+            const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
             if (totalReturnDate) {
                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
             }
