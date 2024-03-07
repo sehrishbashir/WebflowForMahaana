@@ -8051,7 +8051,7 @@ const demoPerformaceData = [
 
 function getFundData2(duration) {
     const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
-    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
+    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) {
@@ -8063,8 +8063,8 @@ function getFundData2(duration) {
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
-            renderFundChart(demoPerformaceData);
-            const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
+            renderFundChart(data);
+            const lastDate = data[data.length - 1].date;
             if (totalReturnDate) {
                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
             }
