@@ -230,7 +230,7 @@ const demoData = {
     "distributions": [],
     "performances": [
         {
-            "name": 'asd',
+            "name": null,
             "lastUpdatedOn": null,
             "mtd": "19.86%",
             "ytd": "23.62%",
