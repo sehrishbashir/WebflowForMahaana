@@ -275,7 +275,6 @@ async function fetchData() {
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
-        console.log(dataJson, "opop =>1")
 
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding } = data;
@@ -303,7 +302,6 @@ async function fetchData() {
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'market': `${(overview?.marketPrice && overview?.marketPrice.includes('.') ? Number(overview?.marketPrice).toFixed(4) : Number(overview?.marketPrice)) || '0'}`,
         };
         console.log(contentMapping, "contentMapping")
         if (offeringDocumentList.length > 0) {
@@ -8061,6 +8059,7 @@ function getFundData2(duration) {
             }
             return response.json();
         }).then((data) => {
+            console.log(data,"poi")
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
             renderFundChart(data);
