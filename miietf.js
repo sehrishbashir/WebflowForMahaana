@@ -8048,7 +8048,7 @@ const demoPerformaceData = [
 ]
 
 function getFundData2(duration) {
-    const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
+    const params = typeof duration == 'object' || duration == undefined ? 24 : duration;
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
