@@ -306,6 +306,8 @@ async function fetchData() {
         console.log(contentMapping, "contentMapping")
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+            console.log(offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0] , 'check')
+
             offeringDocumentList.pop();
             if (offeringDocumentList.length > 1) {
                 reportWrap.style.display = "none";
