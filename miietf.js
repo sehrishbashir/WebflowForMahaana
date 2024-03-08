@@ -8059,7 +8059,7 @@ function getFundData2(duration) {
             }
             return response.json();
         }).then((data) => {
-            console.log(data,"poi")
+            console.log(data, "poi")
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
             renderFundChart(data);
@@ -8083,10 +8083,13 @@ var currentUrl = window.location.href; var updatedUrl = currentUrl.replace(/[?&]
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate };
 
 function displayReports(reportsData) {
-    const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage; const displayedData = reportsData?.slice(startIndex, endIndex) || [];
+    const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
+    const displayedData = reportsData?.slice(startIndex, endIndex) || [];
     if (reportsBodyContainer) {
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
+            console.log(url, data.key.split('.')[0], 'offering', reportsData, displayedData)
+
             const row = document.createElement('div');
             row.classList.add('reports-body-row');
             const html = `
