@@ -279,8 +279,10 @@ async function fetchData() {
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
-        // Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
-        Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+        Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        let navDateElement = document.querySelectorAll('body #navDate');
+        Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
 
         const contentMapping = {
@@ -305,7 +307,7 @@ async function fetchData() {
             'authorizedParticipant': fundInfo.authorizedParticipant,
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         };
-        console.log(contentMapping, "contentMapping")
+
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
             console.log(offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0] , 'check')
