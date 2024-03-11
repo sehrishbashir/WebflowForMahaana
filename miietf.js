@@ -281,8 +281,8 @@ async function fetchData() {
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
-        let navDateElement = document.querySelectorAll('body #navDate');
-        Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+        // let navDateElement = document.querySelectorAll('body #navDate');
+        // Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
 
         const contentMapping = {
@@ -293,7 +293,8 @@ async function fetchData() {
             'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
             'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
             'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
             'productSummary': overview.assetCategory,
             'fundManager': fundInfo.fundManager,
             'netAssets': fundInfo.netAssets,
