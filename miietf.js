@@ -90,7 +90,7 @@ function renderLoop(data) {
             while (performanceContentArea.firstChild) {
                 performanceContentArea.removeChild(performanceContentArea.firstChild);
             }
-            console.log(performances, "performances")
+
             performances.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
@@ -310,7 +310,6 @@ async function fetchData() {
 
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-            console.log(offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0] , 'check')
 
             offeringDocumentList.pop();
             if (offeringDocumentList.length > 1) {
@@ -8065,7 +8064,6 @@ function getFundData2(duration) {
             }
             return response.json();
         }).then((data) => {
-            console.log(data, "poi")
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
             renderFundChart(data);
@@ -8094,7 +8092,6 @@ function displayReports(reportsData) {
     if (reportsBodyContainer) {
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
-            console.log(url, data.key.split('.')[0], 'offering', reportsData, displayedData)
 
             const row = document.createElement('div');
             row.classList.add('reports-body-row');
