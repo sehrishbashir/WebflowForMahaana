@@ -288,8 +288,8 @@ async function fetchData() {
         const contentMapping = {
             'asset-name': overview?.name,
             'asset-class': fundInfo.fundCategory,
-            'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,
-            'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
+            'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
+            'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
             'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
             // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
             'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
