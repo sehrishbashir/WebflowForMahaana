@@ -39,7 +39,7 @@ window.helpcrunchSettings = { organization: org, appId: appId, user: userData };
 
 // ---------------- SCROLL TO TOP ---------------- //
 function scrollToTop() { window.scroll({ top: 0, behavior: 'smooth' }) }
-window.addEventListener('unload', () => scrollToTop());
+// window.addEventListener('unload', () => scrollToTop());
 $(window).scroll(function () { if ($(this).scrollTop() >= 400) { $('#return-to-top').fadeIn(200) } else { $('#return-to-top').fadeOut(200) } });
 $('#return-to-top').click(function () { scrollToTop() });
 // ---------------------------------------------- //
