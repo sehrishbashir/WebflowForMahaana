@@ -758,7 +758,7 @@ function handleBody(type) {
 
     handleClick(type)
     if (b2bBody || b2cBody) {
-        scrollToTop();
+        // scrollToTop();
         if (type.toLowerCase() == corporate) {
             b2bBody.style.display = 'flex';
             b2cBody.style.display = 'none';
