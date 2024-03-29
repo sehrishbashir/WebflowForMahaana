@@ -45,20 +45,20 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 // function scrollHandler() {const tabsMenu = document.querySelector('.tabs-menu');const tabContent = document.querySelector('.tabs-content');const tabWrapper = document.querySelector('#tab-wrapper');const sections = document.querySelectorAll(".tab-content-container");const tabLinks = document.querySelectorAll(".tab-item");let isTabBarFixed;if (tabsMenu) {isTabBarFixed = tabsMenu.classList.contains('fixed');function obCallback(payload) {if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {tabsMenu.classList.add("fixed");tabWrapper.style.paddingTop = '64px';}else {tabsMenu.classList.remove("fixed");tabWrapper.style.paddingTop = '0';}}const ob = new IntersectionObserver(obCallback);ob.observe(tabContent);const options = { threshold: 0.2 };const observer = new IntersectionObserver((entries) => {entries.forEach(entry => {if (entry.isIntersecting) {const offset = !isTabBarFixed ? 250 : 200;const targetId = entry.target.id;const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {tabLinks.forEach(link => link.classList.remove("active"));targetTabLinks.forEach(link => link.classList.add("active"));} else {targetTabLinks.forEach(link => link.classList.remove("active"));}}});}, options);sections.forEach((section) => {observer.observe(section);});} }
 // function removePer(str) {if (String(str).includes('%')) return str.replace('%', '');else return str}
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
-const createText = (elementId, content) => {const element = document.getElementById(elementId);if (element) {element.textContent = content;}};
+const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data) {
-    const { performances, holding, creditRating, distributions, overAllCreditRating, assetAllocation } = data;
+    const { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
 
     const dataMappingsUpdated = [
-        { elementClass: '.assetallocation-list', data: assetAllocation },
+        { elementClass: '.assetallocation-list', data: currentAssetAllocation },
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) { compositionList(data, bodyRow) } 
+        if (Object.keys(data).length > 0) { compositionList(data, bodyRow) }
         else { bodyRow.style.display = "none" }
     });
 
@@ -94,19 +94,19 @@ function renderLoop(data) {
             performances.forEach(data => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
-                const selectedColor = data.name.toLowerCase().includes('micf') ? "#2E90FA" : "#62529B";
-                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
+                const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
+                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
             })
         }
     }
 
-    if (assetAllocation) {
+    if (currentAssetAllocation) {
         const portfolioDataContainer = document.querySelector('.portfolio-data-container');
         if (portfolioDataContainer) {
             while (portfolioDataContainer.firstChild) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
-            assetAllocation.forEach((data, index) => {
+            currentAssetAllocation.forEach((data, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
@@ -147,7 +147,7 @@ function renderLoop(data) {
 const demoData = {
     "id": "65d832484b0efa092190560b",
     "overview": {
-        "name": "Mahaana Islamic Index ETF",
+        "name": "Mahaana Islamic Index ETF as",
         "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
         "question": "What is Mahaana Islamic Cash Fund (MICF)?",
         "description": "",
@@ -230,24 +230,24 @@ const demoData = {
     "distributions": [],
     "performances": [
         {
-            "name": "MIIETF return (annualized)",
+            "name": null,
             "lastUpdatedOn": null,
-            "mtd": "-7.10%",
-            "ytd": "6.45%",
+            "mtd": "19.86%",
+            "ytd": "23.62%",
             "days30": null,
-            "days90": "-7.10%",
+            "days90": "24.63%",
             "days365": null,
             "years3": null,
             "years5": null,
             "inception": null
         },
         {
-            "name": "Benchmark return (annualized)",
+            "name": "Benchmark return",
             "lastUpdatedOn": null,
-            "mtd": "-7.05%",
-            "ytd": "6.55%",
+            "mtd": "10.75%",
+            "ytd": "9.54%",
             "days30": null,
-            "days90": "-7.05%",
+            "days90": "10.45%",
             "days365": null,
             "years3": null,
             "years5": null,
@@ -271,21 +271,31 @@ const demoData = {
 async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
-        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/micf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        const data = demoData;
-        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, assetAllocation, holding } = data;
+        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+
+        // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        const dataJson = await response.json()
+
+        const data = dataJson;
+        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        let navDateElement = document.querySelectorAll('body #navDate');
+        Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
 
         const contentMapping = {
             'asset-name': overview?.name,
             'asset-class': fundInfo.fundCategory,
-            'expense-ratio-mtd': `${fundInfo.monthlyTotalExpenseRatio}%`,
-            'expense-ratio-ytd': `${fundInfo.yearlyTotalExpenseRatio}%`,
+            'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
+            'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
             'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-            'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+            // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+            'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
             'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
             'productSummary': overview.assetCategory,
             'fundManager': fundInfo.fundManager,
             'netAssets': fundInfo.netAssets,
@@ -297,12 +307,12 @@ async function fetchData() {
             'fundAuditors': fundInfo.fundAuditors,
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav': "10,045",
-            'market': "10,045"
+            'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         };
 
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+
             offeringDocumentList.pop();
             if (offeringDocumentList.length > 1) {
                 reportWrap.style.display = "none";
@@ -317,7 +327,7 @@ async function fetchData() {
         for (const elementId in contentMapping) {
             createText(elementId, contentMapping[elementId])
         }
-        data.assetAllocation = transformData(assetAllocation, 'table');
+        data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
@@ -356,10 +366,10 @@ async function fetchData() {
             creditChart.style.border = 0;
         }
 
-        if (Object.keys(assetAllocation).length > 0) {
+        if (Object.keys(currentAssetAllocation).length > 0) {
             assetChartWrap.style.display = "none";
             assetList.style.display = "flex";
-            renderAssetChart(transformData(assetAllocation));
+            renderAssetChart(transformData(currentAssetAllocation));
         }
 
 
@@ -8045,8 +8055,8 @@ const demoPerformaceData = [
 ]
 
 function getFundData2(duration) {
-    const params = typeof duration == 'object' || duration == undefined ? 3 : duration;
-    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance?duration=${params}`;
+    const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
+    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (!response.ok) {
@@ -8058,8 +8068,8 @@ function getFundData2(duration) {
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
-            renderFundChart(demoPerformaceData);
-            const lastDate = demoPerformaceData[demoPerformaceData.length - 1].date;
+            renderFundChart(data);
+            const lastDate = data[data.length - 1].date;
             if (totalReturnDate) {
                 totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
             }
@@ -8079,10 +8089,12 @@ var currentUrl = window.location.href; var updatedUrl = currentUrl.replace(/[?&]
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate };
 
 function displayReports(reportsData) {
-    const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage; const displayedData = reportsData?.slice(startIndex, endIndex) || [];
+    const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
+    const displayedData = reportsData?.slice(startIndex, endIndex) || [];
     if (reportsBodyContainer) {
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
+
             const row = document.createElement('div');
             row.classList.add('reports-body-row');
             const html = `
@@ -8100,8 +8112,8 @@ function displayReports(reportsData) {
 }
 
 function goToPage(page) { if (page >= 1 && page <= Math.ceil((reportsData.length || 0) / itemsPerPage)) { currentPage = page; window.currentPage = displayReports(reportsData) } }
-// const graphDur = [{ key: '1M', value: 0 }, { key: '3M', value: 3 }, { key: '1Y', value: 12 }, { key: '3Y', value: 12 }];
-const durationContainerNew = document.getElementById('new-graph-duration'); if (durationContainerNew) { while (durationContainerNew.firstChild) { durationContainerNew.removeChild(durationContainerNew.firstChild); } graphDur.forEach(item => { const durationDiv = document.createElement('div'); durationDiv.className = 'duration'; durationDiv.textContent = item.key; if (item.key === '3M') { durationDiv.classList.add('selected') } durationDiv.addEventListener('click', () => { const selectedDiv = document.querySelector('.duration.selected'); if (selectedDiv) { selectedDiv.classList.remove('selected') } durationDiv.classList.add('selected'); getFundData2(item.value); }); if (durationContainerNew) { durationContainerNew.appendChild(durationDiv); } }); const svgDiv = document.createElement('div'); svgDiv.className = 'html-embed-50 w-embed'; svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`; durationContainerNew.appendChild(svgDiv); }
+const graphDurs = [{ key: '1Y', value: 12 }, { key: '2Y', value: 24 }, { key: '3Y', value: 36 }];
+const durationContainerNew = document.getElementById('new-graph-duration'); if (durationContainerNew) { while (durationContainerNew.firstChild) { durationContainerNew.removeChild(durationContainerNew.firstChild); } graphDurs.forEach(item => { const durationDiv = document.createElement('div'); durationDiv.className = 'duration'; durationDiv.textContent = item.key; if (item.key === '3Y') { durationDiv.classList.add('selected') } durationDiv.addEventListener('click', () => { const selectedDiv = document.querySelector('.duration.selected'); if (selectedDiv) { selectedDiv.classList.remove('selected') } durationDiv.classList.add('selected'); getFundData2(item.value); }); if (durationContainerNew) { durationContainerNew.appendChild(durationDiv); } }); const svgDiv = document.createElement('div'); svgDiv.className = 'html-embed-50 w-embed'; svgDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M4.75 0.75C4.75 0.334375 4.41563 0 4 0C3.58437 0 3.25 0.334375 3.25 0.75V2H2C0.896875 2 0 2.89687 0 4V4.5V6V14C0 15.1031 0.896875 16 2 16H12C13.1031 16 14 15.1031 14 14V6V4.5V4C14 2.89687 13.1031 2 12 2H10.75V0.75C10.75 0.334375 10.4156 0 10 0C9.58438 0 9.25 0.334375 9.25 0.75V2H4.75V0.75ZM1.5 6H12.5V14C12.5 14.275 12.275 14.5 12 14.5H2C1.725 14.5 1.5 14.275 1.5 14V6ZM3 8.75C3 9.16562 3.33437 9.5 3.75 9.5H10.25C10.6656 9.5 11 9.16562 11 8.75C11 8.33438 10.6656 8 10.25 8H3.75C3.33437 8 3 8.33438 3 8.75ZM3.75 11C3.33437 11 3 11.3344 3 11.75C3 12.1656 3.33437 12.5 3.75 12.5H7.25C7.66563 12.5 8 12.1656 8 11.75C8 11.3344 7.66563 11 7.25 11H3.75Z" fill="#667085"></path></svg>`; durationContainerNew.appendChild(svgDiv); }
 
 
 // ---------------------------------------------- //
