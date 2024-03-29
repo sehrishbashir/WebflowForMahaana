@@ -27,7 +27,7 @@ ul.legends-list {padding-left: 0; display: flex; flex-wrap: wrap; justify-conten
 .MuiPaginationItem-root {line-height: 143% !important; letter-spacing: 0.17px !important; text-align: center !important; font-size: 14px !important; font-family: poppins !important; font-weight: 500 !important; color: rgba(0, 0, 0, 0.87) !important;}
 .recharts-wrapper, .recharts-surface {width: 100% !important}
 .tabs-menu { transition: top 0.3s ease; transition: height 0.3s ease }
-.tabs-menu.fixed { position: sticky; top: 80px; left: 0; height: 65px;}
+.tabs-menu.fixed { position: sticky; top: 60px; left: 0; height: 65px;}
 .menu-button.w-nav-button.w--open .menu-wrap { background-color: #f2f4f7; }
 .w-icon-arrow-down::before, .w-icon-dropdown-toggle::before { content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="%23432F87" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>'); font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: -2px; right: -3px; }
 .dropdown-toggle.w--open .w-icon-arrow-down::before, .dropdown-toggle.w--open .w-icon-dropdown-toggle::before { content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 12.5L10 7.5L15 12.5" stroke="%23432F87" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>'); font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: -2px; right: -3px;}
