@@ -285,5 +285,3 @@ textarea::placeholder { color: var(--gray-500); }
 
 .link-block-17:hover .sponsors-logo:first-child { display: none; }
 .link-block-17:hover .sponsors-logo.colored-logo { display: flex; }
-
-#B2C-Body{overflow-x: hidden;}
