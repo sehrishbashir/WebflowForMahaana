@@ -14,8 +14,8 @@ currentPage = 1;
 // const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
 // const holdingChart = document.querySelector('#top-holdings-chart');
 
-const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
-const assetList = document.querySelector('#asset-allocation-chart-wrapper .assetallocation-list');
+// const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
+// const assetList = document.querySelector('#asset-allocation-chart-wrapper .assetallocation-list');
 
 const distributionBodyRow = document.querySelector('.distribution-body');
 const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
