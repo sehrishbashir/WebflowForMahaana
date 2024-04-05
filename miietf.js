@@ -6,7 +6,7 @@ let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
 
-const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+const creditChartWrap2 = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
 const creditChart = document.querySelector('#credit-quality-chart');
 
@@ -359,7 +359,7 @@ async function fetchData() {
         }
 
         if (Object.keys(creditRating).length > 0) {
-            creditChartWrap.style.display = "none";
+            creditChartWrap2.style.display = "none";
             creditList.style.display = "flex";
             renderCreditChart(transformData(creditRating));
         } else {
@@ -8117,3 +8117,8 @@ const durationContainerNew = document.getElementById('new-graph-duration'); if (
 
 
 // ---------------------------------------------- //
+
+
+function tabStopHandler(){Webflow.push(function(){document.querySelectorAll(".tab-item").forEach(function(e){e.addEventListener("click",function(e){e.preventDefault(),$(document).off("click")})})})}function tabHandler(){let e=document.querySelectorAll(".tab-item"),t=document.querySelector(".navbar-3"),n=t.getBoundingClientRect().height;e.forEach(e=>{e.addEventListener("click",function(t){t.preventDefault();let r=document.querySelector(e.getAttribute("href"));!function e(t){let r=document.querySelector(".tabs-menu").classList.contains("fixed"),l=t.getBoundingClientRect();window.scrollTo({top:l.top+window.scrollY+(r?-190:-n-170),behavior:"smooth"});let o=t.id;if(o){let i=new URL(window.location.href);i.searchParams.set("section",o),window.history.replaceState(null,null,i)}}(r);let l=document.querySelector(".tabs-menu");l.classList.add("fixed")})})}function scrollHandler(){let e=document.querySelector(".tabs-menu"),t=document.querySelector(".tabs-content"),n=document.querySelector("#tab-wrapper"),r=document.querySelectorAll(".tab-content-container"),l=document.querySelectorAll(".tab-item"),o;if(e){o=e.classList.contains("fixed");let i=new IntersectionObserver(function t(r){r[0].isIntersecting&&window.scrollY>=600&&window.innerWidth>=768?(e.classList.add("fixed"),n.style.paddingTop="64px"):(e.classList.remove("fixed"),n.style.paddingTop="10px")});i.observe(t);let c=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){let t=o?200:250,n=e.target.id,r=document.querySelectorAll(`.tab-item[href="#${n}"]`);e.boundingClientRect.top<=t&&e.intersectionRatio>0?(l.forEach(e=>e.classList.remove("active")),r.forEach(e=>e.classList.add("active"))):r.forEach(e=>e.classList.remove("active"))}})},{threshold:.2});r.forEach(e=>{c.observe(e)})}}function removePer(e){return String(e).includes("%")?e.replace("%",""):e}function transformData(e,t){return e&&Object.entries(e).map(([e,n])=>({key:e,value:"table"===t?removePer(n):Number(n?.toString()?.replace("%",""))})).filter(e=>e.value>0)};
+function tabStopHandler(){Webflow.push(function(){document.querySelectorAll(".tab-item").forEach(function(e){e.addEventListener("click",function(e){e.preventDefault(),$(document).off("click")})})})}function tabHandler(){let e=document.querySelectorAll(".tab-item"),t=document.querySelector(".navbar-3"),n=t.getBoundingClientRect().height;e.forEach(e=>{e.addEventListener("click",function(t){t.preventDefault();let r=document.querySelector(e.getAttribute("href"));!function e(t){let r=document.querySelector(".tabs-menu").classList.contains("fixed"),l=t.getBoundingClientRect();window.scrollTo({top:l.top+window.scrollY+(r?-190:-n-170),behavior:"smooth"});let o=t.id;if(o){let i=new URL(window.location.href);i.searchParams.set("section",o),window.history.replaceState(null,null,i)}}(r);let l=document.querySelector(".tabs-menu");l.classList.add("fixed")})})}function scrollHandler(){let e=document.querySelector(".tabs-menu"),t=document.querySelector(".tabs-content"),n=document.querySelector("#tab-wrapper"),r=document.querySelectorAll(".tab-content-container"),l=document.querySelectorAll(".tab-item"),o;if(e){o=e.classList.contains("fixed");let i=new IntersectionObserver(function t(r){r[0].isIntersecting&&window.scrollY>=600&&window.innerWidth>=768?(e.classList.add("fixed"),n.style.paddingTop="64px"):(e.classList.remove("fixed"),n.style.paddingTop="10px")});i.observe(t);let c=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){let t=o?200:250,n=e.target.id,r=document.querySelectorAll(`.tab-item[href="#${n}"]`);e.boundingClientRect.top<=t&&e.intersectionRatio>0?(l.forEach(e=>e.classList.remove("active")),r.forEach(e=>e.classList.add("active"))):r.forEach(e=>e.classList.remove("active"))}})},{threshold:.2});r.forEach(e=>{c.observe(e)})}}function removePer(e){return String(e).includes("%")?e.replace("%",""):e}function transformData(e,t){return e&&Object.entries(e).map(([e,n])=>({key:e,value:"table"===t?removePer(n):Number(n?.toString()?.replace("%",""))})).filter(e=>e.value>0)}const setTextContent=(e,t)=>{let n=document.getElementById(e);n&&(n.textContent=t)};
+
