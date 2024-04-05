@@ -21,7 +21,7 @@ currentPage = 1;
 // const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
 
 // const reportsBodyContainer = document.querySelector('.reports-body');
-const reportWrap2 = document.querySelector('.reports-body .flex-block-23');
+// const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
 // const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
@@ -30,7 +30,7 @@ const reportWrap2 = document.querySelector('.reports-body .flex-block-23');
 const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
 
 // ---------------- LOADER ---------------- //
-// function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
+function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
 // ---------------------------------------------- //
 
 // YTD & MTD FIELDS
@@ -316,7 +316,7 @@ async function fetchData() {
             offeringDocumentList.pop();
 
             if (offeringDocumentList.length >= 1) {
-                reportWrap2.style.display = "none";
+                reportWrap.style.display = "none";
             }
         }
         reportsData = offeringDocumentList;
