@@ -17,11 +17,11 @@ currentPage = 1;
 // const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 // const assetList = document.querySelector('#asset-allocation-chart-wrapper .assetallocation-list');
 
-const distributionBodyRow = document.querySelector('.distribution-body');
-const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
+// const distributionBodyRow = document.querySelector('.distribution-body');
+// const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
 
-const reportsBodyContainer = document.querySelector('.reports-body');
-const reportWrap = document.querySelector('.reports-body .flex-block-23');
+// const reportsBodyContainer = document.querySelector('.reports-body');
+// const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
 const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
