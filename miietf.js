@@ -21,7 +21,7 @@ currentPage = 1;
 // const distributionWrap = document.querySelector('.distribution-body .flex-block-23');
 
 // const reportsBodyContainer = document.querySelector('.reports-body');
-// const reportWrap = document.querySelector('.reports-body .flex-block-23');
+const reportWrap2 = document.querySelector('.reports-body .flex-block-23');
 
 // const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
@@ -316,7 +316,7 @@ async function fetchData() {
             offeringDocumentList.pop();
 
             if (offeringDocumentList.length >= 1) {
-                reportWrap.style.display = "none";
+                reportWrap2.style.display = "none";
             }
         }
         reportsData = offeringDocumentList;
