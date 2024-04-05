@@ -6,9 +6,9 @@ let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
 
-const creditChartWrap2 = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
+// const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 // const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
-const creditChart = document.querySelector('#credit-quality-chart');
+// const creditChart = document.querySelector('#credit-quality-chart');
 
 const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
 const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
@@ -359,7 +359,7 @@ async function fetchData() {
         }
 
         if (Object.keys(creditRating).length > 0) {
-            creditChartWrap2.style.display = "none";
+            creditChartWrap.style.display = "none";
             creditList.style.display = "flex";
             renderCreditChart(transformData(creditRating));
         } else {
