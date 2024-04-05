@@ -23,9 +23,9 @@ currentPage = 1;
 // const reportsBodyContainer = document.querySelector('.reports-body');
 // const reportWrap = document.querySelector('.reports-body .flex-block-23');
 
-const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
+// const poerformanceWrap = document.querySelector('.new-performance-wrap .flex-block-23');
 
-const offeringDocumentWrapper = document.getElementById('offering-document');
+// const offeringDocumentWrapper = document.getElementById('offering-document');
 
 const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
 
