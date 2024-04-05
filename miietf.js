@@ -315,9 +315,7 @@ async function fetchData() {
 
             offeringDocumentList.pop();
 
-            console.log("offeringDocumentList.length", offeringDocumentList.length)
-
-            if (offeringDocumentList.length > 1) {
+            if (offeringDocumentList.length >= 1) {
                 reportWrap.style.display = "none";
             }
         }
