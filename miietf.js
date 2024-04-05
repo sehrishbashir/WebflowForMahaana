@@ -30,7 +30,7 @@ currentPage = 1;
 const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
 
 // ---------------- LOADER ---------------- //
-function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
+// function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
 // ---------------------------------------------- //
 
 // YTD & MTD FIELDS
