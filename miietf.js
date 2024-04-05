@@ -10,9 +10,9 @@ currentPage = 1;
 // const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
 // const creditChart = document.querySelector('#credit-quality-chart');
 
-const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
-const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
-const holdingChart = document.querySelector('#top-holdings-chart');
+// const holdingChartWrap = document.querySelector('#top-holding-chart-wrapper .flex-block-23');
+// const holdingList = document.querySelector('#top-holding-chart-wrapper .holding-list');
+// const holdingChart = document.querySelector('#top-holdings-chart');
 
 const assetChartWrap = document.querySelector('#asset-allocation-chart-wrapper .flex-block-23');
 const assetList = document.querySelector('#asset-allocation-chart-wrapper .assetallocation-list');
