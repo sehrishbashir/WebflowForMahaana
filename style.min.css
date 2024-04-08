@@ -285,3 +285,5 @@ textarea::placeholder { color: var(--gray-500); }
 
 .link-block-17:hover .sponsors-logo:first-child { display: none; }
 .link-block-17:hover .sponsors-logo.colored-logo { display: flex; }
+
+.performace-new-table.holding-list, .performace-new-table.credit-list {flex: 1}
