@@ -71,14 +71,15 @@ function renderLoop(data) {
                         const row = document.createElement('div');
                         row.classList.add('table-row-2');
                         
-                        console.log(item)
                         const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
                         const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
                         
                         row.innerHTML = html;
                         holdingRows.appendChild(row);
                     })
-                } 
+                }
+
+                compositionList(data, bodyRow)
             }
             
             else {
@@ -190,15 +191,15 @@ function renderLoop(data) {
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
-            data.forEach((item, index) => {
-                // console.log(item)
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-                row.classList.add('no-min-width');
-                const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                const selectedColor = PIE_COLORS_NEW[index];
-                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row);
-            })
+            // data.forEach((item, index) => {
+            //     // console.log(item)
+            //     const row = document.createElement('div');
+            //     row.classList.add('table-item');
+            //     row.classList.add('no-min-width');
+            //     const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+            //     const selectedColor = PIE_COLORS_NEW[index];
+            //     const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><div class="text-block-37" style="margin-bottom: 2px">${item.key}</div><div class="text-block-39">${returnVal}%</div></div>`; row.innerHTML = html; container.appendChild(row);
+            // })
         }
     }
 }
