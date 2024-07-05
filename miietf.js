@@ -58,20 +58,50 @@ function renderLoop(data) {
 
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) { compositionList(data, bodyRow) }
+        if (Object.keys(data).length > 0) {
+            if (elementClass === ".holding-list") {
+                const holdingRows = document.querySelector("#holding-table-rows");
+                
+                if(holdingRows) {
+                    while (holdingRows.firstChild) {
+                        holdingRows.removeChild(holdingRows.firstChild);
+                    }
+                    
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row-2');
+                        
+                        console.log(item)
+                        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+                        const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+                        
+                        row.innerHTML = html;
+                        holdingRows.appendChild(row);
+                    })
+                } 
+            }
+            
+            else {
+                // console.log(elementClass)
+                // console.log(data)
+                compositionList(data, bodyRow) 
+            }
+        }
         else { bodyRow.style.display = "none" }
     });
 
-    if (performances) {
-        const performanceBodyRow = document.querySelector('.performance-body');
-        if (performanceBodyRow) {
-            performances.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('performance-body-row');
-                const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
-            })
-        }
-    }
+
+    // if (performances) {
+    //     const performanceBodyRow = document.querySelector('.performance-body');
+    //     if (performanceBodyRow) {
+    //         performances.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('performance-body-row');
+    //             const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
+    //         })
+    //     }
+    // }
+    
     if (distributions?.length > 0) {
         distributionWrap.style.display = "none";
         if (distributionBodyRow) {
@@ -83,19 +113,46 @@ function renderLoop(data) {
         }
     }
 
-    if (performances) {
-        const performanceContentArea = document.querySelector('.performace-new-table');
-        if (performanceContentArea) {
+    // if (performances) {
+    //     const performanceContentArea = document.querySelector('.performace-new-table');
+    //     if (performanceContentArea) {
 
-            while (performanceContentArea.firstChild) {
-                performanceContentArea.removeChild(performanceContentArea.firstChild);
+    //         while (performanceContentArea.firstChild) {
+    //             performanceContentArea.removeChild(performanceContentArea.firstChild);
+    //         }
+
+    //         performances.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('table-item');
+    //             const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
+    //             const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
+    //         })
+    //     }
+    // }
+
+    if (performances) {
+        const performanceContentArea = document.querySelector('#perf-table');
+        if (performanceContentArea) {
+            const performanceRowsDiv = document.querySelector('#perf-table-rows');
+            
+            while (performanceRowsDiv.lastChild) {
+                if (performanceRowsDiv.lastChild.classList.contains('headers'))
+                    break
+                else
+                    performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
             }
 
             performances.forEach(data => {
+                // console.log(data)
+                
                 const row = document.createElement('div');
-                row.classList.add('table-item');
-                const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
-                const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
+                row.classList.add('table-row');
+                const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div>`
+                
+                // const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
+                // const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`;
+                row.innerHTML = html;
+                performanceRowsDiv.appendChild(row);
             })
         }
     }
@@ -107,6 +164,7 @@ function renderLoop(data) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
             currentAssetAllocation.forEach((data, index) => {
+                
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
@@ -133,6 +191,7 @@ function renderLoop(data) {
                 container.removeChild(container.firstChild);
             }
             data.forEach((item, index) => {
+                // console.log(item)
                 const row = document.createElement('div');
                 row.classList.add('table-item');
                 row.classList.add('no-min-width');
