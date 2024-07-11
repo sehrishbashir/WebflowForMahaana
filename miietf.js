@@ -8158,14 +8158,33 @@ function displayReports(reportsData) {
 
             const row = document.createElement('div');
             row.classList.add('reports-body-row');
+
             const html = `
-                <div class="reports-body-cell flex-1 text-right">
-                    <span class="rep-body-title">${data.name || data.key}</span>
+            <div class="uui-career03_item">
+                <div class="uui-career03_title-wrapper">
+                    <div class="uui-career03_title-heading">
+                        <div class="uui-career03_heading">${data.name || data.key}</div>
+                    </div>
+                    <a data-w-id="cb583f7d-3dca-0375-9002-e365bf4339fb" href="${url}" class="uui-button-link-3 w-inline-block">
+                        <div class="link">Download Report</div>
+                        <div class="uui-button-icon-3 w-embed" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.83301 14.1668L14.1663 5.8335M14.1663 5.8335H5.83301M14.1663 5.8335V14.1668" stroke="CurrentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                    </a>
                 </div>
-                <a href="${url}" target="_blank" class="reports-body-cell download-doc">
-                    <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
-                    <span class="rep-body-title download">Download</span>
-                </a>`;
+            </div>
+            `;
+            
+            // const html = `
+            //     <div class="reports-body-cell flex-1 text-right">
+            //         <span class="rep-body-title">${data.name || data.key}</span>
+            //     </div>
+            //     <a href="${url}" target="_blank" class="reports-body-cell download-doc">
+            //         <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
+            //         <span class="rep-body-title download">Download</span>
+            //     </a>`;
             row.innerHTML = html; reportsBodyContainer.appendChild(row)
         })
     }
