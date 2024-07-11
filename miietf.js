@@ -440,7 +440,7 @@ async function fetchData() {
         // }
 
     } catch (error) {
-        creditChart.style.border = 0;
+        // creditChart.style.border = 0;
         holdingChart.style.border = 0;
     }
     setTimeout(() => {
