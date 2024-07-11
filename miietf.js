@@ -8161,7 +8161,6 @@ function displayReports(reportsData) {
             row.classList.add('uui-career03_item');
 
             const html = `
-            <div class="uui-career03_item">
                 <div class="uui-career03_title-wrapper">
                     <div class="uui-career03_title-heading">
                         <div class="uui-career03_heading">${data.name || data.key}</div>
@@ -8175,7 +8174,6 @@ function displayReports(reportsData) {
                         </div>
                     </a>
                 </div>
-            </div>
             `;
             
             // const html = `
