@@ -8157,7 +8157,8 @@ function displayReports(reportsData) {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
 
             const row = document.createElement('div');
-            row.classList.add('reports-body-row');
+            // row.classList.add('reports-body-row');
+            row.classList.add('uui-career03_item');
 
             const html = `
             <div class="uui-career03_item">
