@@ -230,7 +230,7 @@ function renderLoop(data) {
                     <div class="table-data name">${data.exNav.toFixed(4) || '-'}</div>
                 </div>
                 <div class="table-box _3">
-                    <div class="table-data name">${data.yield.toFixed(2) || '-'}</div>
+                    <div class="table-data name">${data.yield.toFixed(2) || '-'}%</div>
                 </div>
                 `
                 
