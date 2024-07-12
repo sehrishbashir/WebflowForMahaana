@@ -214,9 +214,29 @@ function renderLoop(data) {
         
         if (distributionBodyRow) {
             distributions.forEach((data) => {
+                console.log(data)
+                
                 const row = document.createElement('div');
-                row.classList.add('distribution-body-row');
-                const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`; row.innerHTML = html; distributionBodyRow.appendChild(row)
+                row.classList.add('table-row');
+
+                const html = `
+                <div class="table-box _2">
+                    <div class="table-data name"><strong class="bold-text">06/13/2023<br></strong></div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">2.375</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">101.5469</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">2.34</div>
+                </div>
+                `
+                
+                // const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;
+                row.innerHTML = html;
+                distribution_wrap.appendChild(row)
             })
         }
     }
