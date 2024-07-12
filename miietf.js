@@ -475,12 +475,18 @@ async function fetchData() {
         let navDateElement = document.querySelectorAll('body #navDate');
         Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
+        expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
+        expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
 
+        console.log('fundInfo.fundAuditors')
+        console.log(fundInfo.fundAuditors)
+        
         const contentMapping = {
             'asset-name': overview?.name,
             'asset-class': fundInfo.fundCategory,
-            'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
-            'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
+            'expense-ratio-mtd': expense_ratio_mtd,
+            'expense-ratio-ytd': expense_ratio_ytd,
+            'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
             'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
             // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
             'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
@@ -495,11 +501,41 @@ async function fetchData() {
             'investmentObjective': fundInfo.investmentObjective,
             'benchmark': fundInfo.benchmark,
             'managementFee': fundInfo.managementFee,
-            'fundAuditors': fundInfo.fundAuditors,
-            'fundStabilityRating': fundInfo.fundStabilityRating,
+            // 'fundAuditors': fundInfo.fundAuditors,
+            'fundAuditors': fundInfo.fundStabilityRating,
+            'fundStabilityRating': fundInfo.fundManager,
+            // 'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         };
+
+        console.log('fundInfo')
+        console.log(fundInfo)
+
+        // const contentMapping = {
+        //     'asset-name': overview?.name,
+        //     'asset-class': fundInfo.fundCategory,
+        //     'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
+        //     'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
+        //     'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+        //     // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+        //     'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
+        //     'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+        //     // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+        //     'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+        //     'productSummary': overview.assetCategory,
+        //     'fundManager': fundInfo.fundManager,
+        //     'netAssets': fundInfo.netAssets,
+        //     'launchDate': fundInfo.launchDate || '-',
+        //     'fundCategory': fundInfo.fundCategory,
+        //     'investmentObjective': fundInfo.investmentObjective,
+        //     'benchmark': fundInfo.benchmark,
+        //     'managementFee': fundInfo.managementFee,
+        //     'fundAuditors': fundInfo.fundAuditors,
+        //     'fundStabilityRating': fundInfo.fundStabilityRating,
+        //     'authorizedParticipant': fundInfo.authorizedParticipant,
+        //     'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+        // };
 
         if (offeringDocumentList.length > 0) {
             offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
