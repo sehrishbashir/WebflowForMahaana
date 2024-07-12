@@ -205,7 +205,13 @@ function renderLoop(data) {
     // }
     
     if (distributions?.length > 0) {
-        distributionWrap.style.display = "none";
+        const distribution_no_data = document.querySelector('#distribution-no-data');
+        const distribution_wrap = document.querySelector('#distribution-wrap');
+        
+        console.log(distributions)
+        
+        distribution_no_data.style.display = "none";
+        
         if (distributionBodyRow) {
             distributions.forEach((data) => {
                 const row = document.createElement('div');
