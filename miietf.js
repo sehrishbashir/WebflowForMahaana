@@ -135,7 +135,33 @@ function renderLoop(data) {
                 const weightedRows = document.querySelector("#weighted-exp-table-rows");
 
                 if(weightedRows) {
-                    data.forEach((item, index) => {console.log(item)})
+                    data.forEach((item, index) => {
+                        console.log(item)
+
+                        const row = document.createElement('div');
+                        row.classList.add('table-row-2');
+                        
+                        const html = `
+                            <div class="div-block-410 _2"><img width="16"
+                                src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg"
+                                alt="" class="image-81"></div>
+                            <div class="table-box _2 sectors">
+                                <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                            </div>
+                            <div class="table-box _2 sectors">
+                                <div class="table-data name sectors"><strong class="bold-text">${item.value.miietf}%<br></strong></div>
+                            </div>
+                            <div class="table-box _2 sectors">
+                                <div class="table-data name sectors"><strong class="bold-text">${item.value.kmi30}%<br></strong></div>
+                            </div>
+                            <div class="table-box _3">
+                                <div class="table-data name">${item.value.weight}%<br></div>
+                            </div>
+                        `
+
+                        row.innerHTML = html;
+                        weightedRows.appendChild(row);
+                    })
                 }
                 
                 // console.log(data)
