@@ -107,8 +107,6 @@ function renderLoop(data) {
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
         if (Object.keys(data).length > 0) {
-            console.log(elementClass)
-            
             if (elementClass === ".holding-list") {
                 const holdingRows = document.querySelector("#holding-table-rows");
                 
@@ -132,12 +130,17 @@ function renderLoop(data) {
                 compositionList(data, bodyRow)
             }
             else if(elementClass === ".credit-list") {
-                console.log("hello")
-                console.log(weighted_exposure)
+                data = weighted_exposure
+            
+                const weightedRows = document.querySelector("#weighted-exp-table-rows");
+
+                if(weightedRows) {
+                    data.forEach((item, index) => {console.log(item)})
+                }
                 
                 // console.log(data)
                 // console.log(data[0])
-                // console.log(typeof(data[0]))
+                
             }
             else {
                 // console.log(elementClass)
