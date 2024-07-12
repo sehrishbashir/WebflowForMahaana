@@ -1,10 +1,58 @@
 // ---------------- MICF PAGE ---------------- //
-
-
-
 let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
+
+weighted_exposure = [
+  {
+    "key": "OIL & GAS EXPLORATION COMPANIES",
+    "value": {
+      "miietf": "18.24",
+      "kmi30": "6.00",
+      "weight": "12.24"
+    }
+  },
+  {
+    "key": "FERTILIZER",
+    "value": {
+      "miietf": "17.098",
+      "kmi30": "6.00",
+      "weight": "12.24"
+    }
+  },
+  {
+    "key": "CEMENT",
+    "value": {
+      "miietf": "14.76",
+      "kmi30": "17.00",
+      "weight": "-2.24"
+    }
+  },
+  {
+    "key": "POWER GENERATION & DISTRIBUTION",
+    "value": {
+      "miietf": "11.51",
+      "kmi30": "30.00",
+      "weight": "-18.49"
+    }
+  },
+  {
+    "key": "COMMERCIAL BANKS",
+    "value": {
+      "miietf": "9.17",
+      "kmi30": "25.00",
+      "weight": "-15.83"
+    }
+  },
+  {
+    "key": "Others",
+    "value": {
+      "miietf": "25.70",
+      "kmi30": "17.05",
+      "weight": "8.65"
+    }
+  }
+];
 
 // const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 // const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
@@ -49,7 +97,7 @@ const createText = (elementId, content) => { const element = document.getElement
 
 function renderLoop(data) {
     const { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
-
+    
     const dataMappingsUpdated = [
         { elementClass: '.assetallocation-list', data: currentAssetAllocation },
         { elementClass: '.credit-list', data: creditRating },
@@ -59,6 +107,8 @@ function renderLoop(data) {
     dataMappingsUpdated.forEach(({ elementClass, data }) => {
         const bodyRow = document.querySelector(elementClass);
         if (Object.keys(data).length > 0) {
+            console.log(elementClass)
+            
             if (elementClass === ".holding-list") {
                 const holdingRows = document.querySelector("#holding-table-rows");
                 
@@ -81,7 +131,14 @@ function renderLoop(data) {
 
                 compositionList(data, bodyRow)
             }
-            
+            else if(elementClass === ".credit-list") {
+                console.log("hello")
+                console.log(weighted_exposure)
+                
+                // console.log(data)
+                // console.log(data[0])
+                // console.log(typeof(data[0]))
+            }
             else {
                 // console.log(elementClass)
                 // console.log(data)
@@ -165,6 +222,8 @@ function renderLoop(data) {
                 portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
             }
             currentAssetAllocation.forEach((data, index) => {
+
+                console.log(data)
                 
                 const row = document.createElement('div');
                 row.classList.add('table-item');
@@ -335,6 +394,8 @@ async function fetchData() {
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
+
+        // console.log(dataJson)
 
         const data = dataJson;
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
@@ -8200,4 +8261,3 @@ if (durationContainerNew) { while (durationContainerNew.firstChild) { durationCo
 
 
 // function tabStopHandler(){Webflow.push(function(){document.querySelectorAll(".tab-item").forEach(function(e){e.addEventListener("click",function(e){e.preventDefault(),$(document).off("click")})})})}function tabHandler(){let e=document.querySelectorAll(".tab-item"),t=document.querySelector(".navbar-3"),n=t.getBoundingClientRect().height;e.forEach(e=>{e.addEventListener("click",function(t){t.preventDefault();let r=document.querySelector(e.getAttribute("href"));!function e(t){let r=document.querySelector(".tabs-menu").classList.contains("fixed"),l=t.getBoundingClientRect();window.scrollTo({top:l.top+window.scrollY+(r?-190:-n-170),behavior:"smooth"});let o=t.id;if(o){let i=new URL(window.location.href);i.searchParams.set("section",o),window.history.replaceState(null,null,i)}}(r);let l=document.querySelector(".tabs-menu");l.classList.add("fixed")})})}function scrollHandler(){let e=document.querySelector(".tabs-menu"),t=document.querySelector(".tabs-content"),n=document.querySelector("#tab-wrapper"),r=document.querySelectorAll(".tab-content-container"),l=document.querySelectorAll(".tab-item"),o;if(e){o=e.classList.contains("fixed");let i=new IntersectionObserver(function t(r){r[0].isIntersecting&&window.scrollY>=600&&window.innerWidth>=768?(e.classList.add("fixed"),n.style.paddingTop="64px"):(e.classList.remove("fixed"),n.style.paddingTop="10px")});i.observe(t);let c=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){let t=o?200:250,n=e.target.id,r=document.querySelectorAll(`.tab-item[href="#${n}"]`);e.boundingClientRect.top<=t&&e.intersectionRatio>0?(l.forEach(e=>e.classList.remove("active")),r.forEach(e=>e.classList.add("active"))):r.forEach(e=>e.classList.remove("active"))}})},{threshold:.2});r.forEach(e=>{c.observe(e)})}}function removePer(e){return String(e).includes("%")?e.replace("%",""):e}function transformData(e,t){return e&&Object.entries(e).map(([e,n])=>({key:e,value:"table"===t?removePer(n):Number(n?.toString()?.replace("%",""))})).filter(e=>e.value>0)}const setTextContent=(e,t)=>{let n=document.getElementById(e);n&&(n.textContent=t)};
-
