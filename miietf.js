@@ -276,6 +276,32 @@ function renderLoop(data) {
                 const row = document.createElement('div');
                 row.classList.add('table-row');
                 const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div>`
+
+                
+                //<div class="div-block-406 _2"><img width="16"
+                //    src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg"
+                //    alt="" class="image-79"></div>
+                
+                // const html = `
+                // <div class="div-block-406 _2" style="display: flex;">
+                //     <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill="#dcb787"></circle></svg>
+                // <div>
+                // <div class="table-box _2">
+                //     <div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div>
+                // </div>
+                // <div class="table-box _3">
+                //     <div class="table-data name">${data.mtd || '-'}</div>
+                // </div>
+                // <div class="table-box _3">
+                //     <div class="table-data name">${data.ytd || '-'}</div>
+                // </div>
+                // <div class="table-box _3">
+                //     <div class="table-data name">${data.days90 || '-'}</div>
+                // </div>
+                // <div class="table-box _3">
+                //     <div class="table-data name">${data.days365 || '-'}</div>
+                // </div>
+                // `
                 
                 // const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
                 // const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`;
