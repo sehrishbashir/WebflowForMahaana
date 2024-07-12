@@ -221,16 +221,16 @@ function renderLoop(data) {
 
                 const html = `
                 <div class="table-box _2">
-                    <div class="table-data name"><strong class="bold-text">06/13/2023<br></strong></div>
+                    <div class="table-data name"><strong class="bold-text">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}<br></strong></div>
                 </div>
                 <div class="table-box _3">
-                    <div class="table-data name">2.375</div>
+                    <div class="table-data name">${data.payoutPerUnit.toFixed(3) || '-'}</div>
                 </div>
                 <div class="table-box _3">
-                    <div class="table-data name">101.5469</div>
+                    <div class="table-data name">${data.exNav.toFixed(4) || '-'}</div>
                 </div>
                 <div class="table-box _3">
-                    <div class="table-data name">2.34</div>
+                    <div class="table-data name">${data.yield.toFixed(2) || '-'}</div>
                 </div>
                 `
                 
