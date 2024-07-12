@@ -7,7 +7,7 @@ weighted_exposure = [
   {
     "key": "OIL & GAS EXPLORATION COMPANIES",
     "value": {
-      "miietf": "18.24",
+      "miietf": "20.00",
       "kmi30": "6.00",
       "weight": "12.24"
     }
