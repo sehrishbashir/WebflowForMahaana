@@ -484,6 +484,7 @@ const demoData = {
 }
 
 async function fetchData() { 
+    console.log('Helllo')
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
