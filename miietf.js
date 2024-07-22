@@ -492,8 +492,6 @@ async function fetchData() {
         
         let Airtable = require('airtable');
         let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
-        
-        // console.log(base)
 
         airFundInfo = {
             authorizedParticipant: null,
@@ -534,11 +532,34 @@ async function fetchData() {
             records.forEach(function (record) {
                 console.log(record.fields)
 
-                console.log(record.fields.Key)
-                if(record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?'){
-                    airOverview.assetCategory = record.fields.Value
+                if (record.fields.Key === 'Name'){
+                    airOverview.name = record.fields.Value
                 }
-                // console.log('Retrieved', record.get('Key'));
+                if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?'){
+                    airOverview.assetCategory = record.fields.Value
+                    airOverview.question = record.fields.Key
+                }
+                if (record.fields.Key === 'Net Assets'){
+                    airFundInfo.netAssets = record.fields.Value
+                }
+                if (record.fields.Key === 'Launch Date'){
+                    airFundInfo.launchDate = record.fields.Value
+                }
+                if (record.fields.Key === 'Fund Category'){
+                    airFundInfo.fundCategory = record.fields.Value
+                }
+                if (record.fields.Key === 'Investment Objective'){
+                    airFundInfo.investmentObjective = record.fields.Value
+                }
+                if (record.fields.Key === 'Benchmark'){
+                    airFundInfo.benchmark = record.fields.Value
+                }
+                if (record.fields.Key === 'Authorized Participant'){
+                    airFundInfo.authorizedParticipant = record.fields.Value
+                }
+                if (record.fields.Key === 'Management Fee'){
+                    airFundInfo.managementFee = record.fields.Value
+                }
             })
 
             fetchNextPage()
