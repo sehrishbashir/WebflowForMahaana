@@ -1,3 +1,6 @@
+const Airtable = require('airtable');
+let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
 itemsPerPage = 5;
@@ -484,15 +487,12 @@ const demoData = {
 }
 
 async function fetchData() {
-    const Airtable = require('airtable');
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
         // AIRTABLE //
         //////////////
         
-        let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
-
         airFundInfo = {
             authorizedParticipant: null,
             benchmark: null,
@@ -8420,7 +8420,19 @@ const demoPerformaceData = [
     }
 ]
 
-function getFundData2(duration) {
+async function getFundData2(duration) {
+    await base('Adjust_nav_values').select({
+        maxRecords: 10000,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+        records.forEach(function (record) {
+            // console.log(record.fields)
+            console.log(record)
+        })
+
+        fetchNextPage() 
+    })
     
     
     const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
@@ -8436,6 +8448,7 @@ function getFundData2(duration) {
         }).then((data) => {
             poerformanceWrap.style.display = "none";
             let totalReturnDate = document.querySelector('#totalReturnsDate');
+            console.log(data)
             renderFundChart(data);
             const lastDate = data[data.length - 1].date;
             if (totalReturnDate) {
@@ -8446,6 +8459,7 @@ function getFundData2(duration) {
             console.error('Error occurred:', error)
         })
 }
+
 getFundData2();
 
 fetchData();
