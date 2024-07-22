@@ -1,3 +1,5 @@
+let Airtable = require('airtable');
+
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
 itemsPerPage = 5;
@@ -491,7 +493,6 @@ async function fetchData() {
         // AIRTABLE //
         //////////////
         
-        let Airtable = require('airtable');
         let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
 
         airFundInfo = {
