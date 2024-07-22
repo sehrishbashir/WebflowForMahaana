@@ -736,6 +736,7 @@ async function fetchData() {
     } catch (error) {
         creditChart.style.border = 0;
         holdingChart.style.border = 0;
+        console.log(error)
     }
     setTimeout(() => {
         loader.style.display = 'none';
