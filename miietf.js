@@ -8429,8 +8429,6 @@ async function getFundData2(duration) {
     }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
-            // console.log(record.fields)
-            // console.log(record)
             airPerfData.push(record.fields)
         })
 
@@ -8441,6 +8439,7 @@ async function getFundData2(duration) {
     renderFundChart(airPerfData);
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
+    const lastDate = data[data.length - 1].date;
     if (totalReturnDate) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
