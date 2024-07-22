@@ -483,15 +483,16 @@ const demoData = {
     ]
 }
 
-async function fetchData() {
+async function fetchData() { 
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
         // AIRTABLE //
         //////////////
-        // let airData = {}
+        
         let Airtable = require('airtable');
-        let base = new Airtable({ apiKey: 'patX0P0T4Y2HvmeaK.acef34abcc044d06a8f332ef3c4f70e746efce6b5bdabff42b5aff0232f8e72a' }).base('appKSjvfuZnvyYd0t');
+        let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+        
         // console.log(base)
 
         airFundInfo = {
@@ -525,7 +526,7 @@ async function fetchData() {
             question: null,
         }
         
-        base('Table 1').select({
+        await base('Table 1').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -533,6 +534,7 @@ async function fetchData() {
             records.forEach(function (record) {
                 console.log(record.fields)
 
+                console.log(record.fields.Key)
                 if(record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?'){
                     airOverview.assetCategory = record.fields.Value
                 }
@@ -540,14 +542,16 @@ async function fetchData() {
             })
 
             fetchNextPage()
-
-        }, function done(err) { 
-            if (err) { 
-                console.error(err)
-                return 
-            }
         })
+        
+        // }, function done(err) { 
+        //     if (err) { 
+        //         console.error(err)
+        //         return 
+        //     }
+        // }))
 
+        
         console.log('airFundInfo')
         console.log(airFundInfo)
         console.log('airOverview')
