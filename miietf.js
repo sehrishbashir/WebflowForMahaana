@@ -8421,6 +8421,8 @@ const demoPerformaceData = [
 ]
 
 async function getFundData2(duration) {
+    airPerfData = []
+    
     await base('Adjust_nav_values').select({
         maxRecords: 10000,
         view: "Grid view"
@@ -8428,36 +8430,45 @@ async function getFundData2(duration) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
             // console.log(record.fields)
-            console.log(record)
+            // console.log(record)
+            airPerfData.push(record.fields)
         })
 
         fetchNextPage() 
     })
+
+    console.log(airPerfData)
+    renderFundChart(airPerfData);
+
+    let totalReturnDate = document.querySelector('#totalReturnsDate');
+    if (totalReturnDate) {
+        totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+    }
     
     
-    const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
-    const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
-    fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
-        .then((response) => {
-            if (!response.ok) {
-                return response.json().then((errorData) => {
-                    throw new Error(errorData.message || 'Unknown error occurred.')
-                });
-            }
-            return response.json();
-        }).then((data) => {
-            poerformanceWrap.style.display = "none";
-            let totalReturnDate = document.querySelector('#totalReturnsDate');
-            console.log(data)
-            renderFundChart(data);
-            const lastDate = data[data.length - 1].date;
-            if (totalReturnDate) {
-                totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
-            }
-        }
-        ).catch((error) => {
-            console.error('Error occurred:', error)
-        })
+    // const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
+    // const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
+    // fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+    //     .then((response) => {
+    //         if (!response.ok) {
+    //             return response.json().then((errorData) => {
+    //                 throw new Error(errorData.message || 'Unknown error occurred.')
+    //             });
+    //         }
+    //         return response.json();
+    //     }).then((data) => {
+    //         poerformanceWrap.style.display = "none";
+    //         let totalReturnDate = document.querySelector('#totalReturnsDate');
+    //         console.log(data)
+    //         renderFundChart(data);
+    //         const lastDate = data[data.length - 1].date;
+    //         if (totalReturnDate) {
+    //             totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
+    //         }
+    //     }
+    //     ).catch((error) => {
+    //         console.error('Error occurred:', error)
+    //     })
 }
 
 getFundData2();
