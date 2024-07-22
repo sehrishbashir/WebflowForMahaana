@@ -149,7 +149,7 @@ function renderLoop(data) {
 
                 if(weightedRows) {
                     data.forEach((item, index) => {
-                        console.log(item)
+                        // console.log(item)
 
                         const row = document.createElement('div');
                         row.classList.add('table-row-2');
@@ -208,13 +208,13 @@ function renderLoop(data) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
         const distribution_wrap = document.querySelector('#distribution-wrap');
         
-        console.log(distributions)
+        // console.log(distributions)
         
         distribution_no_data.style.display = "none";
         
         if (distributionBodyRow) {
             distributions.forEach((data) => {
-                console.log(data)
+                // console.log(data)
                 
                 const row = document.createElement('div');
                 row.classList.add('table-row');
@@ -319,7 +319,7 @@ function renderLoop(data) {
             }
             currentAssetAllocation.forEach((data, index) => {
 
-                console.log(data)
+                // console.log(data)
                 
                 const row = document.createElement('div');
                 row.classList.add('table-item');
@@ -486,6 +486,78 @@ const demoData = {
 async function fetchData() {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
+        //////////////
+        // AIRTABLE //
+        //////////////
+        // let airData = {}
+        let Airtable = require('airtable');
+        let base = new Airtable({ apiKey: 'patX0P0T4Y2HvmeaK.acef34abcc044d06a8f332ef3c4f70e746efce6b5bdabff42b5aff0232f8e72a' }).base('appKSjvfuZnvyYd0t');
+        // console.log(base)
+
+        airFundInfo = {
+            authorizedParticipant: null,
+            benchmark: null,
+            custodian: null,
+            fundAuditors: null,
+            fundCategory: null,
+            fundManager: null,
+            fundStabilityRating: null,
+            investmentObjective: null,
+            launchDate: null,
+            managementFee: null,
+            monthlyTotalExpenseRatio: null,
+            monthlyTotalExpenseRatioWithoutLevy: null,
+            netAssets: null,
+            shariahAdvisors: null,
+            totalExpenseRatio: null,
+            totalExpenseRatioWithoutLevy: null,
+            weightedAverageTime: null,
+            yearlyTotalExpenseRatio: null,
+            yearlyTotalExpenseRatioWithoutLevy: null,
+        }
+
+        airOverview = {
+            assetCategory: null,
+            description: null,
+            name: null,
+            navDate: null,
+            navPerUnit: null,
+            question: null,
+        }
+        
+        base('Table 1').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+        // This function (`page`) will get called for each page of records.
+            records.forEach(function (record) {
+                console.log(record.fields)
+
+                if(record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?'){
+                    airOverview.assetCategory = record.fields.Value
+                }
+                // console.log('Retrieved', record.get('Key'));
+            })
+
+            fetchNextPage()
+
+        }, function done(err) { 
+            if (err) { 
+                console.error(err)
+                return 
+            }
+        })
+
+        console.log('airFundInfo')
+        console.log(airFundInfo)
+        console.log('airOverview')
+        console.log(airOverview)
+        
+        
+
+        //////////////////////
+        // MAHANANA BACKEND //
+        //////////////////////
         const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
@@ -494,6 +566,9 @@ async function fetchData() {
         // console.log(dataJson)
 
         const data = dataJson;
+
+        console.log(data)
+        
         const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
@@ -504,8 +579,8 @@ async function fetchData() {
         expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
         expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
 
-        console.log('fundInfo.fundAuditors')
-        console.log(fundInfo.fundAuditors)
+        // console.log('fundInfo.fundAuditors')
+        // console.log(fundInfo.fundAuditors)
         
         const contentMapping = {
             'asset-name': overview?.name,
@@ -535,8 +610,8 @@ async function fetchData() {
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         };
 
-        console.log('fundInfo')
-        console.log(fundInfo)
+        // console.log('fundInfo')
+        // console.log(fundInfo)
 
         // const contentMapping = {
         //     'asset-name': overview?.name,
