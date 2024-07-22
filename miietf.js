@@ -8435,11 +8435,11 @@ async function getFundData2(duration) {
         fetchNextPage() 
     })
 
-    console.log(airPerfData)
+    // console.log(airPerfData)
     renderFundChart(airPerfData);
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
-    const lastDate = data[data.length - 1].date;
+    const lastDate = airPerfData[airPerfData.length - 1].date;
     if (totalReturnDate) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
