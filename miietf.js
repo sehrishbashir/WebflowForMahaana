@@ -1,5 +1,3 @@
-let Airtable = require('airtable');
-
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
 itemsPerPage = 5;
@@ -485,8 +483,8 @@ const demoData = {
     ]
 }
 
-async function fetchData() { 
-    console.log('Helllo')
+async function fetchData() {
+    const Airtable = require('airtable');
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
@@ -534,7 +532,7 @@ async function fetchData() {
         }).eachPage(function page(records, fetchNextPage) {
         // This function (`page`) will get called for each page of records.
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
 
                 if (record.fields.Key === 'Name'){
                     airOverview.name = record.fields.Value
@@ -587,14 +585,7 @@ async function fetchData() {
 
             fetchNextPage()
         })
-        
-        // }, function done(err) { 
-        //     if (err) { 
-        //         console.error(err)
-        //         return 
-        //     }
-        // }))
-
+    
         console.log('airFundInfo')
         console.log(airFundInfo)
         console.log('airOverview')
@@ -607,8 +598,6 @@ async function fetchData() {
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
-
-        // console.log(dataJson)
 
         const data = dataJson;
 
@@ -628,9 +617,6 @@ async function fetchData() {
 
         expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
         expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
-
-        // console.log('fundInfo.fundAuditors')
-        // console.log(fundInfo.fundAuditors)
         
         const contentMapping = {
             'asset-name': overview?.name,
