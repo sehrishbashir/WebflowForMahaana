@@ -526,7 +526,7 @@ async function fetchData() {
 
         airFmrDate = null
         
-        await base('Table 1').select({
+        await base('Info').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -8421,6 +8421,8 @@ const demoPerformaceData = [
 ]
 
 function getFundData2(duration) {
+    
+    
     const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
     const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
     fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
