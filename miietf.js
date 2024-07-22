@@ -521,10 +521,12 @@ async function fetchData() {
             assetCategory: null,
             description: null,
             name: null,
-            navDate: null,
-            navPerUnit: null,
+            navDate: "2024/07/18",
+            navPerUnit: "11.66",
             question: null,
         }
+
+        airFmrDate = null
         
         await base('Table 1').select({
             maxRecords: 100,
@@ -562,6 +564,25 @@ async function fetchData() {
                 if (record.fields.Key === 'Management Fee'){
                     airFundInfo.managementFee = record.fields.Value
                 }
+                if (record.fields.Key === 'Monthly Total Expense Ratio'){
+                    airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
+                }
+                if (record.fields.Key === 'Yearly Total Expense Ratio'){
+                    airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
+                }
+                
+                if (record.fields.Key === 'Fund Auditors'){
+                    airFundInfo.fundAuditors = record.fields.Value
+                }
+                if (record.fields.Key === 'Fund Stability Rating'){
+                    airFundInfo.fundStabilityRating = record.fields.Value
+                }
+                if (record.fields.Key === 'Fund manager'){
+                    airFundInfo.fundManager = record.fields.Value
+                }
+                if (record.fields.Key === 'Submission date'){
+                    airFmrDate = record.fields.Value
+                }
             })
 
             fetchNextPage()
@@ -574,14 +595,11 @@ async function fetchData() {
         //     }
         // }))
 
-        
         console.log('airFundInfo')
         console.log(airFundInfo)
         console.log('airOverview')
         console.log(airOverview)
         
-        
-
         //////////////////////
         // MAHANANA BACKEND //
         //////////////////////
@@ -596,7 +614,12 @@ async function fetchData() {
 
         console.log(data)
         
-        const { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
+        let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
+
+        fundInfo = airFundInfo
+        fmrDate = airFmrDate
+        overview = airOverview
+        
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
