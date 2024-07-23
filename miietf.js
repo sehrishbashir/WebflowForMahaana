@@ -81,7 +81,17 @@ let weighted_exposure = [
 const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
 
 // ---------------- LOADER ---------------- //
-function createLoader() { const loaderWrapper = document.createElement('div'); loaderWrapper.id = 'loader-wrapper'; loaderWrapper.className = 'loader-wrapper'; const loaderElement = document.createElement('div'); loaderElement.className = 'loader'; loaderWrapper.appendChild(loaderElement); document.body.appendChild(loaderWrapper); return loaderWrapper; }
+function createLoader() { 
+    const loaderWrapper = document.createElement('div'); 
+    loaderWrapper.id = 'loader-wrapper'; 
+    loaderWrapper.className = 'loader-wrapper'; 
+    const loaderElement = document.createElement('div'); 
+    loaderElement.className = 'loader'; 
+    loaderWrapper.appendChild(loaderElement); 
+    document.body.appendChild(loaderWrapper);
+    console.log(loaderWrapper) 
+    return loaderWrapper; 
+}
 // ---------------------------------------------- //
 
 // YTD & MTD FIELDS
@@ -492,7 +502,11 @@ async function fetchData(airPerformances) {
     // console.log('helllo')
     // console.log(airPerformances)
     
-    const loader = createLoader(); loader.style.display = 'flex';
+    const loader = await createLoader();
+    console.log('loader')
+    console.log(loader)
+    console.log(loader.style)
+    loader.style.display = 'flex';
     try {
         //////////////
         // AIRTABLE //
@@ -606,7 +620,7 @@ async function fetchData(airPerformances) {
 
         const data = dataJson;
 
-        console.log(data)
+        // console.log(data)
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
@@ -751,7 +765,8 @@ async function fetchData(airPerformances) {
     } catch (error) {
         creditChart.style.border = 0;
         holdingChart.style.border = 0;
-        console.log(error)
+        console.error('fetchData error')
+        console.error(error) 
     }
     setTimeout(() => {
         loader.style.display = 'none';
@@ -8449,27 +8464,27 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    await base('Adjust_nav_values').select({
-        maxRecords: 10,
-        view: "Grid view",
-        filterByFormula: "IF({date} < '2024-05-01', 1, 0)",
-        sort: [{
-            field: "date",
-            direction: "asc"
-        }]
-    }).eachPage(function page(records, fetchNextPage) {
-        console.log(records);
-        // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
-        console.log(record.fields);
-        // const d = new Date(record.fields.date)
-        // date_str = d.toLocaleString('en-GB', format_options)
-        // airPerfData.push({
-        //     "date": date_str,
-        //     "navValue": record.fields.navValue,
-        //     "performanceValue": record.fields.performanceValue
-        });
-    });
+    // await base('Adjust_nav_values').select({
+    //     maxRecords: 10,
+    //     view: "Grid view",
+    //     filterByFormula: "IF({date} < '2024-05-01', 1, 0)",
+    //     sort: [{
+    //         field: "date",
+    //         direction: "asc"
+    //     }]
+    // }).eachPage(function page(records, fetchNextPage) {
+    //     console.log(records);
+    //     // This function (`page`) will get called for each page of records.
+    //     records.forEach(function (record) {
+    //     console.log(record.fields);
+    //     // const d = new Date(record.fields.date)
+    //     // date_str = d.toLocaleString('en-GB', format_options)
+    //     // airPerfData.push({
+    //     //     "date": date_str,
+    //     //     "navValue": record.fields.navValue,
+    //     //     "performanceValue": record.fields.performanceValue
+    //     });
+    // });
     
     let miietfReturn = {
         "name": "MIIETF return",
