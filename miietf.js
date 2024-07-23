@@ -8425,6 +8425,7 @@ const demoPerformaceData = [
 
 async function getFundData2(duration) {
     airPerfData = []
+    const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
     await base('Adjust_nav_values').select({
         maxRecords: 10000,
@@ -8432,17 +8433,25 @@ async function getFundData2(duration) {
     }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
-            airPerfData.push(record.fields)
+            const d = new Date(record.fields.date)
+            date_str = d.toLocaleString('en-GB', format_options)
+            airPerfData.push({
+                "date": date_str,
+                "navValue": record.fields.navValue,
+                "performanceValue": record.fields.performanceValue
+            })
         })
 
         fetchNextPage() 
     })
 
+    console.log(airPerfData)
+
     // Calculate MTD, YTD and etc performances
     miietfReturn = {
         "name": "MIIETF return",
         "lastUpdatedOn": null,
-        "mtd": "0.52%",
+        "mtd": "1.52%",
         "ytd": "16.60%",
         "days30": null,
         "days90": "8.26%",
@@ -8467,8 +8476,6 @@ async function getFundData2(duration) {
 
     airPerformances = [miietfReturn, benchmarkReturn]
     
-
-    // console.log(airPerfData)
     renderFundChart(airPerfData);
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
@@ -8492,7 +8499,7 @@ async function getFundData2(duration) {
     //         poerformanceWrap.style.display = "none";
     //         let totalReturnDate = document.querySelector('#totalReturnsDate');
     //         console.log(data)
-    //         renderFundChart(data);
+    //         // renderFundChart(data);
     //         const lastDate = data[data.length - 1].date;
     //         if (totalReturnDate) {
     //             totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
