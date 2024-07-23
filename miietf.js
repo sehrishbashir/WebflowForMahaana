@@ -1,6 +1,5 @@
 const Airtable = require('airtable');
 let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
-let airPerformances = null
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
@@ -99,7 +98,7 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
-function renderLoop(data) {
+function renderLoop(data, airPerformances) {
     let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
 
     performances = airPerformances
@@ -489,7 +488,7 @@ const demoData = {
     ]
 }
 
-async function fetchData() {
+async function fetchData(airPerformances) {
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
@@ -716,7 +715,7 @@ async function fetchData() {
 
         // data.overAllCreditRating = overallAssetAllocationData;
 
-        renderLoop(data);
+        renderLoop(data, airPerformances);
 
         if (Object.keys(holding).length > 0) {
             holdingChartWrap.style.display = "none";
@@ -8483,6 +8482,8 @@ async function getFundData2(duration) {
     if (totalReturnDate) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
+
+    return airPerformances
     
     
     // const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
@@ -8510,9 +8511,9 @@ async function getFundData2(duration) {
     //     })
 }
 
-getFundData2();
+let airPerformances = getFundData2();
 
-fetchData();
+fetchData(airPerformances);
 
 
 // BODY
