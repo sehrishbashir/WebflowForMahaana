@@ -8529,6 +8529,7 @@ async function getFundData2(duration) {
 // Calc MTD, YTD, etc
 async function calcPerf() {
     // Get current date record
+    latest_record = null   
     await base('Adjust_nav_values').select({
         maxRecords: 1,
         view: "Grid view",
@@ -8536,22 +8537,30 @@ async function calcPerf() {
     }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
-            console.log(record.fields)
+            latest_record = record.fields
         })
         
         fetchNextPage()
     })
+
+    console.log('latest_record')
+    console.log(latest_record)
+    d = new Date(latest_record.date)
+    month_str = d.toLocaleString('en-GB', {month: '2-digit'})
+    console.log(month_str)
     
     // await base('Adjust_nav_values').select({
     //     maxRecords: 1,
     //     view: "Grid view",
-    //     filterByFormula: "IF({date} < '2024-07-01', 1, 0)",
+    //     filterByFormula: "IF({date} < '2024-"07"-01', 1, 0)",
     //     sort: [{field: "date", direction: "desc"}]
     // }).eachPage(function page(records, fetchNextPage) {
     // // This function (`page`) will get called for each page of records.
     //     records.forEach(function (record) {
     //         console.log(record.fields)
     //     })
+
+    //     fetchNextPage()
     // }) 
 }
 
