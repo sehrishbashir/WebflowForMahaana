@@ -489,8 +489,8 @@ const demoData = {
 }
 
 async function fetchData(airPerformances) {
-    console.log('helllo')
-    console.log(airPerformances)
+    // console.log('helllo')
+    // console.log(airPerformances)
     
     const loader = createLoader(); loader.style.display = 'flex';
     try {
@@ -772,8 +772,7 @@ async function fetchData(airPerformances) {
     }, 1000);
 }
 
-const demoPerformaceData = [
-    {
+const demoPerformaceData = [{
         "date": "22/11/2017",
         "navValue": 10000,
         "performanceValue": 10000
