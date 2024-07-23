@@ -89,7 +89,6 @@ function createLoader() {
     loaderElement.className = 'loader'; 
     loaderWrapper.appendChild(loaderElement); 
     document.body.appendChild(loaderWrapper);
-    console.log(loaderWrapper) 
     return loaderWrapper; 
 }
 // ---------------------------------------------- //
@@ -502,10 +501,7 @@ async function fetchData(airPerformances) {
     // console.log('helllo')
     // console.log(airPerformances)
     
-    const loader = await createLoader();
-    console.log('loader')
-    console.log(loader)
-    console.log(loader.style)
+    const loader = createLoader();
     loader.style.display = 'flex';
     try {
         //////////////
@@ -8463,7 +8459,7 @@ async function getFundData2(duration) {
 
     console.log(airPerfData)
 
-    // Calculate MTD, YTD and etc performances
+    // Calculate MTD, YTD and etc performances 
     // await base('Adjust_nav_values').select({
     //     maxRecords: 10,
     //     view: "Grid view",
@@ -8483,8 +8479,8 @@ async function getFundData2(duration) {
     //     //     "date": date_str,
     //     //     "navValue": record.fields.navValue,
     //     //     "performanceValue": record.fields.performanceValue
-    //     });
-    // });
+    //     })
+    // })
     
     let miietfReturn = {
         "name": "MIIETF return",
