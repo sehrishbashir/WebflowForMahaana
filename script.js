@@ -70,7 +70,7 @@ const b2cBody = document.getElementById('B2C-Body');
 
 
 // ACCORDION WRAPPERS
-const homeAccordions = document.querySelectorAll('.faq-accordionwrap.common-faqs  .single-accordion');
+homeAccordions = document.querySelectorAll('.faq-accordionwrap.common-faqs  .single-accordion');
 const generalAccordions = document.querySelectorAll('.general-faqs .faq-accordionwrap .single-accordion');
 const mahaanaAccordions = document.querySelectorAll('.mahaana-save-faqs .faq-accordionwrap .single-accordion');
 
