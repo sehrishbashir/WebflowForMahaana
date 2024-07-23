@@ -1,6 +1,6 @@
 const Airtable = require('airtable');
 let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
-airPerformances
+let airPerformances = null
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
