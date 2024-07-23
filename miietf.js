@@ -8514,10 +8514,12 @@ async function getFundData2(duration) {
     //     })
 }
 
-let airPerformances = getFundData2();
+async function main() {
+    let airPerformances = await getFundData2();
+    fetchData(airPerformances);
+}
 
-fetchData(airPerformances);
-
+main()
 
 // BODY
 var currentUrl = window.location.href; var updatedUrl = currentUrl.replace(/[?&]section=[^&]+/, ''); if (currentUrl !== updatedUrl) { window.history.replaceState(null, null, updatedUrl); }; $(document).ready(function () { $('.tab-item').click(function (event) { event.stopPropagation(); }); $("html, body").animate({ scrollTop: 0 }, "slow"); $(window).on('load', function () { $(".tab-item").removeClass("w--current", "active") }); }); document.addEventListener("DOMContentLoaded", function () { tabStopHandler(); tabHandler(); }); document.addEventListener("scroll", scrollHandler);
