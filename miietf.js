@@ -8537,7 +8537,7 @@ async function getFundData2(duration) {
 
 async function main() {
     let airPerformances = await getFundData2();
-    fetchData(airPerformances);
+    await fetchData(airPerformances);
 }
 
 main()
