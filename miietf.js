@@ -8449,6 +8449,28 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
+    await base('Adjust_nav_values').select({
+        maxRecords: 10,
+        view: "Grid view",
+        filterByFormula: "IF({date} < '2024-05-01', 1, 0)",
+        sort: [{
+            field: "date",
+            direction: "asc"
+        }]
+    }).eachPage(function page(records, fetchNextPage) {
+        console.log(records);
+        // This function (`page`) will get called for each page of records.
+        records.forEach(function (record) {
+        console.log(record.fields);
+        // const d = new Date(record.fields.date)
+        // date_str = d.toLocaleString('en-GB', format_options)
+        // airPerfData.push({
+        //     "date": date_str,
+        //     "navValue": record.fields.navValue,
+        //     "performanceValue": record.fields.performanceValue
+        });
+    });
+    
     miietfReturn = {
         "name": "MIIETF return",
         "lastUpdatedOn": null,
