@@ -620,7 +620,7 @@ async function fetchData(airPerformances) {
 
         const data = dataJson;
 
-        // console.log(data)
+        console.log(data)
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
@@ -750,11 +750,11 @@ async function fetchData(airPerformances) {
             creditChart.style.border = 0;
         }
 
-        if (Object.keys(currentAssetAllocation).length > 0) {
-            assetChartWrap.style.display = "none";
-            assetList.style.display = "flex";
-            renderAssetChart(transformData(currentAssetAllocation));
-        }
+        // if (Object.keys(currentAssetAllocation).length > 0) {
+        //     assetChartWrap.style.display = "none";
+        //     assetList.style.display = "flex";
+        //     renderAssetChart(transformData(currentAssetAllocation));
+        // }
 
 
         // if (Object.keys(overallAssetAllocationData).length > 0) {
