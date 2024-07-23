@@ -8460,19 +8460,7 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    await base('Adjust_nav_values').select({
-        maxRecords: 1,
-        view: "Grid view",
-        filterByFormula: "IF({date} < '2024-07-01', 1, 0)",
-        sort: [{field: "date", direction: "desc"}]
-    }).eachPage(function page(records, fetchNextPage) {
-    // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
-            console.log(record.fields)
-        })
-
-        fetchNextPage() 
-    }) 
+    await calcPerf()
     
     let miietfReturn = {
         "name": "MIIETF return",
@@ -8536,6 +8524,31 @@ async function getFundData2(duration) {
     //     ).catch((error) => {
     //         console.error('Error occurred:', error)
     //     })
+}
+
+async function calcPerf() { 
+    await base('Adjust_nav_values').select({
+        maxRecords: 5,
+        view: "Grid view",
+        sort: [{field: "date", direction: "desc"}]
+    }).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+        records.forEach(function (record) {
+            console.log(record.fields)
+        })
+    })
+    
+    // await base('Adjust_nav_values').select({
+    //     maxRecords: 1,
+    //     view: "Grid view",
+    //     filterByFormula: "IF({date} < '2024-07-01', 1, 0)",
+    //     sort: [{field: "date", direction: "desc"}]
+    // }).eachPage(function page(records, fetchNextPage) {
+    // // This function (`page`) will get called for each page of records.
+    //     records.forEach(function (record) {
+    //         console.log(record.fields)
+    //     })
+    // }) 
 }
 
 async function main() {
