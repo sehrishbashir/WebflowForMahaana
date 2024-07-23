@@ -8461,7 +8461,7 @@ async function getFundData2(duration) {
 
     // Calculate MTD, YTD and etc performances
     await base('Adjust_nav_values').select({
-        maxRecords: 10,
+        maxRecords: 1,
         view: "Grid view",
         filterByFormula: "IF({date} < '2024-07-01', 1, 0)",
         sort: [{field: "date", direction: "desc"}]
@@ -8469,18 +8469,10 @@ async function getFundData2(duration) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
             console.log(record.fields)
-            // const d = new Date(record.fields.date)
-            // const date_str = d.toLocaleString('en-GB', format_options)
-            // airPerfData.push({
-            //     "date": date_str,
-            //     "navValue": record.fields.navValue,
-            //     "performanceValue": record.fields.performanceValue
-            // })
         })
 
         fetchNextPage() 
     }) 
-    
     
     let miietfReturn = {
         "name": "MIIETF return",
