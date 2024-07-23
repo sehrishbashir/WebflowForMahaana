@@ -3,7 +3,7 @@ let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa5
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
-let itemsPerPage = 5;
+itemsPerPage = 5;
 let currentPage = 1;
 
 let weighted_exposure = [
