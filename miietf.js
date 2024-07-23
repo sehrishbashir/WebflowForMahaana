@@ -489,6 +489,9 @@ const demoData = {
 }
 
 async function fetchData(airPerformances) {
+    console.log('helllo')
+    console.log(airPerformances)
+    
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
@@ -8473,7 +8476,7 @@ async function getFundData2(duration) {
         "inception": null
     }
 
-    airPerformances = [miietfReturn, benchmarkReturn]
+    let airPerformances = [miietfReturn, benchmarkReturn]
     
     renderFundChart(airPerfData);
 
