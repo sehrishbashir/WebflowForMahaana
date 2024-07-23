@@ -8528,71 +8528,62 @@ async function getFundData2(duration) {
 
 // Calc MTD, YTD, etc
 async function calcPerf() {
-    // Get current date record
+    //////////////
+    // MTD CALC //
+    //////////////
     let latest_record = null
     let day_before_curr_month_record = null
     let earliest_record = null
     let mtd = null
 
     latest_record = await airtable_single_record("desc", null)
-    // await base('Adjust_nav_values').select({
-    //     maxRecords: 1,
-    //     view: "Grid view",
-    //     sort: [{field: "date", direction: "desc"}]
-    // }).eachPage(function page(records, fetchNextPage) {
-    // // This function (`page`) will get called for each page of records.
-    //     records.forEach(function (record) {
-    //         latest_record = record.fields
-    //     })
-        
-    //     fetchNextPage()
-    // })
 
     d = new Date(latest_record.date)
     month_str = d.toLocaleString('en-GB', {month: '2-digit'})
-    console.log(month_str)
 
     filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
     day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
-    // await base('Adjust_nav_values').select({
-    //     maxRecords: 1,
-    //     view: "Grid view",
-    //     filterByFormula: `IF({date} < '2024-${month_str}-01', 1, 0)`,
-    //     sort: [{field: "date", direction: "desc"}]
-    // }).eachPage(function page(records, fetchNextPage) {
-    // // This function (`page`) will get called for each page of records.
-    //     records.forEach(function (record) {
-    //         day_before_curr_month_record = record.fields
-    //     })
-
-    //     fetchNextPage()
-    // }) 
 
     console.log('latest_record')
     console.log(latest_record)
+    console.log('day_before_curr_month_record')
     console.log(day_before_curr_month_record)
 
     if (day_before_curr_month_record !== null) {
         mtd = latest_record.navValue / day_before_curr_month_record.navValue - 1    
     } else {
         earliest_record = await airtable_single_record("asc", null)
-        // await base('Adjust_nav_values').select({
-        //     maxRecords: 1,
-        //     view: "Grid view",
-        //     sort: [{field: "date", direction: "asc"}]
-        // }).eachPage(function page(records, fetchNextPage) {
-        // // This function (`page`) will get called for each page of records.
-        //     records.forEach(function (record) {
-        //         earliest_record = record.fields
-        //     })
-            
-        //     fetchNextPage()
-        // })
-
         mtd = latest_record.navValue / earliest_record.navValue - 1
     }
     
+    console.log('mtd')
     console.log(mtd)
+
+    //////////////
+    // YTD CALC //
+    //////////////
+    // let day_before_curr_year_record = null
+    // let ytd = null
+
+    // year = d.getFullYear() 
+    // if(d.getTime() <= )
+
+    // filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
+    // day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
+
+    // console.log('latest_record')
+    // console.log(latest_record)
+    // console.log(day_before_curr_month_record)
+
+    // if (day_before_curr_month_record !== null) {
+    //     mtd = latest_record.navValue / day_before_curr_month_record.navValue - 1    
+    // } else {
+    //     earliest_record = await airtable_single_record("asc", null)
+    //     mtd = latest_record.navValue / earliest_record.navValue - 1
+    // }
+    
+    // console.log(mtd)
+    
 }
 
 async function airtable_single_record(sort, filter) {
