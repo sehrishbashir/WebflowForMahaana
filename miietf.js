@@ -1,5 +1,6 @@
 const Airtable = require('airtable');
 let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+airPerformances
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
@@ -99,7 +100,9 @@ function createLoader() { const loaderWrapper = document.createElement('div'); l
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data) {
-    const { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
+    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
+
+    performances = airPerformances
     
     const dataMappingsUpdated = [
         { elementClass: '.assetallocation-list', data: currentAssetAllocation },
@@ -603,7 +606,7 @@ async function fetchData() {
 
         console.log(data)
         
-        let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding ,navDate } = data;
+        let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
         fundInfo = airFundInfo
         fmrDate = airFmrDate
@@ -8434,6 +8437,36 @@ async function getFundData2(duration) {
 
         fetchNextPage() 
     })
+
+    // Calculate MTD, YTD and etc performances
+    miietfReturn = {
+        "name": "MIIETF return",
+        "lastUpdatedOn": null,
+        "mtd": "0.52%",
+        "ytd": "16.60%",
+        "days30": null,
+        "days90": "8.26%",
+        "days365": null,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    benchmarkReturn = {
+        "name": "Benchmark Return",
+        "lastUpdatedOn": null,
+        "mtd": "1.98%",
+        "ytd": "18.30%",
+        "days30": null,
+        "days90": "9.23%",
+        "days365": null,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    airPerformances = [miietfReturn, benchmarkReturn]
+    
 
     // console.log(airPerfData)
     renderFundChart(airPerfData);
