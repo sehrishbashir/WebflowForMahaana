@@ -489,9 +489,6 @@ const demoData = {
 }
 
 async function fetchData(airPerformances) {
-    console.log('helllo')
-    console.log(airPerformances)
-    
     const loader = createLoader(); loader.style.display = 'flex';
     try {
         //////////////
@@ -533,6 +530,7 @@ async function fetchData(airPerformances) {
         
         await base('Info').select({
             maxRecords: 100,
+            pageSize: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
         // This function (`page`) will get called for each page of records.
@@ -8431,6 +8429,7 @@ async function getFundData2(duration) {
     
     await base('Adjust_nav_values').select({
         maxRecords: 10000,
+        pageSize: 10000,
         view: "Grid view"
     }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
@@ -8450,6 +8449,30 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
+
+    console.log('Hello') 
+    await base('Adjust_nav_values').select({
+        maxRecords: 3,
+        view: "Grid view", 
+        filterByFormula: "IF({date} < '2024-07-01', 0, 1)", 
+        sort: [{field: "date", direction: "desc"}]
+    }).eachPage(function page(records, fetchNextPage) {
+        console.log(records) 
+    // This function (`page`) will get called for each page of records.
+        records.forEach(function (record) {
+            console.log(record.fields)
+            // const d = new Date(record.fields.date)
+            // date_str = d.toLocaleString('en-GB', format_options)
+            // airPerfData.push({
+            //     "date": date_str,
+            //     "navValue": record.fields.navValue,
+            //     "performanceValue": record.fields.performanceValue
+            // })
+        })
+
+        // fetchNextPage() 
+    })
+    
     miietfReturn = {
         "name": "MIIETF return",
         "lastUpdatedOn": null,
