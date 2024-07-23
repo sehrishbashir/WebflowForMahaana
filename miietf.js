@@ -530,7 +530,6 @@ async function fetchData(airPerformances) {
         
         await base('Info').select({
             maxRecords: 100,
-            pageSize: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
         // This function (`page`) will get called for each page of records.
@@ -8429,7 +8428,6 @@ async function getFundData2(duration) {
     
     await base('Adjust_nav_values').select({
         maxRecords: 10000,
-        pageSize: 10000,
         view: "Grid view"
     }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
@@ -8451,11 +8449,11 @@ async function getFundData2(duration) {
     // Calculate MTD, YTD and etc performances
 
     console.log('Hello') 
-    await base('Adjust_nav_values').select({
-        maxRecords: 3,
+    await base('Adjust_nav_values').select({ 
+        maxRecords: 10,
         view: "Grid view", 
-        filterByFormula: "IF({date} < '2024-07-01', 0, 1)", 
-        sort: [{field: "date", direction: "desc"}]
+        filterByFormula: "IF({date} < '2024-05-01', 1, 0)", 
+        sort: [{field: "date", direction: "asc"}]
     }).eachPage(function page(records, fetchNextPage) {
         console.log(records) 
     // This function (`page`) will get called for each page of records.
