@@ -785,7 +785,7 @@ function handleBody(type) {
 
 
 // ---------------- LOADER ---------------- //
-function createLoader() {
+// function createLoader() {
     // // Create the loader wrapper div
     // const loaderWrapper = document.createElement('div');
     // loaderWrapper.id = 'loader-wrapper';
@@ -802,7 +802,7 @@ function createLoader() {
     // document.body.appendChild(loaderWrapper);
 
     // return loaderWrapper;
-}
+// }
 // ---------------------------------------------- //
 
 
