@@ -8533,19 +8533,20 @@ async function calcPerf() {
     let day_before_curr_month_record = null
     let earliest_record = null
     let mtd = null
-    
-    await base('Adjust_nav_values').select({
-        maxRecords: 1,
-        view: "Grid view",
-        sort: [{field: "date", direction: "desc"}]
-    }).eachPage(function page(records, fetchNextPage) {
-    // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
-            latest_record = record.fields
-        })
+
+    latest_record = airtable_single_record("desc")
+    // await base('Adjust_nav_values').select({
+    //     maxRecords: 1,
+    //     view: "Grid view",
+    //     sort: [{field: "date", direction: "desc"}]
+    // }).eachPage(function page(records, fetchNextPage) {
+    // // This function (`page`) will get called for each page of records.
+    //     records.forEach(function (record) {
+    //         latest_record = record.fields
+    //     })
         
-        fetchNextPage()
-    })
+    //     fetchNextPage()
+    // })
 
     d = new Date(latest_record.date)
     month_str = d.toLocaleString('en-GB', {month: '2-digit'})
@@ -8589,6 +8590,37 @@ async function calcPerf() {
     }
     
     console.log(mtd)
+}
+
+async function airtable_single_record(sort, filter) {
+    let result = null
+    let select_options = null 
+
+    if (filter === null) {
+        select_options = {
+            maxRecords: 1,
+            view: "Grid view",
+            sort: [{field: "date", direction: sort}]
+        }
+    } 
+    else {
+        select_options = {
+            maxRecords: 1,
+            view: "Grid view",
+            filterByFormula: filter,
+            sort: [{field: "date", direction: sort}]
+        }
+    }
+    
+    await base('Adjust_nav_values').select(select_options).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+        records.forEach(function (record) {
+            result = record.fields
+        })
+        fetchNextPage()
+    })
+
+    return result
 }
 
 async function main() {
