@@ -3,10 +3,10 @@ let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa5
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
-itemsPerPage = 5;
-currentPage = 1;
+let itemsPerPage = 5;
+let currentPage = 1;
 
-weighted_exposure = [
+let weighted_exposure = [
   {
     "key": "OIL & GAS EXPLORATION COMPANIES",
     "value": {
@@ -498,7 +498,7 @@ async function fetchData(airPerformances) {
         // AIRTABLE //
         //////////////
         
-        airFundInfo = {
+        let airFundInfo = {
             authorizedParticipant: null,
             benchmark: null,
             custodian: null,
@@ -520,7 +520,7 @@ async function fetchData(airPerformances) {
             yearlyTotalExpenseRatioWithoutLevy: null,
         }
 
-        airOverview = {
+        let airOverview = {
             assetCategory: null,
             description: null,
             name: null,
@@ -529,7 +529,7 @@ async function fetchData(airPerformances) {
             question: null,
         }
 
-        airFmrDate = null
+        let airFmrDate = null
         
         await base('Info').select({
             maxRecords: 100,
@@ -620,8 +620,8 @@ async function fetchData(airPerformances) {
         let navDateElement = document.querySelectorAll('body #navDate');
         Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
 
-        expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
-        expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
+        let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
+        let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
         
         const contentMapping = {
             'asset-name': overview?.name,
@@ -8425,7 +8425,7 @@ const demoPerformaceData = [{
 ]
 
 async function getFundData2(duration) {
-    airPerfData = []
+    let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
     await base('Adjust_nav_values').select({
@@ -8435,7 +8435,7 @@ async function getFundData2(duration) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
             const d = new Date(record.fields.date)
-            date_str = d.toLocaleString('en-GB', format_options)
+            const date_str = d.toLocaleString('en-GB', format_options)
             airPerfData.push({
                 "date": date_str,
                 "navValue": record.fields.navValue,
@@ -8471,7 +8471,7 @@ async function getFundData2(duration) {
         });
     });
     
-    miietfReturn = {
+    let miietfReturn = {
         "name": "MIIETF return",
         "lastUpdatedOn": null,
         "mtd": "1.52%",
@@ -8484,7 +8484,7 @@ async function getFundData2(duration) {
         "inception": null
     }
 
-    benchmarkReturn = {
+    let benchmarkReturn = {
         "name": "Benchmark Return",
         "lastUpdatedOn": null,
         "mtd": "1.98%",
