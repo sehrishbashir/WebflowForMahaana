@@ -8590,8 +8590,6 @@ async function calcPerf() {
         curr_FY_end = assume_FY_end
     }
 
-    // let curr_FY_start_str = curr_FY_start.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'})
-    // let curr_FY_start_str = curr_FY_start.toISOString().slice(0, 10);
     let curr_FY_start_str = format_date(curr_FY_start)
     console.log(curr_FY_start_str) 
     console.log('curr_FY_start_str')
@@ -8609,6 +8607,40 @@ async function calcPerf() {
     
     console.log('ytd')
     console.log(ytd)
+
+    //////////////
+    // 90D CALC //
+    //////////////
+    let back_90_days_record = null
+    let ninty_days = null
+
+    back_90_days_record = new Date(latest_record.date)
+    back_90_days_record.setDate(d.getDate() - 89)
+
+    console.log(back_90_days_record)
+    // console.log(d)
+
+    let back_90_days_str = format_date(back_90_days_record)
+
+    filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
+    before_90_days_record = await airtable_single_record("desc", filter_cond)
+
+    console.log('before_90_days_record')
+    console.log(before_90_days_record)
+
+    if (before_90_days_record !== null) {
+        ninty_days = latest_record.navValue / before_90_days_record.navValue - 1    
+    } else {
+        earliest_record = await airtable_single_record("asc", null)
+        ninty_days = latest_record.navValue / earliest_record.navValue - 1
+    }
+    
+    console.log('ninty_days')
+    console.log(ninty_days)
+    
+    /////////////
+    // 1Y CALC //
+    /////////////
     
 }
 
