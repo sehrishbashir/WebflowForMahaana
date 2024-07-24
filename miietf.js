@@ -626,6 +626,7 @@ async function fetchData(airPerformances) {
         // Weighted Exposure //
 
         let airCreditRating = []
+        let airCreditRatingGraph = []
         
         console.log('Weighted_exposure')
         await base('Weighted_exposure').select({
@@ -634,6 +635,7 @@ async function fetchData(airPerformances) {
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
                 console.log(record.fields)
+                
                 airCreditRating.push({
                     key: record.fields.key,
                     value: {
@@ -642,6 +644,11 @@ async function fetchData(airPerformances) {
                         weight: record.fields.weight.toString()
                     }
                 })
+
+                airCreditRatingGraph.push({
+                    key: record.fields.key,
+                    value: record.fields.miietf.toString()
+                })
             })
 
             fetchNextPage()
@@ -649,6 +656,8 @@ async function fetchData(airPerformances) {
 
         console.log('airCreditRating')
         console.log(airCreditRating)
+        console.log('airCreditRatingGraph')
+        console.log(airCreditRatingGraph)
         
         //////////////////////
         // MAHANANA BACKEND //
