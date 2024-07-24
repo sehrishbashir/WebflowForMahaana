@@ -512,7 +512,6 @@ async function fetchData(airPerformances) {
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
-        // This function (`page`) will get called for each page of records.
             records.forEach(function (record) {
                 // console.log(record.fields)
 
@@ -612,7 +611,7 @@ async function fetchData(airPerformances) {
         //////////////
         // Holdings //
 
-        airHoldings = []
+        let airHoldings = {}
         
         await base('Holdings').select({
             maxRecords: 100,
@@ -621,10 +620,12 @@ async function fetchData(airPerformances) {
             records.forEach(function (record) {
                 console.log(record.fields)
 
-                airHoldings.push({
-                    key: record.fields.Name,
-                    value: (record.fields.Holding * 100).toFixed(2)
-                })
+                airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
+                    
+                // airHoldings.push({
+                //     key: record.fields.Name,
+                //     value: (record.fields.Holding * 100).toFixed(2)
+                // })
             })
 
             fetchNextPage()
@@ -641,7 +642,32 @@ async function fetchData(airPerformances) {
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         let dataJson = await response.json()
 
-        let data = dataJson;
+        console.log('dataJson') 
+        console.log(dataJson)
+
+        // let data = dataJson;
+
+        console.log('airHoldings') 
+        console.log(airHoldings) 
+
+        let data = {
+            id: dataJson.id,
+            navDate: dataJson.navDate,
+            benchmarkData: null,
+            creditRating: airCreditRatingGraph,
+            currentAssetAllocation: dataJson.currentAssetAllocation,
+            distribution: dataJson.distribution,
+            distributions: dataJson.distributions,
+            etfBenchmarkData: null,
+            fmrDate: airFmrDate,
+            fundInfo: airFundInfo,
+            holding: airHoldings, 
+            lastAssetAllocation: dataJson.lastAssetAllocation,
+            monthToDateExpense: dataJson.monthToDateExpense,
+            offeringDocumentList: dataJson.offeringDocumentList,
+            overview: airOverview,
+            performances: dataJson.performances,
+        }
 
         console.log('data')
         console.log(data)
@@ -651,16 +677,16 @@ async function fetchData(airPerformances) {
         // console.log('airCreditRatingGraph')
         // console.log(airCreditRatingGraph)
 
-        data.fundInfo = airFundInfo
-        data.fmrDate = airFmrDate
-        data.overview = airOverview
-        data.creditRating = airCreditRatingGraph
-        data.holding = airHoldings
+        // data.fundInfo = airFundInfo
+        // data.fmrDate = airFmrDate
+        // data.overview = airOverview
+        // data.creditRating = airCreditRatingGraph
+        // data.holding = airHoldings
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
-        console.log('data')
-        console.log(data)
+        // console.log('data')
+        // console.log(data)
         
         // fundInfo = airFundInfo
         // fmrDate = airFmrDate
@@ -750,6 +776,7 @@ async function fetchData(airPerformances) {
         for (const elementId in contentMapping) {
             createText(elementId, contentMapping[elementId])
         }
+        
         data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
@@ -807,6 +834,7 @@ async function fetchData(airPerformances) {
         console.error('fetchData error')
         console.error(error) 
     }
+    
     setTimeout(() => {
         loader.style.display = 'none';
         const fragmentIdentifier = window.location.hash;
