@@ -168,7 +168,7 @@ function renderLoop(data, airPerformances) {
                 console.log('weightedExposureTable')
                 console.log(weightedExposureTable)
                 
-                if (performanceContentArea) {
+                if (weightedExposureTable) {
                     const performanceRowsDiv = document.querySelector('#weighted-exp-table-rows');
 
                     console.log('performanceRowsDiv')
@@ -181,14 +181,39 @@ function renderLoop(data, airPerformances) {
                     //     else
                     //         performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
                     // }
+
+                    console.log('data')
+                    console.log(data)
         
-                    // performances.forEach(data => {
-                    //     const row = document.createElement('div');
-                    //     row.classList.add('table-row');
-                    //     const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
-                    //     row.innerHTML = html;
-                    //     performanceRowsDiv.appendChild(row);
-                    // })
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row');
+                        // const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
+                        
+                        console.log(item)
+                        
+                        const html = `
+                        <div class="table-box _2">
+                            <div class="div-block-406 _2" style="margin-right: 8px;">
+                                <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                                    <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                                </svg>
+                            </div>
+                            <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.miietf}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.kmi30}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.weight}%</div>
+                        </div>
+                        `
+                        row.innerHTML = html;
+                        performanceRowsDiv.appendChild(row);
+                    })
                 }
                 
 
