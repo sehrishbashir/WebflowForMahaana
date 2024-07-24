@@ -8476,7 +8476,7 @@ async function getFundData2(duration) {
     // }
 
     let benchmarkReturn = {
-        "name": "Benchmark Return",
+        "name": "Benchmark return",
         "lastUpdatedOn": null,
         "mtd": "1.98%",
         "ytd": "18.30%",
@@ -8488,7 +8488,33 @@ async function getFundData2(duration) {
         "inception": null
     }
 
-    let airPerformances = [miietfReturn, benchmarkReturn]
+    let kmi30Return = {
+        "name": "KMI30 return",
+        "lastUpdatedOn": null,
+        "mtd": "1.98%",
+        "ytd": "18.30%",
+        "days30": null,
+        "days90": "9.23%",
+        "days365": null,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    let peerAvgReturn = {
+        "name": "Peer avg. return",
+        "lastUpdatedOn": null,
+        "mtd": "1.98%",
+        "ytd": "18.30%",
+        "days30": null,
+        "days90": "9.23%",
+        "days365": null,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
     
     renderFundChart(airPerfData);
 
