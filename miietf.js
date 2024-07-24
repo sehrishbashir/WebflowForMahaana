@@ -8450,69 +8450,20 @@ async function getFundData2(duration) {
             airPerfData.push({
                 "date": date_str,
                 "navValue": record.fields.navValue,
-                "performanceValue": record.fields.performanceValue
+                "performanceValue": record.fields.performanceValue,
+                "kmi30": record.fields.kmi30,
+                "peer_avg": record.fields.peer_avg
             })
         })
 
         fetchNextPage() 
     })
 
+    console.log('airPerfData')
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
     let airPerformances = await calcPerf()
-    
-    // let miietfReturn = {
-    //     "name": "MIIETF return",
-    //     "lastUpdatedOn": null,
-    //     "mtd": "1.52%",
-    //     "ytd": "16.60%",
-    //     "days30": null,
-    //     "days90": "8.26%",
-    //     "days365": null,
-    //     "years3": null,
-    //     "years5": null,
-    //     "inception": null
-    // }
-
-    let benchmarkReturn = {
-        "name": "Benchmark return",
-        "lastUpdatedOn": null,
-        "mtd": "1.98%",
-        "ytd": "18.30%",
-        "days30": null,
-        "days90": "9.23%",
-        "days365": null,
-        "years3": null,
-        "years5": null,
-        "inception": null
-    }
-
-    let kmi30Return = {
-        "name": "KMI30 return",
-        "lastUpdatedOn": null,
-        "mtd": "1.98%",
-        "ytd": "18.30%",
-        "days30": null,
-        "days90": "9.23%",
-        "days365": null,
-        "years3": null,
-        "years5": null,
-        "inception": null
-    }
-
-    let peerAvgReturn = {
-        "name": "Peer avg. return",
-        "lastUpdatedOn": null,
-        "mtd": "1.98%",
-        "ytd": "18.30%",
-        "days30": null,
-        "days90": "9.23%",
-        "days365": null,
-        "years3": null,
-        "years5": null,
-        "inception": null
-    }
 
     // let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
     
@@ -8562,6 +8513,8 @@ async function calcPerf() {
     let earliest_record = null
     let mtd_miietf = null
     let mtd_bench = null
+    let mtd_kmi30 = null
+    let mtd_peer = null
 
     latest_record = await airtable_single_record("desc", null)
 
@@ -8579,10 +8532,14 @@ async function calcPerf() {
     if (day_before_curr_month_record !== null) {
         mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
         mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
+        mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
+        mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
     } else {
         earliest_record = await airtable_single_record("asc", null)
         mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
         mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+        mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
+        mtd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
     }
     
     // console.log('mtd')
@@ -8594,6 +8551,8 @@ async function calcPerf() {
     let day_before_curr_year_record = null
     let ytd_miietf = null
     let ytd_bench = null
+    let ytd_kmi30 = null
+    let ytd_peer = null
     let curr_FY_start = null
     let curr_FY_end = null
 
@@ -8610,12 +8569,12 @@ async function calcPerf() {
     // console.log(assume_FY_end)
     
     if (d.getTime() < assume_FY_start.getTime()) {
-        console.log('1')
+        // console.log('1')
         curr_FY_start = new Date(year-1, 6, 1)
         curr_FY_end = new Date(year, 5, 30)
     }
     else if (d.getTime() <= assume_FY_end.getTime()) {
-        console.log('2')
+        // console.log('2')
         curr_FY_start = assume_FY_start
         curr_FY_end = assume_FY_end
     }
@@ -8631,10 +8590,14 @@ async function calcPerf() {
     if (day_before_curr_year_record !== null) {
         ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
         ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
+        ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
+        ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
     } else {
         earliest_record = await airtable_single_record("asc", null)
         ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
         ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+        ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
+        ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
     }
     
     // console.log('ytd')
@@ -8646,6 +8609,8 @@ async function calcPerf() {
     let back_90_days_date = null
     let ninty_days_miietf = null
     let ninty_days_bench = null
+    let ninty_days_kmi30 = null
+    let ninty_days_peer = null
     let before_90_days_record = null
 
     back_90_days_date = new Date(latest_record.date)
@@ -8664,11 +8629,15 @@ async function calcPerf() {
 
     if (before_90_days_record !== null) {
         ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
-        ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1  
+        ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
+        ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
+        ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
     } else {
-        earliest_record = await airtable_single_record("asc", null)
-        ninty_days_miietf = latest_record.navValue / earliest_record.navValue - 1
-        ninty_days_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+        // earliest_record = await airtable_single_record("asc", null)
+        ninty_days_miietf = null
+        ninty_days_bench = null
+        ninty_days_kmi30 = null
+        ninty_days_peer = null
     }
     
     // console.log('ninty_days')
@@ -8680,6 +8649,8 @@ async function calcPerf() {
     let year_ago_date = null
     let year_perf_miietf = null
     let year_perf_bench = null
+    let year_perf_kmi30 = null
+    let year_perf_peer = null
     
     year_ago_date = new Date(latest_record.date)
     year_ago_date.setFullYear(year_ago_date.getFullYear() - 1)
@@ -8697,11 +8668,16 @@ async function calcPerf() {
 
     if (year_ago_record !== null) {
         year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
-        year_perf_bench = latest_record.navValue / year_ago_record.navValue - 1  
+        year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
+        year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
+        year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
     } else {
-        earliest_record = await airtable_single_record("asc", null)
-        year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
-        year_perf_bench = latest_record.navValue / earliest_record.navValue - 1
+        // earliest_record = await airtable_single_record("asc", null)
+        // year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
+        year_perf_miietf = null
+        year_perf_bench = null
+        year_perf_kmi30 = null
+        year_perf_peer = null
     }
     
     // console.log('year_perf')
@@ -8712,13 +8688,23 @@ async function calcPerf() {
     ///////////////////
     let mtd_miietf_str = `${(mtd_miietf * 100).toFixed(2)}%`
     let ytd_miietf_str = `${(ytd_miietf * 100).toFixed(2)}%`
-    let ninty_days_miietf_str = `${(ninty_days_miietf * 100).toFixed(2)}%`
-    let year_perf_miietf_str = `${(year_perf_miietf * 100).toFixed(2)}%`
+    let ninty_days_miietf_str = (ninty_days_miietf) ? `${(ninty_days_miietf * 100).toFixed(2)}%` : '-'
+    let year_perf_miietf_str = (year_perf_miietf) ? `${(year_perf_miietf * 100).toFixed(2)}%` : '-'
 
     let mtd_bench_str = `${(mtd_bench * 100).toFixed(2)}%`
     let ytd_bench_str = `${(ytd_bench * 100).toFixed(2)}%`
-    let ninty_days_bench_str = `${(ninty_days_bench * 100).toFixed(2)}%`
-    let year_perf_bench_str = `${(year_perf_bench * 100).toFixed(2)}%`
+    let ninty_days_bench_str = (ninty_days_bench) ? `${(ninty_days_bench * 100).toFixed(2)}%` : '-'
+    let year_perf_bench_str = (year_perf_bench) ? `${(year_perf_bench * 100).toFixed(2)}%` : '-'
+
+    let mtd_kmi30_str = `${(mtd_kmi30 * 100).toFixed(2)}%`
+    let ytd_kmi30_str = `${(ytd_kmi30 * 100).toFixed(2)}%`
+    let ninty_days_kmi30_str = (ninty_days_kmi30) ? `${(ninty_days_kmi30 * 100).toFixed(2)}%` : '-'
+    let year_perf_kmi30_str = (year_perf_kmi30) ? `${(year_perf_kmi30 * 100).toFixed(2)}%` : '-'
+
+    let mtd_peer_str = `${(mtd_peer * 100).toFixed(2)}%`
+    let ytd_peer_str = `${(ytd_peer * 100).toFixed(2)}%`
+    let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
+    let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
     
     let miietfReturn = {
         "name": "MIIETF return",
@@ -8746,7 +8732,33 @@ async function calcPerf() {
         "inception": null
     }
 
-    let airPerformances = [miietfReturn, benchmarkReturn]
+    let kmi30Return = {
+        "name": "KMI30 return",
+        "lastUpdatedOn": null,
+        "mtd": mtd_kmi30_str,
+        "ytd": ytd_kmi30_str,
+        "days30": null,
+        "days90": ninty_days_kmi30_str,
+        "days365": year_perf_kmi30_str,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    let peerAvgReturn = {
+        "name": "Peer avg. return",
+        "lastUpdatedOn": null,
+        "mtd": mtd_peer_str,
+        "ytd": ytd_peer_str,
+        "days30": null,
+        "days90": ninty_days_peer_str,
+        "days365": year_perf_peer_str,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
 
     console.log(airPerformances)
     
