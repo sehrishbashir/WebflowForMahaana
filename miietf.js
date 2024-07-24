@@ -573,11 +573,11 @@ async function fetchData(airPerformances) {
         console.log('airOverview')
         console.log(airOverview)
 
-        /////////////////////////
+        ///////////////////////
         // Weighted Exposure //
 
         let airCreditRating = []
-        let airCreditRatingGraph = []
+        let airCreditRatingGraph = {}
         
         // console.log('Weighted_exposure')
         await base('Weighted_exposure').select({
@@ -596,15 +596,7 @@ async function fetchData(airPerformances) {
                     }
                 })
 
-                obj = {}
-                obj[`${record.fields.key}`] = record.fields.miietf.toString()
-                airCreditRatingGraph.push(obj)
-                
-                // airCreditRatingGraph.push({
-                //     // `${record.fields.key}`: record.fields.miietf.toString()
-                //     // key: record.fields.key,
-                //     // value: record.fields.miietf.toString()
-                // })
+                airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
             })
 
             fetchNextPage()
@@ -616,6 +608,30 @@ async function fetchData(airPerformances) {
         console.log(airCreditRating)
         console.log('airCreditRatingGraph')
         console.log(airCreditRatingGraph)
+
+        //////////////
+        // Holdings //
+
+        airHoldings = []
+        
+        await base('Holdings').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                console.log(record.fields)
+
+                airHoldings.push({
+                    key: record.fields.Name,
+                    value: (record.fields.Holding * 100).toFixed(2)
+                })
+            })
+
+            fetchNextPage()
+        })
+
+        console.log('airHoldings')
+        console.log(airHoldings) 
         
         //////////////////////
         // MAHANANA BACKEND //
@@ -630,15 +646,16 @@ async function fetchData(airPerformances) {
         console.log('data')
         console.log(data)
 
-        console.log('data.creditRating') 
-        console.log(data.creditRating)
-        console.log('airCreditRatingGraph')
-        console.log(airCreditRatingGraph)
+        // console.log('data.creditRating') 
+        // console.log(data.creditRating)
+        // console.log('airCreditRatingGraph')
+        // console.log(airCreditRatingGraph)
 
         data.fundInfo = airFundInfo
         data.fmrDate = airFmrDate
         data.overview = airOverview
         data.creditRating = airCreditRatingGraph
+        data.holding = airHoldings
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
@@ -646,8 +663,6 @@ async function fetchData(airPerformances) {
         // fmrDate = airFmrDate
         // overview = airOverview
         // creditRating = airCreditRatingGraph
-
-        
         
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
@@ -8484,8 +8499,8 @@ async function getFundData2(duration) {
         fetchNextPage() 
     })
 
-    console.log('airPerfData')
-    console.log(airPerfData)
+    // console.log('airPerfData')
+    // console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
     let airPerformances = await calcPerf()
@@ -8799,7 +8814,7 @@ async function calcPerf() {
 
     let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
 
-    console.log(airPerformances)
+    // console.log(airPerformances)
     
     return airPerformances
 }
