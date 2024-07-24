@@ -8562,11 +8562,43 @@ async function calcPerf() {
     //////////////
     // YTD CALC //
     //////////////
-    // let day_before_curr_year_record = null
-    // let ytd = null
+    let day_before_curr_year_record = null
+    let ytd = null
+    let curr_FY_start = null
+    let curr_FY_end = null
 
-    // year = d.getFullYear() 
-    // if(d.getTime() <= )
+    console.log('d')
+    console.log(d)
+    
+    let year = d.getFullYear()
+    console.log('year')
+    console.log(year)
+
+    let assume_FY_start = new Date(year, 6, 1)
+    let assume_FY_end = new Date(year+1, 5, 30)
+    console.log(assume_FY_start)
+    console.log(assume_FY_end)
+    
+    if (d.getTime() < assume_FY_start.getTime()) {
+        console.log('1')
+        curr_FY_start = new Date(year-1, 6, 1)
+        curr_FY_end = new Date(year, 5, 30)
+    }
+    else if (d.getTime() <= assume_FY_end.getTime()) {
+        console.log('2')
+        curr_FY_start = assume_FY_start
+        curr_FY_end = assume_FY_end
+    }
+
+    // let curr_FY_start_str = curr_FY_start.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'})
+    let curr_FY_start_str = curr_FY_start.toISOString().slice(0, 10);
+    console.log(curr_FY_start_str)
+
+    day_before_curr_year_record = await airtable_single_record("desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
+    console.log(day_before_curr_year_record)
+    
+    // filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
+    // day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
 
     // filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
     // day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
