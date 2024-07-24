@@ -636,10 +636,10 @@ async function fetchData(airPerformances) {
         //////////////////////
         // MAHANANA BACKEND //
         //////////////////////
-        const response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        const dataJson = await response.json()
+        let dataJson = await response.json()
 
         let data = dataJson;
 
@@ -651,11 +651,11 @@ async function fetchData(airPerformances) {
         // console.log('airCreditRatingGraph')
         // console.log(airCreditRatingGraph)
 
-        // data.fundInfo = airFundInfo
-        // data.fmrDate = airFmrDate
-        // data.overview = airOverview
-        // data.creditRating = airCreditRatingGraph
-        // data.holding = airHoldings
+        data.fundInfo = airFundInfo
+        data.fmrDate = airFmrDate
+        data.overview = airOverview
+        data.creditRating = airCreditRatingGraph
+        data.holding = airHoldings
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
