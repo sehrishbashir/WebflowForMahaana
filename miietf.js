@@ -8611,16 +8611,17 @@ async function calcPerf() {
     //////////////
     // 90D CALC //
     //////////////
-    let back_90_days_record = null
+    let back_90_days_date = null
     let ninty_days = null
+    let before_90_days_record = null
 
-    back_90_days_record = new Date(latest_record.date)
-    back_90_days_record.setDate(d.getDate() - 89)
+    back_90_days_date = new Date(latest_record.date)
+    back_90_days_date.setDate(d.getDate() - 89)
 
-    console.log(back_90_days_record)
+    console.log(back_90_days_date)
     // console.log(d)
 
-    let back_90_days_str = format_date(back_90_days_record)
+    let back_90_days_str = format_date(back_90_days_date)
 
     filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
     before_90_days_record = await airtable_single_record("desc", filter_cond)
@@ -8641,7 +8642,38 @@ async function calcPerf() {
     /////////////
     // 1Y CALC //
     /////////////
+    let year_ago_date = null
+    let year_perf = null
     
+    year_ago_date = new Date(latest_record.date)
+    year_ago_date.setFullYear(year_ago_date.getFullYear() - 1)
+
+    console.log('year_ago_date')
+    console.log(year_ago_date)
+    
+    // back_90_days_record = new Date(latest_record.date)
+    // back_90_days_record.setDate(d.getDate() - 89)
+
+    // console.log(back_90_days_record)
+    // // console.log(d)
+
+    // let back_90_days_str = format_date(back_90_days_record)
+
+    // filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
+    // before_90_days_record = await airtable_single_record("desc", filter_cond)
+
+    // console.log('before_90_days_record')
+    // console.log(before_90_days_record)
+
+    // if (before_90_days_record !== null) {
+    //     ninty_days = latest_record.navValue / before_90_days_record.navValue - 1    
+    // } else {
+    //     earliest_record = await airtable_single_record("asc", null)
+    //     ninty_days = latest_record.navValue / earliest_record.navValue - 1
+    // }
+    
+    // console.log('ninty_days')
+    // console.log(ninty_days)
 }
 
 // convert date to this format: 2024-11-01 
