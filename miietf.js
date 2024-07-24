@@ -8651,29 +8651,23 @@ async function calcPerf() {
     console.log('year_ago_date')
     console.log(year_ago_date)
     
-    // back_90_days_record = new Date(latest_record.date)
-    // back_90_days_record.setDate(d.getDate() - 89)
+    let year_ago_date_str = format_date(year_ago_date)
 
-    // console.log(back_90_days_record)
-    // // console.log(d)
+    filter_cond = `IF({date} < '${year_ago_date_str}', 1, 0)`
+    let year_ago_record = await airtable_single_record("desc", filter_cond)
 
-    // let back_90_days_str = format_date(back_90_days_record)
+    console.log('year_ago_record')
+    console.log(year_ago_record)
 
-    // filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
-    // before_90_days_record = await airtable_single_record("desc", filter_cond)
-
-    // console.log('before_90_days_record')
-    // console.log(before_90_days_record)
-
-    // if (before_90_days_record !== null) {
-    //     ninty_days = latest_record.navValue / before_90_days_record.navValue - 1    
-    // } else {
-    //     earliest_record = await airtable_single_record("asc", null)
-    //     ninty_days = latest_record.navValue / earliest_record.navValue - 1
-    // }
+    if (year_ago_record !== null) {
+        year_perf = latest_record.navValue / year_ago_record.navValue - 1    
+    } else {
+        earliest_record = await airtable_single_record("asc", null)
+        year_perf = latest_record.navValue / earliest_record.navValue - 1
+    }
     
-    // console.log('ninty_days')
-    // console.log(ninty_days)
+    console.log('year_perf')
+    console.log(year_perf)
 }
 
 // convert date to this format: 2024-11-01 
