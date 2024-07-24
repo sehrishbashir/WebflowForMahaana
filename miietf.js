@@ -8460,20 +8460,20 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    await calcPerf()
+    let miietfReturn = await calcPerf()
     
-    let miietfReturn = {
-        "name": "MIIETF return",
-        "lastUpdatedOn": null,
-        "mtd": "1.52%",
-        "ytd": "16.60%",
-        "days30": null,
-        "days90": "8.26%",
-        "days365": null,
-        "years3": null,
-        "years5": null,
-        "inception": null
-    }
+    // let miietfReturn = {
+    //     "name": "MIIETF return",
+    //     "lastUpdatedOn": null,
+    //     "mtd": "1.52%",
+    //     "ytd": "16.60%",
+    //     "days30": null,
+    //     "days90": "8.26%",
+    //     "days365": null,
+    //     "years3": null,
+    //     "years5": null,
+    //     "inception": null
+    // }
 
     let benchmarkReturn = {
         "name": "Benchmark Return",
@@ -8668,6 +8668,31 @@ async function calcPerf() {
     
     console.log('year_perf')
     console.log(year_perf)
+
+    ///////////////////
+    // Return Values //
+    ///////////////////
+    let mtd_str = `${(mtd * 100).toFixed(2)}%`
+    let ytd_str = `${(ytd * 100).toFixed(2)}%`
+    let ninty_days_str = `${(ninty_days * 100).toFixed(2)}%`
+    let year_perf_str = `${(year_perf * 100).toFixed(2)}%`
+
+    let miietfReturn = {
+        "name": "MIIETF return",
+        "lastUpdatedOn": null,
+        "mtd": mtd_str,
+        "ytd": ytd_str,
+        "days30": null,
+        "days90": ninty_days_str,
+        "days365": year_perf_str,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    console.log(miietfReturn)
+    
+    return miietfReturn
 }
 
 // convert date to this format: 2024-11-01 
