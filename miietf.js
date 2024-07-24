@@ -164,7 +164,9 @@ function renderLoop(data, airPerformances) {
                 // console.log(weightedRows)
 
 
-                const performanceContentArea = document.querySelector('#perf-table');
+                const weightedExposureTable = document.querySelector('#weighted_exposure');
+                console.log('weightedExposureTable')
+                console.log(weightedExposureTable)
                 
                 // if (performanceContentArea) {
                 //     const performanceRowsDiv = document.querySelector('#perf-table-rows');
