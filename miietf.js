@@ -168,24 +168,28 @@ function renderLoop(data, airPerformances) {
                 console.log('weightedExposureTable')
                 console.log(weightedExposureTable)
                 
-                // if (performanceContentArea) {
-                //     const performanceRowsDiv = document.querySelector('#perf-table-rows');
+                if (performanceContentArea) {
+                    const performanceRowsDiv = document.querySelector('#weighted-exp-table-rows');
+
+                    console.log('performanceRowsDiv')
+                    console.log(performanceRowsDiv)
+                
                     
-                //     while (performanceRowsDiv.lastChild) {
-                //         if (performanceRowsDiv.lastChild.classList.contains('headers'))
-                //             break
-                //         else
-                //             performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
-                //     }
+                    // while (performanceRowsDiv.lastChild) {
+                    //     if (performanceRowsDiv.lastChild.classList.contains('headers'))
+                    //         break
+                    //     else
+                    //         performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
+                    // }
         
-                //     performances.forEach(data => {
-                //         const row = document.createElement('div');
-                //         row.classList.add('table-row');
-                //         const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
-                //         row.innerHTML = html;
-                //         performanceRowsDiv.appendChild(row);
-                //     })
-                // }
+                    // performances.forEach(data => {
+                    //     const row = document.createElement('div');
+                    //     row.classList.add('table-row');
+                    //     const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
+                    //     row.innerHTML = html;
+                    //     performanceRowsDiv.appendChild(row);
+                    // })
+                }
                 
 
                 // if(weightedRows) {
