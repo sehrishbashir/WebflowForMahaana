@@ -8591,7 +8591,10 @@ async function calcPerf() {
     }
 
     // let curr_FY_start_str = curr_FY_start.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'})
-    let curr_FY_start_str = curr_FY_start.toISOString().slice(0, 10);
+    // let curr_FY_start_str = curr_FY_start.toISOString().slice(0, 10);
+    let curr_FY_start_str = format_date(curr_FY_start)
+    console.log(curr_FY_start.toISOString()) 
+    console.log('curr_FY_start_str')
     console.log(curr_FY_start_str)
 
     day_before_curr_year_record = await airtable_single_record("desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
@@ -8607,6 +8610,16 @@ async function calcPerf() {
     console.log('ytd')
     console.log(ytd)
     
+}
+
+// convert date to this format: 2024-11-01 
+function format_date(d) {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`; // Output: "2024-07-24"
+    return formattedDate
 }
 
 async function airtable_single_record(sort, filter) {
