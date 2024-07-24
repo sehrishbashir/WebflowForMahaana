@@ -8460,7 +8460,7 @@ async function getFundData2(duration) {
     console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    let miietfReturn = await calcPerf()
+    let airPerformances = await calcPerf()
     
     // let miietfReturn = {
     //     "name": "MIIETF return",
@@ -8514,7 +8514,7 @@ async function getFundData2(duration) {
         "inception": null
     }
 
-    let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
+    // let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
     
     renderFundChart(airPerfData);
 
@@ -8560,7 +8560,8 @@ async function calcPerf() {
     let latest_record = null
     let day_before_curr_month_record = null
     let earliest_record = null
-    let mtd = null
+    let mtd_miietf = null
+    let mtd_bench = null
 
     latest_record = await airtable_single_record("desc", null)
 
@@ -8570,40 +8571,43 @@ async function calcPerf() {
     filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
     day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
 
-    console.log('latest_record')
-    console.log(latest_record)
-    console.log('day_before_curr_month_record')
-    console.log(day_before_curr_month_record)
+    // console.log('latest_record')
+    // console.log(latest_record)
+    // console.log('day_before_curr_month_record')
+    // console.log(day_before_curr_month_record)
 
     if (day_before_curr_month_record !== null) {
-        mtd = latest_record.navValue / day_before_curr_month_record.navValue - 1    
+        mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
+        mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
     } else {
         earliest_record = await airtable_single_record("asc", null)
-        mtd = latest_record.navValue / earliest_record.navValue - 1
+        mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
+        mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
     }
     
-    console.log('mtd')
-    console.log(mtd)
+    // console.log('mtd')
+    // console.log(mtd)
 
     //////////////
     // YTD CALC //
     //////////////
     let day_before_curr_year_record = null
-    let ytd = null
+    let ytd_miietf = null
+    let ytd_bench = null
     let curr_FY_start = null
     let curr_FY_end = null
 
-    console.log('d')
-    console.log(d)
+    // console.log('d')
+    // console.log(d)
     
     let year = d.getFullYear()
-    console.log('year')
-    console.log(year)
+    // console.log('year')
+    // console.log(year)
 
     let assume_FY_start = new Date(year, 6, 1)
     let assume_FY_end = new Date(year+1, 5, 30)
-    console.log(assume_FY_start)
-    console.log(assume_FY_end)
+    // console.log(assume_FY_start)
+    // console.log(assume_FY_end)
     
     if (d.getTime() < assume_FY_start.getTime()) {
         console.log('1')
@@ -8617,34 +8621,37 @@ async function calcPerf() {
     }
 
     let curr_FY_start_str = format_date(curr_FY_start)
-    console.log(curr_FY_start_str) 
-    console.log('curr_FY_start_str')
-    console.log(curr_FY_start_str)
+    // console.log(curr_FY_start_str) 
+    // console.log('curr_FY_start_str')
+    // console.log(curr_FY_start_str)
 
     day_before_curr_year_record = await airtable_single_record("desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
-    console.log(day_before_curr_year_record)
+    // console.log(day_before_curr_year_record)
 
     if (day_before_curr_year_record !== null) {
-        ytd = latest_record.navValue / day_before_curr_year_record.navValue - 1    
+        ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
+        ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
     } else {
         earliest_record = await airtable_single_record("asc", null)
-        ytd = latest_record.navValue / earliest_record.navValue - 1
+        ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
+        ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
     }
     
-    console.log('ytd')
-    console.log(ytd)
+    // console.log('ytd')
+    // console.log(ytd)
 
     //////////////
     // 90D CALC //
     //////////////
     let back_90_days_date = null
-    let ninty_days = null
+    let ninty_days_miietf = null
+    let ninty_days_bench = null
     let before_90_days_record = null
 
     back_90_days_date = new Date(latest_record.date)
     back_90_days_date.setDate(d.getDate() - 89)
 
-    console.log(back_90_days_date)
+    // console.log(back_90_days_date)
     // console.log(d)
 
     let back_90_days_str = format_date(back_90_days_date)
@@ -8652,73 +8659,98 @@ async function calcPerf() {
     filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
     before_90_days_record = await airtable_single_record("desc", filter_cond)
 
-    console.log('before_90_days_record')
-    console.log(before_90_days_record)
+    // console.log('before_90_days_record')
+    // console.log(before_90_days_record)
 
     if (before_90_days_record !== null) {
-        ninty_days = latest_record.navValue / before_90_days_record.navValue - 1    
+        ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
+        ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1  
     } else {
         earliest_record = await airtable_single_record("asc", null)
-        ninty_days = latest_record.navValue / earliest_record.navValue - 1
+        ninty_days_miietf = latest_record.navValue / earliest_record.navValue - 1
+        ninty_days_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
     }
     
-    console.log('ninty_days')
-    console.log(ninty_days)
+    // console.log('ninty_days')
+    // console.log(ninty_days)
     
     /////////////
     // 1Y CALC //
     /////////////
     let year_ago_date = null
-    let year_perf = null
+    let year_perf_miietf = null
+    let year_perf_bench = null
     
     year_ago_date = new Date(latest_record.date)
     year_ago_date.setFullYear(year_ago_date.getFullYear() - 1)
 
-    console.log('year_ago_date')
-    console.log(year_ago_date)
+    // console.log('year_ago_date')
+    // console.log(year_ago_date)
     
     let year_ago_date_str = format_date(year_ago_date)
 
     filter_cond = `IF({date} < '${year_ago_date_str}', 1, 0)`
     let year_ago_record = await airtable_single_record("desc", filter_cond)
 
-    console.log('year_ago_record')
-    console.log(year_ago_record)
+    // console.log('year_ago_record')
+    // console.log(year_ago_record)
 
     if (year_ago_record !== null) {
-        year_perf = latest_record.navValue / year_ago_record.navValue - 1    
+        year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
+        year_perf_bench = latest_record.navValue / year_ago_record.navValue - 1  
     } else {
         earliest_record = await airtable_single_record("asc", null)
-        year_perf = latest_record.navValue / earliest_record.navValue - 1
+        year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
+        year_perf_bench = latest_record.navValue / earliest_record.navValue - 1
     }
     
-    console.log('year_perf')
-    console.log(year_perf)
+    // console.log('year_perf')
+    // console.log(year_perf)
 
     ///////////////////
     // Return Values //
     ///////////////////
-    let mtd_str = `${(mtd * 100).toFixed(2)}%`
-    let ytd_str = `${(ytd * 100).toFixed(2)}%`
-    let ninty_days_str = `${(ninty_days * 100).toFixed(2)}%`
-    let year_perf_str = `${(year_perf * 100).toFixed(2)}%`
+    let mtd_miietf_str = `${(mtd_miietf * 100).toFixed(2)}%`
+    let ytd_miietf_str = `${(ytd_miietf * 100).toFixed(2)}%`
+    let ninty_days_miietf_str = `${(ninty_days_miietf * 100).toFixed(2)}%`
+    let year_perf_miietf_str = `${(year_perf_miietf * 100).toFixed(2)}%`
 
+    let mtd_bench_str = `${(mtd_bench * 100).toFixed(2)}%`
+    let ytd_bench_str = `${(ytd_bench * 100).toFixed(2)}%`
+    let ninty_days_bench_str = `${(ninty_days_bench * 100).toFixed(2)}%`
+    let year_perf_bench_str = `${(year_perf_bench * 100).toFixed(2)}%`
+    
     let miietfReturn = {
         "name": "MIIETF return",
         "lastUpdatedOn": null,
-        "mtd": mtd_str,
-        "ytd": ytd_str,
+        "mtd": mtd_miietf_str,
+        "ytd": ytd_miietf_str,
         "days30": null,
-        "days90": ninty_days_str,
-        "days365": year_perf_str,
+        "days90": ninty_days_miietf_str,
+        "days365": year_perf_miietf_str,
         "years3": null,
         "years5": null,
         "inception": null
     }
 
-    console.log(miietfReturn)
+    let benchmarkReturn = {
+        "name": "Benchmark return",
+        "lastUpdatedOn": null,
+        "mtd": mtd_bench_str,
+        "ytd": ytd_bench_str,
+        "days30": null,
+        "days90": ninty_days_bench_str,
+        "days365": year_perf_bench_str,
+        "years3": null,
+        "years5": null,
+        "inception": null
+    }
+
+    let airPerformances = [miietfReturn, benchmarkReturn]
+
+    console.log(airPerformances)
     
-    return miietfReturn
+    return airPerformances
 }
 
 // convert date to this format: 2024-11-01 
