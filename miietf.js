@@ -159,39 +159,64 @@ function renderLoop(data, airPerformances) {
             else if(elementClass === ".credit-list") {
                 data = weighted_exposure
             
-                const weightedRows = document.querySelector("#weighted-exp-table-rows");
+                // const weightedRows = document.querySelector("#weighted-exp-table-rows");
+                // console.log('weightedRows')
+                // console.log(weightedRows)
 
-                if(weightedRows) {
-                    data.forEach((item, index) => {
-                        // console.log(item)
 
-                        const row = document.createElement('div');
-                        row.classList.add('table-row-2');
+                const performanceContentArea = document.querySelector('#perf-table');
+                
+                // if (performanceContentArea) {
+                //     const performanceRowsDiv = document.querySelector('#perf-table-rows');
+                    
+                //     while (performanceRowsDiv.lastChild) {
+                //         if (performanceRowsDiv.lastChild.classList.contains('headers'))
+                //             break
+                //         else
+                //             performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
+                //     }
+        
+                //     performances.forEach(data => {
+                //         const row = document.createElement('div');
+                //         row.classList.add('table-row');
+                //         const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
+                //         row.innerHTML = html;
+                //         performanceRowsDiv.appendChild(row);
+                //     })
+                // }
+                
+
+                // if(weightedRows) {
+                //     data.forEach((item, index) => {
+                //         // console.log(item)
+
+                //         const row = document.createElement('div');
+                //         row.classList.add('table-row-2');
                         
-                        const html = `
-                            <div class="div-block-410 _2">
-                                <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                                    <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                                </svg>
-                            </div>
-                            <div class="table-box _2 sectors">
-                                <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-                            </div>
-                            <div class="table-box _2 sectors">
-                                <div class="table-data name sectors"><strong class="bold-text">${item.value.miietf}%<br></strong></div>
-                            </div>
-                            <div class="table-box _2 sectors">
-                                <div class="table-data name sectors"><strong class="bold-text">${item.value.kmi30}%<br></strong></div>
-                            </div>
-                            <div class="table-box _3">
-                                <div class="table-data name">${item.value.weight}%<br></div>
-                            </div>
-                        `
+                //         const html = `
+                //             <div class="div-block-410 _2">
+                //                 <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                //                     <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                //                 </svg>
+                //             </div>
+                //             <div class="table-box _2 sectors">
+                //                 <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                //             </div>
+                //             <div class="table-box _2 sectors">
+                //                 <div class="table-data name sectors"><strong class="bold-text">${item.value.miietf}%<br></strong></div>
+                //             </div>
+                //             <div class="table-box _2 sectors">
+                //                 <div class="table-data name sectors"><strong class="bold-text">${item.value.kmi30}%<br></strong></div>
+                //             </div>
+                //             <div class="table-box _3">
+                //                 <div class="table-data name">${item.value.weight}%<br></div>
+                //             </div>
+                //         `
 
-                        row.innerHTML = html;
-                        weightedRows.appendChild(row);
-                    })
-                }
+                //         row.innerHTML = html;
+                //         weightedRows.appendChild(row);
+                //     })
+                // }
                 
                 // console.log(data)
                 // console.log(data[0])
@@ -285,7 +310,7 @@ function renderLoop(data, airPerformances) {
             }
 
             performances.forEach(data => {
-                console.log(data)
+                // console.log(data)
                 
                 const row = document.createElement('div');
                 row.classList.add('table-row');
