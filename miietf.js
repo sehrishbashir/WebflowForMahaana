@@ -618,7 +618,7 @@ async function fetchData(airPerformances) {
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
 
                 airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
                     
@@ -633,6 +633,28 @@ async function fetchData(airPerformances) {
 
         console.log('airHoldings')
         console.log(airHoldings) 
+
+        ///////////////////
+        // Distributions //
+
+        console.log('Distributions')
+        await base('Distributions').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                console.log(record.fields)
+
+                // airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
+                    
+                // airHoldings.push({
+                //     key: record.fields.Name,
+                //     value: (record.fields.Holding * 100).toFixed(2)
+                // })
+            })
+
+            fetchNextPage()
+        })
         
         //////////////////////
         // MAHANANA BACKEND //
