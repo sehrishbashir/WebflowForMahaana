@@ -285,11 +285,11 @@ function renderLoop(data, airPerformances) {
             }
 
             performances.forEach(data => {
-                // console.log(data)
+                console.log(data)
                 
                 const row = document.createElement('div');
                 row.classList.add('table-row');
-                const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div>`
+                const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
 
                 
                 //<div class="div-block-406 _2"><img width="16"
@@ -8535,7 +8535,7 @@ async function calcPerf() {
         mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
         mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
     } else {
-        earliest_record = await airtable_single_record("asc", null)
+        let earliest_record = await airtable_single_record("asc", null)
         mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
         mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
         mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
@@ -8593,7 +8593,7 @@ async function calcPerf() {
         ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
         ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
     } else {
-        earliest_record = await airtable_single_record("asc", null)
+        let earliest_record = await airtable_single_record("asc", null)
         ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
         ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
         ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
@@ -8683,6 +8683,16 @@ async function calcPerf() {
     // console.log('year_perf')
     // console.log(year_perf)
 
+    ///////////////
+    // INCEPTION //
+    ///////////////
+    earliest_record = await airtable_single_record("asc", null)
+    
+    let inception_miietf = latest_record.navValue / earliest_record.navValue - 1  
+    let inception_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+    let inception_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1  
+    let inception_peer = latest_record.peer_avg / earliest_record.peer_avg - 1  
+
     ///////////////////
     // Return Values //
     ///////////////////
@@ -8690,21 +8700,25 @@ async function calcPerf() {
     let ytd_miietf_str = `${(ytd_miietf * 100).toFixed(2)}%`
     let ninty_days_miietf_str = (ninty_days_miietf) ? `${(ninty_days_miietf * 100).toFixed(2)}%` : '-'
     let year_perf_miietf_str = (year_perf_miietf) ? `${(year_perf_miietf * 100).toFixed(2)}%` : '-'
+    let inception_miietf_str = `${(inception_miietf * 100).toFixed(2)}%`
 
     let mtd_bench_str = `${(mtd_bench * 100).toFixed(2)}%`
     let ytd_bench_str = `${(ytd_bench * 100).toFixed(2)}%`
     let ninty_days_bench_str = (ninty_days_bench) ? `${(ninty_days_bench * 100).toFixed(2)}%` : '-'
     let year_perf_bench_str = (year_perf_bench) ? `${(year_perf_bench * 100).toFixed(2)}%` : '-'
+    let inception_bench_str = `${(inception_bench * 100).toFixed(2)}%`
 
     let mtd_kmi30_str = `${(mtd_kmi30 * 100).toFixed(2)}%`
     let ytd_kmi30_str = `${(ytd_kmi30 * 100).toFixed(2)}%`
     let ninty_days_kmi30_str = (ninty_days_kmi30) ? `${(ninty_days_kmi30 * 100).toFixed(2)}%` : '-'
     let year_perf_kmi30_str = (year_perf_kmi30) ? `${(year_perf_kmi30 * 100).toFixed(2)}%` : '-'
+    let inception_kmi30_str = `${(inception_kmi30 * 100).toFixed(2)}%`
 
     let mtd_peer_str = `${(mtd_peer * 100).toFixed(2)}%`
     let ytd_peer_str = `${(ytd_peer * 100).toFixed(2)}%`
     let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
     let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
+    let inception_peer_str = `${(inception_peer * 100).toFixed(2)}%`
     
     let miietfReturn = {
         "name": "MIIETF return",
@@ -8716,7 +8730,7 @@ async function calcPerf() {
         "days365": year_perf_miietf_str,
         "years3": null,
         "years5": null,
-        "inception": null
+        "inception": inception_miietf_str
     }
 
     let benchmarkReturn = {
@@ -8729,7 +8743,7 @@ async function calcPerf() {
         "days365": year_perf_bench_str,
         "years3": null,
         "years5": null,
-        "inception": null
+        "inception": inception_bench_str
     }
 
     let kmi30Return = {
@@ -8742,7 +8756,7 @@ async function calcPerf() {
         "days365": year_perf_kmi30_str,
         "years3": null,
         "years5": null,
-        "inception": null
+        "inception": inception_kmi30_str
     }
 
     let peerAvgReturn = {
@@ -8755,7 +8769,7 @@ async function calcPerf() {
         "days365": year_perf_peer_str,
         "years3": null,
         "years5": null,
-        "inception": null
+        "inception": inception_peer_str
     }
 
     let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
