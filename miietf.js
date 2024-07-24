@@ -641,24 +641,27 @@ async function fetchData(airPerformances) {
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
         const dataJson = await response.json()
 
-        const data = dataJson;
+        let data = dataJson;
 
         console.log('data')
         console.log(data)
 
-        // console.log('data.creditRating') 
+        // console.log('data.creditRating')  
         // console.log(data.creditRating)
         // console.log('airCreditRatingGraph')
         // console.log(airCreditRatingGraph)
 
-        data.fundInfo = airFundInfo
-        data.fmrDate = airFmrDate
-        data.overview = airOverview
-        data.creditRating = airCreditRatingGraph
-        data.holding = airHoldings
+        // data.fundInfo = airFundInfo
+        // data.fmrDate = airFmrDate
+        // data.overview = airOverview
+        // data.creditRating = airCreditRatingGraph
+        // data.holding = airHoldings
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
+        console.log('data')
+        console.log(data)
+        
         // fundInfo = airFundInfo
         // fmrDate = airFmrDate
         // overview = airOverview
