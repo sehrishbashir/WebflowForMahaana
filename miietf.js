@@ -8596,25 +8596,16 @@ async function calcPerf() {
 
     day_before_curr_year_record = await airtable_single_record("desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
     console.log(day_before_curr_year_record)
+
+    if (day_before_curr_year_record !== null) {
+        ytd = latest_record.navValue / day_before_curr_year_record.navValue - 1    
+    } else {
+        earliest_record = await airtable_single_record("asc", null)
+        ytd = latest_record.navValue / earliest_record.navValue - 1
+    }
     
-    // filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
-    // day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
-
-    // filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
-    // day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
-
-    // console.log('latest_record')
-    // console.log(latest_record)
-    // console.log(day_before_curr_month_record)
-
-    // if (day_before_curr_month_record !== null) {
-    //     mtd = latest_record.navValue / day_before_curr_month_record.navValue - 1    
-    // } else {
-    //     earliest_record = await airtable_single_record("asc", null)
-    //     mtd = latest_record.navValue / earliest_record.navValue - 1
-    // }
-    
-    // console.log(mtd)
+    console.log('ytd')
+    console.log(ytd)
     
 }
 
