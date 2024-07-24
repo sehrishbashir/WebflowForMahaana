@@ -6,56 +6,7 @@ let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
 
-let weighted_exposure = [
-  {
-    "key": "OIL & GAS EXPLORATION COMPANIES",
-    "value": {
-      "miietf": "20.00",
-      "kmi30": "6.00",
-      "weight": "12.24"
-    }
-  },
-  {
-    "key": "FERTILIZER",
-    "value": {
-      "miietf": "17.098",
-      "kmi30": "6.00",
-      "weight": "12.24"
-    }
-  },
-  {
-    "key": "CEMENT",
-    "value": {
-      "miietf": "14.76",
-      "kmi30": "17.00",
-      "weight": "-2.24"
-    }
-  },
-  {
-    "key": "POWER GENERATION & DISTRIBUTION",
-    "value": {
-      "miietf": "11.51",
-      "kmi30": "30.00",
-      "weight": "-18.49"
-    }
-  },
-  {
-    "key": "COMMERCIAL BANKS",
-    "value": {
-      "miietf": "9.17",
-      "kmi30": "25.00",
-      "weight": "-15.83"
-    }
-  },
-  {
-    "key": "Others",
-    "value": {
-      "miietf": "25.70",
-      "kmi30": "17.05",
-      "weight": "8.65"
-    }
-  }
-];
+let weighted_exposure = null
 
 // const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 // const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
@@ -628,13 +579,13 @@ async function fetchData(airPerformances) {
         let airCreditRating = []
         let airCreditRatingGraph = []
         
-        console.log('Weighted_exposure')
+        // console.log('Weighted_exposure')
         await base('Weighted_exposure').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
                 
                 airCreditRating.push({
                     key: record.fields.key,
@@ -645,14 +596,21 @@ async function fetchData(airPerformances) {
                     }
                 })
 
-                airCreditRatingGraph.push({
-                    key: record.fields.key,
-                    value: record.fields.miietf.toString()
-                })
+                obj = {}
+                obj[`${record.fields.key}`] = record.fields.miietf.toString()
+                airCreditRatingGraph.push(obj)
+                
+                // airCreditRatingGraph.push({
+                //     // `${record.fields.key}`: record.fields.miietf.toString()
+                //     // key: record.fields.key,
+                //     // value: record.fields.miietf.toString()
+                // })
             })
 
             fetchNextPage()
         })
+
+        weighted_exposure = airCreditRating
 
         console.log('airCreditRating')
         console.log(airCreditRating)
@@ -671,12 +629,25 @@ async function fetchData(airPerformances) {
 
         console.log('data')
         console.log(data)
+
+        console.log('data.creditRating') 
+        console.log(data.creditRating)
+        console.log('airCreditRatingGraph')
+        console.log(airCreditRatingGraph)
+
+        data.fundInfo = airFundInfo
+        data.fmrDate = airFmrDate
+        data.overview = airOverview
+        data.creditRating = airCreditRatingGraph
         
         let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
 
-        fundInfo = airFundInfo
-        fmrDate = airFmrDate
-        overview = airOverview
+        // fundInfo = airFundInfo
+        // fmrDate = airFmrDate
+        // overview = airOverview
+        // creditRating = airCreditRatingGraph
+
+        
         
         let fmrDateElement = document.querySelectorAll('body #fmrDate');
         Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
