@@ -700,13 +700,13 @@ async function fetchData(airPerformances) {
         //////////////////////
         // MAHANANA BACKEND //
         //////////////////////
-        let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+        // let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
 
         // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        let dataJson = await response.json()
+        // let dataJson = await response.json()
 
-        console.log('dataJson') 
-        console.log(dataJson)
+        // console.log('dataJson') 
+        // console.log(dataJson)
 
         // let data = dataJson;
 
