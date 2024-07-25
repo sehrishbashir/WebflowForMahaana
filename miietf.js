@@ -637,7 +637,7 @@ async function fetchData(airPerformances) {
         ///////////////////
         // Distributions //
 
-        airDistributions = []
+        let airDistributions = []
 
         console.log('Distributions')
         await base('Distributions').select({
@@ -666,6 +666,33 @@ async function fetchData(airPerformances) {
 
         console.log('airDistributions')
         console.log(airDistributions)
+
+        //////////
+        // FMRs //
+
+        let airFMRs = []
+        
+        console.log('FMRs')
+        await base('FMRs').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                console.log(record.fields)
+
+                airFMRs.push({
+                    key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
+                    value: null,
+                    name: record.fields.Name
+                })
+            })
+
+            fetchNextPage()
+        })
+
+        console.log('airFMRs')
+        console.log(airFMRs)
+        
         
         //////////////////////
         // MAHANANA BACKEND //
@@ -697,7 +724,7 @@ async function fetchData(airPerformances) {
             holding: airHoldings, 
             lastAssetAllocation: dataJson.lastAssetAllocation,
             monthToDateExpense: dataJson.monthToDateExpense,
-            offeringDocumentList: dataJson.offeringDocumentList,
+            offeringDocumentList: airFMRs,
             overview: airOverview,
             performances: dataJson.performances,
         }
@@ -8938,6 +8965,13 @@ function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").forma
 function displayReports(reportsData) {
     const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
     const displayedData = reportsData?.slice(startIndex, endIndex) || [];
+
+    console.log('reportsData')
+    console.log(reportsData)
+    
+    console.log('reportsBodyContainer')
+    console.log(reportsBodyContainer)
+    
     if (reportsBodyContainer) {
         displayedData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
