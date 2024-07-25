@@ -730,7 +730,7 @@ async function fetchData(airPerformances) {
             holding: airHoldings, 
             lastAssetAllocation: dataJson.lastAssetAllocation,
             monthToDateExpense: {
-                key: Number(airPerformances[0].mtd.replace("%", "")) / 100,
+                key: Number(airPerformances[0].mtd.replace("%", "")),
                 value: null
             },
             // monthToDateExpense: dataJson.monthToDateExpense,
