@@ -647,7 +647,7 @@ async function fetchData(airPerformances) {
             records.forEach(function (record) {
                 console.log(record.fields)
 
-                formatted_date = new Date(record.fields.payout_date).toLocaleString('en-US').replace(",", "")
+                formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
 
                 distrib_obj = {
                     exNav: record.fields.ex_nav,
