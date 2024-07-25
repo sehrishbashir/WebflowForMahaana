@@ -710,26 +710,34 @@ async function fetchData(airPerformances) {
 
         // let data = dataJson;
 
-        console.log('airHoldings') 
-        console.log(airHoldings) 
+        // console.log('airHoldings') 
+        // console.log(airHoldings)
+
+        console.log('airPerformances')
+        console.log(airPerformances)
 
         let data = {
             id: dataJson.id,
-            navDate: dataJson.navDate,
+            navDate: format_date(latest_date),
             benchmarkData: null,
             creditRating: airCreditRatingGraph,
             currentAssetAllocation: dataJson.currentAssetAllocation,
             distribution: dataJson.distribution,
             distributions: airDistributions,
             etfBenchmarkData: null,
-            fmrDate: airFmrDate,
+            fmrDate: airFmrDate, 
             fundInfo: airFundInfo,
             holding: airHoldings, 
             lastAssetAllocation: dataJson.lastAssetAllocation,
-            monthToDateExpense: dataJson.monthToDateExpense,
+            monthToDateExpense: {
+                key: Number(airPerformances[0].mtd.replace("%", "")) / 100,
+                value: null
+            },
+            // monthToDateExpense: dataJson.monthToDateExpense,
             offeringDocumentList: airFMRs,
             overview: airOverview,
-            performances: dataJson.performances,
+            performances: airPerformances.slice(0, 2),
+            // performances: dataJson.performances,
         }
 
         console.log('data')
