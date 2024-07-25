@@ -6,6 +6,7 @@ let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
 let latest_nav = null
+let latest_date = null
 
 let weighted_exposure = null
 
@@ -503,7 +504,7 @@ async function fetchData(airPerformances) {
             description: null,
             name: null,
             navDate: "2024/07/18",
-            navPerUnit: "11.66",
+            navPerUnit: latest_nav,
             question: null,
         }
 
@@ -713,7 +714,7 @@ async function fetchData(airPerformances) {
 
         let data = {
             id: dataJson.id,
-            navDate: latest_nav,
+            navDate: dataJson.navDate,
             benchmarkData: null,
             creditRating: airCreditRatingGraph,
             currentAssetAllocation: dataJson.currentAssetAllocation,
@@ -8650,6 +8651,7 @@ async function calcPerf() {
 
     latest_record = await airtable_single_record("desc", null)
     latest_nav = latest_record.NAV
+    latest_date = latest_record.date
 
     console.log('latest_record')
     console.log(latest_record)
