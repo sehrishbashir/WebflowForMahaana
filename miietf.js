@@ -852,7 +852,7 @@ async function fetchData(airPerformances) {
             createText(elementId, contentMapping[elementId])
         }
         
-        data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+        // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
