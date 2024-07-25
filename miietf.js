@@ -66,7 +66,7 @@ function renderLoop(data, airPerformances) {
     performances = airPerformances
     
     const dataMappingsUpdated = [
-        { elementClass: '.assetallocation-list', data: currentAssetAllocation },
+        // { elementClass: '.assetallocation-list', data: currentAssetAllocation },
         { elementClass: '.credit-list', data: creditRating },
         { elementClass: '.holding-list', data: holding }
     ];
@@ -563,7 +563,7 @@ async function fetchData(airPerformances) {
                     airFundInfo.fundManager = record.fields.Value
                 }
                 if (record.fields.Key === 'Submission date'){
-                    airFmrDate = record.fields.Value
+                    airFmrDate = format_date(new Date(record.fields.Value))
                 }
             })
 
@@ -717,18 +717,22 @@ async function fetchData(airPerformances) {
         console.log(airPerformances)
 
         let data = {
-            id: dataJson.id,
+            id: null,
+            // id: dataJson.id,
             navDate: format_date(latest_date),
             benchmarkData: null,
             creditRating: airCreditRatingGraph,
-            currentAssetAllocation: dataJson.currentAssetAllocation,
-            distribution: dataJson.distribution,
+            currentAssetAllocation: null,
+            distribution: null,
+            // currentAssetAllocation: dataJson.currentAssetAllocation,
+            // distribution: dataJson.distribution,
             distributions: airDistributions,
             etfBenchmarkData: null,
             fmrDate: airFmrDate, 
             fundInfo: airFundInfo,
             holding: airHoldings, 
-            lastAssetAllocation: dataJson.lastAssetAllocation,
+            lastAssetAllocation: null,
+            // lastAssetAllocation: dataJson.lastAssetAllocation,
             monthToDateExpense: {
                 key: Number(airPerformances[0].mtd.replace("%", "")),
                 value: null
