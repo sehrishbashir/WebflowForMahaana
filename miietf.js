@@ -183,21 +183,15 @@ function renderLoop(data, airPerformances) {
     //         })
     //     }
     // }
-
-    console.log('distributions')
-    console.log(distributions)
     
     if (distributions?.length > 0) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
         const distribution_wrap = document.querySelector('#distribution-wrap');
         
-        console.log('distribution_wrap')
-        console.log(distribution_wrap)
+        // console.log('distribution_wrap')
+        // console.log(distribution_wrap)
         
         distribution_no_data.style.display = "none";
-
-        console.log('distributionBodyRow')
-        console.log(distributionBodyRow)
         
         if (distribution_wrap) {
             distributions.forEach((data) => {
@@ -223,9 +217,6 @@ function renderLoop(data, airPerformances) {
                 
                 // const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;
                 row.innerHTML = html;
-
-                console.log('row')
-                console.log(row)
                 
                 distribution_wrap.appendChild(row)
             })
