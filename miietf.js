@@ -8985,7 +8985,7 @@ function displayReports(reportsData) {
                     <div class="uui-career03_title-heading">
                         <div class="uui-career03_heading">${data.name || data.key}</div>
                     </div>
-                    <a data-w-id="cb583f7d-3dca-0375-9002-e365bf4339fb" href="${url}" class="uui-button-link-3 w-inline-block">
+                    <a data-w-id="cb583f7d-3dca-0375-9002-e365bf4339fb" href="${url}" class="uui-button-link-3 w-inline-block" target="_blank">
                         <div class="link">Download Report</div>
                         <div class="uui-button-icon-3 w-embed" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8996,14 +8996,6 @@ function displayReports(reportsData) {
                 </div>
             `;
             
-            // const html = `
-            //     <div class="reports-body-cell flex-1 text-right">
-            //         <span class="rep-body-title">${data.name || data.key}</span>
-            //     </div>
-            //     <a href="${url}" target="_blank" class="reports-body-cell download-doc">
-            //         <img src="https://uploads-ssl.webflow.com/647f1d0084dd393f468d58a6/6492cec92fe6af1ddd33bcc6_downloadArrow.png" loading="lazy" alt="download">
-            //         <span class="rep-body-title download">Download</span>
-            //     </a>`;
             row.innerHTML = html; reportsBodyContainer.appendChild(row)
         })
     }
