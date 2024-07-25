@@ -846,7 +846,7 @@ async function fetchData(airPerformances) {
 
         displayReports(offeringDocumentList);
 
-        offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
+        // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
 
         for (const elementId in contentMapping) {
             createText(elementId, contentMapping[elementId])
