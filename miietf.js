@@ -503,8 +503,9 @@ async function fetchData(airPerformances) {
             assetCategory: null,
             description: null,
             name: null,
-            navDate: "2024/07/18",
-            navPerUnit: latest_nav,
+            // navDate: "2024/07/18",
+            navDate: format_date(latest_date),
+            navPerUnit: latest_nav.toString(),
             question: null,
         }
 
@@ -8651,7 +8652,7 @@ async function calcPerf() {
 
     latest_record = await airtable_single_record("desc", null)
     latest_nav = latest_record.NAV
-    latest_date = latest_record.date
+    latest_date = new Date(latest_record.date)
 
     console.log('latest_record')
     console.log(latest_record)
