@@ -680,11 +680,11 @@ async function fetchData(airPerformances) {
             records.forEach(function (record) {
                 console.log(record.fields)
 
-                airFMRs.push({
+                console.log(airFMRs.push({
                     key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
                     value: null,
                     name: record.fields.Name
-                })
+                }))
             })
 
             fetchNextPage()
@@ -818,15 +818,15 @@ async function fetchData(airPerformances) {
         //     'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         // };
 
-        if (offeringDocumentList.length > 0) {
-            offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+        // if (offeringDocumentList.length > 0) {
+        //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
 
-            offeringDocumentList.pop();
+        //     offeringDocumentList.pop();
 
-            if (offeringDocumentList.length >= 1) {
-                reportWrap.style.display = "none";
-            }
-        }
+        //     if (offeringDocumentList.length >= 1) {
+        //         reportWrap.style.display = "none";
+        //     }
+        // }
         reportsData = offeringDocumentList;
 
         displayReports(offeringDocumentList);
