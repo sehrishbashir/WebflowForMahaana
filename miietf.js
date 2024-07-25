@@ -5,6 +5,7 @@ let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa5
 let reportsData;
 itemsPerPage = 5;
 currentPage = 1;
+let latest_nav = null
 
 let weighted_exposure = null
 
@@ -678,13 +679,13 @@ async function fetchData(airPerformances) {
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
 
-                console.log(airFMRs.push({
+                airFMRs.push({
                     key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
                     value: null,
                     name: record.fields.Name
-                }))
+                })
             })
 
             fetchNextPage()
@@ -712,7 +713,7 @@ async function fetchData(airPerformances) {
 
         let data = {
             id: dataJson.id,
-            navDate: dataJson.navDate,
+            navDate: latest_nav,
             benchmarkData: null,
             creditRating: airCreditRatingGraph,
             currentAssetAllocation: dataJson.currentAssetAllocation,
@@ -8648,6 +8649,10 @@ async function calcPerf() {
     let mtd_peer = null
 
     latest_record = await airtable_single_record("desc", null)
+    latest_nav = latest_record.NAV
+
+    console.log('latest_record')
+    console.log(latest_record)
 
     d = new Date(latest_record.date)
     month_str = d.toLocaleString('en-GB', {month: '2-digit'})
@@ -8966,11 +8971,11 @@ function displayReports(reportsData) {
     // const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
     // const displayedData = reportsData?.slice(startIndex, endIndex) || [];
 
-    console.log('reportsData')
-    console.log(reportsData)
+    // console.log('reportsData')
+    // console.log(reportsData)
     
-    console.log('reportsBodyContainer')
-    console.log(reportsBodyContainer)
+    // console.log('reportsBodyContainer')
+    // console.log(reportsBodyContainer)
     
     if (reportsBodyContainer) {
         reportsData.forEach((data) => {
