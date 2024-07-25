@@ -8963,8 +8963,8 @@ var currentUrl = window.location.href; var updatedUrl = currentUrl.replace(/[?&]
 function getFormattedDate(date) { const navDate = moment(date, "DDMMYYYY").format('DD MMM YYYY'); return "as of " + navDate };
 
 function displayReports(reportsData) {
-    const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
-    const displayedData = reportsData?.slice(startIndex, endIndex) || [];
+    // const startIndex = (currentPage - 1) * itemsPerPage; const endIndex = startIndex + itemsPerPage;
+    // const displayedData = reportsData?.slice(startIndex, endIndex) || [];
 
     console.log('reportsData')
     console.log(reportsData)
