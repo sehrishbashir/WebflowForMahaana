@@ -8973,7 +8973,7 @@ function displayReports(reportsData) {
     console.log(reportsBodyContainer)
     
     if (reportsBodyContainer) {
-        displayedData.forEach((data) => {
+        reportsData.forEach((data) => {
             const url = `${mahaanaWealthCashFund}/api/Document/${data.key.split('.')[0]}`;
 
             const row = document.createElement('div');
