@@ -637,6 +637,8 @@ async function fetchData(airPerformances) {
         ///////////////////
         // Distributions //
 
+        airDistributions = []
+
         console.log('Distributions')
         await base('Distributions').select({
             maxRecords: 100,
@@ -645,16 +647,25 @@ async function fetchData(airPerformances) {
             records.forEach(function (record) {
                 console.log(record.fields)
 
-                // airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
-                    
-                // airHoldings.push({
-                //     key: record.fields.Name,
-                //     value: (record.fields.Holding * 100).toFixed(2)
-                // })
+                formatted_date = new Date(record.fields.payout_date).toLocaleString('en-US').replace(",", "")
+
+                distrib_obj = {
+                    exNav: record.fields.ex_nav,
+                    payoutDate: formatted_date,
+                    payoutPerUnit: record.fields.payout_per_unit,
+                    recordDate: null,
+                    type: "",
+                    yield: record.fields.yield * 100
+                }
+
+                airDistributions.push(distrib_obj)
             })
 
             fetchNextPage()
         })
+
+        console.log('airDistributions')
+        console.log(airDistributions)
         
         //////////////////////
         // MAHANANA BACKEND //
@@ -679,7 +690,7 @@ async function fetchData(airPerformances) {
             creditRating: airCreditRatingGraph,
             currentAssetAllocation: dataJson.currentAssetAllocation,
             distribution: dataJson.distribution,
-            distributions: dataJson.distributions,
+            distributions: airDistributions,
             etfBenchmarkData: null,
             fmrDate: airFmrDate,
             fundInfo: airFundInfo,
