@@ -8976,10 +8976,11 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
+    let productName = document.querySelector('#product_name').innerText
+    console.log(productName) 
     
-    
-    let airPerformances = await getFundData2();
-    fetchData(airPerformances);
+    // let airPerformances = await getFundData2();
+    // fetchData(airPerformances);
 }
 
 main()
