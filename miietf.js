@@ -1,5 +1,5 @@
 const Airtable = require('airtable');
-let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+// let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
 
 airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
 miietfBase = airtable.base('app9fpjsdlh5R7gsq')
@@ -8586,11 +8586,11 @@ const demoPerformaceData = [{
     }
 ]
 
-async function getFundPricesMIIETF() {
+async function getFundPrices(airBase, method) {
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
-    await base('Adjust_nav_values').select({
+    await airBase('Adjust_nav_values').select({
         maxRecords: 10000,
         view: "Grid view"
     }).eachPage(function page(records, fetchNextPage) {
@@ -8967,7 +8967,7 @@ async function airtable_single_record(sort, filter) {
         }
     }
     
-    await base('Adjust_nav_values').select(select_options).eachPage(function page(records, fetchNextPage) {
+    await airBase('Adjust_nav_values').select(select_options).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
             result = record.fields
@@ -8986,11 +8986,11 @@ async function main() {
     console.log(productName)
 
     if (productName === 'MIIETF') {
-        let airPerformances = await getFundPricesMIIETF(miietfBase, 'actual')
-        getFundDataMIIETF(airPerformances)
+        let airPerformances = await getFundPrices(miietfBase, 'actual')
+        // getFundDataMIIETF(airPerformances)
     } 
     else if (productName === 'MICF') {
-        let airPerformances = await getFundPricesMIIETF('annualized')
+        // let airPerformances = await getFundPricesMIIETF('annualized')
         // getFundDataMIIETF(airPerformances)
     }
 }
