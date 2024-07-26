@@ -1,5 +1,8 @@
 const Airtable = require('airtable');
-let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+// let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
+
+airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
+miietfBase = airtable.base('app9fpjsdlh5R7gsq')
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
@@ -8614,6 +8617,9 @@ async function getFundPricesMIIETF(duration) {
     let airPerformances = await calcPerf()
 
     // let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
+
+    console.log('airPerfData')
+    console.log(airPerfData)
     
     renderFundChart(airPerfData);
 
@@ -8980,11 +8986,12 @@ async function main() {
     console.log(productName)
 
     if (productName === 'MIIETF') {
-        let airPerformances = await getFundPricesMIIETF();
-        getFundDataMIIETF(airPerformances);
+        let airPerformances = await getFundPricesMIIETF('actual')
+        getFundDataMIIETF(airPerformances)
     } 
     else if (productName === 'MICF') {
-        
+        let airPerformances = await getFundPricesMIIETF('annualized')
+        // getFundDataMIIETF(airPerformances)
     }
 }
 
