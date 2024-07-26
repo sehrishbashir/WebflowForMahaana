@@ -7,6 +7,7 @@ itemsPerPage = 5;
 currentPage = 1;
 let latest_nav = null
 let latest_date = null
+let loader = null
 
 let weighted_exposure = null
 
@@ -469,8 +470,6 @@ async function fetchData(airPerformances) {
     // console.log('helllo')
     // console.log(airPerformances)
     
-    const loader = createLoader();
-    loader.style.display = 'flex';
     try {
         //////////////
         // AIRTABLE //
@@ -8974,6 +8973,9 @@ async function airtable_single_record(sort, filter) {
 }
 
 async function main() {
+    loader = createLoader();
+    loader.style.display = 'flex';
+    
     let airPerformances = await getFundData2();
     fetchData(airPerformances);
 }
