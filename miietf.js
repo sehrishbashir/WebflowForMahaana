@@ -1,5 +1,4 @@
 const Airtable = require('airtable');
-// let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
@@ -908,24 +907,6 @@ async function getFundData(airBase, airPerformances, productName) {
         console.error('fetchData error')
         console.error(error) 
     }
-    
-    setTimeout(() => {
-        loader.style.display = 'none';
-        const fragmentIdentifier = window.location.hash;
-
-        if (fragmentIdentifier) {
-            // Remove the '#' symbol from the fragment identifier
-            const targetId = fragmentIdentifier.substring(1);
-
-            // Find the target element by its id
-            const targetElement = document.getElementById(targetId);
-
-            // Scroll to the target element if it exists
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    }, 1000);
 }
 
 const demoPerformaceData = [{
@@ -8608,9 +8589,7 @@ async function getFundPrices(airBase, method) {
     // console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    let airPerformances = await calcPerf(airBase)
-
-    // let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
+    let airPerformances = await calcPerf(airBase, method)
 
     console.log('airPerfData')
     console.log(airPerfData)
@@ -8652,7 +8631,7 @@ async function getFundPrices(airBase, method) {
 }
 
 // Calc MTD, YTD, etc
-async function calcPerf(airBase) {
+async function calcPerf(airBase, method) {
     //////////////
     // MTD CALC //
     //////////////
@@ -8872,6 +8851,12 @@ async function calcPerf(airBase) {
     let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
     let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
     let inception_peer_str = `${(inception_peer * 100).toFixed(2)}%`
+
+    ///////////////////
+    // ANNUALIZATION //
+    ///////////////////
+
+    
     
     let miietfReturn = {
         "name": "MIIETF return",
@@ -8990,6 +8975,25 @@ async function main() {
         // let airPerformances = await getFundPricesMIIETF('annualized')
         // getFundDataMIIETF(airPerformances)
     }
+
+    // Close the loader
+    setTimeout(() => {
+        loader.style.display = 'none';
+        const fragmentIdentifier = window.location.hash;
+
+        if (fragmentIdentifier) {
+            // Remove the '#' symbol from the fragment identifier
+            const targetId = fragmentIdentifier.substring(1);
+
+            // Find the target element by its id
+            const targetElement = document.getElementById(targetId);
+
+            // Scroll to the target element if it exists
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, 1000);
 }
 
 main()
