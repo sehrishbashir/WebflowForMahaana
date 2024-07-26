@@ -8662,10 +8662,17 @@ async function calcPerf(airBase, method) {
     // console.log(day_before_curr_month_record)
 
     if (day_before_curr_month_record !== null) {
-        mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
-        mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
-        mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
-        mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
+        if(method === 'actual') {
+            mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
+            mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
+            mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
+            mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
+        }
+        if (method === 'annualized') {
+            
+            mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
+        }
+        
     } else {
         let earliest_record = await airtable_single_record(airBase, "asc", null)
         mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
@@ -8851,12 +8858,6 @@ async function calcPerf(airBase, method) {
     let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
     let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
     let inception_peer_str = `${(inception_peer * 100).toFixed(2)}%`
-
-    ///////////////////
-    // ANNUALIZATION //
-    ///////////////////
-
-    
     
     let miietfReturn = {
         "name": "MIIETF return",
@@ -8957,6 +8958,10 @@ async function airtable_single_record(airBase, sort, filter) {
     return result
 }
 
+function day_between_dates(dateLater, dateEarlier) {
+    return (dateLater.getTime() - dateEarlier.getTime()) / (1000 * 3600 * 24)
+}
+
 async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
@@ -8972,7 +8977,7 @@ async function main() {
         await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
-        // let airPerformances = await getFundPricesMIIETF('annualized')
+        let airPerformances = await getFundPrices(miietfBase, 'annualized')
         // getFundDataMIIETF(airPerformances)
     }
 
