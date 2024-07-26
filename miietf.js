@@ -649,7 +649,7 @@ async function fetchData(airPerformances) {
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
 
                 formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
 
@@ -8975,6 +8975,8 @@ async function airtable_single_record(sort, filter) {
 async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
+
+    
     
     let airPerformances = await getFundData2();
     fetchData(airPerformances);
