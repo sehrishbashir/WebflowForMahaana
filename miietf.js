@@ -466,7 +466,7 @@ const demoData = {
     ]
 }
 
-async function fetchData(airPerformances) {
+async function getFundDataMIIETF(airPerformances) {
     // console.log('helllo')
     // console.log(airPerformances)
     
@@ -8583,7 +8583,7 @@ const demoPerformaceData = [{
     }
 ]
 
-async function getFundData2(duration) {
+async function getFundPricesMIIETF(duration) {
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
@@ -8977,10 +8977,15 @@ async function main() {
     loader.style.display = 'flex';
 
     let productName = document.querySelector('#product_name').innerText
-    console.log(productName) 
-    
-    // let airPerformances = await getFundData2();
-    // fetchData(airPerformances);
+    console.log(productName)
+
+    if (productName === 'MIIETF') {
+        let airPerformances = await getFundPricesMIIETF();
+        getFundDataMIIETF(airPerformances);
+    } 
+    else if (productName === 'MICF') {
+        
+    }
 }
 
 main()
