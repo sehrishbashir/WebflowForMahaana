@@ -571,10 +571,10 @@ async function fetchData(airPerformances) {
             fetchNextPage()
         })
     
-        console.log('airFundInfo')
-        console.log(airFundInfo)
-        console.log('airOverview')
-        console.log(airOverview)
+        // console.log('airFundInfo')
+        // console.log(airFundInfo)
+        // console.log('airOverview')
+        // console.log(airOverview)
 
         ///////////////////////
         // Weighted Exposure //
@@ -607,10 +607,10 @@ async function fetchData(airPerformances) {
 
         weighted_exposure = airCreditRating
 
-        console.log('airCreditRating')
-        console.log(airCreditRating)
-        console.log('airCreditRatingGraph')
-        console.log(airCreditRatingGraph)
+        // console.log('airCreditRating')
+        // console.log(airCreditRating)
+        // console.log('airCreditRatingGraph')
+        // console.log(airCreditRatingGraph)
 
         //////////////
         // Holdings //
@@ -635,15 +635,15 @@ async function fetchData(airPerformances) {
             fetchNextPage()
         })
 
-        console.log('airHoldings')
-        console.log(airHoldings) 
+        // console.log('airHoldings')
+        // console.log(airHoldings) 
 
         ///////////////////
         // Distributions //
 
         let airDistributions = []
 
-        console.log('Distributions')
+        // console.log('Distributions')
         await base('Distributions').select({
             maxRecords: 100,
             view: "Grid view"
@@ -668,15 +668,15 @@ async function fetchData(airPerformances) {
             fetchNextPage()
         })
 
-        console.log('airDistributions')
-        console.log(airDistributions)
+        // console.log('airDistributions')
+        // console.log(airDistributions)
 
         //////////
         // FMRs //
 
         let airFMRs = []
         
-        console.log('FMRs')
+        // console.log('FMRs')
         await base('FMRs').select({
             maxRecords: 100,
             view: "Grid view"
@@ -694,8 +694,8 @@ async function fetchData(airPerformances) {
             fetchNextPage()
         })
 
-        console.log('airFMRs')
-        console.log(airFMRs)
+        // console.log('airFMRs')
+        // console.log(airFMRs)
         
         
         //////////////////////
@@ -714,8 +714,8 @@ async function fetchData(airPerformances) {
         // console.log('airHoldings') 
         // console.log(airHoldings)
 
-        console.log('airPerformances')
-        console.log(airPerformances)
+        // console.log('airPerformances')
+        // console.log(airPerformances)
 
         let data = {
             id: null,
@@ -8668,8 +8668,8 @@ async function calcPerf() {
     latest_nav = latest_record.NAV
     latest_date = new Date(latest_record.date)
 
-    console.log('latest_record')
-    console.log(latest_record)
+    // console.log('latest_record')
+    // console.log(latest_record)
 
     d = new Date(latest_record.date)
     month_str = d.toLocaleString('en-GB', {month: '2-digit'})
