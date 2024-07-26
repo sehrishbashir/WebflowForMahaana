@@ -466,10 +466,7 @@ const demoData = {
     ]
 }
 
-async function getFundDataMIIETF(airPerformances) {
-    // console.log('helllo')
-    // console.log(airPerformances)
-    
+async function getFundData(airPerformances, productName) {
     try {
         //////////////
         // AIRTABLE //
@@ -8987,7 +8984,7 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let airPerformances = await getFundPrices(miietfBase, 'actual')
-        // getFundDataMIIETF(airPerformances)
+        await getFundData(airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         // let airPerformances = await getFundPricesMIIETF('annualized')
