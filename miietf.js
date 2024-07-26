@@ -466,7 +466,7 @@ const demoData = {
     ]
 }
 
-async function getFundData(airPerformances, productName) {
+async function getFundData(airBase, airPerformances, productName) {
     try {
         //////////////
         // AIRTABLE //
@@ -509,7 +509,7 @@ async function getFundData(airPerformances, productName) {
 
         let airFmrDate = null
         
-        await base('Info').select({
+        await airBase('Info').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -580,7 +580,7 @@ async function getFundData(airPerformances, productName) {
         let airCreditRatingGraph = {}
         
         // console.log('Weighted_exposure')
-        await base('Weighted_exposure').select({
+        await airBase('Weighted_exposure').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -614,7 +614,7 @@ async function getFundData(airPerformances, productName) {
 
         let airHoldings = {}
         
-        await base('Holdings').select({
+        await airBase('Holdings').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -641,7 +641,7 @@ async function getFundData(airPerformances, productName) {
         let airDistributions = []
 
         // console.log('Distributions')
-        await base('Distributions').select({
+        await airBase('Distributions').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -674,7 +674,7 @@ async function getFundData(airPerformances, productName) {
         let airFMRs = []
         
         // console.log('FMRs')
-        await base('FMRs').select({
+        await airBase('FMRs').select({
             maxRecords: 100,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -8984,7 +8984,7 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let airPerformances = await getFundPrices(miietfBase, 'actual')
-        await getFundData(airPerformances, productName)
+        await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         // let airPerformances = await getFundPricesMIIETF('annualized')
