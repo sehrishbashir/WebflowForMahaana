@@ -1,9 +1,6 @@
 const Airtable = require('airtable');
 // let base = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'}).base('app9fpjsdlh5R7gsq');
 
-airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
-miietfBase = airtable.base('app9fpjsdlh5R7gsq')
-
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
 itemsPerPage = 5;
@@ -8614,7 +8611,7 @@ async function getFundPrices(airBase, method) {
     // console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    let airPerformances = await calcPerf()
+    let airPerformances = await calcPerf(airBase)
 
     // let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
 
@@ -8658,7 +8655,7 @@ async function getFundPrices(airBase, method) {
 }
 
 // Calc MTD, YTD, etc
-async function calcPerf() {
+async function calcPerf(airBase) {
     //////////////
     // MTD CALC //
     //////////////
@@ -8670,7 +8667,7 @@ async function calcPerf() {
     let mtd_kmi30 = null
     let mtd_peer = null
 
-    latest_record = await airtable_single_record("desc", null)
+    latest_record = await airtable_single_record(airBase, "desc", null)
     latest_nav = latest_record.NAV
     latest_date = new Date(latest_record.date)
 
@@ -8681,7 +8678,7 @@ async function calcPerf() {
     month_str = d.toLocaleString('en-GB', {month: '2-digit'})
 
     filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
-    day_before_curr_month_record = await airtable_single_record("desc", filter_cond)
+    day_before_curr_month_record = await airtable_single_record(airBase, "desc", filter_cond)
 
     // console.log('latest_record')
     // console.log(latest_record)
@@ -8694,7 +8691,7 @@ async function calcPerf() {
         mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
         mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
     } else {
-        let earliest_record = await airtable_single_record("asc", null)
+        let earliest_record = await airtable_single_record(airBase, "asc", null)
         mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
         mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
         mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
@@ -8743,7 +8740,7 @@ async function calcPerf() {
     // console.log('curr_FY_start_str')
     // console.log(curr_FY_start_str)
 
-    day_before_curr_year_record = await airtable_single_record("desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
+    day_before_curr_year_record = await airtable_single_record(airBase, "desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
     // console.log(day_before_curr_year_record)
 
     if (day_before_curr_year_record !== null) {
@@ -8752,7 +8749,7 @@ async function calcPerf() {
         ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
         ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
     } else {
-        let earliest_record = await airtable_single_record("asc", null)
+        let earliest_record = await airtable_single_record(airBase, "asc", null)
         ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
         ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
         ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
@@ -8781,7 +8778,7 @@ async function calcPerf() {
     let back_90_days_str = format_date(back_90_days_date)
 
     filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
-    before_90_days_record = await airtable_single_record("desc", filter_cond)
+    before_90_days_record = await airtable_single_record(airBase, "desc", filter_cond)
 
     // console.log('before_90_days_record')
     // console.log(before_90_days_record)
@@ -8820,7 +8817,7 @@ async function calcPerf() {
     let year_ago_date_str = format_date(year_ago_date)
 
     filter_cond = `IF({date} < '${year_ago_date_str}', 1, 0)`
-    let year_ago_record = await airtable_single_record("desc", filter_cond)
+    let year_ago_record = await airtable_single_record(airBase, "desc", filter_cond)
 
     // console.log('year_ago_record')
     // console.log(year_ago_record)
@@ -8845,7 +8842,7 @@ async function calcPerf() {
     ///////////////
     // INCEPTION //
     ///////////////
-    earliest_record = await airtable_single_record("asc", null)
+    earliest_record = await airtable_single_record(airBase, "asc", null)
     
     let inception_miietf = latest_record.navValue / earliest_record.navValue - 1  
     let inception_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
@@ -8947,7 +8944,7 @@ function format_date(d) {
     return formattedDate
 }
 
-async function airtable_single_record(sort, filter) {
+async function airtable_single_record(airBase, sort, filter) {
     let result = null
     let select_options = null 
 
@@ -8981,6 +8978,9 @@ async function airtable_single_record(sort, filter) {
 async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
+
+    airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
+    miietfBase = airtable.base('app9fpjsdlh5R7gsq')
 
     let productName = document.querySelector('#product_name').innerText
     console.log(productName)
