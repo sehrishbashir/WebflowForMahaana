@@ -8966,18 +8966,19 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
-    airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
-    miietfBase = airtable.base('app9fpjsdlh5R7gsq')
+    let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
+    let miietfBase = airtable.base('app9fpjsdlh5R7gsq')
+    let micfBase = airtable.base('app3KpgeOesdEHazM')
 
     let productName = document.querySelector('#product_name').innerText
     console.log(productName)
 
     if (productName === 'MIIETF') {
         let airPerformances = await getFundPrices(miietfBase, productName)
-        // await getFundData(miietfBase, airPerformances, productName)
+        await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
-        let airPerformances = await getFundPrices(miietfBase, 'annualized')
+        let airPerformances = await getFundPrices(micfBase, productName)
         // getFundDataMIIETF(airPerformances)
     }
 
