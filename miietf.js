@@ -8693,8 +8693,6 @@ async function calcPerf(airBase, productName) {
             mtd_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
             mtd_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
         }
-        
-        
     }
     
     // console.log('mtd')
@@ -8710,9 +8708,6 @@ async function calcPerf(airBase, productName) {
     let ytd_peer = null
     let curr_FY_start = null
     let curr_FY_end = null
-
-    // console.log('d')
-    // console.log(d)
     
     let year = d.getFullYear()
     // console.log('year')
@@ -8742,17 +8737,51 @@ async function calcPerf(airBase, productName) {
     day_before_curr_year_record = await airtable_single_record(airBase, "desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
     // console.log(day_before_curr_year_record)
 
+    // if (day_before_curr_year_record !== null) {
+    //     ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
+    //     ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
+    //     ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
+    //     ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
+    // } else {
+    //     let earliest_record = await airtable_single_record(airBase, "asc", null)
+    //     ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
+    //     ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+    //     ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
+    //     ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
+    // }
+
     if (day_before_curr_year_record !== null) {
-        ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
-        ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
-        ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
-        ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
+        if(productName === 'MIIETF') {
+            ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
+            ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
+            ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
+            ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
+        }
+        if (productName === 'MICF') {
+            let day_before_curr_year_date = new Date(day_before_curr_year_record.date)
+            let day_diff = (latest_date - day_before_curr_year_date) / (1000 * 60 * 60 * 24)
+
+            ytd_miietf = (latest_record.navValue / day_before_curr_year_record.navValue - 1) / day_diff * 365
+            ytd_bench = (latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1) / day_diff * 365
+            ytd_peer = (latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1) / day_diff * 365
+        }
     } else {
         let earliest_record = await airtable_single_record(airBase, "asc", null)
-        ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
-        ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-        ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
-        ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
+        
+        if(productName === 'MIIETF') {
+            ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
+            ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+            ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
+            ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
+        }
+        if (productName === 'MICF') {
+            let earliest_date = new Date(earliest_record.date)
+            let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
+
+            ytd_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
+            ytd_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
+            ytd_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
+        }
     }
     
     // console.log('ytd')
@@ -8782,13 +8811,35 @@ async function calcPerf(airBase, productName) {
     // console.log('before_90_days_record')
     // console.log(before_90_days_record)
 
+    // if (before_90_days_record !== null) {
+    //     ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
+    //     ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
+    //     ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
+    //     ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
+    // } else {
+    //     // earliest_record = await airtable_single_record("asc", null)
+    //     ninty_days_miietf = null
+    //     ninty_days_bench = null
+    //     ninty_days_kmi30 = null
+    //     ninty_days_peer = null
+    // }
+
     if (before_90_days_record !== null) {
-        ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
-        ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
-        ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
-        ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
+        if (productName === 'MIIETF') {
+            ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
+            ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
+            ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
+            ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
+        }
+        if (productName === 'MICF') {
+            let before_90_days_date = new Date(before_90_days_record.date)
+            let day_diff = (latest_date - before_90_days_date) / (1000 * 60 * 60 * 24)
+
+            ninty_days_miietf = (latest_record.navValue / before_90_days_record.navValue - 1) / day_diff * 365
+            ninty_days_bench = (latest_record.performanceValue / before_90_days_record.performanceValue - 1) / day_diff * 365
+            ninty_days_peer = (latest_record.peer_avg / before_90_days_record.peer_avg - 1) / day_diff * 365
+        }
     } else {
-        // earliest_record = await airtable_single_record("asc", null)
         ninty_days_miietf = null
         ninty_days_bench = null
         ninty_days_kmi30 = null
@@ -8821,14 +8872,36 @@ async function calcPerf(airBase, productName) {
     // console.log('year_ago_record')
     // console.log(year_ago_record)
 
+    // if (year_ago_record !== null) {
+    //     year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
+    //     year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
+    //     year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
+    //     year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
+    // } else {
+    //     // earliest_record = await airtable_single_record("asc", null)
+    //     // year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
+    //     year_perf_miietf = null
+    //     year_perf_bench = null
+    //     year_perf_kmi30 = null
+    //     year_perf_peer = null
+    // }
+
     if (year_ago_record !== null) {
-        year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
-        year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
-        year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
-        year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
+        if (productName === 'MIIETF') {
+            year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
+            year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
+            year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
+            year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
+        }
+        if (productName === 'MICF') {
+            let year_ago_date = new Date(year_ago_record.date)
+            let day_diff = (latest_date - year_ago_date) / (1000 * 60 * 60 * 24)
+
+            year_perf_miietf = (latest_record.navValue / year_ago_date.navValue - 1) / day_diff * 365
+            year_perf_bench = (latest_record.performanceValue / year_ago_date.performanceValue - 1) / day_diff * 365
+            year_perf_peer = (latest_record.peer_avg / year_ago_date.peer_avg - 1) / day_diff * 365
+        }
     } else {
-        // earliest_record = await airtable_single_record("asc", null)
-        // year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
         year_perf_miietf = null
         year_perf_bench = null
         year_perf_kmi30 = null
@@ -8842,12 +8915,26 @@ async function calcPerf(airBase, productName) {
     // INCEPTION //
     ///////////////
     earliest_record = await airtable_single_record(airBase, "asc", null)
+    let inception_miietf = null
+    let inception_bench = null
+    let inception_kmi30 = null
+    let inception_peer = null
     
-    let inception_miietf = latest_record.navValue / earliest_record.navValue - 1  
-    let inception_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-    let inception_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1  
-    let inception_peer = latest_record.peer_avg / earliest_record.peer_avg - 1  
+    if (productName === 'MIIETF') {
+        inception_miietf = latest_record.navValue / earliest_record.navValue - 1  
+        inception_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+        inception_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1  
+        inception_peer = latest_record.peer_avg / earliest_record.peer_avg - 1  
+    }
+    else {
+        let earliest_date = new Date(earliest_record.date)
+        let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
 
+        inception_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
+        inception_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
+        inception_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
+    }
+    
     ///////////////////
     // Return Values //
     ///////////////////
