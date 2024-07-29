@@ -8561,7 +8561,7 @@ const demoPerformaceData = [{
     }
 ]
 
-async function getFundPrices(airBase, method) {
+async function getFundPrices(airBase, productName) {
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
@@ -8589,7 +8589,7 @@ async function getFundPrices(airBase, method) {
     // console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    let airPerformances = await calcPerf(airBase, method)
+    let airPerformances = await calcPerf(airBase, productName)
 
     console.log('airPerfData')
     console.log(airPerfData)
@@ -8631,7 +8631,7 @@ async function getFundPrices(airBase, method) {
 }
 
 // Calc MTD, YTD, etc
-async function calcPerf(airBase, method) {
+async function calcPerf(airBase, productName) {
     //////////////
     // MTD CALC //
     //////////////
@@ -8662,13 +8662,13 @@ async function calcPerf(airBase, method) {
     // console.log(day_before_curr_month_record)
 
     if (day_before_curr_month_record !== null) {
-        if(method === 'actual') {
+        if(productName === 'MIIETF') {
             mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
             mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
             mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
             mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
         }
-        if (method === 'annualized') {
+        if (productName === 'MICF') {
             
             mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
         }
@@ -8973,8 +8973,8 @@ async function main() {
     console.log(productName)
 
     if (productName === 'MIIETF') {
-        let airPerformances = await getFundPrices(miietfBase, 'actual')
-        await getFundData(miietfBase, airPerformances, productName)
+        let airPerformances = await getFundPrices(miietfBase, productName)
+        // await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(miietfBase, 'annualized')
