@@ -8669,16 +8669,32 @@ async function calcPerf(airBase, productName) {
             mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
         }
         if (productName === 'MICF') {
-            
-            mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
+            let day_before_curr_month_date = new Date(day_before_curr_month_record.date)
+            let day_diff = (latest_date - day_before_curr_month_date) / (1000 * 60 * 60 * 24)
+
+            mtd_miietf = (latest_record.navValue / day_before_curr_month_record.navValue - 1) / day_diff * 365
+            mtd_bench = (latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1) / day_diff * 365
+            mtd_peer = (latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1) / day_diff * 365
         }
-        
     } else {
         let earliest_record = await airtable_single_record(airBase, "asc", null)
-        mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
-        mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-        mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
-        mtd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
+        
+        if(productName === 'MIIETF') {
+            mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
+            mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
+            mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
+            mtd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
+        }
+        if (productName === 'MICF') {
+            let earliest_date = new Date(earliest_record.date)
+            let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
+
+            mtd_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
+            mtd_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
+            mtd_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
+        }
+        
+        
     }
     
     // console.log('mtd')
@@ -8913,7 +8929,8 @@ async function calcPerf(airBase, productName) {
 
     let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
 
-    // console.log(airPerformances)
+    console.log('airPerformances')
+    console.log(airPerformances)
     
     return airPerformances
 }
