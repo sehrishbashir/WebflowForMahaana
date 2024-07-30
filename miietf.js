@@ -854,7 +854,7 @@ async function getFundData(airBase, airPerformances, productName) {
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
-        addGraph("container1", [])
+        addGraph("container1", data.creditRating)
         
         // const assetAllocationData = {
         //     "currentAssetAllocation": currentAssetAllocation,
@@ -913,6 +913,19 @@ async function getFundData(airBase, airPerformances, productName) {
 function addGraph(id, data) {
     console.log('Hello!!')
 
+    let transformed_data = []
+    for (let i in data) {
+        console.log(i)
+
+        transformed_data.push({
+            name: data[i].key,
+            y: data[i].value
+        })
+    }
+
+    console.log('transformed_data')
+    console.log(transformed_data)
+
     document.addEventListener('DOMContentLoaded', function () {
         Highcharts.chart(id, {
             chart: {
@@ -940,19 +953,7 @@ function addGraph(id, data) {
             },
             series: [{
                 name: '',
-                data: [
-                    { name: 'Hub Power Energy Company', y: 12.00 },
-                    { name: 'Engro Fertilizers Limited', y: 8.06 },
-                    { name: 'Engro Corporation', y: 7.81 },
-                    { name: 'Oil & Gas Development Company', y: 7.04 },
-                    { name: 'Pakistan Petroleum Limited', y: 6.80 },
-                    { name: 'Hub Power Energy Company', y: 6.51 },
-                    { name: 'Lucky Cement Limited', y: 6.40 },
-                    { name: 'Systems Limited', y: 6.27 },
-                    { name: 'Millat Tractors Limited', y: 5.05 },
-                    { name: 'Mari Petroleum Limited', y: 4.78 },
-    
-                ]
+                data: transformed_data
             }]
         });
     }) 
