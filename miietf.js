@@ -855,6 +855,7 @@ async function getFundData(airBase, airPerformances, productName) {
         data.holding = transformData(holding, 'table');
 
         addGraph("container2", data.creditRating)
+        addGraph("container1", data.holding)
         
         // const assetAllocationData = {
         //     "currentAssetAllocation": currentAssetAllocation,
@@ -911,11 +912,11 @@ async function getFundData(airBase, airPerformances, productName) {
 }
 
 function addGraph(id, data) {
-    console.log('Add graph')
+    // console.log('Add graph')
 
     let transformed_data = []
     for (let i in data) {
-        console.log(i)
+        // console.log(i)
 
         transformed_data.push({
             name: data[i].key,
@@ -923,8 +924,8 @@ function addGraph(id, data) {
         })
     }
 
-    console.log('transformed_data')
-    console.log(transformed_data)
+    // console.log('transformed_data')
+    // console.log(transformed_data)
 
     Highcharts.chart(id, {
         chart: {
