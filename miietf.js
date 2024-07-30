@@ -902,8 +902,8 @@ async function getFundData(airBase, airPerformances, productName) {
         // }
 
     } catch (error) {
-        creditChart.style.border = 0;
-        holdingChart.style.border = 0;
+        // creditChart.style.border = 0;
+        // holdingChart.style.border = 0;
         console.error('fetchData error')
         console.error(error) 
     }
