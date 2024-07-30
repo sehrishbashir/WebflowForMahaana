@@ -854,7 +854,8 @@ async function getFundData(airBase, airPerformances, productName) {
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
-
+        addGraph("container1", [])
+        
         // const assetAllocationData = {
         //     "currentAssetAllocation": currentAssetAllocation,
         //     "lastAssetAllocation": lastAssetAllocation
@@ -907,6 +908,54 @@ async function getFundData(airBase, airPerformances, productName) {
         console.error('fetchData error')
         console.error(error) 
     }
+}
+
+function addGraph(id, data) {
+    console.log('Hello!!')
+
+    document.addEventListener('DOMContentLoaded', function () {
+        Highcharts.chart(id, {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: ''  // Remove the title
+            },
+            exporting: {
+                enabled: false  // Disable the exporting hamburger icon
+            },
+            credits: {
+                enabled: false  // Disable the Highcharts watermark
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: '80%',  // Adjust inner radius size (donut hole)
+                    size: '90%',  // Adjust outer radius size (decrease overall chart size)
+                    depth: 45,
+                    dataLabels: {
+                        enabled: false,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: '',
+                data: [
+                    { name: 'Hub Power Energy Company', y: 12.00 },
+                    { name: 'Engro Fertilizers Limited', y: 8.06 },
+                    { name: 'Engro Corporation', y: 7.81 },
+                    { name: 'Oil & Gas Development Company', y: 7.04 },
+                    { name: 'Pakistan Petroleum Limited', y: 6.80 },
+                    { name: 'Hub Power Energy Company', y: 6.51 },
+                    { name: 'Lucky Cement Limited', y: 6.40 },
+                    { name: 'Systems Limited', y: 6.27 },
+                    { name: 'Millat Tractors Limited', y: 5.05 },
+                    { name: 'Mari Petroleum Limited', y: 4.78 },
+    
+                ]
+            }]
+        });
+    }) 
 }
 
 const demoPerformaceData = [{
