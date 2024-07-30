@@ -854,7 +854,7 @@ async function getFundData(airBase, airPerformances, productName) {
         data.creditRating = transformData(creditRating, 'table');
         data.holding = transformData(holding, 'table');
 
-        addGraph("container1", data.creditRating)
+        addGraph("container2", data.creditRating)
         
         // const assetAllocationData = {
         //     "currentAssetAllocation": currentAssetAllocation,
@@ -919,7 +919,7 @@ function addGraph(id, data) {
 
         transformed_data.push({
             name: data[i].key,
-            y: data[i].value
+            y: Number(data[i].value)
         })
     }
 
@@ -939,6 +939,7 @@ function addGraph(id, data) {
         credits: {
             enabled: false  // Disable the Highcharts watermark
         },
+        colors: PIE_COLORS_NEW,
         plotOptions: {
             pie: {
                 innerSize: '80%',  // Adjust inner radius size (donut hole)
