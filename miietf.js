@@ -940,15 +940,30 @@ function addGraph(id, data) {
         credits: {
             enabled: false  // Disable the Highcharts watermark
         },
+        tooltip: {
+            pointFormat: '{series.name} <b>{point.percentage:.0f}%</b>'
+        },
         colors: PIE_COLORS_NEW,
         plotOptions: {
             pie: {
                 innerSize: '80%',  // Adjust inner radius size (donut hole)
                 size: '90%',  // Adjust outer radius size (decrease overall chart size)
                 depth: 45,
+                // dataLabels: [{
+                //     enabled: true,
+                //     distance: 20,
+                //     format: '{point.name}'
+                // }, {
+                //     enabled: false,
+                //     distance: -15,
+                //     format: '{point.percentage:.0f}%',
+                //     style: {
+                //         fontSize: '0.9em'
+                //     }
+                // }],
                 dataLabels: {
                     enabled: false,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    format: '<b>{point.name}</b>: {point.percentage:.1f}%'
                 }
             }
         },
