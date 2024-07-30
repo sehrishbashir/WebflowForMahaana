@@ -924,8 +924,8 @@ function addGraph(id, data) {
         })
     }
 
-    // console.log('transformed_data')
-    // console.log(transformed_data)
+    console.log('transformed_data')
+    console.log(transformed_data)
 
     Highcharts.chart(id, {
         chart: {
@@ -941,7 +941,7 @@ function addGraph(id, data) {
             enabled: false  // Disable the Highcharts watermark
         },
         tooltip: {
-            pointFormat: '{series.name} <b>{point.percentage:.0f}%</b>'
+            pointFormat: '{series.name} <b>{point.y:.2f}%</b>'
         },
         colors: PIE_COLORS_NEW,
         plotOptions: {
