@@ -1140,6 +1140,9 @@ function renderPerfChart(data) {
         title: {
             text: null,
         },
+        exporting: {
+            enabled: false  // Disable the exporting hamburger icon
+        },
         // subtitle: {
         //     text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
         //     align: 'left'
@@ -1161,12 +1164,13 @@ function renderPerfChart(data) {
         yAxis: {
             min: min,
             max: max,
-            title: null
+            title: null,
+            gridLineWidth: 0
             // startOnTick: false,
             // endOnTick: false
         },
         tooltip: {
-            // shared: true,
+            shared: true,
             headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
         },
         credits: {
@@ -1178,7 +1182,7 @@ function renderPerfChart(data) {
             //     pointStart: 2000
             // },
             areaspline: {
-                fillOpacity: 0.4,
+                fillOpacity: 0.2,
                 marker: {
                     enabled: false,
                     symbol: 'circle',
