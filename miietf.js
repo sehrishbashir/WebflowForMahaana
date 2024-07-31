@@ -1045,41 +1045,54 @@ async function getFundPrices(airBase, productName) {
 }
 
 function renderPerfChart(data) {
-    let transformed_data = []
+    let miietf_series = []
+    let benchmark_series = []
+    let kmi30_series = []
+    let peer_series = []
 
-    for (let item in data) {
-        
+    for (let i in data) {
+        miietf_series.push([data[i].date, data[i].navValue])
+        benchmark_series.push([data[i].date, data[i].performanceValue])
+        kmi30_series.push([data[i].date, data[i].kmi30])
+        peer_series.push([data[i].date, data[i].peer_avg])
     }
+
+    console.log('peer_series')
+    console.log(peer_series)
+    console.log('benchmark_series')
+    console.log(benchmark_series)
     
     Highcharts.chart('perf-chart', {
         chart: {
             type: 'areaspline'
         },
-        title: {
-            text: 'Moose and deer hunting in Norway, 2000 - 2024',
-            align: 'left'
+        // title: {
+        //     text: 'Moose and deer hunting in Norway, 2000 - 2024',
+        //     align: 'left'
+        // },
+        // subtitle: {
+        //     text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
+        //     align: 'left'
+        // },
+        // legend: {
+        //     layout: 'vertical',
+        //     align: 'left',
+        //     verticalAlign: 'top',
+        //     x: 120,
+        //     y: 70,
+        //     floating: true,
+        //     borderWidth: 1,
+        //     backgroundColor:
+        //         Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+        // },
+        xAxis: {
+            type: 'datetime'
         },
-        subtitle: {
-            text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
-            align: 'left'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 120,
-            y: 70,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor:
-                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
-        },
-        xAxis: {},
-        yAxis: {
-            title: {
-                text: 'Quantity'
-            }
-        },
+        // yAxis: {
+        //     title: {
+        //         text: 'Quantity'
+        //     }
+        // },
         tooltip: {
             shared: true,
             headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
@@ -1088,93 +1101,61 @@ function renderPerfChart(data) {
             enabled: false
         },
         plotOptions: {
-            series: {
-                pointStart: 2000
-            },
+            // series: {
+            //     pointStart: 2000
+            // },
             areaspline: {
                 fillOpacity: 0.4,
-                marker: {
-                	enabled: false,
-                  symbol: 'circle',
-                  radius: 2,
-                  states: {
-                  hover: {
-                    enabled: true
-                	}
-              	}
-            	}
+             //    marker: {
+             //        enabled: false,
+             //        symbol: 'circle',
+             //        radius: 2,
+             //        states: {
+             //            hover: {
+             //                enabled: true
+             //        	}
+             //      	}
+            	// }
             }
         },
-        series: [{
-            name: 'Moose',
-            data:[
-                	[2000, 55000],
-                 	[2001, 56000],
-                    [2002, 55000],
-                 	[2004, 56000],
-                    [2005, 55000],
-                 	[2006, 56000],
-                    [2007, 55000],
-                 	[2008, 56000]
-                ]
-        }]
-                /*[   
-                    38000,
-                    37300,
-                    37892,
-                    38564,
-                    36770,
-                    36026,
-                    34978,
-                    35657,
-                    35620,
-                    35971,
-                    36409,
-                    36435,
-                    34643,
-                    34956,
-                    33199,
-                    31136,
-                    30835,
-                    31611,
-                    30666,
-                    30319,
-                    31766,
-                    29278,
-                    27487,
-                    26007
-                ] */
-        /*}, {
-            name: 'Deer',
-            data:
-                [
-                    22534,
-                    23599,
-                    24533,
-                    25195,
-                    25896,
-                    27635,
-                    29173,
-                    32646,
-                    35686,
-                    37709,
-                    39143,
-                    36829,
-                    35031,
-                    36202,
-                    35140,
-                    33718,
-                    37773,
-                    42556,
-                    43820,
-                    46445,
-                    50048,
-                    52804,
-                    49317,
-                    52490
-                ]
-        }
-        ]*/
+        series: [
+            {
+                name: 'MIIETF',
+                data: miietf_series,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                    	}
+                  	}
+            	}
+            },
+            {
+                name: 'Benchmark',
+                date: benchmark_series,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                    	}
+                  	}
+            	}
+            },
+            {
+                name: 'KMI30',
+                date: kmi30_series
+            },
+            {
+                name: 'Peer Avg.',
+                date: peer_series
+            }
+        ]
     }); 
 }
 
