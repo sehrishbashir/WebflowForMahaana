@@ -1007,7 +1007,7 @@ async function getFundPrices(airBase, productName) {
     console.log('airPerfData')
     console.log(airPerfData)
     
-    renderFundChart(airPerfData);
+    // renderFundChart(airPerfData);
     renderPerfChart(airPerfData)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
