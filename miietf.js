@@ -1045,6 +1045,12 @@ async function getFundPrices(airBase, productName) {
 }
 
 function renderPerfChart(data) {
+    const currentDate = new Date();
+    const timezoneOffset = currentDate.getTimezoneOffset();
+    const hoursOffset = -timezoneOffset / 60;
+    console.log('hoursOffset');
+    console.log(hoursOffset);
+    
     let miietf_series = []
     let benchmark_series = []
     let kmi30_series = []
@@ -1055,19 +1061,19 @@ function renderPerfChart(data) {
     
     for (let i in data) {
         miietf_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000,
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
             data[i].navValue
         ])
         benchmark_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
             data[i].performanceValue
         ])
         kmi30_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
             data[i].kmi30
         ])
         peer_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
             data[i].peer_avg
         ]) 
     }
@@ -1113,8 +1119,9 @@ function renderPerfChart(data) {
         tooltip: {
             shared: true,
             headerFormat: '<b>{point.key}</b><br>',
-            // xDateFormat: '%d %b %Y',
-            xDateFormat: this.x
+            xDateFormat: '%d %b %Y',
+            // xDateFormat: moment(this.x, 'dddd, D MMM, HH:mm').format('D MMM YYYY')
+            // xDateFormat: console.log(this.x)
         },
         credits: {
             enabled: false
