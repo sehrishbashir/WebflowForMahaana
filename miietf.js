@@ -1008,7 +1008,7 @@ async function getFundPrices(airBase, productName) {
     console.log(airPerfData)
     
     renderFundChart(airPerfData);
-    renderPerfChart()
+    renderPerfChart(airPerfData)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
     const lastDate = airPerfData[airPerfData.length - 1].date;
@@ -1044,7 +1044,13 @@ async function getFundPrices(airBase, productName) {
     //     })
 }
 
-function renderPerfChart() {
+function renderPerfChart(data) {
+    let transformed_data = []
+
+    for (let item in data) {
+        
+    }
+    
     Highcharts.chart('perf-chart', {
         chart: {
             type: 'areaspline'
