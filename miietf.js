@@ -1113,7 +1113,8 @@ function renderPerfChart(data) {
         tooltip: {
             shared: true,
             headerFormat: '<b>{point.key}</b><br>',
-            xDateFormat: '%d %b %Y',
+            // xDateFormat: '%d %b %Y',
+            xDateFormat: console.log(new Date(this.x))
         },
         credits: {
             enabled: false
