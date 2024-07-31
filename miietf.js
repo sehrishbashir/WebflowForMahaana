@@ -1114,7 +1114,7 @@ function renderPerfChart(data) {
             shared: true,
             headerFormat: '<b>{point.key}</b><br>',
             // xDateFormat: '%d %b %Y',
-            xDateFormat: console.log(new Date(this.x))
+            xDateFormat: this.x
         },
         credits: {
             enabled: false
