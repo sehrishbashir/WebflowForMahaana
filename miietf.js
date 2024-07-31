@@ -1050,17 +1050,73 @@ function renderPerfChart(data) {
     let kmi30_series = []
     let peer_series = []
 
+    // moment("08/10/2022", "DD/MM/YYYY").toDate()
+    
     for (let i in data) {
-        miietf_series.push([data[i].date, data[i].navValue])
-        benchmark_series.push([data[i].date, data[i].performanceValue])
-        kmi30_series.push([data[i].date, data[i].kmi30])
-        peer_series.push([data[i].date, data[i].peer_avg])
+        miietf_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000,
+            data[i].navValue
+        ])
+        benchmark_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            data[i].performanceValue
+        ])
+        kmi30_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            data[i].kmi30
+        ])
+        peer_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
+            data[i].peer_avg
+        ])
     }
 
     console.log('peer_series')
     console.log(peer_series)
     console.log('benchmark_series')
     console.log(benchmark_series)
+
+    // Highcharts.chart('perf-chart', {
+    //     chart: {
+    //         type: 'line'
+    //     },
+    //     title: {
+    //         text: 'Multiple Lines Example'
+    //     },
+    //     xAxis: {
+    //         type: 'datetime',
+    //         title: {
+    //             text: 'Date'
+    //         }
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: 'Values'
+    //         }
+    //     },
+    //     series: [{
+    //         name: 'Line 1',
+    //         data: [
+    //             [Date.UTC(2024, 6, 1), 29.9],
+    //             [Date.UTC(2024, 6, 2), 71.5],
+    //             [Date.UTC(2024, 6, 3), 106.4]
+    //         ]
+    //     }, {
+    //         name: 'Line 2',
+    //         data: [
+    //             [Date.UTC(2024, 6, 1), 34.9],
+    //             [Date.UTC(2024, 6, 2), 54.5],
+    //             [Date.UTC(2024, 6, 3), 90.4]
+    //         ]
+    //     }, {
+    //         name: 'Line 3',
+    //         data: [
+    //             [Date.UTC(2024, 6, 1), 20.0],
+    //             [Date.UTC(2024, 6, 2), 60.0],
+    //             [Date.UTC(2024, 6, 3), 80.0]
+    //         ]
+    //     }]
+    // });
     
     Highcharts.chart('perf-chart', {
         chart: {
@@ -1135,7 +1191,7 @@ function renderPerfChart(data) {
             },
             {
                 name: 'Benchmark',
-                date: benchmark_series,
+                data: benchmark_series,
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -1149,11 +1205,11 @@ function renderPerfChart(data) {
             },
             {
                 name: 'KMI30',
-                date: kmi30_series
+                data: kmi30_series
             },
             {
                 name: 'Peer Avg.',
-                date: peer_series
+                data: peer_series
             }
         ]
     }); 
