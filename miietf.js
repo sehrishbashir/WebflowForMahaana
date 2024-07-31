@@ -1090,48 +1090,6 @@ function renderPerfChart(data) {
     console.log(peer_series)
     console.log('benchmark_series')
     console.log(benchmark_series)
-
-    // Highcharts.chart('perf-chart', {
-    //     chart: {
-    //         type: 'line'
-    //     },
-    //     title: {
-    //         text: 'Multiple Lines Example'
-    //     },
-    //     xAxis: {
-    //         type: 'datetime',
-    //         title: {
-    //             text: 'Date'
-    //         }
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: 'Values'
-    //         }
-    //     },
-    //     series: [{
-    //         name: 'Line 1',
-    //         data: [
-    //             [Date.UTC(2024, 6, 1), 29.9],
-    //             [Date.UTC(2024, 6, 2), 71.5],
-    //             [Date.UTC(2024, 6, 3), 106.4]
-    //         ]
-    //     }, {
-    //         name: 'Line 2',
-    //         data: [
-    //             [Date.UTC(2024, 6, 1), 34.9],
-    //             [Date.UTC(2024, 6, 2), 54.5],
-    //             [Date.UTC(2024, 6, 3), 90.4]
-    //         ]
-    //     }, {
-    //         name: 'Line 3',
-    //         data: [
-    //             [Date.UTC(2024, 6, 1), 20.0],
-    //             [Date.UTC(2024, 6, 2), 60.0],
-    //             [Date.UTC(2024, 6, 3), 80.0]
-    //         ]
-    //     }]
-    // });
     
     Highcharts.chart('perf-chart', {
         chart: {
@@ -1143,21 +1101,6 @@ function renderPerfChart(data) {
         exporting: {
             enabled: false  // Disable the exporting hamburger icon
         },
-        // subtitle: {
-        //     text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
-        //     align: 'left'
-        // },
-        // legend: {
-        //     layout: 'vertical',
-        //     align: 'left',
-        //     verticalAlign: 'top',
-        //     x: 120,
-        //     y: 70,
-        //     floating: true,
-        //     borderWidth: 1,
-        //     backgroundColor:
-        //         Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
-        // },
         xAxis: {
             type: 'datetime'
         },
@@ -1166,21 +1109,17 @@ function renderPerfChart(data) {
             max: max,
             title: null,
             gridLineWidth: 0
-            // startOnTick: false,
-            // endOnTick: false
         },
         tooltip: {
             shared: true,
-            headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
+            headerFormat: '<b>{point.key}</b><br>',
+            xDateFormat: '%d %b %Y',
         },
         credits: {
             enabled: false
         },
         colors: PIE_COLORS_NEW,
         plotOptions: {
-            // series: {
-            //     pointStart: 2000
-            // },
             areaspline: {
                 fillOpacity: 0.2,
                 marker: {
@@ -1199,30 +1138,10 @@ function renderPerfChart(data) {
             {
                 name: 'MIIETF',
                 data: miietf_series,
-             //    marker: {
-             //        enabled: false,
-             //        symbol: 'circle',
-             //        radius: 2,
-             //        states: {
-             //            hover: {
-             //                enabled: true
-             //        	}
-             //      	}
-            	// }
             },
             {
                 name: 'Benchmark',
                 data: benchmark_series,
-             //    marker: {
-             //        enabled: false,
-             //        symbol: 'circle',
-             //        radius: 2,
-             //        states: {
-             //            hover: {
-             //                enabled: true
-             //        	}
-             //      	}
-            	// }
             },
             {
                 name: 'KMI30',
