@@ -1078,6 +1078,14 @@ function renderPerfChart(data) {
     console.log('max')
     console.log(max)
 
+    min = min * 0.95
+    max = max * 1.05
+
+    console.log('min')
+    console.log(min)
+    console.log('max')
+    console.log(max)
+
     console.log('peer_series')
     console.log(peer_series)
     console.log('benchmark_series')
@@ -1129,10 +1137,9 @@ function renderPerfChart(data) {
         chart: {
             type: 'areaspline'
         },
-        // title: {
-        //     text: 'Moose and deer hunting in Norway, 2000 - 2024',
-        //     align: 'left'
-        // },
+        title: {
+            text: null,
+        },
         // subtitle: {
         //     text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
         //     align: 'left'
@@ -1152,22 +1159,42 @@ function renderPerfChart(data) {
             type: 'datetime'
         },
         yAxis: {
+            min: min,
+            max: max,
+            title: null
             // startOnTick: false,
             // endOnTick: false
         },
         tooltip: {
-            shared: true,
+            // shared: true,
             headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
         },
         credits: {
             enabled: false
         },
+        colors: PIE_COLORS_NEW,
         plotOptions: {
             // series: {
             //     pointStart: 2000
             // },
             areaspline: {
                 fillOpacity: 0.4,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                    	}
+                  	}
+            	}
+            }
+        },
+        series: [
+            {
+                name: 'MIIETF',
+                data: miietf_series,
              //    marker: {
              //        enabled: false,
              //        symbol: 'circle',
@@ -1178,36 +1205,20 @@ function renderPerfChart(data) {
              //        	}
              //      	}
             	// }
-            }
-        },
-        series: [
-            {
-                name: 'MIIETF',
-                data: miietf_series,
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                    	}
-                  	}
-            	}
             },
             {
                 name: 'Benchmark',
                 data: benchmark_series,
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                    	}
-                  	}
-            	}
+             //    marker: {
+             //        enabled: false,
+             //        symbol: 'circle',
+             //        radius: 2,
+             //        states: {
+             //            hover: {
+             //                enabled: true
+             //        	}
+             //      	}
+            	// }
             },
             {
                 name: 'KMI30',
