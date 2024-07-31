@@ -1050,7 +1050,8 @@ function renderPerfChart(data) {
     let kmi30_series = []
     let peer_series = []
 
-    // moment("08/10/2022", "DD/MM/YYYY").toDate()
+    let max_val = null
+    let min_val = null
     
     for (let i in data) {
         miietf_series.push([
@@ -1068,8 +1069,14 @@ function renderPerfChart(data) {
         peer_series.push([
             moment(data[i].date, "DD/MM/YYYY").unix() * 1000, 
             data[i].peer_avg
-        ])
+        ]) 
     }
+
+    let {min, max} = getMinMax(data)
+    console.log('min')
+    console.log(min)
+    console.log('max')
+    console.log(max)
 
     console.log('peer_series')
     console.log(peer_series)
@@ -1144,11 +1151,10 @@ function renderPerfChart(data) {
         xAxis: {
             type: 'datetime'
         },
-        // yAxis: {
-        //     title: {
-        //         text: 'Quantity'
-        //     }
-        // },
+        yAxis: {
+            // startOnTick: false,
+            // endOnTick: false
+        },
         tooltip: {
             shared: true,
             headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
@@ -1213,6 +1219,26 @@ function renderPerfChart(data) {
             }
         ]
     }); 
+}
+
+function getMinMax(arr) {
+    return arr.reduce((acc, obj) => {
+        acc.min = Math.min(
+            acc.min, 
+            obj.navValue, 
+            obj.performanceValue, 
+            obj.kmi30,
+            obj.peer_avg
+        );
+        acc.max = Math.max(
+            acc.max, 
+            obj.navValue, 
+            obj.performanceValue, 
+            obj.kmi30,
+            obj.peer_avg
+        );
+        return acc;
+    }, { min: Infinity, max: -Infinity });
 }
 
 // Calc MTD, YTD, etc
