@@ -31,7 +31,8 @@ let weighted_exposure = null
 
 // const offeringDocumentWrapper = document.getElementById('offering-document');
 
-const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+// const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
+const PIE_COLORS_NEW = ['#0E70C7', '#3296ED', '#7719E3', '#9D53F2', '#067D77', '#26ABA4', '#EB7F13', '#F7A452', '#E3193B', '#F2536D']
 
 // ---------------- LOADER ---------------- //
 function createLoader() { 
@@ -1049,8 +1050,8 @@ function renderPerfChart(data) {
     const currentDate = new Date();
     const timezoneOffset = currentDate.getTimezoneOffset();
     const hoursOffset = -timezoneOffset / 60;
-    console.log('hoursOffset');
-    console.log(hoursOffset);
+    // console.log('hoursOffset');
+    // console.log(hoursOffset);
     
     let miietf_series = []
     let benchmark_series = []
@@ -1080,23 +1081,13 @@ function renderPerfChart(data) {
     }
 
     let {min, max} = getMinMax(data)
-    console.log('min')
-    console.log(min)
-    console.log('max')
-    console.log(max)
+    // console.log('min')
+    // console.log(min)
+    // console.log('max')
+    // console.log(max)
 
     min = min * 0.95
     max = max * 1.05
-
-    console.log('min')
-    console.log(min)
-    console.log('max')
-    console.log(max)
-
-    console.log('peer_series')
-    console.log(peer_series)
-    console.log('benchmark_series')
-    console.log(benchmark_series)
     
     Highcharts.chart('perf-chart', {
         chart: {
