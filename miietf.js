@@ -1120,6 +1120,8 @@ function renderPerfChart(data) {
             shared: true,
             headerFormat: '<b>{point.key}</b><br>',
             xDateFormat: '%d %b %Y',
+            valueDecimals: 2
+            // pointFormat: '<b>{point.y:.2f}</b>'
             // xDateFormat: moment(this.x, 'dddd, D MMM, HH:mm').format('D MMM YYYY')
             // xDateFormat: console.log(this.x)
         },
