@@ -253,12 +253,38 @@ function renderLoop(data, airPerformances) {
                     performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
             }
 
-            performances.forEach(data => {
+            performances.forEach((data, index) => {
                 // console.log(data)
-                
+                const selectedColor = PIE_COLORS_NEW[index];
                 const row = document.createElement('div');
                 row.classList.add('table-row');
-                const html = `<div class="div-block-406 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79"></div><div class="table-box _2"><div class="table-data name"><strong class="bold-text">${data?.name || '-'}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${data.mtd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.ytd || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days90 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.days365 || '-'}</div></div><div class="table-box _3"><div class="table-data name">${data.inception || '-'}</div></div>`
+
+                // <img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79">
+                const html = `
+                <div class="div-block-406 _2">
+                    
+                    <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+                </div>
+                <div class="table-box _2">
+                    <div class="table-data name">
+                        <strong class="bold-text">${data?.name || '-'}<br></strong>
+                    </div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.mtd || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.ytd || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.days90 || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.days365 || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.inception || '-'}</div>
+                </div>`
 
                 
                 //<div class="div-block-406 _2"><img width="16"
@@ -1019,31 +1045,6 @@ async function getFundPrices(airBase, productName) {
     }
 
     return airPerformances
-    
-    
-    // const params = typeof duration == 'object' || duration == undefined ? 36 : duration;
-    // const url = `${mahaanaWealthCashFund}/api/CashFund/fundperformance/miietf?duration=${params}`;
-    // fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
-    //     .then((response) => {
-    //         if (!response.ok) {
-    //             return response.json().then((errorData) => {
-    //                 throw new Error(errorData.message || 'Unknown error occurred.')
-    //             });
-    //         }
-    //         return response.json();
-    //     }).then((data) => {
-    //         poerformanceWrap.style.display = "none";
-    //         let totalReturnDate = document.querySelector('#totalReturnsDate');
-    //         console.log(data)
-    //         // renderFundChart(data);
-    //         const lastDate = data[data.length - 1].date;
-    //         if (totalReturnDate) {
-    //             totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
-    //         }
-    //     }
-    //     ).catch((error) => {
-    //         console.error('Error occurred:', error)
-    //     })
 }
 
 function renderPerfChart(data) {
@@ -1126,13 +1127,13 @@ function renderPerfChart(data) {
                 fillOpacity: 0.2,
                 marker: {
                     enabled: false,
-                   //  symbol: 'circle',
-                   //  radius: 2,
-                   //  states: {
-                   //      hover: {
-                   //          enabled: true
-                   //  	}
-                  	// }
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                    	}
+                  	}
             	}
             }
         },
