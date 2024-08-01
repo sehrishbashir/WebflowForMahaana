@@ -1086,14 +1086,14 @@ function renderPerfChart(data, productName) {
         ]) 
     }
 
-    let {min, max} = getMinMax(data)
-    // console.log('min')
-    // console.log(min)
-    // console.log('max')
-    // console.log(max)
+    let {min, max} = getMinMax(data, productName)
+    min = min * 0.85
+    max = max * 1.15
 
-    min = min * 0.95
-    max = max * 1.05
+    console.log('min')
+    console.log(min)
+    console.log('max')
+    console.log(max)
 
     let series = [
         {
@@ -1195,24 +1195,45 @@ function renderPerfChart(data, productName) {
     }); 
 }
 
-function getMinMax(arr) {
-    return arr.reduce((acc, obj) => {
-        acc.min = Math.min(
-            acc.min, 
-            obj.navValue, 
-            obj.performanceValue, 
-            obj.kmi30,
-            obj.peer_avg
-        );
-        acc.max = Math.max(
-            acc.max, 
-            obj.navValue, 
-            obj.performanceValue, 
-            obj.kmi30,
-            obj.peer_avg
-        );
-        return acc;
-    }, { min: Infinity, max: -Infinity });
+function getMinMax(arr, productName) {
+    if (productName === 'MIIETF') {
+        return arr.reduce((acc, obj) => {
+            acc.min = Math.min(
+                acc.min, 
+                obj.navValue, 
+                obj.performanceValue, 
+                obj.kmi30,
+                obj.peer_avg
+            );
+            acc.max = Math.max(
+                acc.max, 
+                obj.navValue, 
+                obj.performanceValue, 
+                obj.kmi30,
+                obj.peer_avg
+            );
+            return acc;
+        }, { min: Infinity, max: -Infinity });    
+    }
+
+    if (productName === 'MICF') {
+        return arr.reduce((acc, obj) => {
+            acc.min = Math.min(
+                acc.min, 
+                obj.navValue, 
+                obj.performanceValue,
+                obj.peer_avg
+            );
+            acc.max = Math.max(
+                acc.max, 
+                obj.navValue, 
+                obj.performanceValue,
+                obj.peer_avg
+            );
+            return acc;
+        }, { min: Infinity, max: -Infinity });    
+    }
+    
 }
 
 // Calc MTD, YTD, etc
@@ -1670,11 +1691,10 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let airPerformances = await getFundPrices(miietfBase, productName)
-        await getFundData(miietfBase, airPerformances, productName)
+        // await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
-        // await getFundData(micfBase, airPerformances, productName)
         // getFundDataMIIETF(airPerformances)
     }
 
