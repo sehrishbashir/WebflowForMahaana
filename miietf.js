@@ -1091,7 +1091,7 @@ function renderPerfChart(data) {
     
     Highcharts.chart('perf-chart', {
         chart: {
-            type: 'areaspline'
+            type: 'line'
         },
         title: {
             text: null,
@@ -1122,17 +1122,17 @@ function renderPerfChart(data) {
         },
         colors: PIE_COLORS_NEW,
         plotOptions: {
-            areaspline: {
+            line: {
                 fillOpacity: 0.2,
                 marker: {
                     enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                    	}
-                  	}
+                   //  symbol: 'circle',
+                   //  radius: 2,
+                   //  states: {
+                   //      hover: {
+                   //          enabled: true
+                   //  	}
+                  	// }
             	}
             }
         },
