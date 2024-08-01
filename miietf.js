@@ -648,7 +648,7 @@ async function getFundData(airBase, airPerformances, productName) {
                 // console.log(record.fields)
 
                 formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
-
+                
                 distrib_obj = {
                     exNav: record.fields.ex_nav,
                     payoutDate: formatted_date,
@@ -985,6 +985,7 @@ async function getFundPrices(airBase, productName) {
     // This function (`page`) will get called for each page of records.
         records.forEach(function (record) {
             const d = new Date(record.fields.date)
+
             const date_str = d.toLocaleString('en-GB', format_options)
             airPerfData.push({
                 "date": date_str,
@@ -1201,7 +1202,7 @@ async function calcPerf(airBase, productName) {
     latest_record = await airtable_single_record(airBase, "desc", null)
     latest_nav = latest_record.NAV
     latest_date = new Date(latest_record.date)
-
+    
     // console.log('latest_record')
     // console.log(latest_record)
 
