@@ -1536,19 +1536,6 @@ async function calcPerf(airBase, productName) {
         "inception": inception_bench_str
     }
 
-    let kmi30Return = {
-        "name": "KMI30 return",
-        "lastUpdatedOn": null,
-        "mtd": mtd_kmi30_str,
-        "ytd": ytd_kmi30_str,
-        "days30": null,
-        "days90": ninty_days_kmi30_str,
-        "days365": year_perf_kmi30_str,
-        "years3": null,
-        "years5": null,
-        "inception": inception_kmi30_str
-    }
-
     let peerAvgReturn = {
         "name": "Peer avg. return",
         "lastUpdatedOn": null,
@@ -1562,7 +1549,26 @@ async function calcPerf(airBase, productName) {
         "inception": inception_peer_str
     }
 
-    let airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
+    let airPerformances = null
+    if(productName === "MIIETF") {
+        let kmi30Return = {
+            "name": "KMI30 return",
+            "lastUpdatedOn": null,
+            "mtd": mtd_kmi30_str,
+            "ytd": ytd_kmi30_str,
+            "days30": null,
+            "days90": ninty_days_kmi30_str,
+            "days365": year_perf_kmi30_str,
+            "years3": null,
+            "years5": null,
+            "inception": inception_kmi30_str
+        }
+
+        airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
+    }
+    if(productName === "MICF") {
+        airPerformances = [miietfReturn, benchmarkReturn, peerAvgReturn]
+    }
 
     console.log('airPerformances')
     console.log(airPerformances)
