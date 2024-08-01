@@ -1670,10 +1670,11 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let airPerformances = await getFundPrices(miietfBase, productName)
-        // await getFundData(miietfBase, airPerformances, productName)
+        await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
+        // await getFundData(micfBase, airPerformances, productName)
         // getFundDataMIIETF(airPerformances)
     }
 
