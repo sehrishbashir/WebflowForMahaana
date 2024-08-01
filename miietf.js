@@ -1036,7 +1036,7 @@ async function getFundPrices(airBase, productName) {
     console.log(airPerfData)
     
     // renderFundChart(airPerfData);
-    renderPerfChart(airPerfData)
+    renderPerfChart(airPerfData, productName)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
     const lastDate = airPerfData[airPerfData.length - 1].date;
@@ -1047,7 +1047,7 @@ async function getFundPrices(airBase, productName) {
     return airPerformances
 }
 
-function renderPerfChart(data) {
+function renderPerfChart(data, productName) {
     const currentDate = new Date();
     const timezoneOffset = currentDate.getTimezoneOffset();
     const hoursOffset = -timezoneOffset / 60;
@@ -1067,14 +1067,19 @@ function renderPerfChart(data) {
             moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
             data[i].navValue
         ])
+        
         benchmark_series.push([
             moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
             data[i].performanceValue
         ])
-        kmi30_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
-            data[i].kmi30
-        ])
+
+        if(productName === 'MIIETF') {
+            kmi30_series.push([
+                moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
+                data[i].kmi30
+            ])
+        }
+        
         peer_series.push([
             moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
             data[i].peer_avg
@@ -1089,6 +1094,37 @@ function renderPerfChart(data) {
 
     min = min * 0.95
     max = max * 1.05
+
+    let series = [
+        {
+            name: 'MIIETF',
+            data: miietf_series,
+        },
+        {
+            name: 'Benchmark',
+            data: benchmark_series,
+        }
+    ]
+
+    if (productName === 'MIIETF') {
+        series.push({
+            name: 'KMI30',
+            data: kmi30_series
+        })
+        series.push({
+            name: 'Peer Avg.',
+            data: peer_series,
+        })
+    }
+    if (productName === 'MICF') {
+        series.push({
+            name: 'Peer Avg.',
+            data: peer_series,
+        })
+    }
+
+    console.log('series')
+    console.log(series)
     
     Highcharts.chart('perf-chart', {
         chart: {
@@ -1137,24 +1173,25 @@ function renderPerfChart(data) {
             	}
             }
         },
-        series: [
-            {
-                name: 'MIIETF',
-                data: miietf_series,
-            },
-            {
-                name: 'Benchmark',
-                data: benchmark_series,
-            },
-            {
-                name: 'KMI30',
-                data: kmi30_series
-            },
-            {
-                name: 'Peer Avg.',
-                data: peer_series
-            }
-        ]
+        series: series
+        // series: [
+        //     {
+        //         name: 'MIIETF',
+        //         data: miietf_series,
+        //     },
+        //     {
+        //         name: 'Benchmark',
+        //         data: benchmark_series,
+        //     },
+        //     {
+        //         name: 'KMI30',
+        //         data: kmi30_series
+        //     },
+        //     {
+        //         name: 'Peer Avg.',
+        //         data: peer_series
+        //     }
+        // ]
     }); 
 }
 
