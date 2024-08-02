@@ -966,10 +966,14 @@ function addAssetAllocGraph(data) {
             type: 'column'
         },
         xAxis: {
-        categories: [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-            'Oct', 'Nov', 'Dec'
-        ]
+            categories: labels
+        },
+        yAxis: {
+            labels: {
+                formatter: function() {
+                    return (this.value * 100) + '%';
+                }
+            }  
         },
         plotOptions: {
             series: {
@@ -980,20 +984,12 @@ function addAssetAllocGraph(data) {
             }
         },
         series: [{
-            data: [
-                ['Jan', 29.9],
-                ['Feb', 71.5],
-                ['Mar', 29.9],
-                ['Apr', 129.2]
-            ]
+            name: 'Current month',
+            data: curr_month
         },
         {
-    		data: [
-                ['Jan', 29.9],
-                ['Feb', 71.5],
-                ['Mar', 29.9],
-                ['Apr', 129.2]
-            ]    
+            name: 'Previous month',
+    		data: prev_month
         }]
     });
 
