@@ -541,7 +541,7 @@ async function getFundData(airBase, airPerformances, productName) {
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                // console.log(record.fields)
+                console.log(record.fields)
 
                 if (record.fields.Key === 'Name'){
                     airOverview.name = record.fields.Value
@@ -1688,7 +1688,7 @@ async function main() {
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
-        await getFundData(miietfBase, airPerformances, productName)
+        await getFundData(micfBase, airPerformances, productName)
     }
 
     // Close the loader
