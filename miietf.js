@@ -158,40 +158,33 @@ function renderLoop(data, airPerformances) {
                 assetAllocRowsDiv.removeChild(assetAllocRowsDiv.lastChild);
         }
 
-        performances.forEach((data, index) => {
+        assetAllocation.forEach((data, index) => {
             // console.log(data)
             const selectedColor = PIE_COLORS_NEW[index];
             const row = document.createElement('div');
             row.classList.add('table-row');
 
-            // const html = `
-            // <div class="div-block-406 _2">
-                
-            //     <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
-            // </div>
-            // <div class="table-box _2">
-            //     <div class="table-data name">
-            //         <strong class="bold-text">${data?.name || '-'}<br></strong>
-            //     </div>
-            // </div>
-            // <div class="table-box _3">
-            //     <div class="table-data name">${data.mtd || '-'}</div>
-            // </div>
-            // <div class="table-box _3">
-            //     <div class="table-data name">${data.ytd || '-'}</div>
-            // </div>
-            // <div class="table-box _3">
-            //     <div class="table-data name">${data.days90 || '-'}</div>
-            // </div>
-            // <div class="table-box _3">
-            //     <div class="table-data name">${data.days365 || '-'}</div>
-            // </div>
-            // <div class="table-box _3">
-            //     <div class="table-data name">${data.inception || '-'}</div>
-            // </div>`
+            console.log('data')
+            console.log(data)
+            
+            const html = `
+            <div class="div-block-406 _2">
+                <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+            </div>
+            <div class="table-box _2">
+                <div class="table-data name">
+                    <strong class="bold-text">${data.Name || '-'}<br></strong>
+                </div>
+            </div>
+            <div class="table-box _3">
+                <div class="table-data name">${(data['Current month']) ? data['Current month'] * 100 + '%' : '-'}</div>
+            </div>
+            <div class="table-box _3">
+                <div class="table-data name">${data['Prev month'] || '-'}</div>
+            </div>`
 
-            // row.innerHTML = html;
-            // performanceRowsDiv.appendChild(row);
+            row.innerHTML = html;
+            assetAllocRowsDiv.appendChild(row);
         })
     }
     
