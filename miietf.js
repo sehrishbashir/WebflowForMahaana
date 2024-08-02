@@ -951,7 +951,7 @@ function addAssetAllocGraph(data) {
     let curr_month = []
     let prev_month = []
     
-    for(let item in data) {
+    for(let i in data) {
         labels.push(data[i].Name)
         curr_month.push(data[i]['Current month'])
         prev_month.push(data[i]['Prev month'])
