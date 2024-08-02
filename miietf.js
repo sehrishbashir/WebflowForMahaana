@@ -945,9 +945,31 @@ function addGraph(id, data) {
 function addAssetAllocGraph(data) {
     console.log('hello')
 
+    console.log(data)
+
+    let labels = []
+    let curr_month = []
+    let prev_month = []
+    
+    for(let item in data) {
+        labels.push(data[i].Name)
+        curr_month.push(data[i]['Current month'])
+        prev_month.push(data[i]['Prev month'])
+    }
+
+    console.log(labels)
+    console.log(curr_month)
+    console.log(prev_month)
+
     Highcharts.chart('assetAllocation', {
         chart: {
             type: 'column'
+        },
+        xAxis: {
+        categories: [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+            'Oct', 'Nov', 'Dec'
+        ]
         },
         plotOptions: {
             series: {
