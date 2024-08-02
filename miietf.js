@@ -546,7 +546,8 @@ async function getFundData(airBase, airPerformances, productName) {
                 if (record.fields.Key === 'Name'){
                     airOverview.name = record.fields.Value
                 }
-                if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?'){
+                if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
+                    record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
                     airOverview.assetCategory = record.fields.Value
                     airOverview.question = record.fields.Key
                 }
@@ -590,15 +591,24 @@ async function getFundData(airBase, airPerformances, productName) {
                 if (record.fields.Key === 'Submission date'){
                     airFmrDate = format_date(new Date(record.fields.Value))
                 }
+                if (record.fields.Key === 'Custodian'){
+                    airFundInfo.custodian = record.fields.Value
+                }
+                if (record.fields.Key === 'Shariah Advisors'){
+                    airFundInfo.shariahAdvisors = record.fields.Value
+                }
+                if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
+                    airFundInfo.weightedAverageTime = record.fields.Value
+                }
             })
 
             fetchNextPage()
         })
     
-        // console.log('airFundInfo')
-        // console.log(airFundInfo)
-        // console.log('airOverview')
-        // console.log(airOverview)
+        console.log('airFundInfo')
+        console.log(airFundInfo)
+        console.log('airOverview')
+        console.log(airOverview)
 
         ///////////////////////
         // Weighted Exposure //
