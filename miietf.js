@@ -149,14 +149,50 @@ function renderLoop(data, airPerformances) {
     if (assetAllocation) {
         console.log('Helllo!!')
 
-        // const performanceRowsDiv = document.querySelector('#perf-table-rows');
+        const assetAllocRowsDiv = document.querySelector('#asset-aloc-table-rows');
             
-        // while (performanceRowsDiv.lastChild) {
-        //     if (performanceRowsDiv.lastChild.classList.contains('headers'))
-        //         break
-        //     else
-        //         performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
-        // }
+        while (assetAllocRowsDiv.lastChild) {
+            if (assetAllocRowsDiv.lastChild.classList.contains('headers'))
+                break
+            else
+                assetAllocRowsDiv.removeChild(assetAllocRowsDiv.lastChild);
+        }
+
+        performances.forEach((data, index) => {
+            // console.log(data)
+            const selectedColor = PIE_COLORS_NEW[index];
+            const row = document.createElement('div');
+            row.classList.add('table-row');
+
+            // const html = `
+            // <div class="div-block-406 _2">
+                
+            //     <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+            // </div>
+            // <div class="table-box _2">
+            //     <div class="table-data name">
+            //         <strong class="bold-text">${data?.name || '-'}<br></strong>
+            //     </div>
+            // </div>
+            // <div class="table-box _3">
+            //     <div class="table-data name">${data.mtd || '-'}</div>
+            // </div>
+            // <div class="table-box _3">
+            //     <div class="table-data name">${data.ytd || '-'}</div>
+            // </div>
+            // <div class="table-box _3">
+            //     <div class="table-data name">${data.days90 || '-'}</div>
+            // </div>
+            // <div class="table-box _3">
+            //     <div class="table-data name">${data.days365 || '-'}</div>
+            // </div>
+            // <div class="table-box _3">
+            //     <div class="table-data name">${data.inception || '-'}</div>
+            // </div>`
+
+            // row.innerHTML = html;
+            // performanceRowsDiv.appendChild(row);
+        })
     }
     
     const dataMappingsUpdated = [
