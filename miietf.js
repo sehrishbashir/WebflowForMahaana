@@ -31,8 +31,9 @@ let weighted_exposure = null
 
 // const offeringDocumentWrapper = document.getElementById('offering-document');
 
-// const PIE_COLORS_NEW = ['#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631', '#583EB1', '#43BED8', '#9575FF', '#4382D8', '#85EBFF', '#5D9631'];
-const PIE_COLORS_NEW = ['#0E70C7', '#3296ED', '#7719E3', '#9D53F2', '#067D77', '#26ABA4', '#EB7F13', '#F7A452', '#E3193B', '#F2536D']
+// const PIE_COLORS_NEW = ['#0E70C7', '#3296ED', '#7719E3', '#9D53F2', '#067D77', '#26ABA4', '#EB7F13', '#F7A452', '#E3193B', '#F2536D']
+const PIE_COLORS_NEW = ['#0E70C7', '#7719E3', '#067D77', '#EB7F13', '#E3193B', '#3296ED', '#9D53F2', '#26ABA4', '#EB7F13', '#F2536D']
+
 
 // ---------------- LOADER ---------------- //
 function createLoader() { 
@@ -1090,10 +1091,10 @@ function renderPerfChart(data, productName) {
     min = min * 0.85
     max = max * 1.15
 
-    console.log('min')
-    console.log(min)
-    console.log('max')
-    console.log(max)
+    // console.log('min')
+    // console.log(min)
+    // console.log('max')
+    // console.log(max)
 
     let series = [
         {
@@ -1174,24 +1175,6 @@ function renderPerfChart(data, productName) {
             }
         },
         series: series
-        // series: [
-        //     {
-        //         name: 'MIIETF',
-        //         data: miietf_series,
-        //     },
-        //     {
-        //         name: 'Benchmark',
-        //         data: benchmark_series,
-        //     },
-        //     {
-        //         name: 'KMI30',
-        //         data: kmi30_series
-        //     },
-        //     {
-        //         name: 'Peer Avg.',
-        //         data: peer_series
-        //     }
-        // ]
     }); 
 }
 
@@ -1695,7 +1678,7 @@ async function main() {
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
-        // getFundDataMIIETF(airPerformances)
+        await getFundData(miietfBase, airPerformances, productName)
     }
 
     // Close the loader
