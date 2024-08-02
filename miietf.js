@@ -944,6 +944,120 @@ function addGraph(id, data) {
 
 function addAssetAllocGraph(data) {
     console.log('hello')
+
+    Highcharts.chart('assetAllocation', {
+    chart: {
+    type: 'bar'
+    },
+    title: {
+    text: 'Bar Chart Example'
+    },
+    xAxis: {
+    categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
+    },
+    yAxis: {
+    min: 0,
+    title: {
+        text: 'Value'
+        }
+      },
+      legend: {
+        reversed: true
+      },
+      plotOptions: {
+        series: {
+          stacking: 'normal'
+        }
+      },
+      series: [{
+        name: 'Data Set 1',
+        data: [5, 3, 4, 7, 2]
+      }, {
+        name: 'Data Set 2',
+        data: [2, 2, 3, 2, 1]
+      }]
+    });
+    
+    // let series = [
+    //     {
+    //         name: 'MIIETF',
+    //         data: miietf_series,
+    //     },
+    //     {
+    //         name: 'Benchmark',
+    //         data: benchmark_series,
+    //     }
+    // ]
+
+    // if (productName === 'MIIETF') {
+    //     series.push({
+    //         name: 'KMI30',
+    //         data: kmi30_series
+    //     })
+    //     series.push({
+    //         name: 'Peer Avg.',
+    //         data: peer_series,
+    //     })
+    // }
+    // if (productName === 'MICF') {
+    //     series.push({
+    //         name: 'Peer Avg.',
+    //         data: peer_series,
+    //     })
+    // }
+
+    // console.log('series')
+    // console.log(series)
+    
+    // Highcharts.chart('perf-chart', {
+    //     chart: {
+    //         type: 'line'
+    //     },
+    //     title: {
+    //         text: null,
+    //     },
+    //     exporting: {
+    //         enabled: false  // Disable the exporting hamburger icon
+    //     },
+    //     xAxis: {
+    //         type: 'datetime'
+    //     },
+    //     yAxis: {
+    //         min: min,
+    //         max: max,
+    //         title: null,
+    //         gridLineWidth: 0
+    //     },
+    //     tooltip: {
+    //         shared: true,
+    //         headerFormat: '<b>{point.key}</b><br>',
+    //         xDateFormat: '%d %b %Y',
+    //         valueDecimals: 2
+    //         // pointFormat: '<b>{point.y:.2f}</b>'
+    //         // xDateFormat: moment(this.x, 'dddd, D MMM, HH:mm').format('D MMM YYYY')
+    //         // xDateFormat: console.log(this.x)
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     colors: PIE_COLORS_NEW,
+    //     plotOptions: {
+    //         line: {
+    //             fillOpacity: 0.2,
+    //             marker: {
+    //                 enabled: false,
+    //                 symbol: 'circle',
+    //                 radius: 2,
+    //                 states: {
+    //                     hover: {
+    //                         enabled: true
+    //                 	}
+    //               	}
+    //         	}
+    //         }
+    //     },
+    //     series: series
+    // }); 
 }
 
 async function getFundPrices(airBase, productName) {
