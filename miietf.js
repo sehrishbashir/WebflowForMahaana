@@ -63,7 +63,7 @@ function createLoader() {
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data, airPerformances) {
-    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
+    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation } = data;
 
     performances = airPerformances
 
@@ -144,6 +144,10 @@ function renderLoop(data, airPerformances) {
                 performanceRowsDiv.appendChild(row);
             })
         }
+    }
+
+    if (assetAllocation) {
+        console.log('Helllo!!')
     }
     
     const dataMappingsUpdated = [
@@ -369,130 +373,6 @@ function renderLoop(data, airPerformances) {
     }
 }
 
-const demoData = {
-    "id": "65d832484b0efa092190560b",
-    "overview": {
-        "name": "Mahaana Islamic Index ETF as",
-        "assetCategory": "MIIETF is a Shariah-compliant equity index fund that primarily invests in the top 30, free float weighted Islamic stocks that have an annual average turnover of more than PKR 10 million. MIIETF provides investors the long term benefits of equity markets.",
-        "question": "What is Mahaana Islamic Cash Fund (MICF)?",
-        "description": "",
-        "navDate": "2024/02/22",
-        "navPerUnit": "10735.3598"
-    },
-    "fundInfo": {
-        "netAssets": "PKR 25 mn",
-        "launchDate": "Mar 04, 2024",
-        "fundCategory": "Open-end Shariah Compliant Equity ETF",
-        "investmentObjective": "Investment objective is to provide competitive equity market returns with maximum coverage of the broader Islamic index at lowest possible cost.",
-        "benchmark": "Mahaana Islamic Index",
-        "managementFee": "Up to 1% of average net assets during the month",
-        "monthlyTotalExpenseRatio": 0.20,
-        "yearlyTotalExpenseRatio": 0.20,
-        "fundAuditors": "BDO Ebrahim & Co.",
-        "fundStabilityRating": "N/A",
-        "fundManager": "Mahaana Wealth Limited",
-
-        // New
-        "authorizedParticipant": "JS Global Capital Limited",
-
-        // Not used anymore
-        "totalExpenseRatio": null,
-        "totalExpenseRatioWithoutLevy": null,
-        "monthlyTotalExpenseRatioWithoutLevy": 0.07,
-        "yearlyTotalExpenseRatioWithoutLevy": 0.07,
-        "weightedAverageTime": "47.00",
-        "custodian": "Central Depository Company of Pakistan Limited",
-        "shariahAdvisors": "Al Hilal Shariah Advisors"
-    },
-    "fmrDate": "2024-02-29",
-
-    // New section instead of asset allocation but like credit quality
-    "assetAllocation": {
-        "Equity": "97.50",
-        "Cash": "2.00",
-        "Other assets ": "0.50"
-    },
-
-    // Not used anymore
-    "currentAssetAllocation": {
-        "Bank Deposits": 34.22,
-        "GoP Ijarah Sukuks": 60.59,
-        "Short Term Sukuk": 0.00,
-        "Certificate of Investments": 0.00,
-        "Other assets ": 5.19
-    },
-    // Not used anymore
-    "lastAssetAllocation": {
-        "Bank Deposits": 34.66,
-        "GoP Ijarah Sukuks": 61.88,
-        "Short Term Sukuk": 0.00,
-        "Certificate of Investments": 0.00,
-        "Other assets ": 3.46
-    },
-
-    // "Credit quality" rename to "Sector allocation"
-    "creditRating": {
-        "OIL & GAS EXPLORATION COMPANIES": "17.65",
-        "CEMENT": "17.09",
-        "FERTILIZER": "16.06",
-        "TECHNOLOGY & COMMUNICATION": "11.67",
-        "POWER GENERATION & DISTRIBUTION": "9.53",
-        "Others": "25.50"
-    },
-    "holding": {
-        "Systems Limited": "11",
-        "Engro Corporation": "10",
-        "Hub Power Energy Company": "10",
-        "Lucky Cement Limited": "8",
-        "Oil & Gas Development Company": "7",
-        "Engro Fertilizers Limited": "6",
-        "Pakistan Petroleum Limited": "6",
-        "Meezan Bank Limited": "6",
-        "Mari Petroleum Limited": "5",
-        "Millat Tractors Limited": "4"
-    },
-    "distribution": {},
-    "distributions": [],
-    "performances": [
-        {
-            "name": null,
-            "lastUpdatedOn": null,
-            "mtd": "19.86%",
-            "ytd": "23.62%",
-            "days30": null,
-            "days90": "24.63%",
-            "days365": null,
-            "years3": null,
-            "years5": null,
-            "inception": null
-        },
-        {
-            "name": "Benchmark return",
-            "lastUpdatedOn": null,
-            "mtd": "10.75%",
-            "ytd": "9.54%",
-            "days30": null,
-            "days90": "10.45%",
-            "days365": null,
-            "years3": null,
-            "years5": null,
-            "inception": null
-        }
-    ],
-    "benchmarkData": null,
-    "monthToDateExpense": {
-        "key": -7.05,
-        "value": "2024-02-22T00:00:00Z"
-    },
-    "offeringDocumentList": [
-        {
-            "key": "OfferingDocument.pdf",
-            "value": "#",
-            "name": "OfferingDocument.pdf"
-        }
-    ]
-}
-
 async function getFundData(airBase, airPerformances, productName) {
     // try {
     
@@ -617,6 +497,32 @@ async function getFundData(airBase, airPerformances, productName) {
     console.log('airOverview')
     console.log(airOverview)
 
+    ///////////////////////
+    // Asset Allocation //
+    
+    let airAssetAlloc = null
+
+    if(productName === 'MIIETF') {
+        airAssetAlloc = []
+        
+        await airBase('Asset_allocation').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                // console.log(record.fields)
+    
+                airAssetAlloc.push(record.fields)
+            })
+    
+            fetchNextPage()
+        })
+    
+        console.log('airAssetAlloc')
+        console.log(airAssetAlloc)    
+    }
+    
+    
     ///////////////////////
     // Weighted Exposure //
 
@@ -765,6 +671,7 @@ async function getFundData(airBase, airPerformances, productName) {
         benchmarkData: null,
         creditRating: airCreditRatingGraph,
         currentAssetAllocation: null,
+        assetAllocation: airAssetAlloc,
         distribution: null,
         // currentAssetAllocation: dataJson.currentAssetAllocation,
         // distribution: dataJson.distribution,
