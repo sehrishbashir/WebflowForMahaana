@@ -946,27 +946,33 @@ function addAssetAllocGraph(data) {
     console.log('hello')
 
     Highcharts.chart('assetAllocation', {
-    chart: {
-    type: 'bar'
-    },
-    title: {
-    text: 'Bar Chart Example'
-    },
-    xAxis: {
-    categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
-    },
-    yAxis: {
-    min: 0,
-    title: {
-        text: 'Value'
+      chart: {
+        type: 'column' // Change to 'column' for vertical bars
+      },
+      title: {
+        text: 'Vertical Bar Chart Example'
+      },
+      xAxis: {
+        categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
+        title: {
+          text: null // No title for x-axis
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Value'
         }
       },
       legend: {
-        reversed: true
+        align: 'right',
+        verticalAlign: 'top',
+        layout: 'vertical'
       },
       plotOptions: {
-        series: {
-          stacking: 'normal'
+        column: {
+          pointWidth: 30, // Width of the columns
+          stacking: 'normal' // Stack the columns
         }
       },
       series: [{
@@ -977,6 +983,39 @@ function addAssetAllocGraph(data) {
         data: [2, 2, 3, 2, 1]
       }]
     });
+
+    // Highcharts.chart('assetAllocation', {
+    // chart: {
+    // type: 'bar'
+    // },
+    // title: {
+    // text: 'Bar Chart Example'
+    // },
+    // xAxis: {
+    // categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
+    // },
+    // yAxis: {
+    // min: 0,
+    // title: {
+    //     text: 'Value'
+    //     }
+    //   },
+    //   legend: {
+    //     reversed: true
+    //   },
+    //   plotOptions: {
+    //     series: {
+    //       stacking: 'normal'
+    //     }
+    //   },
+    //   series: [{
+    //     name: 'Data Set 1',
+    //     data: [5, 3, 4, 7, 2]
+    //   }, {
+    //     name: 'Data Set 2',
+    //     data: [2, 2, 3, 2, 1]
+    //   }]
+    // });
     
     // let series = [
     //     {
