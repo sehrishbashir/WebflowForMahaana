@@ -947,7 +947,7 @@ function addAssetAllocGraph(data) {
 
     Highcharts.chart('assetAllocation', {
       chart: {
-        type: 'column' // Change to 'column' for vertical bars
+        type: 'column' // Use 'column' for vertical bars
       },
       title: {
         text: 'Vertical Bar Chart Example'
@@ -971,8 +971,8 @@ function addAssetAllocGraph(data) {
       },
       plotOptions: {
         column: {
-          pointWidth: 30, // Width of the columns
-          stacking: 'normal' // Stack the columns
+          grouping: true, // Enable grouping to position bars side by side
+          pointWidth: 0 // Width of the columns
         }
       },
       series: [{
@@ -983,6 +983,45 @@ function addAssetAllocGraph(data) {
         data: [2, 2, 3, 2, 1]
       }]
     });
+
+    // Highcharts.chart('assetAllocation', {
+    //   chart: {
+    //     type: 'column' // Change to 'column' for vertical bars
+    //   },
+    //   title: {
+    //     text: 'Vertical Bar Chart Example'
+    //   },
+    //   xAxis: {
+    //     categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
+    //     title: {
+    //       text: null // No title for x-axis
+    //     }
+    //   },
+    //   yAxis: {
+    //     min: 0,
+    //     title: {
+    //       text: 'Value'
+    //     }
+    //   },
+    //   legend: {
+    //     align: 'right',
+    //     verticalAlign: 'top',
+    //     layout: 'vertical'
+    //   },
+    //   plotOptions: {
+    //     column: {
+    //       pointWidth: 30, // Width of the columns
+    //       stacking: 'normal' // Stack the columns
+    //     }
+    //   },
+    //   series: [{
+    //     name: 'Data Set 1',
+    //     data: [5, 3, 4, 7, 2]
+    //   }, {
+    //     name: 'Data Set 2',
+    //     data: [2, 2, 3, 2, 1]
+    //   }]
+    // });
 
     // Highcharts.chart('assetAllocation', {
     // chart: {
