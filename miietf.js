@@ -152,118 +152,118 @@ function renderLoop(data, airPerformances) {
         { elementClass: '.holding-list', data: holding }
     ];
 
-    // dataMappingsUpdated.forEach(({ elementClass, data }) => {
-    //     const bodyRow = document.querySelector(elementClass);
-    //     if (Object.keys(data).length > 0) {
-    //         if (elementClass === ".holding-list") {
-    //             const holdingRows = document.querySelector("#holding-table-rows");
+    dataMappingsUpdated.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        if (Object.keys(data).length > 0) {
+            if (elementClass === ".holding-list") {
+                const holdingRows = document.querySelector("#holding-table-rows");
                 
-    //             if(holdingRows) {
-    //                 while (holdingRows.firstChild) {
-    //                     holdingRows.removeChild(holdingRows.firstChild);
-    //                 }
+                if(holdingRows) {
+                    while (holdingRows.firstChild) {
+                        holdingRows.removeChild(holdingRows.firstChild);
+                    }
                     
-    //                 data.forEach((item, index) => {
-    //                     const row = document.createElement('div');
-    //                     row.classList.add('table-row-2');
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row-2');
                         
-    //                     const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-    //                     // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-    //                     const html = `
-    //                     <div class="div-block-410 _2">
-    //                         <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-    //                             <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-    //                         </svg>
-    //                     </div>
-    //                     <div class="table-box _2 sectors">
-    //                         <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-    //                     </div>
-    //                     <div class="table-box _3">
-    //                         <div class="table-data name">${returnVal.trim()}%<br></div>
-    //                     </div>
-    //                     `
+                        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+                        // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+                        const html = `
+                        <div class="div-block-410 _2">
+                            <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                                <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                            </svg>
+                        </div>
+                        <div class="table-box _2 sectors">
+                            <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${returnVal.trim()}%<br></div>
+                        </div>
+                        `
                         
-    //                     row.innerHTML = html;
-    //                     holdingRows.appendChild(row);
-    //                 })
-    //             }
+                        row.innerHTML = html;
+                        holdingRows.appendChild(row);
+                    })
+                }
 
-    //             compositionList(data, bodyRow)
-    //         }
-    //         else if(elementClass === ".credit-list") {
-    //             data = weighted_exposure
+                compositionList(data, bodyRow)
+            }
+            else if(elementClass === ".credit-list") {
+                data = weighted_exposure
 
-    //             const weightedExposureTable = document.querySelector('#weighted_exposure');
-    //             // console.log('weightedExposureTable')
-    //             // console.log(weightedExposureTable)
+                const weightedExposureTable = document.querySelector('#weighted_exposure');
+                // console.log('weightedExposureTable')
+                // console.log(weightedExposureTable)
                 
-    //             if (weightedExposureTable) {
-    //                 const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
+                if (weightedExposureTable) {
+                    const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
 
-    //                 // console.log('weightedExpRowsDiv')
-    //                 // console.log(weightedExpRowsDiv)
+                    // console.log('weightedExpRowsDiv')
+                    // console.log(weightedExpRowsDiv)
                 
                     
-    //                 while (weightedExpRowsDiv.lastChild) {
-    //                     if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
-    //                         break
-    //                     else
-    //                         weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
-    //                 }
+                    while (weightedExpRowsDiv.lastChild) {
+                        if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
+                            break
+                        else
+                            weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
+                    }
 
-    //                 // console.log('data')
-    //                 // console.log(data)
+                    // console.log('data')
+                    // console.log(data)
         
-    //                 data.forEach((item, index) => {
-    //                     const row = document.createElement('div');
-    //                     row.classList.add('table-row');
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row');
                         
-    //                     // console.log(item)
+                        // console.log(item)
                         
-    //                     const html = `
-    //                     <div class="table-box _2">
-    //                         <div class="div-block-406 _2" style="margin-right: 8px;">
-    //                             <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-    //                                 <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-    //                             </svg>
-    //                         </div>
-    //                         <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
-    //                     </div>
-    //                     <div class="table-box _3">
-    //                         <div class="table-data name">${item.value.miietf}%</div>
-    //                     </div>
-    //                     <div class="table-box _3">
-    //                         <div class="table-data name">${item.value.kmi30}%</div>
-    //                     </div>
-    //                     <div class="table-box _3">
-    //                         <div class="table-data name">${item.value.weight}%</div>
-    //                     </div>
-    //                     `
-    //                     row.innerHTML = html;
-    //                     weightedExpRowsDiv.appendChild(row);
-    //                 })
-    //             }
-    //         }
-    //         else {
-    //             // console.log(elementClass)
-    //             // console.log(data)
-    //             compositionList(data, bodyRow) 
-    //         }
-    //     }
-    //     else { bodyRow.style.display = "none" }
-    // });
+                        const html = `
+                        <div class="table-box _2">
+                            <div class="div-block-406 _2" style="margin-right: 8px;">
+                                <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                                    <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                                </svg>
+                            </div>
+                            <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.miietf}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.kmi30}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.weight}%</div>
+                        </div>
+                        `
+                        row.innerHTML = html;
+                        weightedExpRowsDiv.appendChild(row);
+                    })
+                }
+            }
+            else {
+                // console.log(elementClass)
+                // console.log(data)
+                compositionList(data, bodyRow) 
+            }
+        }
+        else { bodyRow.style.display = "none" }
+    });
 
 
-    // if (performances) {
-    //     const performanceBodyRow = document.querySelector('.performance-body');
-    //     if (performanceBodyRow) {
-    //         performances.forEach(data => {
-    //             const row = document.createElement('div');
-    //             row.classList.add('performance-body-row');
-    //             const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
-    //         })
-    //     }
-    // }
+    if (performances) {
+        const performanceBodyRow = document.querySelector('.performance-body');
+        if (performanceBodyRow) {
+            performances.forEach(data => {
+                const row = document.createElement('div');
+                row.classList.add('performance-body-row');
+                const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
+            })
+        }
+    }
     
     if (distributions?.length > 0) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
@@ -321,35 +321,35 @@ function renderLoop(data, airPerformances) {
     //     }
     // }
 
-    // if (currentAssetAllocation) {
-    //     const portfolioDataContainer = document.querySelector('.portfolio-data-container');
-    //     if (portfolioDataContainer) {
-    //         while (portfolioDataContainer.firstChild) {
-    //             portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
-    //         }
-    //         currentAssetAllocation.forEach((data, index) => {
+    if (currentAssetAllocation) {
+        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+        if (portfolioDataContainer) {
+            while (portfolioDataContainer.firstChild) {
+                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
+            }
+            currentAssetAllocation.forEach((data, index) => {
 
-    //             // console.log(data)
+                // console.log(data)
                 
-    //             const row = document.createElement('div');
-    //             row.classList.add('table-item');
-    //             const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
-    //             const selectedColor = PIE_COLORS_NEW[index];
+                const row = document.createElement('div');
+                row.classList.add('table-item');
+                const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
+                const selectedColor = PIE_COLORS_NEW[index];
 
-    //             const html = `
-    //             <div class="table-content-area">
-    //                 <div style="display: flex; gap: 14px">
-    //                     <div class="div-block-101" style="display: flex;">
-    //                         <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
-    //                     <div>
-    //                     <div class="text-block-37">${data.key}</div>
-    //                     <div class="text-block-38">${returnVal}%</div>
-    //                 </div>
-    //             </div>
-    //             `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
-    //         })
-    //     }
-    // }
+                const html = `
+                <div class="table-content-area">
+                    <div style="display: flex; gap: 14px">
+                        <div class="div-block-101" style="display: flex;">
+                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+                        <div>
+                        <div class="text-block-37">${data.key}</div>
+                        <div class="text-block-38">${returnVal}%</div>
+                    </div>
+                </div>
+                `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
+            })
+        }
+    }
 
     function compositionList(data, container) {
         if (container) {
