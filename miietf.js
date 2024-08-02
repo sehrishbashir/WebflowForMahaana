@@ -946,43 +946,75 @@ function addAssetAllocGraph(data) {
     console.log('hello')
 
     Highcharts.chart('assetAllocation', {
-      chart: {
-        type: 'column' // Use 'column' for vertical bars
-      },
-      title: {
-        text: 'Vertical Bar Chart Example'
-      },
-      xAxis: {
-        categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
-        title: {
-          text: null // No title for x-axis
-        }
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Value'
-        }
-      },
-      legend: {
-        align: 'right',
-        verticalAlign: 'top',
-        layout: 'vertical'
-      },
-      plotOptions: {
-        column: {
-          grouping: true, // Enable grouping to position bars side by side
-          pointWidth: 0 // Width of the columns
-        }
-      },
-      series: [{
-        name: 'Data Set 1',
-        data: [5, 3, 4, 7, 2]
-      }, {
-        name: 'Data Set 2',
-        data: [2, 2, 3, 2, 1]
-      }]
+        chart: {
+            type: 'column'
+        },
+        plotOptions: {
+            series: {
+                pointPadding: 0,
+                groupPadding: 0.2,
+                borderWidth: 0,
+                shadow: false
+            }
+        },
+        series: [{
+            data: [
+                ['Jan', 29.9],
+                ['Feb', 71.5],
+                ['Mar', 29.9],
+                ['Apr', 129.2]
+            ]
+        },
+        {
+    		data: [
+                ['Jan', 29.9],
+                ['Feb', 71.5],
+                ['Mar', 29.9],
+                ['Apr', 129.2]
+            ]    
+        }]
     });
+
+    // Highcharts.chart('assetAllocation', {
+    //   chart: {
+    //     type: 'column' // Use 'column' for vertical bars
+    //   },
+    //   title: {
+    //     text: 'Vertical Bar Chart Example'
+    //   },
+    //   xAxis: {
+    //     categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
+    //     title: {
+    //       text: null // No title for x-axis
+    //     }
+    //   },
+    //   yAxis: {
+    //     min: 0,
+    //     title: {
+    //       text: 'Value'
+    //     }
+    //   },
+    //   legend: {
+    //     align: 'right',
+    //     verticalAlign: 'top',
+    //     layout: 'vertical'
+    //   },
+    //   plotOptions: {
+    //     column: {
+    //       // grouping: true, // Enable grouping to position bars side by side
+    //       pointWidth: 30, // Width of the columns
+    //       pointPadding: 0,
+    //       groupPadding: 0
+    //     }
+    //   },
+    //   series: [{
+    //     name: 'Data Set 1',
+    //     data: [5, 3, 4, 7, 2]
+    //   }, {
+    //     name: 'Data Set 2',
+    //     data: [2, 2, 3, 2, 1]
+    //   }]
+    // });
 
     // Highcharts.chart('assetAllocation', {
     //   chart: {
