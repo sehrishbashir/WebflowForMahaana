@@ -600,6 +600,15 @@ async function getFundData(airBase, airPerformances, productName) {
                 if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
                     airFundInfo.weightedAverageTime = record.fields.Value
                 }
+                if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
+                    airFundInfo.weightedAverageTime = record.fields.Value
+                }
+                if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
+                    airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
+                }
+                if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
+                    airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
+                }
             })
 
             fetchNextPage()
