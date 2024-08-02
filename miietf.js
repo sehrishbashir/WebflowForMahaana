@@ -66,181 +66,6 @@ function renderLoop(data, airPerformances) {
     let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation } = data;
 
     performances = airPerformances
-    
-    const dataMappingsUpdated = [
-        // { elementClass: '.assetallocation-list', data: currentAssetAllocation },
-        { elementClass: '.credit-list', data: creditRating },
-        { elementClass: '.holding-list', data: holding }
-    ];
-
-    dataMappingsUpdated.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) {
-            if (elementClass === ".holding-list") {
-                const holdingRows = document.querySelector("#holding-table-rows");
-                
-                if(holdingRows) {
-                    while (holdingRows.firstChild) {
-                        holdingRows.removeChild(holdingRows.firstChild);
-                    }
-                    
-                    data.forEach((item, index) => {
-                        const row = document.createElement('div');
-                        row.classList.add('table-row-2');
-                        
-                        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                        // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-                        const html = `
-                        <div class="div-block-410 _2">
-                            <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                            </svg>
-                        </div>
-                        <div class="table-box _2 sectors">
-                            <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${returnVal.trim()}%<br></div>
-                        </div>
-                        `
-                        
-                        row.innerHTML = html;
-                        holdingRows.appendChild(row);
-                    })
-                }
-
-                compositionList(data, bodyRow)
-            }
-            else if(elementClass === ".credit-list") {
-                data = weighted_exposure
-
-                const weightedExposureTable = document.querySelector('#weighted_exposure');
-                // console.log('weightedExposureTable')
-                // console.log(weightedExposureTable)
-                
-                if (weightedExposureTable) {
-                    const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
-
-                    // console.log('weightedExpRowsDiv')
-                    // console.log(weightedExpRowsDiv)
-                
-                    
-                    while (weightedExpRowsDiv.lastChild) {
-                        if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
-                            break
-                        else
-                            weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
-                    }
-
-                    // console.log('data')
-                    // console.log(data)
-        
-                    data.forEach((item, index) => {
-                        const row = document.createElement('div');
-                        row.classList.add('table-row');
-                        
-                        // console.log(item)
-                        
-                        const html = `
-                        <div class="table-box _2">
-                            <div class="div-block-406 _2" style="margin-right: 8px;">
-                                <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                                    <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                                </svg>
-                            </div>
-                            <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.miietf}%</div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.kmi30}%</div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.weight}%</div>
-                        </div>
-                        `
-                        row.innerHTML = html;
-                        weightedExpRowsDiv.appendChild(row);
-                    })
-                }
-            }
-            else {
-                // console.log(elementClass)
-                // console.log(data)
-                compositionList(data, bodyRow) 
-            }
-        }
-        else { bodyRow.style.display = "none" }
-    });
-
-
-    // if (performances) {
-    //     const performanceBodyRow = document.querySelector('.performance-body');
-    //     if (performanceBodyRow) {
-    //         performances.forEach(data => {
-    //             const row = document.createElement('div');
-    //             row.classList.add('performance-body-row');
-    //             const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
-    //         })
-    //     }
-    // }
-    
-    if (distributions?.length > 0) {
-        const distribution_no_data = document.querySelector('#distribution-no-data');
-        const distribution_wrap = document.querySelector('#distribution-wrap');
-        
-        // console.log('distribution_wrap')
-        // console.log(distribution_wrap)
-        
-        distribution_no_data.style.display = "none";
-        
-        if (distribution_wrap) {
-            distributions.forEach((data) => {
-                // console.log(data)
-                
-                const row = document.createElement('div');
-                row.classList.add('table-row');
-
-                const html = `
-                <div class="table-box _2">
-                    <div class="table-data name"><strong class="bold-text">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}<br></strong></div>
-                </div>
-                <div class="table-box _3">
-                    <div class="table-data name">${data.payoutPerUnit.toFixed(3) || '-'}</div>
-                </div>
-                <div class="table-box _3">
-                    <div class="table-data name">${data.exNav.toFixed(4) || '-'}</div>
-                </div>
-                <div class="table-box _3">
-                    <div class="table-data name">${data.yield.toFixed(2) || '-'}%</div>
-                </div>
-                `
-                
-                // const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;
-                row.innerHTML = html;
-                
-                distribution_wrap.appendChild(row)
-            })
-        }
-    }
-
-    // if (performances) {
-    //     const performanceContentArea = document.querySelector('.performace-new-table');
-    //     if (performanceContentArea) {
-
-    //         while (performanceContentArea.firstChild) {
-    //             performanceContentArea.removeChild(performanceContentArea.firstChild);
-    //         }
-
-    //         performances.forEach(data => {
-    //             const row = document.createElement('div');
-    //             row.classList.add('table-item');
-    //             const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
-    //             const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
-    //         })
-    //     }
-    // }
 
     if (performances) {
         const performanceContentArea = document.querySelector('#perf-table');
@@ -320,36 +145,211 @@ function renderLoop(data, airPerformances) {
             })
         }
     }
+    
+    const dataMappingsUpdated = [
+        // { elementClass: '.assetallocation-list', data: currentAssetAllocation },
+        { elementClass: '.credit-list', data: creditRating },
+        { elementClass: '.holding-list', data: holding }
+    ];
 
-    if (currentAssetAllocation) {
-        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
-        if (portfolioDataContainer) {
-            while (portfolioDataContainer.firstChild) {
-                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
-            }
-            currentAssetAllocation.forEach((data, index) => {
+    // dataMappingsUpdated.forEach(({ elementClass, data }) => {
+    //     const bodyRow = document.querySelector(elementClass);
+    //     if (Object.keys(data).length > 0) {
+    //         if (elementClass === ".holding-list") {
+    //             const holdingRows = document.querySelector("#holding-table-rows");
+                
+    //             if(holdingRows) {
+    //                 while (holdingRows.firstChild) {
+    //                     holdingRows.removeChild(holdingRows.firstChild);
+    //                 }
+                    
+    //                 data.forEach((item, index) => {
+    //                     const row = document.createElement('div');
+    //                     row.classList.add('table-row-2');
+                        
+    //                     const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+    //                     // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+    //                     const html = `
+    //                     <div class="div-block-410 _2">
+    //                         <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+    //                             <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+    //                         </svg>
+    //                     </div>
+    //                     <div class="table-box _2 sectors">
+    //                         <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+    //                     </div>
+    //                     <div class="table-box _3">
+    //                         <div class="table-data name">${returnVal.trim()}%<br></div>
+    //                     </div>
+    //                     `
+                        
+    //                     row.innerHTML = html;
+    //                     holdingRows.appendChild(row);
+    //                 })
+    //             }
 
+    //             compositionList(data, bodyRow)
+    //         }
+    //         else if(elementClass === ".credit-list") {
+    //             data = weighted_exposure
+
+    //             const weightedExposureTable = document.querySelector('#weighted_exposure');
+    //             // console.log('weightedExposureTable')
+    //             // console.log(weightedExposureTable)
+                
+    //             if (weightedExposureTable) {
+    //                 const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
+
+    //                 // console.log('weightedExpRowsDiv')
+    //                 // console.log(weightedExpRowsDiv)
+                
+                    
+    //                 while (weightedExpRowsDiv.lastChild) {
+    //                     if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
+    //                         break
+    //                     else
+    //                         weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
+    //                 }
+
+    //                 // console.log('data')
+    //                 // console.log(data)
+        
+    //                 data.forEach((item, index) => {
+    //                     const row = document.createElement('div');
+    //                     row.classList.add('table-row');
+                        
+    //                     // console.log(item)
+                        
+    //                     const html = `
+    //                     <div class="table-box _2">
+    //                         <div class="div-block-406 _2" style="margin-right: 8px;">
+    //                             <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+    //                                 <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+    //                             </svg>
+    //                         </div>
+    //                         <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
+    //                     </div>
+    //                     <div class="table-box _3">
+    //                         <div class="table-data name">${item.value.miietf}%</div>
+    //                     </div>
+    //                     <div class="table-box _3">
+    //                         <div class="table-data name">${item.value.kmi30}%</div>
+    //                     </div>
+    //                     <div class="table-box _3">
+    //                         <div class="table-data name">${item.value.weight}%</div>
+    //                     </div>
+    //                     `
+    //                     row.innerHTML = html;
+    //                     weightedExpRowsDiv.appendChild(row);
+    //                 })
+    //             }
+    //         }
+    //         else {
+    //             // console.log(elementClass)
+    //             // console.log(data)
+    //             compositionList(data, bodyRow) 
+    //         }
+    //     }
+    //     else { bodyRow.style.display = "none" }
+    // });
+
+
+    // if (performances) {
+    //     const performanceBodyRow = document.querySelector('.performance-body');
+    //     if (performanceBodyRow) {
+    //         performances.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('performance-body-row');
+    //             const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
+    //         })
+    //     }
+    // }
+    
+    if (distributions?.length > 0) {
+        const distribution_no_data = document.querySelector('#distribution-no-data');
+        const distribution_wrap = document.querySelector('#distribution-wrap');
+        
+        // console.log('distribution_wrap')
+        // console.log(distribution_wrap)
+        
+        distribution_no_data.style.display = "none";
+        
+        if (distribution_wrap) {
+            distributions.forEach((data) => {
                 // console.log(data)
                 
                 const row = document.createElement('div');
-                row.classList.add('table-item');
-                const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
-                const selectedColor = PIE_COLORS_NEW[index];
+                row.classList.add('table-row');
 
                 const html = `
-                <div class="table-content-area">
-                    <div style="display: flex; gap: 14px">
-                        <div class="div-block-101" style="display: flex;">
-                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
-                        <div>
-                        <div class="text-block-37">${data.key}</div>
-                        <div class="text-block-38">${returnVal}%</div>
-                    </div>
+                <div class="table-box _2">
+                    <div class="table-data name"><strong class="bold-text">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}<br></strong></div>
                 </div>
-                `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
+                <div class="table-box _3">
+                    <div class="table-data name">${data.payoutPerUnit.toFixed(3) || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.exNav.toFixed(4) || '-'}</div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${data.yield.toFixed(2) || '-'}%</div>
+                </div>
+                `
+                
+                // const html = `<div class="distribution-body-cell flex-1 right-align"><span class="dist-body-title">${data.payoutDate ? data.payoutDate.split(' ')[0] : '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.payoutPerUnit.toFixed(3) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.exNav.toFixed(4) || '-'}</span></div><div class="distribution-body-cell"><span class="dist-body-title">${data.yield.toFixed(2) || '-'}</span></div>`;
+                row.innerHTML = html;
+                
+                distribution_wrap.appendChild(row)
             })
         }
     }
+
+    // if (performances) {
+    //     const performanceContentArea = document.querySelector('.performace-new-table');
+    //     if (performanceContentArea) {
+
+    //         while (performanceContentArea.firstChild) {
+    //             performanceContentArea.removeChild(performanceContentArea.firstChild);
+    //         }
+
+    //         performances.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('table-item');
+    //             const selectedColor = data?.name?.toLowerCase().includes('miietf') ? "#2E90FA" : "#62529B";
+    //             const html = `<div class="div-block-98" style="background-color: ${selectedColor}"></div><div class="table-content-area"><h3 class="table-title">${data?.name || '-'}</h3><div class="div-block-99"><div class="div-block-100"><div class="text-block-37">MTD</div><div class="text-block-38">${data.mtd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">YTD</div><div class="text-block-38">${data.ytd || '-'}</div></div><div class="div-block-100"><div class="text-block-37">90 DAYS</div><div class="text-block-38">${data.days90 || '-'}</div></div><div class="div-block-100"><div class="text-block-37">1Y</div><div class="text-block-38">${data.days365 || '-'}</div></div></div></div>`; row.innerHTML = html; performanceContentArea.appendChild(row);
+    //         })
+    //     }
+    // }
+
+    // if (currentAssetAllocation) {
+    //     const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+    //     if (portfolioDataContainer) {
+    //         while (portfolioDataContainer.firstChild) {
+    //             portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
+    //         }
+    //         currentAssetAllocation.forEach((data, index) => {
+
+    //             // console.log(data)
+                
+    //             const row = document.createElement('div');
+    //             row.classList.add('table-item');
+    //             const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
+    //             const selectedColor = PIE_COLORS_NEW[index];
+
+    //             const html = `
+    //             <div class="table-content-area">
+    //                 <div style="display: flex; gap: 14px">
+    //                     <div class="div-block-101" style="display: flex;">
+    //                         <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+    //                     <div>
+    //                     <div class="text-block-37">${data.key}</div>
+    //                     <div class="text-block-38">${returnVal}%</div>
+    //                 </div>
+    //             </div>
+    //             `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
+    //         })
+    //     }
+    // }
 
     function compositionList(data, container) {
         if (container) {
@@ -494,472 +494,473 @@ const demoData = {
 }
 
 async function getFundData(airBase, airPerformances, productName) {
-    try {
-        //////////////
-        // AIRTABLE //
-        //////////////
-
-        /////////////////////////
-        // FundInfo & Overview //
-        
-        let airFundInfo = {
-            authorizedParticipant: null,
-            benchmark: null,
-            custodian: null,
-            fundAuditors: null,
-            fundCategory: null,
-            fundManager: null,
-            fundStabilityRating: null,
-            investmentObjective: null,
-            launchDate: null,
-            managementFee: null,
-            monthlyTotalExpenseRatio: null,
-            monthlyTotalExpenseRatioWithoutLevy: null,
-            netAssets: null,
-            shariahAdvisors: null,
-            totalExpenseRatio: null,
-            totalExpenseRatioWithoutLevy: null,
-            weightedAverageTime: null,
-            yearlyTotalExpenseRatio: null,
-            yearlyTotalExpenseRatioWithoutLevy: null,
-        }
-
-        let airOverview = {
-            assetCategory: null,
-            description: null,
-            name: null,
-            // navDate: "2024/07/18",
-            navDate: format_date(latest_date),
-            navPerUnit: latest_nav.toString(),
-            question: null,
-        }
-
-        let airFmrDate = null
-        
-        await airBase('Info').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-
-                if (record.fields.Key === 'Name'){
-                    airOverview.name = record.fields.Value
-                }
-                if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
-                    record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
-                    airOverview.assetCategory = record.fields.Value
-                    airOverview.question = record.fields.Key
-                }
-                if (record.fields.Key === 'Net Assets'){
-                    airFundInfo.netAssets = record.fields.Value
-                }
-                if (record.fields.Key === 'Launch Date'){
-                    airFundInfo.launchDate = record.fields.Value
-                }
-                if (record.fields.Key === 'Fund Category'){
-                    airFundInfo.fundCategory = record.fields.Value
-                }
-                if (record.fields.Key === 'Investment Objective'){
-                    airFundInfo.investmentObjective = record.fields.Value
-                }
-                if (record.fields.Key === 'Benchmark'){
-                    airFundInfo.benchmark = record.fields.Value
-                }
-                if (record.fields.Key === 'Authorized Participant'){
-                    airFundInfo.authorizedParticipant = record.fields.Value
-                }
-                if (record.fields.Key === 'Management Fee'){
-                    airFundInfo.managementFee = record.fields.Value
-                }
-                if (record.fields.Key === 'Monthly Total Expense Ratio'){
-                    airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
-                }
-                if (record.fields.Key === 'Yearly Total Expense Ratio'){
-                    airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
-                }
-                
-                if (record.fields.Key === 'Fund Auditors'){
-                    airFundInfo.fundAuditors = record.fields.Value
-                }
-                if (record.fields.Key === 'Fund Stability Rating'){
-                    airFundInfo.fundStabilityRating = record.fields.Value
-                }
-                if (record.fields.Key === 'Fund manager'){
-                    airFundInfo.fundManager = record.fields.Value
-                }
-                if (record.fields.Key === 'Submission date'){
-                    airFmrDate = format_date(new Date(record.fields.Value))
-                }
-                if (record.fields.Key === 'Custodian'){
-                    airFundInfo.custodian = record.fields.Value
-                }
-                if (record.fields.Key === 'Shariah Advisors'){
-                    airFundInfo.shariahAdvisors = record.fields.Value
-                }
-                if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
-                    airFundInfo.weightedAverageTime = record.fields.Value
-                }
-                if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
-                    airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
-                }
-                if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
-                    airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
-                }
-            })
-
-            fetchNextPage()
-        })
+    // try {
     
-        console.log('airFundInfo')
-        console.log(airFundInfo)
-        console.log('airOverview')
-        console.log(airOverview)
+    //////////////
+    // AIRTABLE //
+    //////////////
 
-        ///////////////////////
-        // Weighted Exposure //
-
-        let airCreditRating = []
-        let airCreditRatingGraph = {}
-        
-        // console.log('Weighted_exposure')
-        await airBase('Weighted_exposure').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-                
-                airCreditRating.push({
-                    key: record.fields.key,
-                    value: {
-                        miietf: record.fields.miietf.toString(),
-                        kmi30: record.fields.kmi30.toString(),
-                        weight: record.fields.weight.toString()
-                    }
-                })
-
-                airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
-            })
-
-            fetchNextPage()
-        })
-
-        weighted_exposure = airCreditRating
-
-        // console.log('airCreditRating')
-        // console.log(airCreditRating)
-        // console.log('airCreditRatingGraph')
-        // console.log(airCreditRatingGraph)
-
-        //////////////
-        // Holdings //
-
-        let airHoldings = {}
-        
-        await airBase('Holdings').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-
-                airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
-                    
-                // airHoldings.push({
-                //     key: record.fields.Name,
-                //     value: (record.fields.Holding * 100).toFixed(2)
-                // })
-            })
-
-            fetchNextPage()
-        })
-
-        // console.log('airHoldings')
-        // console.log(airHoldings) 
-
-        ///////////////////
-        // Distributions //
-
-        let airDistributions = []
-
-        // console.log('Distributions')
-        await airBase('Distributions').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-
-                formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
-                
-                distrib_obj = {
-                    exNav: record.fields.ex_nav,
-                    payoutDate: formatted_date,
-                    payoutPerUnit: record.fields.payout_per_unit,
-                    recordDate: null,
-                    type: "",
-                    yield: record.fields.yield * 100
-                }
-
-                airDistributions.push(distrib_obj)
-            })
-
-            fetchNextPage()
-        })
-
-        // console.log('airDistributions')
-        // console.log(airDistributions)
-
-        //////////
-        // FMRs //
-
-        let airFMRs = []
-        
-        // console.log('FMRs')
-        await airBase('FMRs').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-
-                airFMRs.push({
-                    key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
-                    value: null,
-                    name: record.fields.Name
-                })
-            })
-
-            fetchNextPage()
-        })
-
-        // console.log('airFMRs')
-        // console.log(airFMRs)
-        
-        
-        //////////////////////
-        // MAHANANA BACKEND //
-        //////////////////////
-        // let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-
-        // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-        // let dataJson = await response.json()
-
-        // console.log('dataJson') 
-        // console.log(dataJson)
-
-        // let data = dataJson;
-
-        // console.log('airHoldings') 
-        // console.log(airHoldings)
-
-        // console.log('airPerformances')
-        // console.log(airPerformances)
-
-        let data = {
-            id: null,
-            // id: dataJson.id,
-            navDate: format_date(latest_date),
-            benchmarkData: null,
-            creditRating: airCreditRatingGraph,
-            currentAssetAllocation: null,
-            distribution: null,
-            // currentAssetAllocation: dataJson.currentAssetAllocation,
-            // distribution: dataJson.distribution,
-            distributions: airDistributions,
-            etfBenchmarkData: null,
-            fmrDate: airFmrDate, 
-            fundInfo: airFundInfo,
-            holding: airHoldings, 
-            lastAssetAllocation: null,
-            // lastAssetAllocation: dataJson.lastAssetAllocation,
-            monthToDateExpense: {
-                key: Number(airPerformances[0].mtd.replace("%", "")),
-                value: null
-            },
-            // monthToDateExpense: dataJson.monthToDateExpense,
-            offeringDocumentList: airFMRs,
-            overview: airOverview,
-            performances: airPerformances.slice(0, 2),
-            // performances: dataJson.performances,
-        }
-
-        console.log('data')
-        console.log(data)
-
-        // console.log('data.creditRating')  
-        // console.log(data.creditRating)
-        // console.log('airCreditRatingGraph')
-        // console.log(airCreditRatingGraph)
-
-        // data.fundInfo = airFundInfo
-        // data.fmrDate = airFmrDate
-        // data.overview = airOverview
-        // data.creditRating = airCreditRatingGraph
-        // data.holding = airHoldings
-        
-        let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
-
-        // console.log('data')
-        // console.log(data)
-        
-        // fundInfo = airFundInfo
-        // fmrDate = airFmrDate
-        // overview = airOverview
-        // creditRating = airCreditRatingGraph
-        
-        let fmrDateElement = document.querySelectorAll('body #fmrDate');
-        Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
-
-        let navDateElement = document.querySelectorAll('body #navDate');
-        Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
-
-        let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
-        let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
-
-        let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
-        let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
-        
-        const contentMapping = {
-            'asset-name': overview?.name,
-            'asset-class': fundInfo.fundCategory,
-            'expense-ratio-mtd': expense_ratio_mtd,
-            'expense-ratio-ytd': expense_ratio_ytd,
-            'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
-            'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
-            'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-            // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
-            'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
-            'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-            'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-            'productSummary': overview.assetCategory,
-            'fundManager': fundInfo.fundManager,
-            'netAssets': fundInfo.netAssets,
-            'launchDate': fundInfo.launchDate || '-',
-            'fundCategory': fundInfo.fundCategory,
-            'investmentObjective': fundInfo.investmentObjective,
-            'benchmark': fundInfo.benchmark,
-            'managementFee': fundInfo.managementFee,
-            'fundAuditors': fundInfo.fundAuditors,
-            // 'fundAuditors': fundInfo.fundStabilityRating,
-            // 'fundStabilityRating': fundInfo.fundManager,
-            'fundStabilityRating': fundInfo.fundStabilityRating,
-            'authorizedParticipant': fundInfo.authorizedParticipant,
-            'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-            'custodian': airFundInfo.custodian,
-            'shariahAdvisors': airFundInfo.shariahAdvisors,
-            'weightedAverageTime': airFundInfo.weightedAverageTime
-        };
-        
-        // console.log('fundInfo')
-        // console.log(fundInfo)
-
-        // const contentMapping = {
-        //     'asset-name': overview?.name,
-        //     'asset-class': fundInfo.fundCategory,
-        //     'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
-        //     'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
-        //     'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-        //     // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
-        //     'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
-        //     'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-        //     // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-        //     'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-        //     'productSummary': overview.assetCategory,
-        //     'fundManager': fundInfo.fundManager,
-        //     'netAssets': fundInfo.netAssets,
-        //     'launchDate': fundInfo.launchDate || '-',
-        //     'fundCategory': fundInfo.fundCategory,
-        //     'investmentObjective': fundInfo.investmentObjective,
-        //     'benchmark': fundInfo.benchmark,
-        //     'managementFee': fundInfo.managementFee,
-        //     'fundAuditors': fundInfo.fundAuditors,
-        //     'fundStabilityRating': fundInfo.fundStabilityRating,
-        //     'authorizedParticipant': fundInfo.authorizedParticipant,
-        //     'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-        // };
-
-        // if (offeringDocumentList.length > 0) {
-        //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-
-        //     offeringDocumentList.pop();
-
-        //     if (offeringDocumentList.length >= 1) {
-        //         reportWrap.style.display = "none";
-        //     }
-        // }
-        
-        reportsData = offeringDocumentList;
-
-        displayReports(offeringDocumentList);
-
-        // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
-
-        for (const elementId in contentMapping) {
-            createText(elementId, contentMapping[elementId])
-        }
-        
-        // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
-        data.creditRating = transformData(creditRating, 'table');
-        data.holding = transformData(holding, 'table');
-
-        addGraph("container2", data.creditRating)
-        addGraph("container1", data.holding)
-        
-        // const assetAllocationData = {
-        //     "currentAssetAllocation": currentAssetAllocation,
-        //     "lastAssetAllocation": lastAssetAllocation
-        // };
-
-        // const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-        // const overallAssetAllocationData = assetClasses
-        //     .map(assetClass => ({
-        //         name: assetClass,
-        //         current: assetAllocationData.currentAssetAllocation[assetClass],
-        //         last: assetAllocationData.lastAssetAllocation[assetClass]
-        //     }))
-        //     .filter(data => data.current > 0 || data.last > 0);
-
-        // data.overAllCreditRating = overallAssetAllocationData;
-
-        renderLoop(data, airPerformances);
-
-        // if (Object.keys(holding).length > 0) {
-        //     holdingChartWrap.style.display = "none";
-        //     holdingList.style.display = "flex";
-        //     renderHoldingChart(transformData(holding))
-        // } else {
-        //     holdingChart.style.border = 0
-        // }
-
-        // if (Object.keys(creditRating).length > 0) {
-        //     creditChartWrap.style.display = "none";
-        //     creditList.style.display = "flex";
-        //     renderCreditChart(transformData(creditRating));
-        // } else {
-        //     creditChart.style.border = 0;
-        // }
-
-        // if (Object.keys(currentAssetAllocation).length > 0) {
-        //     assetChartWrap.style.display = "none";
-        //     assetList.style.display = "flex";
-        //     renderAssetChart(transformData(currentAssetAllocation));
-        // }
-
-
-        // if (Object.keys(overallAssetAllocationData).length > 0) {
-        //     assetChartWrap.style.display = "none";
-        //     renderAssetChart(overallAssetAllocationData);
-        // }
-
-    } catch (error) {
-        // creditChart.style.border = 0;
-        // holdingChart.style.border = 0;
-        console.error('fetchData error')
-        console.error(error) 
+    /////////////////////////
+    // FundInfo & Overview //
+    
+    let airFundInfo = {
+        authorizedParticipant: null,
+        benchmark: null,
+        custodian: null,
+        fundAuditors: null,
+        fundCategory: null,
+        fundManager: null,
+        fundStabilityRating: null,
+        investmentObjective: null,
+        launchDate: null,
+        managementFee: null,
+        monthlyTotalExpenseRatio: null,
+        monthlyTotalExpenseRatioWithoutLevy: null,
+        netAssets: null,
+        shariahAdvisors: null,
+        totalExpenseRatio: null,
+        totalExpenseRatioWithoutLevy: null,
+        weightedAverageTime: null,
+        yearlyTotalExpenseRatio: null,
+        yearlyTotalExpenseRatioWithoutLevy: null,
     }
+
+    let airOverview = {
+        assetCategory: null,
+        description: null,
+        name: null,
+        // navDate: "2024/07/18",
+        navDate: format_date(latest_date),
+        navPerUnit: latest_nav.toString(),
+        question: null,
+    }
+
+    let airFmrDate = null
+    
+    await airBase('Info').select({
+        maxRecords: 100,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        records.forEach(function (record) {
+            // console.log(record.fields)
+
+            if (record.fields.Key === 'Name'){
+                airOverview.name = record.fields.Value
+            }
+            if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
+                record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
+                airOverview.assetCategory = record.fields.Value
+                airOverview.question = record.fields.Key
+            }
+            if (record.fields.Key === 'Net Assets'){
+                airFundInfo.netAssets = record.fields.Value
+            }
+            if (record.fields.Key === 'Launch Date'){
+                airFundInfo.launchDate = record.fields.Value
+            }
+            if (record.fields.Key === 'Fund Category'){
+                airFundInfo.fundCategory = record.fields.Value
+            }
+            if (record.fields.Key === 'Investment Objective'){
+                airFundInfo.investmentObjective = record.fields.Value
+            }
+            if (record.fields.Key === 'Benchmark'){
+                airFundInfo.benchmark = record.fields.Value
+            }
+            if (record.fields.Key === 'Authorized Participant'){
+                airFundInfo.authorizedParticipant = record.fields.Value
+            }
+            if (record.fields.Key === 'Management Fee'){
+                airFundInfo.managementFee = record.fields.Value
+            }
+            if (record.fields.Key === 'Monthly Total Expense Ratio'){
+                airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
+            }
+            if (record.fields.Key === 'Yearly Total Expense Ratio'){
+                airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
+            }
+            
+            if (record.fields.Key === 'Fund Auditors'){
+                airFundInfo.fundAuditors = record.fields.Value
+            }
+            if (record.fields.Key === 'Fund Stability Rating'){
+                airFundInfo.fundStabilityRating = record.fields.Value
+            }
+            if (record.fields.Key === 'Fund manager'){
+                airFundInfo.fundManager = record.fields.Value
+            }
+            if (record.fields.Key === 'Submission date'){
+                airFmrDate = format_date(new Date(record.fields.Value))
+            }
+            if (record.fields.Key === 'Custodian'){
+                airFundInfo.custodian = record.fields.Value
+            }
+            if (record.fields.Key === 'Shariah Advisors'){
+                airFundInfo.shariahAdvisors = record.fields.Value
+            }
+            if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
+                airFundInfo.weightedAverageTime = record.fields.Value
+            }
+            if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
+                airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
+            }
+            if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
+                airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
+            }
+        })
+
+        fetchNextPage()
+    })
+
+    console.log('airFundInfo')
+    console.log(airFundInfo)
+    console.log('airOverview')
+    console.log(airOverview)
+
+    ///////////////////////
+    // Weighted Exposure //
+
+    let airCreditRating = []
+    let airCreditRatingGraph = {}
+    
+    // console.log('Weighted_exposure')
+    await airBase('Weighted_exposure').select({
+        maxRecords: 100,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        records.forEach(function (record) {
+            // console.log(record.fields)
+            
+            airCreditRating.push({
+                key: record.fields.key,
+                value: {
+                    miietf: record.fields.miietf.toString(),
+                    kmi30: record.fields.kmi30.toString(),
+                    weight: record.fields.weight.toString()
+                }
+            })
+
+            airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
+        })
+
+        fetchNextPage()
+    })
+
+    weighted_exposure = airCreditRating
+
+    // console.log('airCreditRating')
+    // console.log(airCreditRating)
+    // console.log('airCreditRatingGraph')
+    // console.log(airCreditRatingGraph)
+
+    //////////////
+    // Holdings //
+
+    let airHoldings = {}
+    
+    await airBase('Holdings').select({
+        maxRecords: 100,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        records.forEach(function (record) {
+            // console.log(record.fields)
+
+            airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
+                
+            // airHoldings.push({
+            //     key: record.fields.Name,
+            //     value: (record.fields.Holding * 100).toFixed(2)
+            // })
+        })
+
+        fetchNextPage()
+    })
+
+    // console.log('airHoldings')
+    // console.log(airHoldings) 
+
+    ///////////////////
+    // Distributions //
+
+    let airDistributions = []
+
+    // console.log('Distributions')
+    await airBase('Distributions').select({
+        maxRecords: 100,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        records.forEach(function (record) {
+            // console.log(record.fields)
+
+            formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
+            
+            distrib_obj = {
+                exNav: record.fields.ex_nav,
+                payoutDate: formatted_date,
+                payoutPerUnit: record.fields.payout_per_unit,
+                recordDate: null,
+                type: "",
+                yield: record.fields.yield * 100
+            }
+
+            airDistributions.push(distrib_obj)
+        })
+
+        fetchNextPage()
+    })
+
+    // console.log('airDistributions')
+    // console.log(airDistributions)
+
+    //////////
+    // FMRs //
+
+    let airFMRs = []
+    
+    // console.log('FMRs')
+    await airBase('FMRs').select({
+        maxRecords: 100,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        records.forEach(function (record) {
+            // console.log(record.fields)
+
+            airFMRs.push({
+                key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
+                value: null,
+                name: record.fields.Name
+            })
+        })
+
+        fetchNextPage()
+    })
+
+    // console.log('airFMRs')
+    // console.log(airFMRs)
+    
+    
+    //////////////////////
+    // MAHANANA BACKEND //
+    //////////////////////
+    // let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+
+    // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
+    // let dataJson = await response.json()
+
+    // console.log('dataJson') 
+    // console.log(dataJson)
+
+    // let data = dataJson;
+
+    // console.log('airHoldings') 
+    // console.log(airHoldings)
+
+    // console.log('airPerformances')
+    // console.log(airPerformances)
+
+    let data = {
+        id: null,
+        // id: dataJson.id,
+        navDate: format_date(latest_date),
+        benchmarkData: null,
+        creditRating: airCreditRatingGraph,
+        currentAssetAllocation: null,
+        distribution: null,
+        // currentAssetAllocation: dataJson.currentAssetAllocation,
+        // distribution: dataJson.distribution,
+        distributions: airDistributions,
+        etfBenchmarkData: null,
+        fmrDate: airFmrDate, 
+        fundInfo: airFundInfo,
+        holding: airHoldings, 
+        lastAssetAllocation: null,
+        // lastAssetAllocation: dataJson.lastAssetAllocation,
+        monthToDateExpense: {
+            key: Number(airPerformances[0].mtd.replace("%", "")),
+            value: null
+        },
+        // monthToDateExpense: dataJson.monthToDateExpense,
+        offeringDocumentList: airFMRs,
+        overview: airOverview,
+        performances: airPerformances.slice(0, 2),
+        // performances: dataJson.performances,
+    }
+
+    console.log('data')
+    console.log(data)
+
+    // console.log('data.creditRating')  
+    // console.log(data.creditRating)
+    // console.log('airCreditRatingGraph')
+    // console.log(airCreditRatingGraph)
+
+    // data.fundInfo = airFundInfo
+    // data.fmrDate = airFmrDate
+    // data.overview = airOverview
+    // data.creditRating = airCreditRatingGraph
+    // data.holding = airHoldings
+    
+    let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate } = data;
+
+    // console.log('data')
+    // console.log(data)
+    
+    // fundInfo = airFundInfo
+    // fmrDate = airFmrDate
+    // overview = airOverview
+    // creditRating = airCreditRatingGraph
+    
+    let fmrDateElement = document.querySelectorAll('body #fmrDate');
+    Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+    let navDateElement = document.querySelectorAll('body #navDate');
+    Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+    let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
+    let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
+
+    let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+    let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+    
+    const contentMapping = {
+        'asset-name': overview?.name,
+        'asset-class': fundInfo.fundCategory,
+        'expense-ratio-mtd': expense_ratio_mtd,
+        'expense-ratio-ytd': expense_ratio_ytd,
+        'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+        'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
+        'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+        // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+        'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
+        'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+        // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+        'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+        'productSummary': overview.assetCategory,
+        'fundManager': fundInfo.fundManager,
+        'netAssets': fundInfo.netAssets,
+        'launchDate': fundInfo.launchDate || '-',
+        'fundCategory': fundInfo.fundCategory,
+        'investmentObjective': fundInfo.investmentObjective,
+        'benchmark': fundInfo.benchmark,
+        'managementFee': fundInfo.managementFee,
+        'fundAuditors': fundInfo.fundAuditors,
+        // 'fundAuditors': fundInfo.fundStabilityRating,
+        // 'fundStabilityRating': fundInfo.fundManager,
+        'fundStabilityRating': fundInfo.fundStabilityRating,
+        'authorizedParticipant': fundInfo.authorizedParticipant,
+        'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+        'custodian': airFundInfo.custodian,
+        'shariahAdvisors': airFundInfo.shariahAdvisors,
+        'weightedAverageTime': airFundInfo.weightedAverageTime
+    };
+    
+    // console.log('fundInfo')
+    // console.log(fundInfo)
+
+    // const contentMapping = {
+    //     'asset-name': overview?.name,
+    //     'asset-class': fundInfo.fundCategory,
+    //     'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
+    //     'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
+    //     'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+    //     // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+    //     'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
+    //     'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+    //     // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+    //     'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+    //     'productSummary': overview.assetCategory,
+    //     'fundManager': fundInfo.fundManager,
+    //     'netAssets': fundInfo.netAssets,
+    //     'launchDate': fundInfo.launchDate || '-',
+    //     'fundCategory': fundInfo.fundCategory,
+    //     'investmentObjective': fundInfo.investmentObjective,
+    //     'benchmark': fundInfo.benchmark,
+    //     'managementFee': fundInfo.managementFee,
+    //     'fundAuditors': fundInfo.fundAuditors,
+    //     'fundStabilityRating': fundInfo.fundStabilityRating,
+    //     'authorizedParticipant': fundInfo.authorizedParticipant,
+    //     'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+    // };
+
+    // if (offeringDocumentList.length > 0) {
+    //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
+
+    //     offeringDocumentList.pop();
+
+    //     if (offeringDocumentList.length >= 1) {
+    //         reportWrap.style.display = "none";
+    //     }
+    // }
+    
+    reportsData = offeringDocumentList;
+
+    displayReports(offeringDocumentList);
+
+    // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
+
+    for (const elementId in contentMapping) {
+        createText(elementId, contentMapping[elementId])
+    }
+    
+    // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+    data.creditRating = transformData(creditRating, 'table');
+    data.holding = transformData(holding, 'table');
+
+    // addGraph("container2", data.creditRating)
+    // addGraph("container1", data.holding)
+    
+    // const assetAllocationData = {
+    //     "currentAssetAllocation": currentAssetAllocation,
+    //     "lastAssetAllocation": lastAssetAllocation
+    // };
+
+    // const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
+    // const overallAssetAllocationData = assetClasses
+    //     .map(assetClass => ({
+    //         name: assetClass,
+    //         current: assetAllocationData.currentAssetAllocation[assetClass],
+    //         last: assetAllocationData.lastAssetAllocation[assetClass]
+    //     }))
+    //     .filter(data => data.current > 0 || data.last > 0);
+
+    // data.overAllCreditRating = overallAssetAllocationData;
+
+    renderLoop(data, airPerformances);
+
+    // if (Object.keys(holding).length > 0) {
+    //     holdingChartWrap.style.display = "none";
+    //     holdingList.style.display = "flex";
+    //     renderHoldingChart(transformData(holding))
+    // } else {
+    //     holdingChart.style.border = 0
+    // }
+
+    // if (Object.keys(creditRating).length > 0) {
+    //     creditChartWrap.style.display = "none";
+    //     creditList.style.display = "flex";
+    //     renderCreditChart(transformData(creditRating));
+    // } else {
+    //     creditChart.style.border = 0;
+    // }
+
+    // if (Object.keys(currentAssetAllocation).length > 0) {
+    //     assetChartWrap.style.display = "none";
+    //     assetList.style.display = "flex";
+    //     renderAssetChart(transformData(currentAssetAllocation));
+    // }
+
+
+    // if (Object.keys(overallAssetAllocationData).length > 0) {
+    //     assetChartWrap.style.display = "none";
+    //     renderAssetChart(overallAssetAllocationData);
+    // }
+
+    // } catch (error) {
+    //     // creditChart.style.border = 0;
+    //     // holdingChart.style.border = 0;
+    //     console.error('fetchData error')
+    //     console.error(error) 
+    // }
 }
 
 function addGraph(id, data) {
