@@ -163,9 +163,6 @@ function renderLoop(data, airPerformances) {
             const selectedColor = PIE_COLORS_NEW[index];
             const row = document.createElement('div');
             row.classList.add('table-row');
-
-            console.log('data')
-            console.log(data)
             
             const html = `
             <div class="div-block-406 _2">
@@ -180,7 +177,7 @@ function renderLoop(data, airPerformances) {
                 <div class="table-data name">${(data['Current month']) ? data['Current month'] * 100 + '%' : '-'}</div>
             </div>
             <div class="table-box _3">
-                <div class="table-data name">${data['Prev month'] || '-'}</div>
+                <div class="table-data name">${(data['Current month']) ? data['Prev month'] * 100 + '%' : '-'}</div>
             </div>`
 
             row.innerHTML = html;
