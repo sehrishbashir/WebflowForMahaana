@@ -811,6 +811,9 @@ async function getFundData(airBase, airPerformances, productName) {
 
         let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
         let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
+
+        let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+        let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
         
         const contentMapping = {
             'asset-name': overview?.name,
@@ -818,6 +821,7 @@ async function getFundData(airBase, airPerformances, productName) {
             'expense-ratio-mtd': expense_ratio_mtd,
             'expense-ratio-ytd': expense_ratio_ytd,
             'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+            'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
             'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
             // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
             'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
