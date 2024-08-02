@@ -148,6 +148,15 @@ function renderLoop(data, airPerformances) {
 
     if (assetAllocation) {
         console.log('Helllo!!')
+
+        // const performanceRowsDiv = document.querySelector('#perf-table-rows');
+            
+        // while (performanceRowsDiv.lastChild) {
+        //     if (performanceRowsDiv.lastChild.classList.contains('headers'))
+        //         break
+        //     else
+        //         performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
+        // }
     }
     
     const dataMappingsUpdated = [
@@ -258,16 +267,16 @@ function renderLoop(data, airPerformances) {
     });
 
 
-    if (performances) {
-        const performanceBodyRow = document.querySelector('.performance-body');
-        if (performanceBodyRow) {
-            performances.forEach(data => {
-                const row = document.createElement('div');
-                row.classList.add('performance-body-row');
-                const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
-            })
-        }
-    }
+    // if (performances) {
+    //     const performanceBodyRow = document.querySelector('.performance-body');
+    //     if (performanceBodyRow) {
+    //         performances.forEach(data => {
+    //             const row = document.createElement('div');
+    //             row.classList.add('performance-body-row');
+    //             const html = `<div class="performance-body-cell flex-1 right-align"><span class="per-body-title">${data.name || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.mtd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.ytd || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days90 || '-'}</span></div><div class="performance-body-cell"><span class="per-body-title">${data.days365 || '-'}</span></div>`; row.innerHTML = html; performanceBodyRow.appendChild(row)
+    //         })
+    //     }
+    // }
     
     if (distributions?.length > 0) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
