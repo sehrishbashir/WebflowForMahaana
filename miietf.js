@@ -502,7 +502,7 @@ async function getFundData(airBase, airPerformances, productName) {
     
     let airAssetAlloc = null
 
-    if(productName === 'MIIETF') {
+    if(productName === 'MICF') {
         airAssetAlloc = []
         
         await airBase('Asset_allocation').select({
