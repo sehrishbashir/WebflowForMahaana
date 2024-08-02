@@ -541,7 +541,7 @@ async function getFundData(airBase, airPerformances, productName) {
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
-                console.log(record.fields)
+                // console.log(record.fields)
 
                 if (record.fields.Key === 'Name'){
                     airOverview.name = record.fields.Value
