@@ -600,9 +600,6 @@ async function getFundData(airBase, airPerformances, productName) {
                 if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
                     airFundInfo.weightedAverageTime = record.fields.Value
                 }
-                if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
-                    airFundInfo.weightedAverageTime = record.fields.Value
-                }
                 if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
                     airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
                 }
@@ -851,8 +848,11 @@ async function getFundData(airBase, airPerformances, productName) {
             'fundStabilityRating': fundInfo.fundStabilityRating,
             'authorizedParticipant': fundInfo.authorizedParticipant,
             'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            'custodian': airFundInfo.custodian,
+            'shariahAdvisors': airFundInfo.shariahAdvisors,
+            'weightedAverageTime': airFundInfo.weightedAverageTime
         };
-
+        
         // console.log('fundInfo')
         // console.log(fundInfo)
 
