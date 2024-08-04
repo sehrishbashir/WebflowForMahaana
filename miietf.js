@@ -564,40 +564,71 @@ async function getFundData(airBase, airPerformances, productName) {
     
     ///////////////////////
     // Weighted Exposure //
-
+    
     let airCreditRating = []
     let airCreditRatingGraph = {}
+
+    if (productName === 'MIIETF') {
+        // console.log('Weighted_exposure')
+        await airBase('Weighted_exposure').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                // console.log(record.fields)
+                
+                airCreditRating.push({
+                    key: record.fields.key,
+                    value: {
+                        miietf: record.fields.miietf.toString(),
+                        kmi30: record.fields.kmi30.toString(),
+                        weight: record.fields.weight.toString()
+                    }
+                })
     
-    // console.log('Weighted_exposure')
-    await airBase('Weighted_exposure').select({
-        maxRecords: 100,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        records.forEach(function (record) {
-            // console.log(record.fields)
-            
-            airCreditRating.push({
-                key: record.fields.key,
-                value: {
-                    miietf: record.fields.miietf.toString(),
-                    kmi30: record.fields.kmi30.toString(),
-                    weight: record.fields.weight.toString()
-                }
+                airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
             })
-
-            airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
+    
+            fetchNextPage()
         })
-
-        fetchNextPage()
-    })
-
-    weighted_exposure = airCreditRating
-
+    
+        weighted_exposure = airCreditRating
+    }
+    
     // console.log('airCreditRating')
     // console.log(airCreditRating)
     // console.log('airCreditRatingGraph')
     // console.log(airCreditRatingGraph)
 
+    ////////////////////
+    // Credit Quality //
+    // let airHoldings = {}
+    
+    // if (productName === 'MICF') {
+        
+        
+    //     await airBase('Holdings').select({
+    //         maxRecords: 100,
+    //         view: "Grid view"
+    //     }).eachPage(function page(records, fetchNextPage) {
+    //         records.forEach(function (record) {
+    //             // console.log(record.fields)
+    
+    //             airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
+                    
+    //             // airHoldings.push({
+    //             //     key: record.fields.Name,
+    //             //     value: (record.fields.Holding * 100).toFixed(2)
+    //             // })
+    //         })
+    
+    //         fetchNextPage()
+    //     })
+    
+    //     // console.log('airHoldings')
+    //     // console.log(airHoldings) 
+    // }
+    
     //////////////
     // Holdings //
 
