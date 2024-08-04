@@ -997,7 +997,8 @@ function addGraph(id, data) {
             enabled: false  // Disable the Highcharts watermark
         },
         tooltip: {
-            pointFormat: '{series.name} <b>{point.y:.2f}%</b>'
+            pointFormat: '{series.name} {point.y:.2f}%',
+            headerFormat: '<b>{point.key}</b><br>',
         },
         colors: PIE_COLORS_NEW,
         plotOptions: {
@@ -1019,7 +1020,7 @@ function addGraph(id, data) {
                 // }],
                 dataLabels: {
                     enabled: false,
-                    format: '<b>{point.name}</b>: {point.percentage:.2f}%'
+                    // format: '<b>{point.name}</b>: {point.percentage:.2f}%'
                 }
             }
         },
