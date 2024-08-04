@@ -1657,19 +1657,6 @@ async function calcPerf(airBase, productName) {
     let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
     let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
     let inception_peer_str = `${(inception_peer * 100).toFixed(2)}%`
-    
-    let miietfReturn = {
-        "name": "MIIETF return",
-        "lastUpdatedOn": null,
-        "mtd": mtd_miietf_str,
-        "ytd": ytd_miietf_str,
-        "days30": null,
-        "days90": ninty_days_miietf_str,
-        "days365": year_perf_miietf_str,
-        "years3": null,
-        "years5": null,
-        "inception": inception_miietf_str
-    }
 
     let benchmarkReturn = {
         "name": "Benchmark return",
@@ -1712,9 +1699,35 @@ async function calcPerf(airBase, productName) {
             "inception": inception_kmi30_str
         }
 
+        let miietfReturn = {
+            "name": "MIIETF return",
+            "lastUpdatedOn": null,
+            "mtd": mtd_miietf_str,
+            "ytd": ytd_miietf_str,
+            "days30": null,
+            "days90": ninty_days_miietf_str,
+            "days365": year_perf_miietf_str,
+            "years3": null,
+            "years5": null,
+            "inception": inception_miietf_str
+        }
+
         airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
     }
     if(productName === "MICF") {
+        let miietfReturn = {
+            "name": "MICF return",
+            "lastUpdatedOn": null,
+            "mtd": mtd_miietf_str,
+            "ytd": ytd_miietf_str,
+            "days30": null,
+            "days90": ninty_days_miietf_str,
+            "days365": year_perf_miietf_str,
+            "years3": null,
+            "years5": null,
+            "inception": inception_miietf_str
+        }
+        
         airPerformances = [miietfReturn, benchmarkReturn, peerAvgReturn]
     }
 
