@@ -821,11 +821,11 @@ async function getFundData(airBase, airPerformances, productName) {
     data.creditRating = transformData(creditRating, 'table');
     data.holding = transformData(holding, 'table');
 
-    if (productName === 'MIIETF') {
+    if (productName === 'MICF') {
         addAssetAllocGraph(assetAllocation)    
     }
 
-    if (productName === 'MICF') {
+    if (productName === 'MIIETF') {
         addGraph("container2", data.creditRating)
         addGraph("container1", data.holding)    
     }
