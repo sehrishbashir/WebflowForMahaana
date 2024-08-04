@@ -294,8 +294,8 @@ function renderLoop(data, airPerformances, productName) {
                 creditQualityRows.removeChild(creditQualityRows.firstChild);
             }
 
-            console.log('creditQuality')
-            console.log(creditQuality)
+            // console.log('creditQuality')
+            // console.log(creditQuality)
             
             creditQuality.forEach((item, index) => {
                 if (item.value === 0)
@@ -903,15 +903,15 @@ async function getFundData(airBase, airPerformances, productName) {
     data.holding = transformData(holding, 'table');
 
     if (productName === 'MICF') {
-        addAssetAllocGraph(data.assetAllocation)   
-        // addCreditQualityGraph(creditQuality)
+        addAssetAllocGraph(data.assetAllocation)
         addGraph("creditQualityChart", data.creditQuality)
     }
 
     if (productName === 'MIIETF') {
-        addGraph("container2", data.creditRating)
-        addGraph("container1", data.holding)    
+        addGraph("container2", data.creditRating)  
     }
+
+    addGraph("container1", data.holding)  
     
     // const assetAllocationData = {
     //     "currentAssetAllocation": currentAssetAllocation,
