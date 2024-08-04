@@ -949,13 +949,13 @@ function addAssetAllocGraph(data) {
     
     for(let i in data) {
         labels.push(data[i].Name)
-        curr_month.push(data[i]['Current month'])
-        prev_month.push(data[i]['Prev month'])
+        curr_month.push(Number((data[i]['Current month'] * 100).toFixed(2)))
+        prev_month.push(Number((data[i]['Prev month'] * 100).toFixed(2)))
     }
 
-    // console.log(labels)
-    // console.log(curr_month)
-    // console.log(prev_month)
+    console.log(labels)
+    console.log(curr_month)
+    console.log(prev_month)
 
     Highcharts.chart('assetAllocation', {
         chart: {
@@ -967,13 +967,13 @@ function addAssetAllocGraph(data) {
         yAxis: {
             labels: {
                 formatter: function() {
-                    return (this.value * 100) + '%';
+                    return (this.value + '%');
                 }
             }  
         },
         tooltip: {
             // pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.2f}%</b><br/>',
-            pointFormat: '<span style="color:{series.color}">•</span> {series.name}: <b>{(point.y * 100):.2f}%</b><br/>',
+            // pointFormat: '<span style="color:{series.color}">•</span> {series.name}: <b>{(point.y * 100):.2f}%</b><br/>',
             headerFormat: '<b>{point.key}</b><br>',
             shared: true
         },
