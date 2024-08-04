@@ -130,6 +130,11 @@ function renderLoop(data, airPerformances, productName) {
 
         assetAllocation.forEach((data, index) => {
             // console.log(data)
+
+            // Not worth showing 0 values
+            if (data['Current month'] === 0 && data['Prev month'] === 0)
+                return
+            
             const selectedColor = PIE_COLORS_NEW[index];
             const row = document.createElement('div');
             row.classList.add('table-row');
@@ -1019,18 +1024,15 @@ function addGraph(id, data) {
     });
 }
 
-// function addCreditQualityGraph(data) {
-//     console.log('Helllo!')
-
-    
-// }
-
 function addAssetAllocGraph(data) {
     let labels = []
     let curr_month = []
     let prev_month = []
     
     for(let i in data) {
+        if(data[i]['Current month'] === 0 && data[i]['Prev month'] === 0)
+            continue
+        
         labels.push(data[i].Name)
         curr_month.push(Number((data[i]['Current month'] * 100).toFixed(2)))
         prev_month.push(Number((data[i]['Prev month'] * 100).toFixed(2)))
