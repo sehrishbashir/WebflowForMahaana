@@ -953,13 +953,22 @@ function addAssetAllocGraph(data) {
         prev_month.push(Number((data[i]['Prev month'] * 100).toFixed(2)))
     }
 
-    console.log(labels)
-    console.log(curr_month)
-    console.log(prev_month)
+    // console.log(labels)
+    // console.log(curr_month)
+    // console.log(prev_month)
 
     Highcharts.chart('assetAllocation', {
         chart: {
             type: 'column'
+        },
+        title: {
+            text: null,
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false  // Disable the exporting hamburger icon
         },
         xAxis: {
             categories: labels
@@ -969,7 +978,9 @@ function addAssetAllocGraph(data) {
                 formatter: function() {
                     return (this.value + '%');
                 }
-            }  
+            },
+            title: null,
+            gridLineWidth: 0
         },
         tooltip: {
             // pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.2f}%</b><br/>',
@@ -994,119 +1005,6 @@ function addAssetAllocGraph(data) {
     		data: prev_month
         }]
     });
-
-    // Highcharts.chart('assetAllocation', {
-    //   chart: {
-    //     type: 'column' // Use 'column' for vertical bars
-    //   },
-    //   title: {
-    //     text: 'Vertical Bar Chart Example'
-    //   },
-    //   xAxis: {
-    //     categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
-    //     title: {
-    //       text: null // No title for x-axis
-    //     }
-    //   },
-    //   yAxis: {
-    //     min: 0,
-    //     title: {
-    //       text: 'Value'
-    //     }
-    //   },
-    //   legend: {
-    //     align: 'right',
-    //     verticalAlign: 'top',
-    //     layout: 'vertical'
-    //   },
-    //   plotOptions: {
-    //     column: {
-    //       // grouping: true, // Enable grouping to position bars side by side
-    //       pointWidth: 30, // Width of the columns
-    //       pointPadding: 0,
-    //       groupPadding: 0
-    //     }
-    //   },
-    //   series: [{
-    //     name: 'Data Set 1',
-    //     data: [5, 3, 4, 7, 2]
-    //   }, {
-    //     name: 'Data Set 2',
-    //     data: [2, 2, 3, 2, 1]
-    //   }]
-    // });
-
-    // Highcharts.chart('assetAllocation', {
-    //   chart: {
-    //     type: 'column' // Change to 'column' for vertical bars
-    //   },
-    //   title: {
-    //     text: 'Vertical Bar Chart Example'
-    //   },
-    //   xAxis: {
-    //     categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
-    //     title: {
-    //       text: null // No title for x-axis
-    //     }
-    //   },
-    //   yAxis: {
-    //     min: 0,
-    //     title: {
-    //       text: 'Value'
-    //     }
-    //   },
-    //   legend: {
-    //     align: 'right',
-    //     verticalAlign: 'top',
-    //     layout: 'vertical'
-    //   },
-    //   plotOptions: {
-    //     column: {
-    //       pointWidth: 30, // Width of the columns
-    //       stacking: 'normal' // Stack the columns
-    //     }
-    //   },
-    //   series: [{
-    //     name: 'Data Set 1',
-    //     data: [5, 3, 4, 7, 2]
-    //   }, {
-    //     name: 'Data Set 2',
-    //     data: [2, 2, 3, 2, 1]
-    //   }]
-    // });
-
-    // Highcharts.chart('assetAllocation', {
-    // chart: {
-    // type: 'bar'
-    // },
-    // title: {
-    // text: 'Bar Chart Example'
-    // },
-    // xAxis: {
-    // categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
-    // },
-    // yAxis: {
-    // min: 0,
-    // title: {
-    //     text: 'Value'
-    //     }
-    //   },
-    //   legend: {
-    //     reversed: true
-    //   },
-    //   plotOptions: {
-    //     series: {
-    //       stacking: 'normal'
-    //     }
-    //   },
-    //   series: [{
-    //     name: 'Data Set 1',
-    //     data: [5, 3, 4, 7, 2]
-    //   }, {
-    //     name: 'Data Set 2',
-    //     data: [2, 2, 3, 2, 1]
-    //   }]
-    // });
     
     // let series = [
     //     {
