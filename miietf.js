@@ -294,7 +294,7 @@ function renderLoop(data, airPerformances, productName) {
                 row.classList.add('table-row-2');
                 // console.log(item)
 
-                let perc = `${(item.value * 100).toFixed(2)}%`
+                let perc = `${item.value.toFixed(2)}%`
                 // console.log(perc)
                 
                 const html = `
@@ -620,8 +620,13 @@ async function getFundData(airBase, airPerformances, productName) {
         }).eachPage(function page(records, fetchNextPage) {
             records.forEach(function (record) {
                 // console.log(record.fields)
+                // airCreditQuality.push(record.fields)
 
-                airCreditQuality.push(record.fields)
+                airCreditQuality.push({
+                    key: record.fields.key,
+                    value: record.fields.value * 100,
+                })
+                
             })
     
             fetchNextPage()
@@ -654,8 +659,8 @@ async function getFundData(airBase, airPerformances, productName) {
         fetchNextPage()
     })
 
-    // console.log('airHoldings')
-    // console.log(airHoldings) 
+    console.log('airHoldings')
+    console.log(airHoldings) 
 
     ///////////////////
     // Distributions //
@@ -687,8 +692,8 @@ async function getFundData(airBase, airPerformances, productName) {
         fetchNextPage()
     })
 
-    // console.log('airDistributions')
-    // console.log(airDistributions)
+    console.log('airDistributions')
+    console.log(airDistributions)
 
     //////////
     // FMRs //
@@ -964,8 +969,8 @@ function addGraph(id, data) {
         })
     }
 
-    console.log('transformed_data')
-    console.log(transformed_data)
+    // console.log('transformed_data')
+    // console.log(transformed_data)
 
     Highcharts.chart(id, {
         chart: {
@@ -1003,7 +1008,7 @@ function addGraph(id, data) {
                 // }],
                 dataLabels: {
                     enabled: false,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f}%'
+                    format: '<b>{point.name}</b>: {point.percentage:.2f}%'
                 }
             }
         },
