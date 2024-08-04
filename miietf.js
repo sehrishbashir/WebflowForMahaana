@@ -283,8 +283,6 @@ function renderLoop(data, airPerformances, productName) {
         // credit-quality-table-rows
 
         const creditQualityRows = document.querySelector("#credit-quality-table-rows");
-        console.log('creditQualityRows')
-        console.log(creditQualityRows)
 
         if (creditQualityRows) {
             while (creditQualityRows.firstChild) {
@@ -294,11 +292,10 @@ function renderLoop(data, airPerformances, productName) {
             creditQuality.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.classList.add('table-row-2');
-
-                console.log(item)
+                // console.log(item)
 
                 let perc = `${(item.Percentage * 100).toFixed(2)}%`
-                console.log(perc)
+                // console.log(perc)
                 
                 const html = `
                 <div class="div-block-410 _2">
@@ -783,7 +780,7 @@ async function getFundData(airBase, airPerformances, productName) {
     // data.creditRating = airCreditRatingGraph
     // data.holding = airHoldings
     
-    let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation } = data;
+    let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation, creditQuality } = data;
 
     // console.log('data')
     // console.log(data)
@@ -890,7 +887,8 @@ async function getFundData(airBase, airPerformances, productName) {
     data.holding = transformData(holding, 'table');
 
     if (productName === 'MICF') {
-        addAssetAllocGraph(assetAllocation)    
+        addAssetAllocGraph(assetAllocation)   
+        addCreditQualityGraph(creditQuality)
     }
 
     if (productName === 'MIIETF') {
@@ -1013,6 +1011,10 @@ function addGraph(id, data) {
             data: transformed_data
         }]
     });
+}
+
+function addCreditQualityGraph(data) {
+    console.log('Helllo!')
 }
 
 function addAssetAllocGraph(data) {
