@@ -821,9 +821,14 @@ async function getFundData(airBase, airPerformances, productName) {
     data.creditRating = transformData(creditRating, 'table');
     data.holding = transformData(holding, 'table');
 
-    addAssetAllocGraph(assetAllocation)
-    // addGraph("container2", data.creditRating)
-    // addGraph("container1", data.holding)
+    if (productName === 'MIIETF') {
+        addAssetAllocGraph(assetAllocation)    
+    }
+
+    if (productName === 'MICF') {
+        addGraph("container2", data.creditRating)
+        addGraph("container1", data.holding)    
+    }
     
     // const assetAllocationData = {
     //     "currentAssetAllocation": currentAssetAllocation,
