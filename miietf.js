@@ -293,8 +293,14 @@ function renderLoop(data, airPerformances, productName) {
             while (creditQualityRows.firstChild) {
                 creditQualityRows.removeChild(creditQualityRows.firstChild);
             }
+
+            console.log('creditQuality')
+            console.log(creditQuality)
             
             creditQuality.forEach((item, index) => {
+                if (item.value === 0)
+                    return
+            
                 const row = document.createElement('div');
                 row.classList.add('table-row-2');
                 // console.log(item)
