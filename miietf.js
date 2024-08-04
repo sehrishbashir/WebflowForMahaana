@@ -63,7 +63,7 @@ function createLoader() {
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data, airPerformances, productName) {
-    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation } = data;
+    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation, creditQuality } = data;
 
     performances = airPerformances
 
@@ -278,35 +278,42 @@ function renderLoop(data, airPerformances, productName) {
     //     }
     // }
 
-    // if(holdingRows) {
-    //     while (holdingRows.firstChild) {
-    //         holdingRows.removeChild(holdingRows.firstChild);
-    //     }
+    if(creditQuality) {
+        // holding-table-rows
+        // credit-quality-table-rows
+
+        const creditQualityRows = document.querySelector("#credit-quality-table-rows");
+        console.log('creditQualityRows')
+        console.log(creditQualityRows)
         
-    //     data.forEach((item, index) => {
-    //         const row = document.createElement('div');
-    //         row.classList.add('table-row-2');
+        // while (holdingRows.firstChild) {
+        //     holdingRows.removeChild(holdingRows.firstChild);
+        // }
+        
+        // data.forEach((item, index) => {
+        //     const row = document.createElement('div');
+        //     row.classList.add('table-row-2');
             
-    //         const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-    //         // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-    //         const html = `
-    //         <div class="div-block-410 _2">
-    //             <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-    //                 <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-    //             </svg>
-    //         </div>
-    //         <div class="table-box _2 sectors">
-    //             <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-    //         </div>
-    //         <div class="table-box _3">
-    //             <div class="table-data name">${returnVal.trim()}%<br></div>
-    //         </div>
-    //         `
+        //     const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+        //     // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+        //     const html = `
+        //     <div class="div-block-410 _2">
+        //         <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+        //             <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+        //         </svg>
+        //     </div>
+        //     <div class="table-box _2 sectors">
+        //         <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+        //     </div>
+        //     <div class="table-box _3">
+        //         <div class="table-data name">${returnVal.trim()}%<br></div>
+        //     </div>
+        //     `
             
-    //         row.innerHTML = html;
-    //         holdingRows.appendChild(row);
-    //     })
-    // }
+        //     row.innerHTML = html;
+        //     holdingRows.appendChild(row);
+        // })
+    }
     
     if (distributions?.length > 0) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
@@ -733,6 +740,7 @@ async function getFundData(airBase, airPerformances, productName) {
         navDate: format_date(latest_date),
         benchmarkData: null,
         creditRating: airCreditRatingGraph,
+        creditQuality: airCreditQuality, 
         currentAssetAllocation: null,
         assetAllocation: airAssetAlloc,
         distribution: null,
