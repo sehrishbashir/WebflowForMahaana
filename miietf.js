@@ -163,114 +163,124 @@ function renderLoop(data, airPerformances, productName) {
         })
     }
 
+    let dataMappingsUpdated = null
+    
     if (productName === 'MIIETF') {
-        const dataMappingsUpdated = [
+        dataMappingsUpdated = [
             // { elementClass: '.assetallocation-list', data: currentAssetAllocation },
             { elementClass: '.credit-list', data: creditRating },
             { elementClass: '.holding-list', data: holding }
         ];
-        
-        dataMappingsUpdated.forEach(({ elementClass, data }) => {
-            const bodyRow = document.querySelector(elementClass);
-            if (Object.keys(data).length > 0) {
-                if (elementClass === ".holding-list") {
-                    const holdingRows = document.querySelector("#holding-table-rows");
+    }
+
+    if (productName === 'MICF') {
+        dataMappingsUpdated = [
+            // { elementClass: '.assetallocation-list', data: currentAssetAllocation },
+            // { elementClass: '.credit-list', data: creditRating },
+            { elementClass: '.holding-list', data: holding }
+        ];
+    }
+
+    dataMappingsUpdated.forEach(({ elementClass, data }) => {
+        const bodyRow = document.querySelector(elementClass);
+        if (Object.keys(data).length > 0) {
+            if (elementClass === ".holding-list") {
+                const holdingRows = document.querySelector("#holding-table-rows");
+                
+                if(holdingRows) {
+                    while (holdingRows.firstChild) {
+                        holdingRows.removeChild(holdingRows.firstChild);
+                    }
                     
-                    if(holdingRows) {
-                        while (holdingRows.firstChild) {
-                            holdingRows.removeChild(holdingRows.firstChild);
-                        }
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row-2');
                         
-                        data.forEach((item, index) => {
-                            const row = document.createElement('div');
-                            row.classList.add('table-row-2');
-                            
-                            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                            // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-                            const html = `
-                            <div class="div-block-410 _2">
+                        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+                        // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+                        const html = `
+                        <div class="div-block-410 _2">
+                            <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                                <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                            </svg>
+                        </div>
+                        <div class="table-box _2 sectors">
+                            <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${returnVal.trim()}%<br></div>
+                        </div>
+                        `
+                        
+                        row.innerHTML = html;
+                        holdingRows.appendChild(row);
+                    })
+                }
+
+                compositionList(data, bodyRow)
+            }
+            else if(elementClass === ".credit-list") {
+                data = weighted_exposure
+
+                const weightedExposureTable = document.querySelector('#weighted_exposure');
+                // console.log('weightedExposureTable')
+                // console.log(weightedExposureTable)
+                
+                if (weightedExposureTable) {
+                    const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
+
+                    // console.log('weightedExpRowsDiv')
+                    // console.log(weightedExpRowsDiv)
+                
+                    
+                    while (weightedExpRowsDiv.lastChild) {
+                        if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
+                            break
+                        else
+                            weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
+                    }
+
+                    // console.log('data')
+                    // console.log(data)
+        
+                    data.forEach((item, index) => {
+                        const row = document.createElement('div');
+                        row.classList.add('table-row');
+                        
+                        // console.log(item)
+                        
+                        const html = `
+                        <div class="table-box _2">
+                            <div class="div-block-406 _2" style="margin-right: 8px;">
                                 <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
                                     <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
                                 </svg>
                             </div>
-                            <div class="table-box _2 sectors">
-                                <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-                            </div>
-                            <div class="table-box _3">
-                                <div class="table-data name">${returnVal.trim()}%<br></div>
-                            </div>
-                            `
-                            
-                            row.innerHTML = html;
-                            holdingRows.appendChild(row);
-                        })
-                    }
-    
-                    compositionList(data, bodyRow)
-                }
-                else if(elementClass === ".credit-list") {
-                    data = weighted_exposure
-    
-                    const weightedExposureTable = document.querySelector('#weighted_exposure');
-                    // console.log('weightedExposureTable')
-                    // console.log(weightedExposureTable)
-                    
-                    if (weightedExposureTable) {
-                        const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
-    
-                        // console.log('weightedExpRowsDiv')
-                        // console.log(weightedExpRowsDiv)
-                    
-                        
-                        while (weightedExpRowsDiv.lastChild) {
-                            if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
-                                break
-                            else
-                                weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
-                        }
-    
-                        // console.log('data')
-                        // console.log(data)
-            
-                        data.forEach((item, index) => {
-                            const row = document.createElement('div');
-                            row.classList.add('table-row');
-                            
-                            // console.log(item)
-                            
-                            const html = `
-                            <div class="table-box _2">
-                                <div class="div-block-406 _2" style="margin-right: 8px;">
-                                    <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                                        <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                                    </svg>
-                                </div>
-                                <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
-                            </div>
-                            <div class="table-box _3">
-                                <div class="table-data name">${item.value.miietf}%</div>
-                            </div>
-                            <div class="table-box _3">
-                                <div class="table-data name">${item.value.kmi30}%</div>
-                            </div>
-                            <div class="table-box _3">
-                                <div class="table-data name">${item.value.weight}%</div>
-                            </div>
-                            `
-                            row.innerHTML = html;
-                            weightedExpRowsDiv.appendChild(row);
-                        })
-                    }
-                }
-                else {
-                    // console.log(elementClass)
-                    // console.log(data)
-                    compositionList(data, bodyRow) 
+                            <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.miietf}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.kmi30}%</div>
+                        </div>
+                        <div class="table-box _3">
+                            <div class="table-data name">${item.value.weight}%</div>
+                        </div>
+                        `
+                        row.innerHTML = html;
+                        weightedExpRowsDiv.appendChild(row);
+                    })
                 }
             }
-            else { bodyRow.style.display = "none" }
-        });
-    }
+            else {
+                // console.log(elementClass)
+                // console.log(data)
+                compositionList(data, bodyRow) 
+            }
+        }
+        else { bodyRow.style.display = "none" }
+    });
 
     // if (performances) {
     //     const performanceBodyRow = document.querySelector('.performance-body');
