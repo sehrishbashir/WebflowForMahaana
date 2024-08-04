@@ -279,8 +279,8 @@ function renderLoop(data, airPerformances, productName) {
     // }
 
     if(creditQuality) {
-        // holding-table-rows
-        // credit-quality-table-rows
+        // console.log('creditQuality')
+        // console.log(creditQuality)
 
         const creditQualityRows = document.querySelector("#credit-quality-table-rows");
 
@@ -294,7 +294,7 @@ function renderLoop(data, airPerformances, productName) {
                 row.classList.add('table-row-2');
                 // console.log(item)
 
-                let perc = `${(item.Percentage * 100).toFixed(2)}%`
+                let perc = `${(item.value * 100).toFixed(2)}%`
                 // console.log(perc)
                 
                 const html = `
@@ -304,7 +304,7 @@ function renderLoop(data, airPerformances, productName) {
                     </svg>
                 </div>
                 <div class="table-box _2 sectors">
-                    <div class="table-data name sectors"><strong class="bold-text">${item.Name}<br></strong></div>
+                    <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
                 </div>
                 <div class="table-box _3">
                     <div class="table-data name">${perc}<br></div>
@@ -887,8 +887,9 @@ async function getFundData(airBase, airPerformances, productName) {
     data.holding = transformData(holding, 'table');
 
     if (productName === 'MICF') {
-        addAssetAllocGraph(assetAllocation)   
-        addCreditQualityGraph(creditQuality)
+        addAssetAllocGraph(data.assetAllocation)   
+        // addCreditQualityGraph(creditQuality)
+        addGraph("creditQualityChart", data.creditQuality)
     }
 
     if (productName === 'MIIETF') {
@@ -1013,9 +1014,11 @@ function addGraph(id, data) {
     });
 }
 
-function addCreditQualityGraph(data) {
-    console.log('Helllo!')
-}
+// function addCreditQualityGraph(data) {
+//     console.log('Helllo!')
+
+    
+// }
 
 function addAssetAllocGraph(data) {
     let labels = []
