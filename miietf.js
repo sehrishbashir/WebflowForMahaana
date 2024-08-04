@@ -296,25 +296,26 @@ function renderLoop(data, airPerformances, productName) {
                 row.classList.add('table-row-2');
 
                 console.log(item)
+
+                let perc = `${(item.Percentage * 100).toFixed(2)}%`
+                console.log(perc)
                 
-                // const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                // // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-                // const html = `
-                // <div class="div-block-410 _2">
-                //     <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                //         <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                //     </svg>
-                // </div>
-                // <div class="table-box _2 sectors">
-                //     <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-                // </div>
-                // <div class="table-box _3">
-                //     <div class="table-data name">${returnVal.trim()}%<br></div>
-                // </div>
-                // `
+                const html = `
+                <div class="div-block-410 _2">
+                    <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                        <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                    </svg>
+                </div>
+                <div class="table-box _2 sectors">
+                    <div class="table-data name sectors"><strong class="bold-text">${item.Name}<br></strong></div>
+                </div>
+                <div class="table-box _3">
+                    <div class="table-data name">${perc}<br></div>
+                </div>
+                `
                 
-                // row.innerHTML = html;
-                // holdingRows.appendChild(row);
+                row.innerHTML = html;
+                creditQualityRows.appendChild(row);
             })
         }
     }
