@@ -602,32 +602,25 @@ async function getFundData(airBase, airPerformances, productName) {
 
     ////////////////////
     // Credit Quality //
-    // let airHoldings = {}
+    let airCreditQuality = []
     
-    // if (productName === 'MICF') {
-        
-        
-    //     await airBase('Holdings').select({
-    //         maxRecords: 100,
-    //         view: "Grid view"
-    //     }).eachPage(function page(records, fetchNextPage) {
-    //         records.forEach(function (record) {
-    //             // console.log(record.fields)
+    if (productName === 'MICF') {
+        await airBase('Credit_quality').select({
+            maxRecords: 100,
+            view: "Grid view"
+        }).eachPage(function page(records, fetchNextPage) {
+            records.forEach(function (record) {
+                // console.log(record.fields)
+
+                airCreditQuality.push(record.fields)
+            })
     
-    //             airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
-                    
-    //             // airHoldings.push({
-    //             //     key: record.fields.Name,
-    //             //     value: (record.fields.Holding * 100).toFixed(2)
-    //             // })
-    //         })
+            fetchNextPage()
+        })
     
-    //         fetchNextPage()
-    //     })
-    
-    //     // console.log('airHoldings')
-    //     // console.log(airHoldings) 
-    // }
+        console.log('airCreditQuality')
+        console.log(airCreditQuality) 
+    }
     
     //////////////
     // Holdings //
