@@ -62,7 +62,7 @@ function createLoader() {
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
-function renderLoop(data, airPerformances) {
+function renderLoop(data, airPerformances, productName) {
     let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation } = data;
 
     performances = airPerformances
@@ -164,107 +164,108 @@ function renderLoop(data, airPerformances) {
         { elementClass: '.holding-list', data: holding }
     ];
 
-    dataMappingsUpdated.forEach(({ elementClass, data }) => {
-        const bodyRow = document.querySelector(elementClass);
-        if (Object.keys(data).length > 0) {
-            if (elementClass === ".holding-list") {
-                const holdingRows = document.querySelector("#holding-table-rows");
-                
-                if(holdingRows) {
-                    while (holdingRows.firstChild) {
-                        holdingRows.removeChild(holdingRows.firstChild);
-                    }
+    if (productName === 'MIIETF') {
+        dataMappingsUpdated.forEach(({ elementClass, data }) => {
+            const bodyRow = document.querySelector(elementClass);
+            if (Object.keys(data).length > 0) {
+                if (elementClass === ".holding-list") {
+                    const holdingRows = document.querySelector("#holding-table-rows");
                     
-                    data.forEach((item, index) => {
-                        const row = document.createElement('div');
-                        row.classList.add('table-row-2');
+                    if(holdingRows) {
+                        while (holdingRows.firstChild) {
+                            holdingRows.removeChild(holdingRows.firstChild);
+                        }
                         
-                        const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
-                        // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
-                        const html = `
-                        <div class="div-block-410 _2">
-                            <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
-                            </svg>
-                        </div>
-                        <div class="table-box _2 sectors">
-                            <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${returnVal.trim()}%<br></div>
-                        </div>
-                        `
-                        
-                        row.innerHTML = html;
-                        holdingRows.appendChild(row);
-                    })
-                }
-
-                compositionList(data, bodyRow)
-            }
-            else if(elementClass === ".credit-list") {
-                data = weighted_exposure
-
-                const weightedExposureTable = document.querySelector('#weighted_exposure');
-                // console.log('weightedExposureTable')
-                // console.log(weightedExposureTable)
-                
-                if (weightedExposureTable) {
-                    const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
-
-                    // console.log('weightedExpRowsDiv')
-                    // console.log(weightedExpRowsDiv)
-                
-                    
-                    while (weightedExpRowsDiv.lastChild) {
-                        if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
-                            break
-                        else
-                            weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
-                    }
-
-                    // console.log('data')
-                    // console.log(data)
-        
-                    data.forEach((item, index) => {
-                        const row = document.createElement('div');
-                        row.classList.add('table-row');
-                        
-                        // console.log(item)
-                        
-                        const html = `
-                        <div class="table-box _2">
-                            <div class="div-block-406 _2" style="margin-right: 8px;">
+                        data.forEach((item, index) => {
+                            const row = document.createElement('div');
+                            row.classList.add('table-row-2');
+                            
+                            const returnVal = typeof (item.value) == 'string' ? item.value : (item.value).toFixed(2);
+                            // const html = `<div class="div-block-410 _2"><img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-81"></div><div class="table-box _2 sectors"><div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div></div><div class="table-box _3"><div class="table-data name">${returnVal.trim()}%<br></div></div>`
+                            const html = `
+                            <div class="div-block-410 _2">
                                 <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
                                     <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
                                 </svg>
                             </div>
-                            <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.miietf}%</div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.kmi30}%</div>
-                        </div>
-                        <div class="table-box _3">
-                            <div class="table-data name">${item.value.weight}%</div>
-                        </div>
-                        `
-                        row.innerHTML = html;
-                        weightedExpRowsDiv.appendChild(row);
-                    })
+                            <div class="table-box _2 sectors">
+                                <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                            </div>
+                            <div class="table-box _3">
+                                <div class="table-data name">${returnVal.trim()}%<br></div>
+                            </div>
+                            `
+                            
+                            row.innerHTML = html;
+                            holdingRows.appendChild(row);
+                        })
+                    }
+    
+                    compositionList(data, bodyRow)
+                }
+                else if(elementClass === ".credit-list") {
+                    data = weighted_exposure
+    
+                    const weightedExposureTable = document.querySelector('#weighted_exposure');
+                    // console.log('weightedExposureTable')
+                    // console.log(weightedExposureTable)
+                    
+                    if (weightedExposureTable) {
+                        const weightedExpRowsDiv = document.querySelector('#weighted-exp-table-rows');
+    
+                        // console.log('weightedExpRowsDiv')
+                        // console.log(weightedExpRowsDiv)
+                    
+                        
+                        while (weightedExpRowsDiv.lastChild) {
+                            if (weightedExpRowsDiv.lastChild.classList.contains('headers'))
+                                break
+                            else
+                                weightedExpRowsDiv.removeChild(weightedExpRowsDiv.lastChild);
+                        }
+    
+                        // console.log('data')
+                        // console.log(data)
+            
+                        data.forEach((item, index) => {
+                            const row = document.createElement('div');
+                            row.classList.add('table-row');
+                            
+                            // console.log(item)
+                            
+                            const html = `
+                            <div class="table-box _2">
+                                <div class="div-block-406 _2" style="margin-right: 8px;">
+                                    <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                                        <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index]}"></circle>
+                                    </svg>
+                                </div>
+                                <div class="table-data name"><strong class="bold-text">${item.key}<br></strong></div>
+                            </div>
+                            <div class="table-box _3">
+                                <div class="table-data name">${item.value.miietf}%</div>
+                            </div>
+                            <div class="table-box _3">
+                                <div class="table-data name">${item.value.kmi30}%</div>
+                            </div>
+                            <div class="table-box _3">
+                                <div class="table-data name">${item.value.weight}%</div>
+                            </div>
+                            `
+                            row.innerHTML = html;
+                            weightedExpRowsDiv.appendChild(row);
+                        })
+                    }
+                }
+                else {
+                    // console.log(elementClass)
+                    // console.log(data)
+                    compositionList(data, bodyRow) 
                 }
             }
-            else {
-                // console.log(elementClass)
-                // console.log(data)
-                compositionList(data, bodyRow) 
-            }
-        }
-        else { bodyRow.style.display = "none" }
-    });
-
+            else { bodyRow.style.display = "none" }
+        });
+    }
 
     // if (performances) {
     //     const performanceBodyRow = document.querySelector('.performance-body');
@@ -333,35 +334,35 @@ function renderLoop(data, airPerformances) {
     //     }
     // }
 
-    if (currentAssetAllocation) {
-        const portfolioDataContainer = document.querySelector('.portfolio-data-container');
-        if (portfolioDataContainer) {
-            while (portfolioDataContainer.firstChild) {
-                portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
-            }
-            currentAssetAllocation.forEach((data, index) => {
+    // if (currentAssetAllocation) {
+    //     const portfolioDataContainer = document.querySelector('.portfolio-data-container');
+    //     if (portfolioDataContainer) {
+    //         while (portfolioDataContainer.firstChild) {
+    //             portfolioDataContainer.removeChild(portfolioDataContainer.firstChild)
+    //         }
+    //         currentAssetAllocation.forEach((data, index) => {
 
-                // console.log(data)
+    //             // console.log(data)
                 
-                const row = document.createElement('div');
-                row.classList.add('table-item');
-                const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
-                const selectedColor = PIE_COLORS_NEW[index];
+    //             const row = document.createElement('div');
+    //             row.classList.add('table-item');
+    //             const returnVal = typeof (data.value) == 'string' ? data.value : (data.value).toFixed(2);
+    //             const selectedColor = PIE_COLORS_NEW[index];
 
-                const html = `
-                <div class="table-content-area">
-                    <div style="display: flex; gap: 14px">
-                        <div class="div-block-101" style="display: flex;">
-                            <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
-                        <div>
-                        <div class="text-block-37">${data.key}</div>
-                        <div class="text-block-38">${returnVal}%</div>
-                    </div>
-                </div>
-                `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
-            })
-        }
-    }
+    //             const html = `
+    //             <div class="table-content-area">
+    //                 <div style="display: flex; gap: 14px">
+    //                     <div class="div-block-101" style="display: flex;">
+    //                         <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+    //                     <div>
+    //                     <div class="text-block-37">${data.key}</div>
+    //                     <div class="text-block-38">${returnVal}%</div>
+    //                 </div>
+    //             </div>
+    //             `; row.innerHTML = html; portfolioDataContainer.appendChild(row)
+    //         })
+    //     }
+    // }
 
     function compositionList(data, container) {
         if (container) {
@@ -846,7 +847,7 @@ async function getFundData(airBase, airPerformances, productName) {
 
     // data.overAllCreditRating = overallAssetAllocationData;
 
-    renderLoop(data, airPerformances);
+    renderLoop(data, airPerformances, productName);
 
     // if (Object.keys(holding).length > 0) {
     //     holdingChartWrap.style.display = "none";
@@ -1010,87 +1011,6 @@ function addAssetAllocGraph(data) {
     		data: prev_month
         }]
     });
-    
-    // let series = [
-    //     {
-    //         name: 'MIIETF',
-    //         data: miietf_series,
-    //     },
-    //     {
-    //         name: 'Benchmark',
-    //         data: benchmark_series,
-    //     }
-    // ]
-
-    // if (productName === 'MIIETF') {
-    //     series.push({
-    //         name: 'KMI30',
-    //         data: kmi30_series
-    //     })
-    //     series.push({
-    //         name: 'Peer Avg.',
-    //         data: peer_series,
-    //     })
-    // }
-    // if (productName === 'MICF') {
-    //     series.push({
-    //         name: 'Peer Avg.',
-    //         data: peer_series,
-    //     })
-    // }
-
-    // console.log('series')
-    // console.log(series)
-    
-    // Highcharts.chart('perf-chart', {
-    //     chart: {
-    //         type: 'line'
-    //     },
-    //     title: {
-    //         text: null,
-    //     },
-    //     exporting: {
-    //         enabled: false  // Disable the exporting hamburger icon
-    //     },
-    //     xAxis: {
-    //         type: 'datetime'
-    //     },
-    //     yAxis: {
-    //         min: min,
-    //         max: max,
-    //         title: null,
-    //         gridLineWidth: 0
-    //     },
-    //     tooltip: {
-    //         shared: true,
-    //         headerFormat: '<b>{point.key}</b><br>',
-    //         xDateFormat: '%d %b %Y',
-    //         valueDecimals: 2
-    //         // pointFormat: '<b>{point.y:.2f}</b>'
-    //         // xDateFormat: moment(this.x, 'dddd, D MMM, HH:mm').format('D MMM YYYY')
-    //         // xDateFormat: console.log(this.x)
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     colors: PIE_COLORS_NEW,
-    //     plotOptions: {
-    //         line: {
-    //             fillOpacity: 0.2,
-    //             marker: {
-    //                 enabled: false,
-    //                 symbol: 'circle',
-    //                 radius: 2,
-    //                 states: {
-    //                     hover: {
-    //                         enabled: true
-    //                 	}
-    //               	}
-    //         	}
-    //         }
-    //     },
-    //     series: series
-    // }); 
 }
 
 async function getFundPrices(airBase, productName) {
