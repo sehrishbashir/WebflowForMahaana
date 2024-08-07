@@ -14,7 +14,7 @@ img:focus-visible {outline: none}
 .recharts-tooltip-item, .recharts-tooltip-label {font-family: 'Inter'; font-weight: 500; font-size: 14px; padding: 0 !important;     margin: 0 !important;}
 .micf-section {isolation: isolate;}
 .tab-link.w--current .tab-link-text {color: var(--primary-500);}
-.tooltip-content {font-family: poppins; font-size: 12px; font-weight: 500px; line-height: 14px; color: var(--white);}
+.tooltip-content {font-family: poppins; font-size: 12px; font-weight: 500px; line-height: 14px; color: #fff;}
 .tippy-tooltip {background-color: #616161 !important;}
 .tippy-arrow {border-right-color: #616161 !important;}
 ul.legends-list {padding-left: 0; display: flex; flex-wrap: wrap; justify-content: center; list-style: none;column-gap: 20px; row-gap: 10px;}
@@ -48,8 +48,8 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 .nav-button:hover .nav-button-link,
 .nav-button:hover svg path,
 .b2c-navlink { position: relative; padding: 0 }
-.sst-list-item.selected path { fill: var(--white); }
-.sst-list-item.selected { background-color: var(--white); }
+.sst-list-item.selected path { fill: #fff; }
+.sst-list-item.selected { background-color: #fff; }
 .sst-list-item:nth-child(1).selected { border: 1px solid #00338D; }
 .sst-list-item:nth-child(1).selected rect { fill: #00338D; }
 .sst-list-item:nth-child(2).selected { border: 1px solid #D1B000; }
@@ -102,13 +102,13 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 :where(.primary-button, .join-waitlist, .white-waitlist-button) svg path { transition: all 0s linear !important; }
 .primary-button:hover .primary-button-text {color: #432F86;}
 :where(.primary-button, .join-waitlist):hover svg path { color: #432F86; stroke: #432F86; }
-.white-waitlist-button:hover svg path { color: var(--white); stroke: var(--white); }
+.white-waitlist-button:hover svg path { color: #fff; stroke: #fff; }
 .slick-dots {bottom: -40px;}
 .team-slider .slick-dots li.slick-active button:before,
-.team-slider .slick-dots li button:before{color: var(--white);}
+.team-slider .slick-dots li button:before{color: #fff;}
 :is(.load-more, .b2c-home-arrow, .b2c-slick-arrow) {transition: all 0.3s ease; }
 .load-more:hover { background-color: #6941c6; }
-.load-more:hover :is(div, svg path) { color: #f9f5ff; stroke: var(--white);}
+.load-more:hover :is(div, svg path) { color: #f9f5ff; stroke: #fff;}
 .input-error, input:focus.input-error {border: 1px solid #FDA29B; box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05)}
 .sst-essentials1 .sst-inputscontainer { flex-direction: column; gap: 80px }
 .slider-item:nth-child(4) .image-7 { width: 100%; height: 240px; object-fit: contain; }
@@ -139,7 +139,7 @@ input[type=range] { outline: 0; border: 0; border-radius: 24px;  width: 100%; ma
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 input[type=range] { height: 8px; border: none; -webkit-appearance: none; background-color: #EAECF0; border-radius: 20px; }
 input[type=range]::-webkit-slider-runnable-track { height: 8px; -webkit-appearance: none; -webkit-transition: box-shadow 0.2s ease-in-out; transition: box-shadow 0.2s ease-in-out; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; cursor: ew-resize; border-radius: 50%; -webkit-transition: box-shadow 0.2s ease-in-out; transition: box-shadow 0.2s ease-in-out; position: relative; background-color: var(--white); top: -8px; box-shadow: inset 0 0 0 1.5px #43BED8; z-index: 9999;};
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; cursor: ew-resize; border-radius: 50%; -webkit-transition: box-shadow 0.2s ease-in-out; transition: box-shadow 0.2s ease-in-out; position: relative; background-color: #fff; top: -8px; box-shadow: inset 0 0 0 1.5px #43BED8; z-index: 9999;};
 }
 @media screen and (min-width: 1280px) {
 .responsive-container, .slider-container {max-width: 1280px;}
@@ -241,10 +241,10 @@ textarea::placeholder { color: var(--gray-500); }
 .facebook:hover { background-color: rgb(59, 89, 152); border-color: rgb(59, 89, 152); }
 .twitter:hover { background-color: rgb(0, 172, 238); border-color: rgb(0, 172, 238); }
 
-.linkedin:hover path { fill: var(--white); }
-.facebook:hover path { fill: var(--white); }
+.linkedin:hover path { fill: #fff; }
+.facebook:hover path { fill: #fff; }
 .facebook:hover path ~ path { fill: rgb(59, 89, 152); }
-.twitter:hover path { fill: var(--white); }
+.twitter:hover path { fill: #fff; }
 
 /* JOB OPENING TEMPLATE PAGE CSS */
 .job-content :is(p, ol, ul), .how-to-apply p { margin: 0 }
@@ -258,7 +258,7 @@ textarea::placeholder { color: var(--gray-500); }
 .secondary-slider .w-slider-dot.w-active { background-color: var(--primary-700); }
 
 .primary-slider .w-slider-dot { width: 65px; height: 8px; border-radius: 4px !important; background-color: rgba(255, 255, 255, 0.20); margin-left: 6px !important; margin-right: 6px !important; margin-bottom: 0;}
-.primary-slider .w-slider-dot.w-active { background-color: var(--white); }
+.primary-slider .w-slider-dot.w-active { background-color: #fff; }
 
 .w-slider-dot:focus { box-shadow: none; }
 
@@ -273,7 +273,7 @@ textarea::placeholder { color: var(--gray-500); }
 #contribution-chart .recharts-legend-wrapper { bottom: 0 !important; }
 #contribution-chart .recharts-legend-wrapper ul div { margin: 5px }
 #contribution-chart .recharts-legend-wrapper ul div div { width: 8px; height: 8px; margin-right: 8px; border-radius: 100%; }
-#contribution-chart .recharts-tooltip-wrapper { border-radius: 8px; padding: 12px; border: 1px solid #EAECF0; background: var(--white);}
+#contribution-chart .recharts-tooltip-wrapper { border-radius: 8px; padding: 12px; border: 1px solid #EAECF0; background: #fff;}
 #contribution-chart .recharts-tooltip-wrapper > div { display: flex; flex-direction: column; align-items: flex-start; gap: 8px;}
 #contribution-chart .recharts-tooltip-wrapper .year { line-height: 130%; letter-spacing: 0.17px; text-transform: capitalize; }
 #contribution-chart .tooltip-wrapper { display: flex; gap: 6px; align-items: flex-start; }
