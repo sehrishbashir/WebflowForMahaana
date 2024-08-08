@@ -1,40 +1,51 @@
 import os
+import simplejson as json
 from dotenv import load_dotenv
 from pyairtable import Api
 import requests
-# from webflow.client import Webflow
 
 AIRTABLE_BASE_ID = 'app9fpjsdlh5R7gsq'
 AIRTABLE_TABLE_ID = 'Adjust_nav_values'
+WEBFLOW_SITE_NAME = "Anas's Supercool Site"
 load_dotenv()
 
-# Airtable #
-############
+def get_webflow_site_data(): 
+    url = "https://api.webflow.com/v2/sites"
+
+    headers = {
+        "accept": "application/json",
+        "authorization": f"Bearer {os.environ['WEBFLOW_KEY']}"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return json.loads(response.text) 
+    else:
+        return None
+
+### Airtable
 
 airtable_api = Api(os.environ['AIRTABLE_KEY'])
 table = airtable_api.table(AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID)
 records = table.all()
 
-# for record in records:
-#     print(record)
+### Webflow
 
-###########
-# Webflow #
-###########
+site_resp = get_webflow_site_data()
 
-# 64525a82e6ab51cfbe7a1f51
+site_id = None
 
-url = "https://api.webflow.com/v2/sites"
+for site in site_resp['sites']:
+    if site['displayName'] == WEBFLOW_SITE_NAME:
+        site_id = site['id']
+    else:
+        print("Couldn't find selected webflow site")
+        exit()
 
-headers = {
-    "accept": "application/json",
-    "authorization": "Bearer 71032c45837440a1d709127be3bc3f518731841407fc4d4141d732aa3c25e70a"
-}
-response = requests.get(url, headers=headers)
+print(site_id)
 
-print(response.text)
-
-# url = "https://api.webflow.com/v2/sites/null/collections"
+# url = f"https://api.webflow.com/v2/sites/{site_id}/collections"
 # headers = {
 #     "accept": "application/json",
 #     "authorization": f"Bearer {os.environ['WEBFLOW_KEY']}"
