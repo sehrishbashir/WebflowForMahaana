@@ -5,9 +5,8 @@ from pyairtable import Api
 import requests
 
 AIRTABLE_BASE_ID = 'app9fpjsdlh5R7gsq'
-AIRTABLE_TABLE_ID = 'Adjust_nav_values'
+AIRTABLE_TABLE_ID = 'Adjust_nav_values copy'
 WEBFLOW_COLLECTION_ID = '66b4be6b03988ba8bc4ca48f'
-# WEBFLOW_SITE_NAME = "Anas's Supercool Site"
 load_dotenv()
 
 def get_webflow_site_data(): 
@@ -51,6 +50,35 @@ def delete_all_webflow_collection_items(item_ids):
         
         requests.delete(url, headers=headers)
 
+def add_items_to_webflow():
+    url = f"https://api.webflow.com/v2/collections/{WEBFLOW_COLLECTION_ID}/items"
+
+    payload = {
+        "isArchived": False,
+        "isDraft": True,
+        "fieldData": {
+            "name": "0",
+            "slug": "0",
+            "date": "2024-08-09T00:00:00.000Z",
+            "nav": 100,
+            "adjustnav": 100,
+            "benchmark": 100,
+            "kmi30": 100,
+            "peer": 100,
+        }
+    }
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "authorization": f"Bearer {os.environ['WEBFLOW_KEY']}"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+
+    if response.status_code == 202:
+        return json.loads(response.text) 
+    else:
+        return None
 
 ### Airtable
 
@@ -58,8 +86,8 @@ airtable_api = Api(os.environ['AIRTABLE_KEY'])
 table = airtable_api.table(AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID)
 records = table.all()
 
-# print('records')
-# print(records)
+print('records')
+print(records)
 
 ### Webflow
 
@@ -75,34 +103,10 @@ print(item_ids)
 
 delete_all_webflow_collection_items(item_ids)
 
+resp = add_items_to_webflow()
+print(resp)
 
 
-
-url = f"https://api.webflow.com/v2/collections/{WEBFLOW_COLLECTION_ID}/items"
-
-payload = {
-    "isArchived": False,
-    "isDraft": True,
-    "fieldData": {
-        "name": "0",
-        "slug": "0",
-        # "date": "10/11/2024",
-        "nav": 100,
-        # "adjusted_nav": 100,
-        # "benchmark": 100,
-        # "kmi30": 100,
-        "peer_avg": 100,
-    }
-}
-headers = {
-    "accept": "application/json",
-    "content-type": "application/json",
-    "authorization": "Bearer 25f9fc9e618e097bc4cc9f7956e2a90a3cbdcd8b0a3c1c1b4c6df91463957b7b"
-}
-
-response = requests.post(url, json=payload, headers=headers)
-
-print(response.text)
 
 
 
