@@ -448,9 +448,18 @@ function getOnPageData() {
     let price_data_html = document.querySelectorAll('#miietf-data .w-embed')
     console.log(price_data_html)
 
+    let price_data = []
     price_data_html.forEach(function (item, index) {
         console.log(item)
+        obj = JSON.parse(item.innerText.slice(1, -1))
+        
+        price_data.push(obj)
+
+        // let modifiedString = originalString.slice(1, -1);
     });
+
+    console.log('price_data')
+    console.log(price_data)
 }
 
 async function getFundData(airBase, airPerformances, productName) {
