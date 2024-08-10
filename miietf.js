@@ -444,6 +444,13 @@ function renderLoop(data, airPerformances, productName) {
 
 function getOnPageData() {
     console.log('hello')
+
+    let price_data_html = document.querySelectorAll('#miietf-data .w-embed')
+    console.log(price_data_html)
+
+    price_data_html.forEach(function (item, index) {
+        console.log(item)
+    });
 }
 
 async function getFundData(airBase, airPerformances, productName) {
