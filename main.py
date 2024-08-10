@@ -3,10 +3,11 @@ import simplejson as json
 from dotenv import load_dotenv
 from pyairtable import Api
 import requests
+from datetime import datetime
 
 AIRTABLE_BASE_ID = 'app9fpjsdlh5R7gsq'
 AIRTABLE_TABLE_ID = 'Adjust_nav_values copy'
-WEBFLOW_COLLECTION_ID = '66b4be6b03988ba8bc4ca48f'
+WEBFLOW_COLLECTION_ID = '66b62c95d2784eaeb57d21b9'
 load_dotenv()
 
 def get_webflow_site_data(): 
@@ -50,23 +51,60 @@ def delete_all_webflow_collection_items(item_ids):
         
         requests.delete(url, headers=headers)
 
-def add_items_to_webflow():
+def add_items_to_webflow(records):
     url = f"https://api.webflow.com/v2/collections/{WEBFLOW_COLLECTION_ID}/items"
 
-    payload = {
-        "isArchived": False,
-        "isDraft": True,
-        "fieldData": {
-            "name": "0",
-            "slug": "0",
-            "date": "2024-08-09T00:00:00.000Z",
-            "nav": 100,
-            "adjustnav": 100,
-            "benchmark": 100,
-            "kmi30": 100,
-            "peer": 100,
-        }
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "authorization": f"Bearer {os.environ['WEBFLOW_KEY']}"
     }
+
+    responses = []
+
+    i = 0
+    for record in records:
+        print(f'Uploading record {i}')
+
+        datetime_obj = datetime.strptime(record['fields']['date'], "%Y-%m-%d")
+        date_iso_format = f"{datetime_obj.isoformat()}.000Z" # format with miliseconds added in 
+
+        payload = {
+            "isArchived": False,
+            "isDraft": False,
+            "fieldData": {
+                "name": str(i),
+                "slug": str(i),
+                # "date": "2024-08-09T00:00:00.000Z",
+                "date": date_iso_format,
+                "miietf-nav": record['fields']['NAV'],
+                "miietf-adjustnav": record['fields']['navValue'],
+                "miietf-benchmark": record['fields']['performanceValue'],
+                "miietf-kmi30": record['fields']['kmi30'],
+                "miietf-peer": record['fields']['peer_avg'],
+            }
+        }
+    
+        response = requests.post(url, json=payload, headers=headers)
+
+        if response.status_code == 202:
+            responses.append(json.loads(response.text))
+        else:
+            print('Could not upload an item in collection')
+            print(response.text)
+            return None
+
+        i = i + 1
+
+    return responses
+
+def publish_all_webflow_items(item_ids):
+    url = f"https://api.webflow.com/v2/collections/{WEBFLOW_COLLECTION_ID}/items/publish"
+
+    print('item_ids')
+    print(item_ids)
+
+    payload = { "itemIds": item_ids }
     headers = {
         "accept": "application/json",
         "content-type": "application/json",
@@ -103,10 +141,20 @@ print(item_ids)
 
 delete_all_webflow_collection_items(item_ids)
 
-resp = add_items_to_webflow()
-print(resp)
+add_responses = add_items_to_webflow(records)
+print(add_responses)
 
+created_item_ids = []
+for response in add_responses:
+    created_item_ids.append(response['id'])
 
+print('created_item_ids')
+print(created_item_ids)
+
+creation_resp = publish_all_webflow_items(created_item_ids)
+
+print('creation_resp')
+print(creation_resp)
 
 
 
