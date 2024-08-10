@@ -451,7 +451,7 @@ function getOnPageData() {
     let price_data = []
     price_data_html.forEach(function (item, index) {
         console.log(item)
-        obj = JSON.parse(item.innerText.slice(1, -1))
+        obj = JSON.parse(item.innerText)
         
         price_data.push(obj)
 
