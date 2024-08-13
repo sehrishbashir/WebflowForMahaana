@@ -794,13 +794,13 @@ async function getFundData(airBase, airPerformances, productName) {
     }
 
     let appwOverview = {
-        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)'],
+        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
         description: null,
         name: 'Mahaana Islamic Index ETF',
         // navDate: "2024/07/18",
-        navDate: format_date(latest_date),
-        navPerUnit: latest_nav.toString(),
-        question: null,
+        navDate: null,
+        navPerUnit: null,
+        question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
     console.log(appwFundInfo)
