@@ -766,14 +766,16 @@ async function getFundData(airBase, airPerformances, productName) {
     // APPWRITE //
     //////////////
     let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
-    console.log('appw_data')
-    console.log(await appw_data.json())
+    appw_json = await appw_data.json()
+    
+    console.log('appw_json')
+    console.log(appw_json)
 
     let appwFundInfo = {
-        authorizedParticipant: appw_data.info[13].value,
-        benchmark: null,
+        authorizedParticipant: appw_json.info['Authorized Participant'],
+        benchmark: appw_json.info['Benchmark'],
         custodian: null,
-        fundAuditors: null,
+        fundAuditors: appw_json.info['Fund Auditors'],
         fundCategory: null,
         fundManager: null,
         fundStabilityRating: null,
