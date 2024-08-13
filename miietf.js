@@ -1179,14 +1179,19 @@ async function getFundPrices(airBase, productName, appw_price) {
     console.log(appw_price)
 
     appw_price_reformed = []
+    
     for (item in appw_price) {
+        console.log(appw_price[item].date)
+        
         appw_price_reformed.push({
-            date: item.date,
-            navValue: item.nav_adjusted,
-            performanceValue: item.benchmark,
-            kmi30: item.kmi30,
-            peer_avg: item.peer_avg,
+            date: appw_price[item].date,
+            navValue: appw_price[item].nav_adjusted,
+            performanceValue: appw_price[item].benchmark,
+            kmi30: appw_price[item].kmi30,
+            peer_avg: appw_price[item].peer_avg,
         })
+
+        break
     }
 
     console.log('appw_price_reformed')
