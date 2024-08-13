@@ -781,22 +781,22 @@ async function getFundData(airBase, airPerformances, productName) {
         fundStabilityRating: appw_json.info['Fund Stability Rating:'],
         investmentObjective: appw_json.info['Investment Objective'],
         launchDate: appw_json.info['Launch Date'],
-        managementFee: appw_json.info[''],
-        monthlyTotalExpenseRatio: appw_json.info[''],
+        managementFee: appw_json.info['Management Fee'],
+        monthlyTotalExpenseRatio: appw_json.info['Monthly Total Expense Ratio'],
         monthlyTotalExpenseRatioWithoutLevy: appw_json.info[''],
-        netAssets: appw_json.info[''],
+        netAssets: appw_json.info['Monthly Total Expense Ratio (without gov levy)'],
         shariahAdvisors: null,
         totalExpenseRatio: null,
         totalExpenseRatioWithoutLevy: null,
         weightedAverageTime: null,
-        yearlyTotalExpenseRatio: appw_json.info[''],
-        yearlyTotalExpenseRatioWithoutLevy: appw_json.info[''],
+        yearlyTotalExpenseRatio: appw_json.info['Yearly Total Expense Ratio'],
+        yearlyTotalExpenseRatioWithoutLevy: appw_json.info['Yearly Total Expense Ratio (without gov levy)'],
     }
 
     let appwOverview = {
-        assetCategory: null,
+        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)'],
         description: null,
-        name: null,
+        name: 'Mahaana Islamic Index ETF',
         // navDate: "2024/07/18",
         navDate: format_date(latest_date),
         navPerUnit: latest_nav.toString(),
@@ -804,6 +804,7 @@ async function getFundData(airBase, airPerformances, productName) {
     }
 
     console.log(appwFundInfo)
+    console.log(appwOverview)
     
     //////////////////////
     // MAHANANA BACKEND //
