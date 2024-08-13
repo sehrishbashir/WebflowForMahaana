@@ -761,7 +761,13 @@ async function getFundData(airBase, airPerformances, productName) {
 
     // console.log('airFMRs')
     // console.log(airFMRs)
-    
+
+    //////////////
+    // APPWRITE //
+    //////////////
+    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
+    console.log('appw_data')
+    console.log(await appw_data.json())
     
     //////////////////////
     // MAHANANA BACKEND //
