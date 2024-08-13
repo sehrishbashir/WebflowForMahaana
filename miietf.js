@@ -1172,7 +1172,10 @@ function addAssetAllocGraph(data) {
     });
 }
 
-async function getFundPrices(airBase, productName) {
+async function getFundPrices(airBase, productName, appw_price) {
+    console.log('appw_price')
+    console.log(appw_price)
+    
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
@@ -1859,8 +1862,12 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let appwData = await getAppWriteData(productName)
-        // let airPerformances = await getFundPrices(miietfBase, productName)
-        await getFundData(miietfBase, airPerformances, productName)
+
+        console.log('appwData')
+        console.log(appwData)
+        
+        let airPerformances = await getFundPrices(miietfBase, productName, appwData)
+        // await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
