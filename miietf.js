@@ -462,6 +462,50 @@ function getOnPageData() {
     console.log(price_data)
 }
 
+async function getAppWriteData(productName) {
+    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
+    appw_json = await appw_data.json()
+    
+    console.log('appw_json')
+    console.log(appw_json)
+    
+    let appwFundInfo = {
+        authorizedParticipant: appw_json.info['Authorized Participant'],
+        benchmark: appw_json.info['Benchmark'],
+        custodian: null,
+        fundAuditors: appw_json.info['Fund Auditors'],
+        fundCategory: appw_json.info['Fund Category'],
+        fundManager: appw_json.info['Fund manager'],
+        fundStabilityRating: appw_json.info['Fund Stability Rating'],
+        investmentObjective: appw_json.info['Investment Objective'],
+        launchDate: appw_json.info['Launch Date'],
+        managementFee: appw_json.info['Management Fee'],
+        monthlyTotalExpenseRatio: appw_json.info['Monthly Total Expense Ratio'],
+        monthlyTotalExpenseRatioWithoutLevy: appw_json.info['Monthly Total Expense Ratio (without gov levy)'],
+        netAssets: appw_json.info['Net Assets'],
+        shariahAdvisors: null,
+        totalExpenseRatio: null,
+        totalExpenseRatioWithoutLevy: null,
+        weightedAverageTime: null,
+        yearlyTotalExpenseRatio: appw_json.info['Yearly Total Expense Ratio'],
+        yearlyTotalExpenseRatioWithoutLevy: appw_json.info['Yearly Total Expense Ratio (without gov levy)'],
+    }
+
+    let appwOverview = {
+        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
+        description: null,
+        name: 'Mahaana Islamic Index ETF',
+        // navDate: "2024/07/18",
+        navDate: null,
+        navPerUnit: null,
+        question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
+    }
+
+    console.log(appwFundInfo)
+    console.log(appwOverview)   
+}
+
+
 async function getFundData(airBase, airPerformances, productName) {
     // try {
     
@@ -762,50 +806,6 @@ async function getFundData(airBase, airPerformances, productName) {
     // console.log('airFMRs')
     // console.log(airFMRs)
 
-    //////////////
-    // APPWRITE //
-    //////////////
-    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
-    appw_json = await appw_data.json()
-    
-    console.log('appw_json')
-    console.log(appw_json)
-
-    let appwFundInfo = {
-        authorizedParticipant: appw_json.info['Authorized Participant'],
-        benchmark: appw_json.info['Benchmark'],
-        custodian: null,
-        fundAuditors: appw_json.info['Fund Auditors'],
-        fundCategory: appw_json.info['Fund Category'],
-        fundManager: appw_json.info['Fund manager'],
-        fundStabilityRating: appw_json.info['Fund Stability Rating'],
-        investmentObjective: appw_json.info['Investment Objective'],
-        launchDate: appw_json.info['Launch Date'],
-        managementFee: appw_json.info['Management Fee'],
-        monthlyTotalExpenseRatio: appw_json.info['Monthly Total Expense Ratio'],
-        monthlyTotalExpenseRatioWithoutLevy: appw_json.info['Monthly Total Expense Ratio (without gov levy)'],
-        netAssets: appw_json.info['Net Assets'],
-        shariahAdvisors: null,
-        totalExpenseRatio: null,
-        totalExpenseRatioWithoutLevy: null,
-        weightedAverageTime: null,
-        yearlyTotalExpenseRatio: appw_json.info['Yearly Total Expense Ratio'],
-        yearlyTotalExpenseRatioWithoutLevy: appw_json.info['Yearly Total Expense Ratio (without gov levy)'],
-    }
-
-    let appwOverview = {
-        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
-        description: null,
-        name: 'Mahaana Islamic Index ETF',
-        // navDate: "2024/07/18",
-        navDate: null,
-        navPerUnit: null,
-        question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
-    }
-
-    console.log(appwFundInfo)
-    console.log(appwOverview)
-    
     //////////////////////
     // MAHANANA BACKEND //
     //////////////////////
@@ -1858,7 +1858,8 @@ async function main() {
     console.log(productName)
 
     if (productName === 'MIIETF') {
-        let airPerformances = await getFundPrices(miietfBase, productName)
+        let appwData = await getAppWriteData(productName)
+        // let airPerformances = await getFundPrices(miietfBase, productName)
         await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
