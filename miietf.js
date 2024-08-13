@@ -466,8 +466,8 @@ async function getAppWriteData(productName) {
     let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
     appw_json = await appw_data.json()
     
-    console.log('appw_json')
-    console.log(appw_json)
+    // console.log('appw_json')
+    // console.log(appw_json)
     
     let appwFundInfo = {
         authorizedParticipant: appw_json.info['Authorized Participant'],
@@ -501,8 +501,8 @@ async function getAppWriteData(productName) {
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
-    console.log(appwFundInfo)
-    console.log(appwOverview)   
+    // console.log(appwFundInfo)
+    // console.log(appwOverview)   
 
     return appw_json
 }
@@ -1177,6 +1177,21 @@ function addAssetAllocGraph(data) {
 async function getFundPrices(airBase, productName, appw_price) {
     console.log('appw_price')
     console.log(appw_price)
+
+    appw_price_reformed = []
+    for (item in appw_price) {
+        appw_price_reformed.push({
+            date: item.date,
+            navValue: item.nav_adjusted,
+            performanceValue: item.benchmark,
+            kmi30: item.kmi30,
+            peer_avg: item.peer_avg,
+        })
+    }
+
+    console.log('appw_price_reformed')
+    console.log(appw_price_reformed)
+    
     
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
