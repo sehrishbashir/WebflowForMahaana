@@ -768,6 +768,40 @@ async function getFundData(airBase, airPerformances, productName) {
     let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
     console.log('appw_data')
     console.log(await appw_data.json())
+
+    let appwFundInfo = {
+        authorizedParticipant: appw_data.info[13].value,
+        benchmark: null,
+        custodian: null,
+        fundAuditors: null,
+        fundCategory: null,
+        fundManager: null,
+        fundStabilityRating: null,
+        investmentObjective: null,
+        launchDate: null,
+        managementFee: null,
+        monthlyTotalExpenseRatio: null,
+        monthlyTotalExpenseRatioWithoutLevy: null,
+        netAssets: null,
+        shariahAdvisors: null,
+        totalExpenseRatio: null,
+        totalExpenseRatioWithoutLevy: null,
+        weightedAverageTime: null,
+        yearlyTotalExpenseRatio: null,
+        yearlyTotalExpenseRatioWithoutLevy: null,
+    }
+
+    let appwOverview = {
+        assetCategory: null,
+        description: null,
+        name: null,
+        // navDate: "2024/07/18",
+        navDate: format_date(latest_date),
+        navPerUnit: latest_nav.toString(),
+        question: null,
+    }
+
+    console.log(appwFundInfo)
     
     //////////////////////
     // MAHANANA BACKEND //
