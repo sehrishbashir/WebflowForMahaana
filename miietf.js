@@ -1175,23 +1175,22 @@ function addAssetAllocGraph(data) {
 }
 
 async function getFundPrices(airBase, productName, appw_price) {
-    console.log('appw_price')
-    console.log(appw_price)
+    // console.log('appw_price')
+    // console.log(appw_price)
 
     appw_price_reformed = []
     
     for (item in appw_price) {
-        console.log(appw_price[item].date)
+        let d = new Date(appw_price[item].date)
+        let date_str = moment(d).format('DD/MM/YYYY');
         
         appw_price_reformed.push({
-            date: appw_price[item].date,
+            date: date_str,
             navValue: appw_price[item].nav_adjusted,
             performanceValue: appw_price[item].benchmark,
             kmi30: appw_price[item].kmi30,
             peer_avg: appw_price[item].peer_avg,
         })
-
-        break
     }
 
     console.log('appw_price_reformed')
@@ -1231,8 +1230,8 @@ async function getFundPrices(airBase, productName, appw_price) {
     console.log('airPerfData')
     console.log(airPerfData)
     
-    // renderFundChart(airPerfData);
-    renderPerfChart(airPerfData, productName)
+    // renderPerfChart(airPerfData, productName)
+    renderPerfChart(appw_price_reformed, productName)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
     const lastDate = airPerfData[airPerfData.length - 1].date;
