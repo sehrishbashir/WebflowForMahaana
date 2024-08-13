@@ -466,8 +466,8 @@ async function getAppWriteData(productName) {
     let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
     appw_json = await appw_data.json()
     
-    // console.log('appw_json')
-    // console.log(appw_json)
+    console.log('appw_json')
+    console.log(appw_json)
     
     let appwFundInfo = {
         authorizedParticipant: appw_json.info['Authorized Participant'],
