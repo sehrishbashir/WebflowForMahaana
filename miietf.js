@@ -503,6 +503,8 @@ async function getAppWriteData(productName) {
 
     console.log(appwFundInfo)
     console.log(appwOverview)   
+
+    return appw_json
 }
 
 
@@ -1862,11 +1864,8 @@ async function main() {
 
     if (productName === 'MIIETF') {
         let appwData = await getAppWriteData(productName)
-
-        console.log('appwData')
-        console.log(appwData)
         
-        let airPerformances = await getFundPrices(miietfBase, productName, appwData)
+        let airPerformances = await getFundPrices(miietfBase, productName, appwData.price)
         // await getFundData(miietfBase, airPerformances, productName)
     } 
     else if (productName === 'MICF') {
