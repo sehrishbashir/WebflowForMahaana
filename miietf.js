@@ -524,15 +524,15 @@ async function getFundData(airBase, airPerformances, productName, appwData) {
     for (record_num in appwData.perf) {
         appwPerformances.push({
             days30: null,
-            days90: appwData.perf[record_num]['90d'],
-            days365: appwData.perf[record_num]['1y'],
-            inception: appwData.perf[record_num]['inception'],
+            days90: (appwData.perf[record_num]['90d'] * 100).toFixed(2) + "%",
+            days365: (appwData.perf[record_num]['1y'] * 100).toFixed(2) + "%",
+            inception: (appwData.perf[record_num]['inception'] * 100).toFixed(2) + "%",
             lastUpdatedOn: null,
-            mtd: appwData.perf[record_num]['mtd'],
+            mtd: (appwData.perf[record_num]['mtd'] * 100).toFixed(2) + "%",
             name: appwData.perf[record_num]['name'],
             years3: null,
             years5: null,
-            ytd: appwData.perf[record_num]['ytd'],
+            ytd: (appwData.perf[record_num]['ytd'] * 100).toFixed(2) + "%",
         })
     }
 
