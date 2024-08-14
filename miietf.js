@@ -483,7 +483,7 @@ async function getFundData(airBase, airPerformances, productName, appwData) {
 
     /////////////////////////
     // FundInfo & Overview //
-
+    
     let appwFundInfo = {
         authorizedParticipant: appw_json.info['Authorized Participant'],
         benchmark: appw_json.info['Benchmark'],
@@ -517,7 +517,27 @@ async function getFundData(airBase, airPerformances, productName, appwData) {
     }
 
     console.log(appwFundInfo)
-    console.log(appwOverview) 
+    console.log(appwOverview)
+
+    const appwPerformances = []
+
+    for (record_num in appwData.perf) {
+        appwPerformances.push({
+            days30: null,
+            days90: appwData.perf[record_num]['90d'],
+            days365: appwData.perf[record_num]['1y'],
+            inception: appwData.perf[record_num]['inception'],
+            lastUpdatedOn: null,
+            mtd: appwData.perf[record_num]['mtd'],
+            name: appwData.perf[record_num]['name'],
+            years3: null,
+            years5: null,
+            ytd: appwData.perf[record_num]['ytd'],
+        })
+    }
+
+    console.log('appwPerformances')
+    console.log(appwPerformances)
     
     let airFundInfo = {
         authorizedParticipant: null,
