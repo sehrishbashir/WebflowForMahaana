@@ -516,8 +516,14 @@ async function getFundData(airBase, productName, appwData) {
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
+    // airFmrDate = format_date(new Date(record.fields.Value))
+    appwFmrDate = format_date(new Date(appw_json.info['Submission date']))
+
     console.log(appwFundInfo)
     console.log(appwOverview)
+
+    console.log('appwFmrDate')
+    console.log(appwFmrDate)
 
     const appwPerformances = []
 
@@ -908,7 +914,7 @@ async function getFundData(airBase, productName, appwData) {
         // distribution: dataJson.distribution,
         distributions: appwDistributions,
         etfBenchmarkData: null,
-        fmrDate: airFmrDate, 
+        fmrDate: appwFmrDate, 
         fundInfo: appwFundInfo,
         holding: appwHolding, 
         lastAssetAllocation: null,
