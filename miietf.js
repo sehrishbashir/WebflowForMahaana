@@ -561,6 +561,30 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwHolding')
     console.log(appwHolding)
 
+    let appwDistributions = []
+
+    for (record_num in appwData.distribution) {
+        let d = new Date(appwData.distribution[record_num].payout_date)
+        let date_str = moment(z).format("DD/MM/YYYY HH:mm:ss")
+        
+        appwDistributions.push({
+            exNav: appwData.distribution[record_num].ex_nav,
+            payoutDate: date_str,
+            payoutPerUnit: appwData.distribution[record_num].payout_per_unit,
+            recordDate: null,
+            type: "",
+            yield: appwData.distribution[record_num].yield * 100,
+        })
+    }
+
+    console.log('appwDistributions')
+    console.log(appwDistributions)
+
+
+
+
+    
+
     let airFundInfo = {
         authorizedParticipant: null,
         benchmark: null,
@@ -882,7 +906,7 @@ async function getFundData(airBase, productName, appwData) {
         distribution: null,
         // currentAssetAllocation: dataJson.currentAssetAllocation,
         // distribution: dataJson.distribution,
-        distributions: airDistributions,
+        distributions: appwDistributions,
         etfBenchmarkData: null,
         fmrDate: airFmrDate, 
         fundInfo: appwFundInfo,
