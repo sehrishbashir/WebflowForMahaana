@@ -538,6 +538,31 @@ async function getFundData(airBase, productName, appwData) {
 
     console.log('appwPerformances')
     console.log(appwPerformances)
+
+    let appwCreditRating = {}
+
+    for (record_num in appwData.weighted_expo) {
+        key = appwData.weighted_expo[record_num].key
+        value = appwData.weighted_expo[record_num].miietf.toFixed(2)
+        appwCreditRating[key] = value 
+    }
+
+    console.log('appwCreditRating')
+    console.log(appwCreditRating)
+
+    let appwHolding = {}
+
+    for (record_num in appwData.holdings) {
+        key = appwData.holdings[record_num].key
+        value = appwData.holdings[record_num].holding.toFixed(2) + "%"
+        appwHolding[key] = value 
+    }
+
+    console.log('appwHolding')
+    console.log(appwHolding)
+
+
+    
     
     let airFundInfo = {
         authorizedParticipant: null,
@@ -853,10 +878,10 @@ async function getFundData(airBase, productName, appwData) {
         // id: dataJson.id,
         navDate: format_date(latest_date),
         benchmarkData: null,
-        creditRating: airCreditRatingGraph,
-        creditQuality: airCreditQuality, 
+        creditRating: appwCreditRating,
+        creditQuality: airCreditQuality, // MICF
         currentAssetAllocation: null,
-        assetAllocation: airAssetAlloc,
+        assetAllocation: airAssetAlloc, // MICF
         distribution: null,
         // currentAssetAllocation: dataJson.currentAssetAllocation,
         // distribution: dataJson.distribution,
@@ -996,8 +1021,8 @@ async function getFundData(airBase, productName, appwData) {
     }
     
     // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
-    data.creditRating = transformData(creditRating, 'table');
-    data.holding = transformData(holding, 'table');
+    // data.creditRating = transformData(creditRating, 'table');
+    // data.holding = transformData(holding, 'table');
 
     if (productName === 'MICF') {
         addAssetAllocGraph(data.assetAllocation)
