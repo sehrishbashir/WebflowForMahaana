@@ -294,8 +294,8 @@ function renderLoop(data, airPerformances, productName) {
     // }
 
     if(creditQuality) {
-        // console.log('creditQuality')
-        // console.log(creditQuality)
+        console.log('creditQuality')
+        console.log(creditQuality)
 
         const creditQualityRows = document.querySelector("#credit-quality-table-rows");
 
@@ -511,8 +511,8 @@ async function getFundData(airBase, productName, appwData) {
         description: null,
         name: 'Mahaana Islamic Index ETF',
         // navDate: "2024/07/18",
-        navDate: null,
-        navPerUnit: null,
+        navDate: format_date(latest_date),
+        navPerUnit: latest_nav.toString(),
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
@@ -937,7 +937,7 @@ async function getFundData(airBase, productName, appwData) {
         },
         // monthToDateExpense: dataJson.monthToDateExpense,
         offeringDocumentList: appwFmr,
-        overview: airOverview,
+        overview: appwOverview,
         performances: appwPerformances.slice(0, 2),
         // performances: dataJson.performances,
     }
@@ -1282,9 +1282,13 @@ async function getFundPrices(airBase, productName, appw_price) {
     console.log(appw_price_reformed)
 
     latest_date = new Date(appw_price[appw_price.length - 1].date)
+    latest_nav = appw_price[appw_price.length - 1].nav
 
     console.log('latest_date')
     console.log(latest_date)
+
+    console.log('latest_nav')
+    console.log(latest_nav)
     
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
