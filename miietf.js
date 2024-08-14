@@ -543,16 +543,29 @@ async function getFundData(airBase, productName, appwData) {
     console.log(appwPerformances)
 
     let appwCreditRating = {}
+    let appwWeightedExpo = []
 
     for (record_num in appwData.weighted_expo) {
         key = appwData.weighted_expo[record_num].key
         value = appwData.weighted_expo[record_num].miietf.toFixed(2)
         appwCreditRating[key] = value 
+
+        appwWeightedExpo.push({
+            key: key,
+            value: {
+                miietf: value,
+                kmi30: appwData.weighted_expo[record_num].kmi30.toFixed(2),
+                weight: appwData.weighted_expo[record_num].weight.toFixed(2),
+            }
+        })
     }
 
     console.log('appwCreditRating')
     console.log(appwCreditRating)
 
+    console.log('appwWeightedExpo')
+    console.log(appwWeightedExpo)
+    
     let appwHolding = {}
 
     for (record_num in appwData.holdings) {
@@ -937,7 +950,7 @@ async function getFundData(airBase, productName, appwData) {
         overview: appwOverview,
         performances: appwPerformances.slice(0, 2),
         // performances: dataJson.performances,
-        weighted_exposure: airCreditRating,
+        weighted_exposure: appwWeightedExpo,
     }
 
     console.log('data')
