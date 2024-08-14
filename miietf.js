@@ -565,7 +565,7 @@ async function getFundData(airBase, productName, appwData) {
 
     for (record_num in appwData.distribution) {
         let d = new Date(appwData.distribution[record_num].payout_date)
-        let date_str = moment(z).format("DD/MM/YYYY HH:mm:ss")
+        let date_str = moment(d).format("DD/MM/YYYY HH:mm:ss")
         
         appwDistributions.push({
             exNav: appwData.distribution[record_num].ex_nav,
