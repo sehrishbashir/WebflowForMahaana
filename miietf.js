@@ -868,13 +868,14 @@ async function getFundData(airBase, airPerformances, productName, appwData) {
         lastAssetAllocation: null,
         // lastAssetAllocation: dataJson.lastAssetAllocation,
         monthToDateExpense: {
-            key: Number(airPerformances[0].mtd.replace("%", "")),
+            // key: Number(airPerformances[0].mtd.replace("%", "")),
+            key: Number(appwPerformances[0].mtd.replace("%", "")),
             value: null
         },
         // monthToDateExpense: dataJson.monthToDateExpense,
         offeringDocumentList: airFMRs,
         overview: airOverview,
-        performances: airPerformances.slice(0, 2),
+        performances: appwPerformances.slice(0, 2),
         // performances: dataJson.performances,
     }
 
@@ -1025,7 +1026,7 @@ async function getFundData(airBase, airPerformances, productName, appwData) {
 
     // data.overAllCreditRating = overallAssetAllocationData;
 
-    renderLoop(data, airPerformances, productName);
+    renderLoop(data, appwPerformances, productName);
 
     // if (Object.keys(holding).length > 0) {
     //     holdingChartWrap.style.display = "none";
