@@ -8,8 +8,6 @@ let latest_nav = null
 let latest_date = null
 let loader = null
 
-let weighted_exposure = null
-
 // const creditChartWrap = document.querySelector('#credit-rating-chart-wrapper .flex-block-23');
 // const creditList = document.querySelector('#credit-rating-chart-wrapper .credit-list');
 // const creditChart = document.querySelector('#credit-quality-chart');
@@ -63,7 +61,7 @@ function createLoader() {
 const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
 function renderLoop(data, airPerformances, productName) {
-    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation, creditQuality } = data;
+    let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation, creditQuality, weighted_exposure } = data;
 
     performances = airPerformances
 
@@ -294,8 +292,8 @@ function renderLoop(data, airPerformances, productName) {
     // }
 
     if(creditQuality) {
-        console.log('creditQuality')
-        console.log(creditQuality)
+        // console.log('creditQuality')
+        // console.log(creditQuality)
 
         const creditQualityRows = document.querySelector("#credit-quality-table-rows");
 
@@ -472,7 +470,6 @@ async function getAppWriteData(productName) {
 
     return appw_json
 }
-
 
 async function getFundData(airBase, productName, appwData) {
     // try {
@@ -940,6 +937,7 @@ async function getFundData(airBase, productName, appwData) {
         overview: appwOverview,
         performances: appwPerformances.slice(0, 2),
         // performances: dataJson.performances,
+        weighted_exposure: airCreditRating,
     }
 
     console.log('data')
