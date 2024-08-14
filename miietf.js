@@ -466,9 +466,23 @@ async function getAppWriteData(productName) {
     let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
     appw_json = await appw_data.json()
     
-    console.log('appw_json')
-    console.log(appw_json)
+    // console.log('appw_json')
+    // console.log(appw_json)  
+
+    return appw_json
+}
+
+
+async function getFundData(airBase, airPerformances, productName, appwData) {
+    // try {
     
+    //////////////
+    // AIRTABLE //
+    //////////////
+
+    /////////////////////////
+    // FundInfo & Overview //
+
     let appwFundInfo = {
         authorizedParticipant: appw_json.info['Authorized Participant'],
         benchmark: appw_json.info['Benchmark'],
@@ -501,22 +515,8 @@ async function getAppWriteData(productName) {
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
-    // console.log(appwFundInfo)
-    // console.log(appwOverview)   
-
-    return appw_json
-}
-
-
-async function getFundData(airBase, airPerformances, productName) {
-    // try {
-    
-    //////////////
-    // AIRTABLE //
-    //////////////
-
-    /////////////////////////
-    // FundInfo & Overview //
+    console.log(appwFundInfo)
+    console.log(appwOverview) 
     
     let airFundInfo = {
         authorizedParticipant: null,
@@ -852,7 +852,7 @@ async function getFundData(airBase, airPerformances, productName) {
         },
         // monthToDateExpense: dataJson.monthToDateExpense,
         offeringDocumentList: airFMRs,
-        overview: airOverview,
+        overview: appwOverview,
         performances: airPerformances.slice(0, 2),
         // performances: dataJson.performances,
     }
@@ -1434,7 +1434,7 @@ async function main() {
         let appwData = await getAppWriteData(productName)
         
         getFundPrices(miietfBase, productName, appwData.price)
-        // await getFundData(miietfBase, airPerformances, productName)
+        await getFundData(miietfBase, airPerformances, productName, appwData)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
