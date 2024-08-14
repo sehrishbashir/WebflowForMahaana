@@ -1263,7 +1263,11 @@ async function getFundPrices(airBase, productName, appw_price) {
 
     console.log('appw_price_reformed')
     console.log(appw_price_reformed)
-    
+
+    latest_date = new Date(appw_price[appw_price.length - 1].date)
+
+    console.log('latest_date')
+    console.log(latest_date)
     
     let airPerfData = []
     const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
