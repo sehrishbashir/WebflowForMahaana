@@ -474,7 +474,7 @@ async function getAppWriteData(productName) {
 }
 
 
-async function getFundData(airBase, airPerformances, productName, appwData) {
+async function getFundData(airBase, productName, appwData) {
     // try {
     
     //////////////
@@ -1909,7 +1909,7 @@ async function main() {
         let appwData = await getAppWriteData(productName)
         
         let airPerformances = await getFundPrices(miietfBase, productName, appwData.price)
-        await getFundData(miietfBase, airPerformances, productName, appwData)
+        await getFundData(miietfBase, productName, appwData)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
