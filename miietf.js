@@ -442,6 +442,7 @@ function renderLoop(data, airPerformances, productName) {
     }
 }
 
+// GOTO: delete
 function getOnPageData() {
     console.log('hello')
 
@@ -467,8 +468,22 @@ async function getAppWriteData(productName) {
     appw_json = await appw_data.json()
     
     console.log('appw_json')
-    console.log(appw_json)
+    console.log(appw_json)  
+
+    return appw_json
+}
+
+
+async function getFundData(airBase, airPerformances, productName, appwData) {
+    // try {
     
+    //////////////
+    // AIRTABLE //
+    //////////////
+
+    /////////////////////////
+    // FundInfo & Overview //
+
     let appwFundInfo = {
         authorizedParticipant: appw_json.info['Authorized Participant'],
         benchmark: appw_json.info['Benchmark'],
@@ -501,22 +516,8 @@ async function getAppWriteData(productName) {
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
-    // console.log(appwFundInfo)
-    // console.log(appwOverview)   
-
-    return appw_json
-}
-
-
-async function getFundData(airBase, airPerformances, productName) {
-    // try {
-    
-    //////////////
-    // AIRTABLE //
-    //////////////
-
-    /////////////////////////
-    // FundInfo & Overview //
+    console.log(appwFundInfo)
+    console.log(appwOverview) 
     
     let airFundInfo = {
         authorizedParticipant: null,
@@ -1234,7 +1235,8 @@ async function getFundPrices(airBase, productName, appw_price) {
     renderPerfChart(appw_price_reformed, productName)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
-    const lastDate = airPerfData[airPerfData.length - 1].date;
+    // const lastDate = airPerfData[airPerfData.length - 1].date;
+    const lastDate = appw_price_reformed[appw_price_reformed.length - 1].date
     if (totalReturnDate) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
@@ -1872,6 +1874,7 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
+    // GOTO: delete
     // getOnPageData()
 
     let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
@@ -1885,7 +1888,7 @@ async function main() {
         let appwData = await getAppWriteData(productName)
         
         let airPerformances = await getFundPrices(miietfBase, productName, appwData.price)
-        // await getFundData(miietfBase, airPerformances, productName)
+        await getFundData(miietfBase, airPerformances, productName, appwData)
     } 
     else if (productName === 'MICF') {
         let airPerformances = await getFundPrices(micfBase, productName)
