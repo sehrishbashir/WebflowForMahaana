@@ -554,16 +554,13 @@ async function getFundData(airBase, productName, appwData) {
 
     for (record_num in appwData.holdings) {
         key = appwData.holdings[record_num].key
-        value = appwData.holdings[record_num].holding.toFixed(2) + "%"
+        value = (appwData.holdings[record_num].holding * 100).toFixed(2) + "%"
         appwHolding[key] = value 
     }
 
     console.log('appwHolding')
     console.log(appwHolding)
 
-
-    
-    
     let airFundInfo = {
         authorizedParticipant: null,
         benchmark: null,
@@ -889,7 +886,7 @@ async function getFundData(airBase, productName, appwData) {
         etfBenchmarkData: null,
         fmrDate: airFmrDate, 
         fundInfo: appwFundInfo,
-        holding: airHoldings, 
+        holding: appwHolding, 
         lastAssetAllocation: null,
         // lastAssetAllocation: dataJson.lastAssetAllocation,
         monthToDateExpense: {
@@ -1021,8 +1018,8 @@ async function getFundData(airBase, productName, appwData) {
     }
     
     // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
-    // data.creditRating = transformData(creditRating, 'table');
-    // data.holding = transformData(holding, 'table');
+    data.creditRating = transformData(creditRating, 'table');
+    data.holding = transformData(holding, 'table');
 
     if (productName === 'MICF') {
         addAssetAllocGraph(data.assetAllocation)
