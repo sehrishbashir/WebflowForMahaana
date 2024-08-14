@@ -586,7 +586,18 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwDistributions')
     console.log(appwDistributions)
 
+    let appwFmr = []
 
+    for (record_num in appwData.fmr) {
+        appwFmr.push({
+            key: appwData.fmr[record_num].key.replaceAll(" ", "_") + ".pdf",
+            value: null,
+            name: appwData.fmr[record_num].key
+        })
+    }
+
+    console.log('appwFmr')
+    console.log(appwFmr)
 
 
     
@@ -925,7 +936,7 @@ async function getFundData(airBase, productName, appwData) {
             value: null
         },
         // monthToDateExpense: dataJson.monthToDateExpense,
-        offeringDocumentList: airFMRs,
+        offeringDocumentList: appwFmr,
         overview: airOverview,
         performances: appwPerformances.slice(0, 2),
         // performances: dataJson.performances,
