@@ -2075,7 +2075,7 @@ function displayReports(reportsData) {
                 </div>
             `;
             
-            row.innerHTML = html; reportsBodyContainer.appendChild(row)
+            row.innerHTML = html; reportsBodyContainer.appendChild(row) 
         })
     }
 
