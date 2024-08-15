@@ -500,10 +500,10 @@ async function getFundData(airBase, productName, appwData) {
         monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
         monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
         netAssets: appwData.info['Net Assets'],
-        shariahAdvisors: null,
+        shariahAdvisors: appwData.info['Shariah Advisors'],
         totalExpenseRatio: null,
         totalExpenseRatioWithoutLevy: null,
-        weightedAverageTime: null,
+        weightedAverageTime: appwData.info['Weighted Average Time to Maturity (Days)'],
         yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
         yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
     }
