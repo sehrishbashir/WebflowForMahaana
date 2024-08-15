@@ -487,31 +487,31 @@ async function getFundData(airBase, productName, appwData) {
     // FundInfo & Overview //
     
     let appwFundInfo = {
-        authorizedParticipant: appw_json.info['Authorized Participant'],
-        benchmark: appw_json.info['Benchmark'],
+        authorizedParticipant: appwData.info['Authorized Participant'],
+        benchmark: appwData.info['Benchmark'],
         custodian: null,
-        fundAuditors: appw_json.info['Fund Auditors'],
-        fundCategory: appw_json.info['Fund Category'],
-        fundManager: appw_json.info['Fund manager'],
-        fundStabilityRating: appw_json.info['Fund Stability Rating'],
-        investmentObjective: appw_json.info['Investment Objective'],
-        launchDate: appw_json.info['Launch Date'],
-        managementFee: appw_json.info['Management Fee'],
-        monthlyTotalExpenseRatio: appw_json.info['Monthly Total Expense Ratio'],
-        monthlyTotalExpenseRatioWithoutLevy: appw_json.info['Monthly Total Expense Ratio (without gov levy)'],
-        netAssets: appw_json.info['Net Assets'],
+        fundAuditors: appwData.info['Fund Auditors'],
+        fundCategory: appwData.info['Fund Category'],
+        fundManager: appwData.info['Fund manager'],
+        fundStabilityRating: appwData.info['Fund Stability Rating'],
+        investmentObjective: appwData.info['Investment Objective'],
+        launchDate: appwData.info['Launch Date'],
+        managementFee: appwData.info['Management Fee'],
+        monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
+        monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
+        netAssets: appwData.info['Net Assets'],
         shariahAdvisors: null,
         totalExpenseRatio: null,
         totalExpenseRatioWithoutLevy: null,
         weightedAverageTime: null,
-        yearlyTotalExpenseRatio: appw_json.info['Yearly Total Expense Ratio'],
-        yearlyTotalExpenseRatioWithoutLevy: appw_json.info['Yearly Total Expense Ratio (without gov levy)'],
+        yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
+        yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
     }
-
+    
     let appwOverview = {
-        assetCategory: appw_json.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
+        assetCategory: appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
         description: null,
-        name: 'Mahaana Islamic Index ETF',
+        name: appwData.info['Name'],
         // navDate: "2024/07/18",
         navDate: format_date(latest_date),
         navPerUnit: latest_nav.toString(),
@@ -519,7 +519,7 @@ async function getFundData(airBase, productName, appwData) {
     }
 
     // airFmrDate = format_date(new Date(record.fields.Value))
-    appwFmrDate = format_date(new Date(appw_json.info['Submission date']))
+    appwFmrDate = format_date(new Date(appwData.info['Submission date']))
 
     console.log(appwFundInfo)
     console.log(appwOverview)
@@ -2002,6 +2002,7 @@ async function main() {
         let appwData = await getAppWriteData(productName)
 
         let airPerformances = await getFundPrices(micfBase, productName, appwData.price)
+        await getFundData(micfBase, productName, appwData)
         
         // let airPerformances = await getFundPrices(micfBase, productName)
         // await getFundData(micfBase, airPerformances, productName)
