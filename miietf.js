@@ -2000,6 +2000,8 @@ async function main() {
     } 
     else if (productName === 'MICF') {
         let appwData = await getAppWriteData(productName)
+
+        let airPerformances = await getFundPrices(micfBase, productName, appwData.price)
         
         // let airPerformances = await getFundPrices(micfBase, productName)
         // await getFundData(micfBase, airPerformances, productName)
