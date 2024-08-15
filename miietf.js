@@ -489,7 +489,7 @@ async function getFundData(airBase, productName, appwData) {
     let appwFundInfo = {
         authorizedParticipant: appwData.info['Authorized Participant'],
         benchmark: appwData.info['Benchmark'],
-        custodian: null,
+        custodian: appwData.info['Custodian'],
         fundAuditors: appwData.info['Fund Auditors'],
         fundCategory: appwData.info['Fund Category'],
         fundManager: appwData.info['Fund manager'],
@@ -507,9 +507,15 @@ async function getFundData(airBase, productName, appwData) {
         yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
         yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
     }
+
+    let product_summary
+    if(appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'])
+        product_summary = appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?']
+    if(appwData.info['What is Mahaana Islamic Cash Fund (MICF)?'])
+        product_summary = appwData.info['What is Mahaana Islamic Cash Fund (MICF)?']
     
     let appwOverview = {
-        assetCategory: appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'],
+        assetCategory: product_summary,
         description: null,
         name: appwData.info['Name'],
         // navDate: "2024/07/18",
