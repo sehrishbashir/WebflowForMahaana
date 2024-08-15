@@ -462,7 +462,7 @@ function getOnPageData() {
 }
 
 async function getAppWriteData(productName) {
-    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/')
+    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')
     appw_json = await appw_data.json()
     
     console.log('appw_json')
