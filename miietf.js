@@ -950,7 +950,7 @@ async function getFundData(airBase, productName, appwData) {
         navDate: format_date(latest_date),
         benchmarkData: null,
         creditRating: appwCreditRating,
-        creditQuality: appw_data.credit_quality, // MICF
+        creditQuality: appwData.credit_quality, // MICF
         currentAssetAllocation: null,
         assetAllocation: appwAssetAlloc, // MICF
         distribution: null,
