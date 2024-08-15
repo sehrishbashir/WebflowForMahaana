@@ -580,18 +580,6 @@ async function getFundData(airBase, productName, appwData) {
     let appwAssetAlloc = []
 
     for (record_num in appwData.asset_alloc) {
-        // appwAssetAlloc.push({
-        //     Name: ,
-            
-            
-        //     exNav: appwData.distribution[record_num].ex_nav,
-        //     payoutDate: date_str,
-        //     payoutPerUnit: appwData.distribution[record_num].payout_per_unit,
-        //     recordDate: null,
-        //     type: "",
-        //     yield: appwData.distribution[record_num].yield * 100,
-        // })
-        
         appwAssetAlloc.push({})
         appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
         appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
@@ -964,7 +952,7 @@ async function getFundData(airBase, productName, appwData) {
         creditRating: appwCreditRating,
         creditQuality: airCreditQuality, // MICF
         currentAssetAllocation: null,
-        assetAllocation: airAssetAlloc, // MICF
+        assetAllocation: appwAssetAlloc, // MICF
         distribution: null,
         // currentAssetAllocation: dataJson.currentAssetAllocation,
         // distribution: dataJson.distribution,
