@@ -721,7 +721,7 @@ async function getFundData(airBase, productName, appwData) {
     
     reportsData = offeringDocumentList;
 
-    displayReports(offeringDocumentList);
+    // displayReports(offeringDocumentList);
 
     // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
 
