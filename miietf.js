@@ -65,6 +65,9 @@ function renderLoop(data, airPerformances, productName) {
 
     performances = airPerformances
 
+    console.log('airPerformances')
+    console.log(airPerformances)
+
     if (performances) {
         const performanceContentArea = document.querySelector('#perf-table');
         if (performanceContentArea) {
@@ -505,10 +508,21 @@ async function getFundData(airBase, productName, appwData) {
     const appwPerformances = []
 
     for (record_num in appwData.perf) {
+        let days_90 = null
+        if (!appwData.perf[record_num]['90d'])
+            days_90 = '-'
+        else
+            days_90 = (appwData.perf[record_num]['90d'] * 100).toFixed(2) + "%"
+
+        if (!appwData.perf[record_num]['1y'])
+            days_365 = '-'
+        else
+            days_365 = (appwData.perf[record_num]['1y'] * 100).toFixed(2) + "%"
+        
         appwPerformances.push({
             days30: null,
-            days90: (appwData.perf[record_num]['90d'] * 100).toFixed(2) + "%",
-            days365: (appwData.perf[record_num]['1y'] * 100).toFixed(2) + "%",
+            days90: days_90,
+            days365: days_365,
             inception: (appwData.perf[record_num]['inception'] * 100).toFixed(2) + "%",
             lastUpdatedOn: null,
             mtd: (appwData.perf[record_num]['mtd'] * 100).toFixed(2) + "%",
