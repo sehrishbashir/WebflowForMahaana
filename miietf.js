@@ -440,27 +440,6 @@ function renderLoop(data, airPerformances, productName) {
     }
 }
 
-// GOTO: delete
-function getOnPageData() {
-    console.log('hello')
-
-    let price_data_html = document.querySelectorAll('#miietf-data .w-embed')
-    console.log(price_data_html)
-
-    let price_data = []
-    price_data_html.forEach(function (item, index) {
-        console.log(item)
-        obj = JSON.parse(item.innerText)
-        
-        price_data.push(obj)
-
-        // let modifiedString = originalString.slice(1, -1);
-    });
-
-    console.log('price_data')
-    console.log(price_data)
-}
-
 async function getAppWriteData(productName) {
     let appw_data = null
     if (productName === 'MIIETF')
@@ -476,16 +455,7 @@ async function getAppWriteData(productName) {
     return appw_json
 }
 
-async function getFundData(airBase, productName, appwData) {
-    // try {
-    
-    //////////////
-    // AIRTABLE //
-    //////////////
-
-    /////////////////////////
-    // FundInfo & Overview //
-    
+async function getFundData(airBase, productName, appwData) {    
     let appwFundInfo = {
         authorizedParticipant: appwData.info['Authorized Participant'],
         benchmark: appwData.info['Benchmark'],
@@ -524,7 +494,6 @@ async function getFundData(airBase, productName, appwData) {
         question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
     }
 
-    // airFmrDate = format_date(new Date(record.fields.Value))
     appwFmrDate = format_date(new Date(appwData.info['Submission date']))
 
     console.log(appwFundInfo)
@@ -652,315 +621,6 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwFmr')
     console.log(appwFmr)
 
-    // let airFundInfo = {
-    //     authorizedParticipant: null,
-    //     benchmark: null,
-    //     custodian: null,
-    //     fundAuditors: null,
-    //     fundCategory: null,
-    //     fundManager: null,
-    //     fundStabilityRating: null,
-    //     investmentObjective: null,
-    //     launchDate: null,
-    //     managementFee: null,
-    //     monthlyTotalExpenseRatio: null,
-    //     monthlyTotalExpenseRatioWithoutLevy: null,
-    //     netAssets: null,
-    //     shariahAdvisors: null,
-    //     totalExpenseRatio: null,
-    //     totalExpenseRatioWithoutLevy: null,
-    //     weightedAverageTime: null,
-    //     yearlyTotalExpenseRatio: null,
-    //     yearlyTotalExpenseRatioWithoutLevy: null,
-    // }
-
-    // let airOverview = {
-    //     assetCategory: null,
-    //     description: null,
-    //     name: null,
-    //     // navDate: "2024/07/18",
-    //     navDate: format_date(latest_date),
-    //     navPerUnit: latest_nav.toString(),
-    //     question: null,
-    // }
-
-    // let airFmrDate = null
-    
-    // await airBase('Info').select({
-    //     maxRecords: 100,
-    //     view: "Grid view"
-    // }).eachPage(function page(records, fetchNextPage) {
-    //     records.forEach(function (record) {
-    //         // console.log(record.fields)
-
-    //         if (record.fields.Key === 'Name'){
-    //             airOverview.name = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
-    //             record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
-    //             airOverview.assetCategory = record.fields.Value
-    //             airOverview.question = record.fields.Key
-    //         }
-    //         if (record.fields.Key === 'Net Assets'){
-    //             airFundInfo.netAssets = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Launch Date'){
-    //             airFundInfo.launchDate = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Fund Category'){
-    //             airFundInfo.fundCategory = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Investment Objective'){
-    //             airFundInfo.investmentObjective = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Benchmark'){
-    //             airFundInfo.benchmark = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Authorized Participant'){
-    //             airFundInfo.authorizedParticipant = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Management Fee'){
-    //             airFundInfo.managementFee = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Monthly Total Expense Ratio'){
-    //             airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Yearly Total Expense Ratio'){
-    //             airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
-    //         }
-            
-    //         if (record.fields.Key === 'Fund Auditors'){
-    //             airFundInfo.fundAuditors = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Fund Stability Rating'){
-    //             airFundInfo.fundStabilityRating = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Fund manager'){
-    //             airFundInfo.fundManager = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Submission date'){
-    //             airFmrDate = format_date(new Date(record.fields.Value))
-    //         }
-    //         if (record.fields.Key === 'Custodian'){
-    //             airFundInfo.custodian = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Shariah Advisors'){
-    //             airFundInfo.shariahAdvisors = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
-    //             airFundInfo.weightedAverageTime = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
-    //             airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
-    //         }
-    //         if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
-    //             airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
-    //         }
-    //     })
-
-    //     fetchNextPage()
-    // })
-
-    // console.log('airFundInfo')
-    // console.log(airFundInfo)
-    // console.log('airOverview')
-    // console.log(airOverview)
-
-    ///////////////////////
-    // Asset Allocation //
-    
-    // let airAssetAlloc = null
-
-    // if(productName === 'MICF') {
-    //     airAssetAlloc = []
-        
-    //     await airBase('Asset_allocation').select({
-    //         maxRecords: 100,
-    //         view: "Grid view"
-    //     }).eachPage(function page(records, fetchNextPage) {
-    //         records.forEach(function (record) {
-    //             // console.log(record.fields)
-    
-    //             airAssetAlloc.push(record.fields)
-    //         })
-    
-    //         fetchNextPage()
-    //     })
-    
-    //     console.log('airAssetAlloc')
-    //     console.log(airAssetAlloc)    
-    // }
-    
-    
-    ///////////////////////
-    // Weighted Exposure //
-    
-    // let airCreditRating = []
-    // let airCreditRatingGraph = {}
-
-    // if (productName === 'MIIETF') {
-    //     // console.log('Weighted_exposure')
-    //     await airBase('Weighted_exposure').select({
-    //         maxRecords: 100,
-    //         view: "Grid view"
-    //     }).eachPage(function page(records, fetchNextPage) {
-    //         records.forEach(function (record) {
-    //             // console.log(record.fields)
-                
-    //             airCreditRating.push({
-    //                 key: record.fields.key,
-    //                 value: {
-    //                     miietf: record.fields.miietf.toString(),
-    //                     kmi30: record.fields.kmi30.toString(),
-    //                     weight: record.fields.weight.toString()
-    //                 }
-    //             })
-    
-    //             airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
-    //         })
-    
-    //         fetchNextPage()
-    //     })
-    
-    //     weighted_exposure = airCreditRating
-    // }
-    
-    // console.log('airCreditRating')
-    // console.log(airCreditRating)
-    // console.log('airCreditRatingGraph')
-    // console.log(airCreditRatingGraph)
-
-    ////////////////////
-    // Credit Quality //
-    let airCreditQuality = []
-    
-    // if (productName === 'MICF') {
-    //     await airBase('Credit_quality').select({
-    //         maxRecords: 100,
-    //         view: "Grid view"
-    //     }).eachPage(function page(records, fetchNextPage) {
-    //         records.forEach(function (record) {
-    //             // console.log(record.fields)
-    //             // airCreditQuality.push(record.fields)
-
-    //             airCreditQuality.push({
-    //                 key: record.fields.key,
-    //                 value: record.fields.value * 100,
-    //             })
-                
-    //         })
-    
-    //         fetchNextPage()
-    //     })
-    
-    //     console.log('airCreditQuality')
-    //     console.log(airCreditQuality) 
-    // }
-    
-    //////////////
-    // Holdings //
-
-    // let airHoldings = {}
-    
-    // await airBase('Holdings').select({
-    //     maxRecords: 100,
-    //     view: "Grid view"
-    // }).eachPage(function page(records, fetchNextPage) {
-    //     records.forEach(function (record) {
-    //         // console.log(record.fields)
-
-    //         airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
-                
-    //         // airHoldings.push({
-    //         //     key: record.fields.Name,
-    //         //     value: (record.fields.Holding * 100).toFixed(2)
-    //         // })
-    //     })
-
-    //     fetchNextPage()
-    // })
-
-    // console.log('airHoldings')
-    // console.log(airHoldings) 
-
-    ///////////////////
-    // Distributions //
-
-    // let airDistributions = []
-
-    // // console.log('Distributions')
-    // await airBase('Distributions').select({
-    //     maxRecords: 100,
-    //     view: "Grid view"
-    // }).eachPage(function page(records, fetchNextPage) {
-    //     records.forEach(function (record) {
-    //         // console.log(record.fields)
-
-    //         formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
-            
-    //         distrib_obj = {
-    //             exNav: record.fields.ex_nav,
-    //             payoutDate: formatted_date,
-    //             payoutPerUnit: record.fields.payout_per_unit,
-    //             recordDate: null,
-    //             type: "",
-    //             yield: record.fields.yield * 100
-    //         }
-
-    //         airDistributions.push(distrib_obj)
-    //     })
-
-    //     fetchNextPage()
-    // })
-
-    // console.log('airDistributions')
-    // console.log(airDistributions)
-
-    //////////
-    // FMRs //
-
-    // let airFMRs = []
-    
-    // // console.log('FMRs')
-    // await airBase('FMRs').select({
-    //     maxRecords: 100,
-    //     view: "Grid view"
-    // }).eachPage(function page(records, fetchNextPage) {
-    //     records.forEach(function (record) {
-    //         // console.log(record.fields)
-
-    //         airFMRs.push({
-    //             key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
-    //             value: null,
-    //             name: record.fields.Name
-    //         })
-    //     })
-
-    //     fetchNextPage()
-    // })
-
-    // console.log('airFMRs')
-    // console.log(airFMRs)
-
-    //////////////////////
-    // MAHANANA BACKEND //
-    //////////////////////
-    // let response = await fetch(`${mahaanaWealthCashFund}/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-
-    // const response = await fetch(`https://stg-mahaana-wealth-cashfund.azurewebsites.net/api/CashFund/miietf`); if (!response.ok) { throw new Error('Network response was not ok') };
-    // let dataJson = await response.json()
-
-    // console.log('dataJson') 
-    // console.log(dataJson)
-
-    // let data = dataJson;
-
-    // console.log('airHoldings') 
-    // console.log(airHoldings)
-
-    // console.log('airPerformances')
-    // console.log(airPerformances)
-
     let data = {
         id: null,
         // id: dataJson.id,
@@ -995,27 +655,8 @@ async function getFundData(airBase, productName, appwData) {
 
     console.log('data')
     console.log(data)
-
-    // console.log('data.creditRating')  
-    // console.log(data.creditRating)
-    // console.log('airCreditRatingGraph')
-    // console.log(airCreditRatingGraph)
-
-    // data.fundInfo = airFundInfo
-    // data.fmrDate = airFmrDate
-    // data.overview = airOverview
-    // data.creditRating = airCreditRatingGraph
-    // data.holding = airHoldings
     
     let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation, creditQuality } = data;
-
-    // console.log('data')
-    // console.log(data)
-    
-    // fundInfo = airFundInfo
-    // fmrDate = airFmrDate
-    // overview = airOverview
-    // creditRating = airCreditRatingGraph
     
     let fmrDateElement = document.querySelectorAll('body #fmrDate');
     Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
@@ -1064,44 +705,6 @@ async function getFundData(airBase, productName, appwData) {
         'weightedAverageTime': fundInfo.weightedAverageTime
     };
     
-    // console.log('fundInfo')
-    // console.log(fundInfo)
-
-    // const contentMapping = {
-    //     'asset-name': overview?.name,
-    //     'asset-class': fundInfo.fundCategory,
-    //     'expense-ratio-mtd': fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A',
-    //     'expense-ratio-ytd': fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A',
-    //     'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-    //     // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
-    //     'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
-    //     'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-    //     // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-    //     'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-    //     'productSummary': overview.assetCategory,
-    //     'fundManager': fundInfo.fundManager,
-    //     'netAssets': fundInfo.netAssets,
-    //     'launchDate': fundInfo.launchDate || '-',
-    //     'fundCategory': fundInfo.fundCategory,
-    //     'investmentObjective': fundInfo.investmentObjective,
-    //     'benchmark': fundInfo.benchmark,
-    //     'managementFee': fundInfo.managementFee,
-    //     'fundAuditors': fundInfo.fundAuditors,
-    //     'fundStabilityRating': fundInfo.fundStabilityRating,
-    //     'authorizedParticipant': fundInfo.authorizedParticipant,
-    //     'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-    // };
-
-    // if (offeringDocumentList.length > 0) {
-    //     offeringDocumentWrapper.href = `${mahaanaWealthCashFund}/api/Document/${offeringDocumentList[offeringDocumentList.length - 1].key.split('.')[0]}`;
-
-    //     offeringDocumentList.pop();
-
-    //     if (offeringDocumentList.length >= 1) {
-    //         reportWrap.style.display = "none";
-    //     }
-    // }
-    
     reportsData = offeringDocumentList;
 
     displayReports(offeringDocumentList);
@@ -1126,59 +729,8 @@ async function getFundData(airBase, productName, appwData) {
     }
 
     addGraph("container1", data.holding)  
-    
-    // const assetAllocationData = {
-    //     "currentAssetAllocation": currentAssetAllocation,
-    //     "lastAssetAllocation": lastAssetAllocation
-    // };
-
-    // const assetClasses = Object.keys(assetAllocationData.currentAssetAllocation);
-    // const overallAssetAllocationData = assetClasses
-    //     .map(assetClass => ({
-    //         name: assetClass,
-    //         current: assetAllocationData.currentAssetAllocation[assetClass],
-    //         last: assetAllocationData.lastAssetAllocation[assetClass]
-    //     }))
-    //     .filter(data => data.current > 0 || data.last > 0);
-
-    // data.overAllCreditRating = overallAssetAllocationData;
 
     renderLoop(data, appwPerformances, productName);
-
-    // if (Object.keys(holding).length > 0) {
-    //     holdingChartWrap.style.display = "none";
-    //     holdingList.style.display = "flex";
-    //     renderHoldingChart(transformData(holding))
-    // } else {
-    //     holdingChart.style.border = 0
-    // }
-
-    // if (Object.keys(creditRating).length > 0) {
-    //     creditChartWrap.style.display = "none";
-    //     creditList.style.display = "flex";
-    //     renderCreditChart(transformData(creditRating));
-    // } else {
-    //     creditChart.style.border = 0;
-    // }
-
-    // if (Object.keys(currentAssetAllocation).length > 0) {
-    //     assetChartWrap.style.display = "none";
-    //     assetList.style.display = "flex";
-    //     renderAssetChart(transformData(currentAssetAllocation));
-    // }
-
-
-    // if (Object.keys(overallAssetAllocationData).length > 0) {
-    //     assetChartWrap.style.display = "none";
-    //     renderAssetChart(overallAssetAllocationData);
-    // }
-
-    // } catch (error) {
-    //     // creditChart.style.border = 0;
-    //     // holdingChart.style.border = 0;
-    //     console.error('fetchData error')
-    //     console.error(error) 
-    // }
 }
 
 function addGraph(id, data) {
