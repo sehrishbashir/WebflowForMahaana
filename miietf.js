@@ -1313,10 +1313,7 @@ function addAssetAllocGraph(data) {
     });
 }
 
-async function getFundPrices(airBase, productName, appw_price) {
-    // console.log('appw_price')
-    // console.log(appw_price)
-
+function getFundPrices(airBase, productName, appw_price) {
     appw_price_reformed = []
     
     for (item in appw_price) {
@@ -1344,40 +1341,6 @@ async function getFundPrices(airBase, productName, appw_price) {
     console.log('latest_nav')
     console.log(latest_nav)
     
-    // let airPerfData = []
-    // const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
-    
-    // await airBase('Adjust_nav_values').select({
-    //     maxRecords: 10000,
-    //     view: "Grid view"
-    // }).eachPage(function page(records, fetchNextPage) {
-    // // This function (`page`) will get called for each page of records.
-    //     records.forEach(function (record) {
-    //         const d = new Date(record.fields.date)
-
-    //         const date_str = d.toLocaleString('en-GB', format_options)
-    //         airPerfData.push({
-    //             "date": date_str,
-    //             "navValue": record.fields.navValue,
-    //             "performanceValue": record.fields.performanceValue,
-    //             "kmi30": record.fields.kmi30,
-    //             "peer_avg": record.fields.peer_avg
-    //         })
-    //     })
-
-    //     fetchNextPage() 
-    // })
-
-    // console.log('airPerfData')
-    // console.log(airPerfData)
-
-    // Calculate MTD, YTD and etc performances
-    // let airPerformances = await calcPerf(airBase, productName)
-
-    // console.log('airPerfData')
-    // console.log(airPerfData)
-    
-    // renderPerfChart(airPerfData, productName)
     renderPerfChart(appw_price_reformed, productName)
 
     let totalReturnDate = document.querySelector('#totalReturnsDate');
@@ -1386,8 +1349,6 @@ async function getFundPrices(airBase, productName, appw_price) {
     if (totalReturnDate) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
-
-    // return airPerformances
 }
 
 function renderPerfChart(data, productName) {
@@ -2020,9 +1981,6 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
-    // GOTO: delete
-    // getOnPageData()
-
     let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
     let miietfBase = airtable.base('app9fpjsdlh5R7gsq')
     let micfBase = airtable.base('app3KpgeOesdEHazM')
@@ -2033,17 +1991,14 @@ async function main() {
     if (productName === 'MIIETF') {
         let appwData = await getAppWriteData(productName)
         
-        let airPerformances = await getFundPrices(miietfBase, productName, appwData.price)
+        getFundPrices(miietfBase, productName, appwData.price)
         await getFundData(miietfBase, productName, appwData)
     } 
     else if (productName === 'MICF') {
         let appwData = await getAppWriteData(productName)
 
-        let airPerformances = await getFundPrices(micfBase, productName, appwData.price)
+        getFundPrices(micfBase, productName, appwData.price)
         await getFundData(micfBase, productName, appwData)
-        
-        // let airPerformances = await getFundPrices(micfBase, productName)
-        // await getFundData(micfBase, airPerformances, productName)
     }
 
     // Close the loader
