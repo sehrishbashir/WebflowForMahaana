@@ -553,41 +553,61 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwPerformances')
     console.log(appwPerformances)
 
-    let appwCreditRating = {}
-    let appwWeightedExpo = []
-
-    for (record_num in appwData.weighted_expo) {
-        key = appwData.weighted_expo[record_num].key
-        value = appwData.weighted_expo[record_num].miietf.toFixed(2)
-        appwCreditRating[key] = value 
-
-        appwWeightedExpo.push({
-            key: key,
-            value: {
-                miietf: value,
-                kmi30: appwData.weighted_expo[record_num].kmi30.toFixed(2),
-                weight: appwData.weighted_expo[record_num].weight.toFixed(2),
-            }
-        })
+    let appwCreditRating = null
+    let appwWeightedExpo = null
+    if (productName === 'MIIETF') {
+        appwCreditRating = {}
+        appwWeightedExpo = []
+    
+        for (record_num in appwData.weighted_expo) {
+            key = appwData.weighted_expo[record_num].key
+            value = appwData.weighted_expo[record_num].miietf.toFixed(2)
+            appwCreditRating[key] = value 
+    
+            appwWeightedExpo.push({
+                key: key,
+                value: {
+                    miietf: value,
+                    kmi30: appwData.weighted_expo[record_num].kmi30.toFixed(2),
+                    weight: appwData.weighted_expo[record_num].weight.toFixed(2),
+                }
+            })
+        }
+    
+        console.log('appwCreditRating')
+        console.log(appwCreditRating)
+    
+        console.log('appwWeightedExpo')
+        console.log(appwWeightedExpo)
     }
 
-    console.log('appwCreditRating')
-    console.log(appwCreditRating)
-
-    console.log('appwWeightedExpo')
-    console.log(appwWeightedExpo)
-
-    let appwAssetAlloc = []
-
-    for (record_num in appwData.asset_alloc) {
-        appwAssetAlloc.push({})
-        appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
-        appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
-        appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
+    let appwAssetAlloc = null
+    let appwCreditQuality = null
+    if (productName === 'MICF'){
+        appwAssetAlloc = []
+    
+        for (record_num in appwData.asset_alloc) {
+            appwAssetAlloc.push({})
+            appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
+            appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
+            appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
+        }
+    
+        console.log('appwAssetAlloc')
+        console.log(appwAssetAlloc)
+    
+        appwCreditQuality = []
+    
+        for (record_num in appwData.distribution) {
+            appwCreditQuality.push({
+                key: appwData.credit_quality[record_num].key,
+                value: appwData.credit_quality[record_num].value * 100,
+            })
+        }
+    
+        console.log('appwCreditQuality')
+        console.log(appwCreditQuality)
     }
-
-    console.log('appwAssetAlloc')
-    console.log(appwAssetAlloc)
     
     let appwHolding = {}
 
@@ -599,18 +619,6 @@ async function getFundData(airBase, productName, appwData) {
 
     console.log('appwHolding')
     console.log(appwHolding)
-
-    let appwCreditQuality = []
-
-    for (record_num in appwData.distribution) {
-        appwCreditQuality.push({
-            key: appwData.credit_quality[record_num].key,
-            value: appwData.credit_quality[record_num].value * 100,
-        })
-    }
-
-    console.log('appwCreditQuality')
-    console.log(appwCreditQuality)
 
     let appwDistributions = []
 
