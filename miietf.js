@@ -600,6 +600,18 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwHolding')
     console.log(appwHolding)
 
+    let appwCreditQuality = []
+
+    for (record_num in appwData.distribution) {
+        appwCreditQuality.push({
+            key: appwData.credit_quality[record_num].key,
+            value: appwData.credit_quality[record_num].value * 100,
+        })
+    }
+
+    console.log('appwCreditQuality')
+    console.log(appwCreditQuality)
+
     let appwDistributions = []
 
     for (record_num in appwData.distribution) {
@@ -950,7 +962,7 @@ async function getFundData(airBase, productName, appwData) {
         navDate: format_date(latest_date),
         benchmarkData: null,
         creditRating: appwCreditRating,
-        creditQuality: appwData.credit_quality, // MICF
+        creditQuality: appwCreditQuality, // MICF
         currentAssetAllocation: null,
         assetAllocation: appwAssetAlloc, // MICF
         distribution: null,
