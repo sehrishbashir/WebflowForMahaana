@@ -1048,9 +1048,12 @@ async function getFundData(airBase, productName, appwData) {
         'fundStabilityRating': fundInfo.fundStabilityRating,
         'authorizedParticipant': fundInfo.authorizedParticipant,
         'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-        'custodian': airFundInfo.custodian,
-        'shariahAdvisors': airFundInfo.shariahAdvisors,
-        'weightedAverageTime': airFundInfo.weightedAverageTime
+        // 'custodian': airFundInfo.custodian,
+        // 'shariahAdvisors': airFundInfo.shariahAdvisors,
+        // 'weightedAverageTime': airFundInfo.weightedAverageTime
+        'custodian': fundInfo.custodian,
+        'shariahAdvisors': fundInfo.shariahAdvisors,
+        'weightedAverageTime': fundInfo.weightedAverageTime
     };
     
     // console.log('fundInfo')
