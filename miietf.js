@@ -1344,38 +1344,38 @@ async function getFundPrices(airBase, productName, appw_price) {
     console.log('latest_nav')
     console.log(latest_nav)
     
-    let airPerfData = []
-    const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
+    // let airPerfData = []
+    // const format_options = { day: '2-digit', month: '2-digit', year: 'numeric'}
     
-    await airBase('Adjust_nav_values').select({
-        maxRecords: 10000,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-    // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
-            const d = new Date(record.fields.date)
+    // await airBase('Adjust_nav_values').select({
+    //     maxRecords: 10000,
+    //     view: "Grid view"
+    // }).eachPage(function page(records, fetchNextPage) {
+    // // This function (`page`) will get called for each page of records.
+    //     records.forEach(function (record) {
+    //         const d = new Date(record.fields.date)
 
-            const date_str = d.toLocaleString('en-GB', format_options)
-            airPerfData.push({
-                "date": date_str,
-                "navValue": record.fields.navValue,
-                "performanceValue": record.fields.performanceValue,
-                "kmi30": record.fields.kmi30,
-                "peer_avg": record.fields.peer_avg
-            })
-        })
+    //         const date_str = d.toLocaleString('en-GB', format_options)
+    //         airPerfData.push({
+    //             "date": date_str,
+    //             "navValue": record.fields.navValue,
+    //             "performanceValue": record.fields.performanceValue,
+    //             "kmi30": record.fields.kmi30,
+    //             "peer_avg": record.fields.peer_avg
+    //         })
+    //     })
 
-        fetchNextPage() 
-    })
+    //     fetchNextPage() 
+    // })
 
     // console.log('airPerfData')
     // console.log(airPerfData)
 
     // Calculate MTD, YTD and etc performances
-    let airPerformances = await calcPerf(airBase, productName)
+    // let airPerformances = await calcPerf(airBase, productName)
 
-    console.log('airPerfData')
-    console.log(airPerfData)
+    // console.log('airPerfData')
+    // console.log(airPerfData)
     
     // renderPerfChart(airPerfData, productName)
     renderPerfChart(appw_price_reformed, productName)
@@ -1387,7 +1387,7 @@ async function getFundPrices(airBase, productName, appw_price) {
         totalReturnDate.textContent = `as of ${moment(lastDate, 'DD/MM/YYYY').format('D MMM YYYY')}`;
     }
 
-    return airPerformances
+    // return airPerformances
 }
 
 function renderPerfChart(data, productName) {
