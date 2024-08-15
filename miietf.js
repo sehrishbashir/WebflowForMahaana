@@ -462,7 +462,12 @@ function getOnPageData() {
 }
 
 async function getAppWriteData(productName) {
-    let appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')
+    let appw_data = null
+    if (productName === 'MIIETF')
+        appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')    
+    if (productName === 'MICF')
+        appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/micf')
+    
     appw_json = await appw_data.json()
     
     console.log('appw_json')
@@ -1994,8 +1999,10 @@ async function main() {
         await getFundData(miietfBase, productName, appwData)
     } 
     else if (productName === 'MICF') {
-        let airPerformances = await getFundPrices(micfBase, productName)
-        await getFundData(micfBase, airPerformances, productName)
+        let appwData = await getAppWriteData(productName)
+        
+        // let airPerformances = await getFundPrices(micfBase, productName)
+        // await getFundData(micfBase, airPerformances, productName)
     }
 
     // Close the loader
