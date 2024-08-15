@@ -644,122 +644,119 @@ async function getFundData(airBase, productName, appwData) {
     console.log('appwFmr')
     console.log(appwFmr)
 
+    // let airFundInfo = {
+    //     authorizedParticipant: null,
+    //     benchmark: null,
+    //     custodian: null,
+    //     fundAuditors: null,
+    //     fundCategory: null,
+    //     fundManager: null,
+    //     fundStabilityRating: null,
+    //     investmentObjective: null,
+    //     launchDate: null,
+    //     managementFee: null,
+    //     monthlyTotalExpenseRatio: null,
+    //     monthlyTotalExpenseRatioWithoutLevy: null,
+    //     netAssets: null,
+    //     shariahAdvisors: null,
+    //     totalExpenseRatio: null,
+    //     totalExpenseRatioWithoutLevy: null,
+    //     weightedAverageTime: null,
+    //     yearlyTotalExpenseRatio: null,
+    //     yearlyTotalExpenseRatioWithoutLevy: null,
+    // }
 
+    // let airOverview = {
+    //     assetCategory: null,
+    //     description: null,
+    //     name: null,
+    //     // navDate: "2024/07/18",
+    //     navDate: format_date(latest_date),
+    //     navPerUnit: latest_nav.toString(),
+    //     question: null,
+    // }
+
+    // let airFmrDate = null
     
+    // await airBase('Info').select({
+    //     maxRecords: 100,
+    //     view: "Grid view"
+    // }).eachPage(function page(records, fetchNextPage) {
+    //     records.forEach(function (record) {
+    //         // console.log(record.fields)
 
-    let airFundInfo = {
-        authorizedParticipant: null,
-        benchmark: null,
-        custodian: null,
-        fundAuditors: null,
-        fundCategory: null,
-        fundManager: null,
-        fundStabilityRating: null,
-        investmentObjective: null,
-        launchDate: null,
-        managementFee: null,
-        monthlyTotalExpenseRatio: null,
-        monthlyTotalExpenseRatioWithoutLevy: null,
-        netAssets: null,
-        shariahAdvisors: null,
-        totalExpenseRatio: null,
-        totalExpenseRatioWithoutLevy: null,
-        weightedAverageTime: null,
-        yearlyTotalExpenseRatio: null,
-        yearlyTotalExpenseRatioWithoutLevy: null,
-    }
-
-    let airOverview = {
-        assetCategory: null,
-        description: null,
-        name: null,
-        // navDate: "2024/07/18",
-        navDate: format_date(latest_date),
-        navPerUnit: latest_nav.toString(),
-        question: null,
-    }
-
-    let airFmrDate = null
-    
-    await airBase('Info').select({
-        maxRecords: 100,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        records.forEach(function (record) {
-            // console.log(record.fields)
-
-            if (record.fields.Key === 'Name'){
-                airOverview.name = record.fields.Value
-            }
-            if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
-                record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
-                airOverview.assetCategory = record.fields.Value
-                airOverview.question = record.fields.Key
-            }
-            if (record.fields.Key === 'Net Assets'){
-                airFundInfo.netAssets = record.fields.Value
-            }
-            if (record.fields.Key === 'Launch Date'){
-                airFundInfo.launchDate = record.fields.Value
-            }
-            if (record.fields.Key === 'Fund Category'){
-                airFundInfo.fundCategory = record.fields.Value
-            }
-            if (record.fields.Key === 'Investment Objective'){
-                airFundInfo.investmentObjective = record.fields.Value
-            }
-            if (record.fields.Key === 'Benchmark'){
-                airFundInfo.benchmark = record.fields.Value
-            }
-            if (record.fields.Key === 'Authorized Participant'){
-                airFundInfo.authorizedParticipant = record.fields.Value
-            }
-            if (record.fields.Key === 'Management Fee'){
-                airFundInfo.managementFee = record.fields.Value
-            }
-            if (record.fields.Key === 'Monthly Total Expense Ratio'){
-                airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
-            }
-            if (record.fields.Key === 'Yearly Total Expense Ratio'){
-                airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
-            }
+    //         if (record.fields.Key === 'Name'){
+    //             airOverview.name = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'What is Mahaana Islamic Index ETF (MIIETF)?' || 
+    //             record.fields.Key === 'What is Mahaana Islamic Cash Fund (MICF)?'){
+    //             airOverview.assetCategory = record.fields.Value
+    //             airOverview.question = record.fields.Key
+    //         }
+    //         if (record.fields.Key === 'Net Assets'){
+    //             airFundInfo.netAssets = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Launch Date'){
+    //             airFundInfo.launchDate = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Fund Category'){
+    //             airFundInfo.fundCategory = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Investment Objective'){
+    //             airFundInfo.investmentObjective = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Benchmark'){
+    //             airFundInfo.benchmark = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Authorized Participant'){
+    //             airFundInfo.authorizedParticipant = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Management Fee'){
+    //             airFundInfo.managementFee = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Monthly Total Expense Ratio'){
+    //             airFundInfo.monthlyTotalExpenseRatio = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Yearly Total Expense Ratio'){
+    //             airFundInfo.yearlyTotalExpenseRatio = record.fields.Value
+    //         }
             
-            if (record.fields.Key === 'Fund Auditors'){
-                airFundInfo.fundAuditors = record.fields.Value
-            }
-            if (record.fields.Key === 'Fund Stability Rating'){
-                airFundInfo.fundStabilityRating = record.fields.Value
-            }
-            if (record.fields.Key === 'Fund manager'){
-                airFundInfo.fundManager = record.fields.Value
-            }
-            if (record.fields.Key === 'Submission date'){
-                airFmrDate = format_date(new Date(record.fields.Value))
-            }
-            if (record.fields.Key === 'Custodian'){
-                airFundInfo.custodian = record.fields.Value
-            }
-            if (record.fields.Key === 'Shariah Advisors'){
-                airFundInfo.shariahAdvisors = record.fields.Value
-            }
-            if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
-                airFundInfo.weightedAverageTime = record.fields.Value
-            }
-            if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
-                airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
-            }
-            if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
-                airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
-            }
-        })
+    //         if (record.fields.Key === 'Fund Auditors'){
+    //             airFundInfo.fundAuditors = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Fund Stability Rating'){
+    //             airFundInfo.fundStabilityRating = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Fund manager'){
+    //             airFundInfo.fundManager = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Submission date'){
+    //             airFmrDate = format_date(new Date(record.fields.Value))
+    //         }
+    //         if (record.fields.Key === 'Custodian'){
+    //             airFundInfo.custodian = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Shariah Advisors'){
+    //             airFundInfo.shariahAdvisors = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Weighted Average Time to Maturity (Days)'){
+    //             airFundInfo.weightedAverageTime = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Monthly Total Expense Ratio (without gov levy)'){
+    //             airFundInfo.monthlyTotalExpenseRatioWithoutLevy = record.fields.Value
+    //         }
+    //         if (record.fields.Key === 'Yearly Total Expense Ratio (without gov levy)'){
+    //             airFundInfo.yearlyTotalExpenseRatioWithoutLevy = record.fields.Value
+    //         }
+    //     })
 
-        fetchNextPage()
-    })
+    //     fetchNextPage()
+    // })
 
-    console.log('airFundInfo')
-    console.log(airFundInfo)
-    console.log('airOverview')
-    console.log(airOverview)
+    // console.log('airFundInfo')
+    // console.log(airFundInfo)
+    // console.log('airOverview')
+    // console.log(airOverview)
 
     ///////////////////////
     // Asset Allocation //
