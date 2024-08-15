@@ -834,110 +834,110 @@ async function getFundData(airBase, productName, appwData) {
     // Credit Quality //
     let airCreditQuality = []
     
-    if (productName === 'MICF') {
-        await airBase('Credit_quality').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
-                // airCreditQuality.push(record.fields)
+    // if (productName === 'MICF') {
+    //     await airBase('Credit_quality').select({
+    //         maxRecords: 100,
+    //         view: "Grid view"
+    //     }).eachPage(function page(records, fetchNextPage) {
+    //         records.forEach(function (record) {
+    //             // console.log(record.fields)
+    //             // airCreditQuality.push(record.fields)
 
-                airCreditQuality.push({
-                    key: record.fields.key,
-                    value: record.fields.value * 100,
-                })
+    //             airCreditQuality.push({
+    //                 key: record.fields.key,
+    //                 value: record.fields.value * 100,
+    //             })
                 
-            })
+    //         })
     
-            fetchNextPage()
-        })
+    //         fetchNextPage()
+    //     })
     
-        console.log('airCreditQuality')
-        console.log(airCreditQuality) 
-    }
+    //     console.log('airCreditQuality')
+    //     console.log(airCreditQuality) 
+    // }
     
     //////////////
     // Holdings //
 
-    let airHoldings = {}
+    // let airHoldings = {}
     
-    await airBase('Holdings').select({
-        maxRecords: 100,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        records.forEach(function (record) {
-            // console.log(record.fields)
+    // await airBase('Holdings').select({
+    //     maxRecords: 100,
+    //     view: "Grid view"
+    // }).eachPage(function page(records, fetchNextPage) {
+    //     records.forEach(function (record) {
+    //         // console.log(record.fields)
 
-            airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
+    //         airHoldings[record.fields.Name] = `${(record.fields.Holding * 100).toFixed(2)}%` 
                 
-            // airHoldings.push({
-            //     key: record.fields.Name,
-            //     value: (record.fields.Holding * 100).toFixed(2)
-            // })
-        })
+    //         // airHoldings.push({
+    //         //     key: record.fields.Name,
+    //         //     value: (record.fields.Holding * 100).toFixed(2)
+    //         // })
+    //     })
 
-        fetchNextPage()
-    })
+    //     fetchNextPage()
+    // })
 
-    console.log('airHoldings')
-    console.log(airHoldings) 
+    // console.log('airHoldings')
+    // console.log(airHoldings) 
 
     ///////////////////
     // Distributions //
 
-    let airDistributions = []
+    // let airDistributions = []
 
-    // console.log('Distributions')
-    await airBase('Distributions').select({
-        maxRecords: 100,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        records.forEach(function (record) {
-            // console.log(record.fields)
+    // // console.log('Distributions')
+    // await airBase('Distributions').select({
+    //     maxRecords: 100,
+    //     view: "Grid view"
+    // }).eachPage(function page(records, fetchNextPage) {
+    //     records.forEach(function (record) {
+    //         // console.log(record.fields)
 
-            formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
+    //         formatted_date = new Date(record.fields.payout_date).toLocaleString('en-GB').replace(",", "")
             
-            distrib_obj = {
-                exNav: record.fields.ex_nav,
-                payoutDate: formatted_date,
-                payoutPerUnit: record.fields.payout_per_unit,
-                recordDate: null,
-                type: "",
-                yield: record.fields.yield * 100
-            }
+    //         distrib_obj = {
+    //             exNav: record.fields.ex_nav,
+    //             payoutDate: formatted_date,
+    //             payoutPerUnit: record.fields.payout_per_unit,
+    //             recordDate: null,
+    //             type: "",
+    //             yield: record.fields.yield * 100
+    //         }
 
-            airDistributions.push(distrib_obj)
-        })
+    //         airDistributions.push(distrib_obj)
+    //     })
 
-        fetchNextPage()
-    })
+    //     fetchNextPage()
+    // })
 
-    console.log('airDistributions')
-    console.log(airDistributions)
+    // console.log('airDistributions')
+    // console.log(airDistributions)
 
     //////////
     // FMRs //
 
-    let airFMRs = []
+    // let airFMRs = []
     
-    // console.log('FMRs')
-    await airBase('FMRs').select({
-        maxRecords: 100,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        records.forEach(function (record) {
-            // console.log(record.fields)
+    // // console.log('FMRs')
+    // await airBase('FMRs').select({
+    //     maxRecords: 100,
+    //     view: "Grid view"
+    // }).eachPage(function page(records, fetchNextPage) {
+    //     records.forEach(function (record) {
+    //         // console.log(record.fields)
 
-            airFMRs.push({
-                key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
-                value: null,
-                name: record.fields.Name
-            })
-        })
+    //         airFMRs.push({
+    //             key: `${record.fields.Name.replaceAll(" ", "_")}.pdf`,
+    //             value: null,
+    //             name: record.fields.Name
+    //         })
+    //     })
 
-        fetchNextPage()
-    })
+    //     fetchNextPage()
+    // })
 
     // console.log('airFMRs')
     // console.log(airFMRs)
