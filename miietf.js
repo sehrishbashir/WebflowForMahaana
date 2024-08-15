@@ -761,61 +761,61 @@ async function getFundData(airBase, productName, appwData) {
     ///////////////////////
     // Asset Allocation //
     
-    let airAssetAlloc = null
+    // let airAssetAlloc = null
 
-    if(productName === 'MICF') {
-        airAssetAlloc = []
+    // if(productName === 'MICF') {
+    //     airAssetAlloc = []
         
-        await airBase('Asset_allocation').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
+    //     await airBase('Asset_allocation').select({
+    //         maxRecords: 100,
+    //         view: "Grid view"
+    //     }).eachPage(function page(records, fetchNextPage) {
+    //         records.forEach(function (record) {
+    //             // console.log(record.fields)
     
-                airAssetAlloc.push(record.fields)
-            })
+    //             airAssetAlloc.push(record.fields)
+    //         })
     
-            fetchNextPage()
-        })
+    //         fetchNextPage()
+    //     })
     
-        console.log('airAssetAlloc')
-        console.log(airAssetAlloc)    
-    }
+    //     console.log('airAssetAlloc')
+    //     console.log(airAssetAlloc)    
+    // }
     
     
     ///////////////////////
     // Weighted Exposure //
     
-    let airCreditRating = []
-    let airCreditRatingGraph = {}
+    // let airCreditRating = []
+    // let airCreditRatingGraph = {}
 
-    if (productName === 'MIIETF') {
-        // console.log('Weighted_exposure')
-        await airBase('Weighted_exposure').select({
-            maxRecords: 100,
-            view: "Grid view"
-        }).eachPage(function page(records, fetchNextPage) {
-            records.forEach(function (record) {
-                // console.log(record.fields)
+    // if (productName === 'MIIETF') {
+    //     // console.log('Weighted_exposure')
+    //     await airBase('Weighted_exposure').select({
+    //         maxRecords: 100,
+    //         view: "Grid view"
+    //     }).eachPage(function page(records, fetchNextPage) {
+    //         records.forEach(function (record) {
+    //             // console.log(record.fields)
                 
-                airCreditRating.push({
-                    key: record.fields.key,
-                    value: {
-                        miietf: record.fields.miietf.toString(),
-                        kmi30: record.fields.kmi30.toString(),
-                        weight: record.fields.weight.toString()
-                    }
-                })
+    //             airCreditRating.push({
+    //                 key: record.fields.key,
+    //                 value: {
+    //                     miietf: record.fields.miietf.toString(),
+    //                     kmi30: record.fields.kmi30.toString(),
+    //                     weight: record.fields.weight.toString()
+    //                 }
+    //             })
     
-                airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
-            })
+    //             airCreditRatingGraph[record.fields.key] = record.fields.miietf.toString()
+    //         })
     
-            fetchNextPage()
-        })
+    //         fetchNextPage()
+    //     })
     
-        weighted_exposure = airCreditRating
-    }
+    //     weighted_exposure = airCreditRating
+    // }
     
     // console.log('airCreditRating')
     // console.log(airCreditRating)
