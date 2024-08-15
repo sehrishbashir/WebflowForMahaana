@@ -576,6 +576,30 @@ async function getFundData(airBase, productName, appwData) {
 
     console.log('appwWeightedExpo')
     console.log(appwWeightedExpo)
+
+    let appwAssetAlloc = []
+
+    for (record_num in appwData.asset_alloc) {
+        // appwAssetAlloc.push({
+        //     Name: ,
+            
+            
+        //     exNav: appwData.distribution[record_num].ex_nav,
+        //     payoutDate: date_str,
+        //     payoutPerUnit: appwData.distribution[record_num].payout_per_unit,
+        //     recordDate: null,
+        //     type: "",
+        //     yield: appwData.distribution[record_num].yield * 100,
+        // })
+        
+        appwAssetAlloc.push({})
+        appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
+        appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
+        appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
+    }
+
+    console.log('appwAssetAlloc')
+    console.log(appwAssetAlloc)
     
     let appwHolding = {}
 
@@ -2075,7 +2099,7 @@ function displayReports(reportsData) {
                 </div>
             `;
             
-            row.innerHTML = html; reportsBodyContainer.appendChild(row) 
+            row.innerHTML = html; reportsBodyContainer.appendChild(row)
         })
     }
 
