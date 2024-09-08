@@ -316,7 +316,7 @@ const WLFormElements = [
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
     { inputField: cuEmail, errorElement: cuEmailError, message: emailMsg, validator: isValidEmail },
-    { inputField: cuNumber, errorElement: cuNumberError, message: phoneMsg, validator: 11 },
+    { inputField: cuNumber, errorElement: cuNumberError, message: phoneMsg, validator: 11, type: "phoneNumber" },
     { inputField: cuMsg, errorElement: cuMsgError, message: requiredMessage }
 ];
 
