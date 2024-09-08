@@ -128,6 +128,8 @@ const cuNameError = document.getElementById('contact-us-name-error');
 // email field with error
 const cuEmail = document.getElementById('contact-us-email');
 const cuEmailError = document.getElementById('contact-us-email-error');
+const cuNumber = document.getElementById('contact-us-number');
+const cuNumberError = document.getElementById('contact-us-number-error');
 // msg field with error
 const cuMsg = document.getElementById('contact-us-message');
 const cuMsgError = document.getElementById('contact-us-msg-error');
@@ -312,6 +314,7 @@ const WLFormElements = [
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
     { inputField: cuEmail, errorElement: cuEmailError, message: emailMsg, validator: isValidEmail },
+    { inputField: cuNumber, errorElement: cuNumberError, message: phoneMsg, validator: 11, type: "phoneNumber" },
     { inputField: cuMsg, errorElement: cuMsgError, message: requiredMessage }
 ];
 
@@ -508,6 +511,7 @@ Webflow.push(function () {
             const formData = {
                 name: cuName.value,
                 email: cuEmail.value,
+                phoneNumber: cuNumber.value,
                 message: cuMsg.value
             };
 
