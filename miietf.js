@@ -959,14 +959,17 @@ function renderPerfChart(data, productName) {
          
     }
 
+    console.log("data")
+    console.log(data)
+
     let {min, max} = getMinMax(data, productName)
     min = min * 0.85
     max = max * 1.15
 
-    // console.log('min')
-    // console.log(min)
-    // console.log('max')
-    // console.log(max)
+    console.log('min')
+    console.log(min)
+    console.log('max')
+    console.log(max)
 
     let series = [
         {
@@ -1058,14 +1061,14 @@ function getMinMax(arr, productName) {
                 obj.navValue, 
                 obj.performanceValue, 
                 obj.kmi30,
-                obj.peer_avg
+                // obj.peer_avg
             );
             acc.max = Math.max(
                 acc.max, 
                 obj.navValue, 
                 obj.performanceValue, 
                 obj.kmi30,
-                obj.peer_avg
+                // obj.peer_avg
             );
             return acc;
         }, { min: Infinity, max: -Infinity });    
