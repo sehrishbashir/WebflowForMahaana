@@ -949,11 +949,14 @@ function renderPerfChart(data, productName) {
                 data[i].kmi30
             ])
         }
-        
-        peer_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
-            data[i].peer_avg
-        ]) 
+
+        if(productName === 'MICF') {
+            peer_series.push([
+                moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
+                data[i].peer_avg
+            ])    
+        }
+         
     }
 
     let {min, max} = getMinMax(data, productName)
@@ -981,10 +984,10 @@ function renderPerfChart(data, productName) {
             name: 'KMI30',
             data: kmi30_series
         })
-        series.push({
-            name: 'Peer Avg.',
-            data: peer_series,
-        })
+        // series.push({
+        //     name: 'Peer Avg.',
+        //     data: peer_series,
+        // })
     }
     if (productName === 'MICF') {
         series.push({
