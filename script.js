@@ -502,12 +502,13 @@ Webflow.push(function () {
             const formData = {
                 name: cuName.value,
                 email: cuEmail.value,
+                phoneNumber: cuPhone.value,
                 message: cuMsg.value
             };
 
             handleBtnStatus(cuSubmit, 'Please wait ...');
 
-            const inputs = [cuName, cuEmail, cuMsg, cuSubmit]
+            const inputs = [cuName, cuEmail, cuPhone, cuMsg, cuSubmit]
 
             function handleSuccess() {
                 handleBtnStatus(cuSubmit, 'Send');
