@@ -118,6 +118,9 @@ const cuNameError = document.getElementById('contact-us-name-error');
 // email field with error
 const cuEmail = document.getElementById('contact-us-email');
 const cuEmailError = document.getElementById('contact-us-email-error');
+// phone field with error
+const cuPhone = document.getElementById('contact-us-number');
+const cuPhoneError = document.getElementById('contact-us-number-error');
 // msg field with error
 const cuMsg = document.getElementById('contact-us-message');
 const cuMsgError = document.getElementById('contact-us-msg-error');
@@ -292,7 +295,7 @@ function handleFormSubmission(apiURL, formData, inputs, handleSuccess, handleErr
 const GIFormElements = [
     { inputField: nameInput, errorElement: nameError, message: nameMsg, validator: 3 },
     { inputField: emailInput, errorElement: emailError, message: emailMsg, validator: isValidEmail },
-    { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11, type: "phoneNumber" }
+    { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11 }
 ];
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
@@ -302,6 +305,7 @@ const WLFormElements = [
 const CUFormElements = [
     { inputField: cuName, errorElement: cuNameError, message: nameMsg, validator: 3 },
     { inputField: cuEmail, errorElement: cuEmailError, message: emailMsg, validator: isValidEmail },
+    { inputField: cuPhone, errorElement: cuPhoneError, message: phoneMsg, validator: 11},
     { inputField: cuMsg, errorElement: cuMsgError, message: requiredMessage }
 ];
 
