@@ -292,7 +292,7 @@ function handleFormSubmission(apiURL, formData, inputs, handleSuccess, handleErr
 const GIFormElements = [
     { inputField: nameInput, errorElement: nameError, message: nameMsg, validator: 3 },
     { inputField: emailInput, errorElement: emailError, message: emailMsg, validator: isValidEmail },
-    { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11 }
+    { inputField: phoneNumberInput, errorElement: phoneNumberError, message: phoneMsg, validator: 11, type: "phoneNumber" }
 ];
 const WLFormElements = [
     { inputField: wlNameInput, errorElement: wlNameError, message: nameMsg, validator: 3 },
