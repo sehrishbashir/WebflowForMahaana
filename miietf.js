@@ -992,12 +992,12 @@ function renderPerfChart(data, productName) {
         //     data: peer_series,
         // })
     }
-    if (productName === 'MICF') {
-        series.push({
-            name: 'Peer Avg.',
-            data: peer_series,
-        })
-    }
+    // if (productName === 'MICF') {
+    //     series.push({
+    //         name: 'Peer Avg.',
+    //         data: peer_series,
+    //     })
+    // }
 
     console.log('series')
     console.log(series)
