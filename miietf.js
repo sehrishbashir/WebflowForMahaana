@@ -779,7 +779,7 @@ function addGraph(id, data) {
     Highcharts.chart(id, {
         chart: {
             type: 'pie',
-            width: chartWidth
+           // width: chartWidth
         },
         title: {
             text: ''  // Remove the title
