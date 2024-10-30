@@ -763,19 +763,6 @@ function addGraph(id, data) {
     // console.log('transformed_data')
     // console.log(transformed_data)
 
-
-    let chartWidth;
-    if (window.innerWidth < 600) {
-        chartWidth = 300;  // Width for small screens
-    } else if (window.innerWidth < 768) {
-        chartWidth = 400;  // Width for medium screens
-    } else if (window.innerWidth < 1225) {
-        chartWidth = window.innerWidth / 2;
-    } 
-    else {
-        chartWidth = null; // Full width for larger screens
-    }
-
     Highcharts.chart(id, {
         chart: {
             type: 'pie'
