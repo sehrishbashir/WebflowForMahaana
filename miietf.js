@@ -762,7 +762,7 @@ function addGraph(id, data) {
 
     function getChartWidth() {
         const screenWidth = window.innerWidth;
-        return screenWidth < 600 ? screenWidth * 0.6 : null;
+        return screenWidth < 600 ? screenWidth * 0.6 : 600;
     }
 
     // console.log('transformed_data')
