@@ -763,9 +763,13 @@ function addGraph(id, data) {
     // console.log('transformed_data')
     // console.log(transformed_data)
 
+    const screenWidth = window.innerWidth;
+    const chartWidth = screenWidth < 600 ? screenWidth * 0.8 : null;
+
     Highcharts.chart(id, {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            width: chartWidth
         },
         title: {
             text: ''  // Remove the title
