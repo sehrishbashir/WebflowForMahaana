@@ -747,6 +747,16 @@ async function getFundData(airBase, productName, appwData) {
     renderLoop(data, appwPerformances, productName);
 }
 
+    function getChartWidth() {
+        const screenWidth = window.innerWidth;
+        return screenWidth < 600 ? screenWidth * 0.5 : null;
+    }
+
+    // Update chart width on window resize
+    window.addEventListener('resize', () => {
+        chart.setSize(getChartWidth(), null); // Set new width, keep height as is
+    });
+
 function addGraph(id, data) {
     // console.log('Add graph')
 
@@ -760,16 +770,18 @@ function addGraph(id, data) {
         })
     }
 
+
+
     // console.log('transformed_data')
     // console.log(transformed_data)
 
     const screenWidth = window.innerWidth;
-    const chartWidth = screenWidth < 600 ? screenWidth * 0.4 : null;
+    const chartWidth = screenWidth < 600 ? screenWidth * 0.5 : null;
 
     Highcharts.chart(id, {
         chart: {
             type: 'pie',
-            width: chartWidth
+            width: getChartWidth() 
         },
         title: {
             text: ''  // Remove the title
