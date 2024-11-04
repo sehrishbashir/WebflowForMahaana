@@ -762,14 +762,11 @@ function addGraph(id, data) {
 
     function getChartWidth() {
         const screenWidth = window.innerWidth;
-        return screenWidth < 600 ? screenWidth * 0.5 : null;
+        return screenWidth < 600 ? screenWidth * 0.6 : null;
     }
 
     // console.log('transformed_data')
     // console.log(transformed_data)
-
-    const screenWidth = window.innerWidth;
-    const chartWidth = screenWidth < 600 ? screenWidth * 0.7 : null;
 
     const chart = Highcharts.chart(id, {
         chart: {
