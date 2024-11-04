@@ -820,6 +820,7 @@ function addGraph(id, data) {
     });
 
     window.addEventListener('resize', () => {
+console.log("resize")
         chart.setSize(getChartWidth(), null); // Set new width, keep height as is
     });
 }
