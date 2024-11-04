@@ -769,7 +769,7 @@ function addGraph(id, data) {
     // console.log(transformed_data)
 
     const screenWidth = window.innerWidth;
-    const chartWidth = screenWidth < 600 ? screenWidth * 0.5 : null;
+    const chartWidth = screenWidth < 600 ? screenWidth * 0.6 : screenWidth * 0.5;
 
     const chart = Highcharts.chart(id, {
         chart: {
@@ -820,7 +820,7 @@ function addGraph(id, data) {
     });
 
     window.addEventListener('resize', () => {
-console.log("resize")
+        console.log("resize")
         chart.setSize(getChartWidth(), null); // Set new width, keep height as is
     });
 }
