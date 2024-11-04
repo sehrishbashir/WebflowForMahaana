@@ -747,7 +747,9 @@ async function getFundData(airBase, productName, appwData) {
     renderLoop(data, appwPerformances, productName);
 }
 
-
+window.addEventListener('resize', () => {
+        chart.setSize(getChartWidth(), null); // Set new width, keep height as is
+});
 
 function addGraph(id, data) {
     // console.log('Add graph')
@@ -766,11 +768,6 @@ function addGraph(id, data) {
         const screenWidth = window.innerWidth;
         return screenWidth < 600 ? screenWidth * 0.5 : null;
     }
-
-    // Update chart width on window resize
-    window.addEventListener('resize', () => {
-        chart.setSize(getChartWidth(), null); // Set new width, keep height as is
-    });
 
     // console.log('transformed_data')
     // console.log(transformed_data)
