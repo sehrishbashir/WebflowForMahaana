@@ -982,27 +982,46 @@ function renderPerfChart(data, productName) {
     console.log('max')
     console.log(max)
 
-    let series = [
-        {
-            name: 'MIIETF',
-            data: miietf_series,
-        },
-        {
-            name: 'Benchmark',
-            data: benchmark_series,
-        }
-    ]
+    if (productName === 'MICF') {
+        let series = [
+            {
+                name: 'MICF',
+                data: miietf_series,
+            },
+            {
+                name: 'Benchmark',
+                data: benchmark_series,
+            }
+        ]
+    }
 
     if (productName === 'MIIETF') {
-        series.push({
-            name: 'KMI30',
-            data: kmi30_series
-        })
-        // series.push({
-        //     name: 'Peer Avg.',
-        //     data: peer_series,
-        // })
+        let series = [
+            {
+                name: 'MIIETF',
+                data: miietf_series,
+            },
+            {
+                name: 'Benchmark',
+                data: benchmark_series,
+            },
+            {
+                name: 'KMI30',
+                data: kmi30_series,
+            }
+        ]
     }
+
+    // if (productName === 'MIIETF') {
+    //     series.push({
+    //         name: 'KMI30',
+    //         data: kmi30_series
+    //     })
+    //     // series.push({
+    //     //     name: 'Peer Avg.',
+    //     //     data: peer_series,
+    //     // })
+    // }
     // if (productName === 'MICF') {
     //     series.push({
     //         name: 'Peer Avg.',
