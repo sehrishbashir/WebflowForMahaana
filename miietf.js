@@ -982,8 +982,10 @@ function renderPerfChart(data, productName) {
     console.log('max')
     console.log(max)
 
+    let series
+
     if (productName === 'MICF') {
-        let series = [
+        series = [
             {
                 name: 'MICF',
                 data: miietf_series,
@@ -996,7 +998,7 @@ function renderPerfChart(data, productName) {
     }
 
     if (productName === 'MIIETF') {
-        let series = [
+        series = [
             {
                 name: 'MIIETF',
                 data: miietf_series,
