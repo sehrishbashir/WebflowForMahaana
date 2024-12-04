@@ -460,28 +460,29 @@ async function getAppWriteData(productName) {
 
     let appw_data = null;
     const retryLimit = 3;  // Retry three time
-    const timeoutDuration = 10000;  // Timeout duration in ms (10 seconds)
+    const timeoutDuration = 5000;  // Timeout duration in ms (10 seconds)
     
     // Function to perform the fetch request with timeout
     const fetchWithTimeout = async (url, options, timeout) => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Request timed out')), timeout)
+        );
+
         try {
-            const response = await fetch(url, {
-                ...options,
-                signal: controller.signal, // Attach the abort signal
-            });
+            const response = await Promise.race([
+                fetch(url, options),
+                timeoutPromise
+            ]);
             return response;
         } catch (error) {
-            if (error.name === 'AbortError') {
+            if (error.message === 'Request timed out') {
                 throw new Error('Request timed out');
             } else {
                 throw error;
             }
-        } finally {
-            clearTimeout(timeoutId);
         }
     };
+
 
     // Retry logic - We will retry once if necessary
     for (let attempt = 0; attempt < retryLimit; attempt++) {
