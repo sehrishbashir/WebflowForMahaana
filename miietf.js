@@ -1,4 +1,4 @@
-const Airtable = require('airtable');
+// const Airtable = require('airtable');
 
 // ---------------- MICF PAGE ---------------- //
 let reportsData;
@@ -68,6 +68,9 @@ function renderLoop(data, airPerformances, productName) {
     console.log('airPerformances')
     console.log(airPerformances)
 
+
+    // Performance Values
+
     if (performances) {
         const performanceContentArea = document.querySelector('#perf-table');
         if (performanceContentArea) {
@@ -119,6 +122,9 @@ function renderLoop(data, airPerformances, productName) {
         }
     }
 
+
+    // Portfolio Asset Allocation
+
     if (assetAllocation) {
         const assetAllocRowsDiv = document.querySelector('#asset-aloc-table-rows');
             
@@ -163,6 +169,9 @@ function renderLoop(data, airPerformances, productName) {
             assetAllocRowsDiv.appendChild(row);
         })
     }
+
+
+    // Weighted Exposure and Holding List
 
     let dataMappingsUpdated = null
     
@@ -294,6 +303,8 @@ function renderLoop(data, airPerformances, productName) {
     //     }
     // }
 
+    // Credit Quality
+
     if(creditQuality) {
         // console.log('creditQuality')
         // console.log(creditQuality)
@@ -339,6 +350,8 @@ function renderLoop(data, airPerformances, productName) {
         }
     }
     
+    // Distribution
+
     if (distributions?.length > 0) {
         const distribution_no_data = document.querySelector('#distribution-no-data');
         const distribution_wrap = document.querySelector('#distribution-wrap');
@@ -444,21 +457,94 @@ function renderLoop(data, airPerformances, productName) {
 }
 
 async function getAppWriteData(productName) {
-    let appw_data = null
-    if (productName === 'MIIETF')
-        appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')    
-    if (productName === 'MICF')
-        appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/micf')
-    
-    appw_json = await appw_data.json()
-    
-    console.log('appw_json')
-    console.log(appw_json)  
 
-    return appw_json
+    let appw_data = null;
+    const retryLimit = 3;  // Retry three time
+    const timeoutDuration = 5000;  // Timeout duration in ms (5 seconds)
+    
+    // Function to perform the fetch request with timeout
+    const fetchWithTimeout = async (url, options, timeout) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal, // Attach the abort signal
+            });
+            return response;
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                throw new Error('Request timed out');
+            } else {
+                throw error;
+            }
+        } finally {
+            clearTimeout(timeoutId);
+        }
+    };
+
+    // Retry logic - We will retry once if necessary
+    for (let attempt = 0; attempt < retryLimit; attempt++) {
+        try {
+            // Make the fetch request depending on product name
+            if (productName === 'MIIETF') {
+                appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/miietf', timeoutDuration);
+            } 
+            else if (productName === 'MICF') {
+                appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/micf', timeoutDuration);
+            }
+
+            // Check if the response is successful
+            if (appw_data.ok) {
+                console.log(attempt+1)
+                console.log(`Response Status: ${appw_data.status} ${appw_data.statusText}`);
+                const appw_json = await appw_data.json();
+                
+                return appw_json;
+            } 
+            else {
+                // If the response is not successful (status code outside 200-299)
+                console.error(`Error fetching data: ${appw_data.status} ${appw_data.statusText}`);
+                // Retry the request
+                if (attempt < retryLimit) {
+                    console.log('Retrying the request...');
+                    continue; // Retry the request
+                } 
+                else {
+                    return null;
+                }
+            }
+        } 
+        catch (error) {
+            // If the request failed (due to timeout or other errors), retry the request
+            console.error(`Attempt ${attempt + 1} failed: ${error.message}`);
+            if (attempt < retryLimit) {
+                console.log('Retrying the request...');
+                continue; // Retry the request
+            } 
+            else {
+                return null;
+            }
+        }
+    }
 }
 
-async function getFundData(airBase, productName, appwData) {    
+
+    // let appw_data = null
+//     if (productName === 'MIIETF')
+//         appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')    
+//     if (productName === 'MICF')
+//         appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/micf')
+    
+//     appw_json = await appw_data.json()
+    
+//     console.log('appw_json')
+//     console.log(appw_json)  
+
+//     return appw_json
+// }
+
+async function getFundData(productName, appwData) {    
     let appwFundInfo = {
         authorizedParticipant: appwData.info['Authorized Participant'],
         benchmark: appwData.info['Benchmark'],
@@ -890,7 +976,7 @@ function addAssetAllocGraph(data) {
     });
 }
 
-function getFundPrices(airBase, productName, appw_price) {
+function getFundPrices(productName, appw_price) {
     appw_price_reformed = []
     
     for (item in appw_price) {
@@ -974,8 +1060,8 @@ function renderPerfChart(data, productName) {
     console.log(data)
 
     let {min, max} = getMinMax(data, productName)
-    min = min * 0.85
-    max = max * 1.15
+    min = min * 0.85 // reason??
+    max = max * 1.15 // reason??
 
     console.log('min')
     console.log(min)
@@ -1126,417 +1212,6 @@ function getMinMax(arr, productName) {
     
 }
 
-// Calc MTD, YTD, etc
-async function calcPerf(airBase, productName) {
-    //////////////
-    // MTD CALC //
-    //////////////
-    let latest_record = null
-    let day_before_curr_month_record = null
-    let earliest_record = null
-    let mtd_miietf = null
-    let mtd_bench = null
-    let mtd_kmi30 = null
-    let mtd_peer = null
-
-    latest_record = await airtable_single_record(airBase, "desc", null)
-    latest_nav = latest_record.NAV
-    latest_date = new Date(latest_record.date)
-    
-    // console.log('latest_record')
-    // console.log(latest_record)
-
-    d = new Date(latest_record.date)
-    month_str = d.toLocaleString('en-GB', {month: '2-digit'})
-
-    filter_cond = `IF({date} < '2024-${month_str}-01', 1, 0)`
-    day_before_curr_month_record = await airtable_single_record(airBase, "desc", filter_cond)
-
-    // console.log('latest_record')
-    // console.log(latest_record)
-    // console.log('day_before_curr_month_record')
-    // console.log(day_before_curr_month_record)
-
-    if (day_before_curr_month_record !== null) {
-        if(productName === 'MIIETF') {
-            mtd_miietf = latest_record.navValue / day_before_curr_month_record.navValue - 1
-            mtd_bench = latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1
-            mtd_kmi30 = latest_record.kmi30 / day_before_curr_month_record.kmi30 - 1
-            mtd_peer = latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1
-        }
-        if (productName === 'MICF') {
-            let day_before_curr_month_date = new Date(day_before_curr_month_record.date)
-            let day_diff = (latest_date - day_before_curr_month_date) / (1000 * 60 * 60 * 24)
-
-            mtd_miietf = (latest_record.navValue / day_before_curr_month_record.navValue - 1) / day_diff * 365
-            mtd_bench = (latest_record.performanceValue / day_before_curr_month_record.performanceValue - 1) / day_diff * 365
-            mtd_peer = (latest_record.peer_avg / day_before_curr_month_record.peer_avg - 1) / day_diff * 365
-        }
-    } else {
-        let earliest_record = await airtable_single_record(airBase, "asc", null)
-        
-        if(productName === 'MIIETF') {
-            mtd_miietf = latest_record.navValue / earliest_record.navValue - 1
-            mtd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-            mtd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
-            mtd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
-        }
-        if (productName === 'MICF') {
-            let earliest_date = new Date(earliest_record.date)
-            let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
-
-            mtd_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
-            mtd_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
-            mtd_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
-        }
-    }
-    
-    // console.log('mtd')
-    // console.log(mtd)
-
-    //////////////
-    // YTD CALC //
-    //////////////
-    let day_before_curr_year_record = null
-    let ytd_miietf = null
-    let ytd_bench = null
-    let ytd_kmi30 = null
-    let ytd_peer = null
-    let curr_FY_start = null
-    let curr_FY_end = null
-    
-    let year = d.getFullYear()
-    // console.log('year')
-    // console.log(year)
-
-    let assume_FY_start = new Date(year, 6, 1)
-    let assume_FY_end = new Date(year+1, 5, 30)
-    // console.log(assume_FY_start)
-    // console.log(assume_FY_end)
-    
-    if (d.getTime() < assume_FY_start.getTime()) {
-        // console.log('1')
-        curr_FY_start = new Date(year-1, 6, 1)
-        curr_FY_end = new Date(year, 5, 30)
-    }
-    else if (d.getTime() <= assume_FY_end.getTime()) {
-        // console.log('2')
-        curr_FY_start = assume_FY_start
-        curr_FY_end = assume_FY_end
-    }
-
-    let curr_FY_start_str = format_date(curr_FY_start)
-    // console.log(curr_FY_start_str) 
-    // console.log('curr_FY_start_str')
-    // console.log(curr_FY_start_str)
-
-    day_before_curr_year_record = await airtable_single_record(airBase, "desc", `IF({date} < '${curr_FY_start_str}', 1, 0)`)
-    // console.log(day_before_curr_year_record)
-
-    // if (day_before_curr_year_record !== null) {
-    //     ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
-    //     ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
-    //     ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
-    //     ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
-    // } else {
-    //     let earliest_record = await airtable_single_record(airBase, "asc", null)
-    //     ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
-    //     ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-    //     ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
-    //     ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
-    // }
-
-    if (day_before_curr_year_record !== null) {
-        if(productName === 'MIIETF') {
-            ytd_miietf = latest_record.navValue / day_before_curr_year_record.navValue - 1
-            ytd_bench = latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1
-            ytd_kmi30 = latest_record.kmi30 / day_before_curr_year_record.kmi30 - 1
-            ytd_peer = latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1
-        }
-        if (productName === 'MICF') {
-            let day_before_curr_year_date = new Date(day_before_curr_year_record.date)
-            let day_diff = (latest_date - day_before_curr_year_date) / (1000 * 60 * 60 * 24)
-
-            ytd_miietf = (latest_record.navValue / day_before_curr_year_record.navValue - 1) / day_diff * 365
-            ytd_bench = (latest_record.performanceValue / day_before_curr_year_record.performanceValue - 1) / day_diff * 365
-            ytd_peer = (latest_record.peer_avg / day_before_curr_year_record.peer_avg - 1) / day_diff * 365
-        }
-    } else {
-        let earliest_record = await airtable_single_record(airBase, "asc", null)
-        
-        if(productName === 'MIIETF') {
-            ytd_miietf = latest_record.navValue / earliest_record.navValue - 1
-            ytd_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-            ytd_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1
-            ytd_peer = latest_record.peer_avg / earliest_record.peer_avg - 1
-        }
-        if (productName === 'MICF') {
-            let earliest_date = new Date(earliest_record.date)
-            let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
-
-            ytd_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
-            ytd_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
-            ytd_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
-        }
-    }
-    
-    // console.log('ytd')
-    // console.log(ytd)
-
-    //////////////
-    // 90D CALC //
-    //////////////
-    let back_90_days_date = null
-    let ninty_days_miietf = null
-    let ninty_days_bench = null
-    let ninty_days_kmi30 = null
-    let ninty_days_peer = null
-    let before_90_days_record = null
-
-    back_90_days_date = new Date(latest_record.date)
-    back_90_days_date.setDate(d.getDate() - 89)
-
-    // console.log(back_90_days_date)
-    // console.log(d)
-
-    let back_90_days_str = format_date(back_90_days_date)
-
-    filter_cond = `IF({date} < '${back_90_days_str}', 1, 0)`
-    before_90_days_record = await airtable_single_record(airBase, "desc", filter_cond)
-
-    // console.log('before_90_days_record')
-    // console.log(before_90_days_record)
-
-    // if (before_90_days_record !== null) {
-    //     ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
-    //     ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
-    //     ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
-    //     ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
-    // } else {
-    //     // earliest_record = await airtable_single_record("asc", null)
-    //     ninty_days_miietf = null
-    //     ninty_days_bench = null
-    //     ninty_days_kmi30 = null
-    //     ninty_days_peer = null
-    // }
-
-    if (before_90_days_record !== null) {
-        if (productName === 'MIIETF') {
-            ninty_days_miietf = latest_record.navValue / before_90_days_record.navValue - 1  
-            ninty_days_bench = latest_record.performanceValue / before_90_days_record.performanceValue - 1
-            ninty_days_kmi30 = latest_record.kmi30 / before_90_days_record.kmi30 - 1  
-            ninty_days_peer = latest_record.peer_avg / before_90_days_record.peer_avg - 1 
-        }
-        if (productName === 'MICF') {
-            let before_90_days_date = new Date(before_90_days_record.date)
-            let day_diff = (latest_date - before_90_days_date) / (1000 * 60 * 60 * 24)
-
-            ninty_days_miietf = (latest_record.navValue / before_90_days_record.navValue - 1) / day_diff * 365
-            ninty_days_bench = (latest_record.performanceValue / before_90_days_record.performanceValue - 1) / day_diff * 365
-            ninty_days_peer = (latest_record.peer_avg / before_90_days_record.peer_avg - 1) / day_diff * 365
-        }
-    } else {
-        ninty_days_miietf = null
-        ninty_days_bench = null
-        ninty_days_kmi30 = null
-        ninty_days_peer = null
-    }
-    
-    // console.log('ninty_days')
-    // console.log(ninty_days)
-    
-    /////////////
-    // 1Y CALC //
-    /////////////
-    let year_ago_date = null
-    let year_perf_miietf = null
-    let year_perf_bench = null
-    let year_perf_kmi30 = null
-    let year_perf_peer = null
-    
-    year_ago_date = new Date(latest_record.date)
-    year_ago_date.setFullYear(year_ago_date.getFullYear() - 1)
-
-    // console.log('year_ago_date')
-    // console.log(year_ago_date)
-    
-    let year_ago_date_str = format_date(year_ago_date)
-
-    filter_cond = `IF({date} < '${year_ago_date_str}', 1, 0)`
-    let year_ago_record = await airtable_single_record(airBase, "desc", filter_cond)
-
-    // console.log('year_ago_record')
-    // console.log(year_ago_record)
-
-    // if (year_ago_record !== null) {
-    //     year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
-    //     year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
-    //     year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
-    //     year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
-    // } else {
-    //     // earliest_record = await airtable_single_record("asc", null)
-    //     // year_perf_miietf = latest_record.navValue / earliest_record.navValue - 1
-    //     year_perf_miietf = null
-    //     year_perf_bench = null
-    //     year_perf_kmi30 = null
-    //     year_perf_peer = null
-    // }
-
-    if (year_ago_record !== null) {
-        if (productName === 'MIIETF') {
-            year_perf_miietf = latest_record.navValue / year_ago_record.navValue - 1  
-            year_perf_bench = latest_record.performanceValue / year_ago_record.performanceValue - 1
-            year_perf_kmi30 = latest_record.kmi30 / year_ago_record.kmi30 - 1  
-            year_perf_peer = latest_record.peer_avg / year_ago_record.peer_avg - 1  
-        }
-        if (productName === 'MICF') {
-            let year_ago_date = new Date(year_ago_record.date)
-            let day_diff = (latest_date - year_ago_date) / (1000 * 60 * 60 * 24)
-
-            year_perf_miietf = (latest_record.navValue / year_ago_date.navValue - 1) / day_diff * 365
-            year_perf_bench = (latest_record.performanceValue / year_ago_date.performanceValue - 1) / day_diff * 365
-            year_perf_peer = (latest_record.peer_avg / year_ago_date.peer_avg - 1) / day_diff * 365
-        }
-    } else {
-        year_perf_miietf = null
-        year_perf_bench = null
-        year_perf_kmi30 = null
-        year_perf_peer = null
-    }
-    
-    // console.log('year_perf')
-    // console.log(year_perf)
-
-    ///////////////
-    // INCEPTION //
-    ///////////////
-    earliest_record = await airtable_single_record(airBase, "asc", null)
-    let inception_miietf = null
-    let inception_bench = null
-    let inception_kmi30 = null
-    let inception_peer = null
-    
-    if (productName === 'MIIETF') {
-        inception_miietf = latest_record.navValue / earliest_record.navValue - 1  
-        inception_bench = latest_record.performanceValue / earliest_record.performanceValue - 1
-        inception_kmi30 = latest_record.kmi30 / earliest_record.kmi30 - 1  
-        inception_peer = latest_record.peer_avg / earliest_record.peer_avg - 1  
-    }
-    else {
-        let earliest_date = new Date(earliest_record.date)
-        let day_diff = (latest_date - earliest_date) / (1000 * 60 * 60 * 24)
-
-        inception_miietf = (latest_record.navValue / earliest_record.navValue - 1) / day_diff * 365
-        inception_bench = (latest_record.performanceValue / earliest_record.performanceValue - 1) / day_diff * 365
-        inception_peer = (latest_record.peer_avg / earliest_record.peer_avg - 1) / day_diff * 365
-    }
-    
-    ///////////////////
-    // Return Values //
-    ///////////////////
-    let mtd_miietf_str = `${(mtd_miietf * 100).toFixed(2)}%`
-    let ytd_miietf_str = `${(ytd_miietf * 100).toFixed(2)}%`
-    let ninty_days_miietf_str = (ninty_days_miietf) ? `${(ninty_days_miietf * 100).toFixed(2)}%` : '-'
-    let year_perf_miietf_str = (year_perf_miietf) ? `${(year_perf_miietf * 100).toFixed(2)}%` : '-'
-    let inception_miietf_str = `${(inception_miietf * 100).toFixed(2)}%`
-
-    let mtd_bench_str = `${(mtd_bench * 100).toFixed(2)}%`
-    let ytd_bench_str = `${(ytd_bench * 100).toFixed(2)}%`
-    let ninty_days_bench_str = (ninty_days_bench) ? `${(ninty_days_bench * 100).toFixed(2)}%` : '-'
-    let year_perf_bench_str = (year_perf_bench) ? `${(year_perf_bench * 100).toFixed(2)}%` : '-'
-    let inception_bench_str = `${(inception_bench * 100).toFixed(2)}%`
-
-    let mtd_kmi30_str = `${(mtd_kmi30 * 100).toFixed(2)}%`
-    let ytd_kmi30_str = `${(ytd_kmi30 * 100).toFixed(2)}%`
-    let ninty_days_kmi30_str = (ninty_days_kmi30) ? `${(ninty_days_kmi30 * 100).toFixed(2)}%` : '-'
-    let year_perf_kmi30_str = (year_perf_kmi30) ? `${(year_perf_kmi30 * 100).toFixed(2)}%` : '-'
-    let inception_kmi30_str = `${(inception_kmi30 * 100).toFixed(2)}%`
-
-    let mtd_peer_str = `${(mtd_peer * 100).toFixed(2)}%`
-    let ytd_peer_str = `${(ytd_peer * 100).toFixed(2)}%`
-    let ninty_days_peer_str = (ninty_days_peer) ? `${(ninty_days_peer * 100).toFixed(2)}%` : '-'
-    let year_perf_peer_str = (year_perf_peer) ? `${(year_perf_peer * 100).toFixed(2)}%` : '-'
-    let inception_peer_str = `${(inception_peer * 100).toFixed(2)}%`
-
-    let benchmarkReturn = {
-        "name": "Benchmark return",
-        "lastUpdatedOn": null,
-        "mtd": mtd_bench_str,
-        "ytd": ytd_bench_str,
-        "days30": null,
-        "days90": ninty_days_bench_str,
-        "days365": year_perf_bench_str,
-        "years3": null,
-        "years5": null,
-        "inception": inception_bench_str
-    }
-
-    let peerAvgReturn = {
-        "name": "Peer avg. return",
-        "lastUpdatedOn": null,
-        "mtd": mtd_peer_str,
-        "ytd": ytd_peer_str,
-        "days30": null,
-        "days90": ninty_days_peer_str,
-        "days365": year_perf_peer_str,
-        "years3": null,
-        "years5": null,
-        "inception": inception_peer_str
-    }
-
-    let airPerformances = null
-    if(productName === "MIIETF") {
-        let kmi30Return = {
-            "name": "KMI30 return",
-            "lastUpdatedOn": null,
-            "mtd": mtd_kmi30_str,
-            "ytd": ytd_kmi30_str,
-            "days30": null,
-            "days90": ninty_days_kmi30_str,
-            "days365": year_perf_kmi30_str,
-            "years3": null,
-            "years5": null,
-            "inception": inception_kmi30_str
-        }
-
-        let miietfReturn = {
-            "name": "MIIETF return",
-            "lastUpdatedOn": null,
-            "mtd": mtd_miietf_str,
-            "ytd": ytd_miietf_str,
-            "days30": null,
-            "days90": ninty_days_miietf_str,
-            "days365": year_perf_miietf_str,
-            "years3": null,
-            "years5": null,
-            "inception": inception_miietf_str
-        }
-
-        airPerformances = [miietfReturn, benchmarkReturn, kmi30Return, peerAvgReturn]
-    }
-    if(productName === "MICF") {
-        let miietfReturn = {
-            "name": "MICF return",
-            "lastUpdatedOn": null,
-            "mtd": mtd_miietf_str,
-            "ytd": ytd_miietf_str,
-            "days30": null,
-            "days90": ninty_days_miietf_str,
-            "days365": year_perf_miietf_str,
-            "years3": null,
-            "years5": null,
-            "inception": inception_miietf_str
-        }
-        
-        airPerformances = [miietfReturn, benchmarkReturn, peerAvgReturn]
-    }
-
-    console.log('airPerformances')
-    console.log(airPerformances)
-    
-    return airPerformances
-}
-
 // convert date to this format: 2024-11-01 
 function format_date(d) {
     const year = d.getFullYear();
@@ -1546,36 +1221,6 @@ function format_date(d) {
     return formattedDate
 }
 
-async function airtable_single_record(airBase, sort, filter) {
-    let result = null
-    let select_options = null 
-
-    if (filter === null) {
-        select_options = {
-            maxRecords: 1,
-            view: "Grid view",
-            sort: [{field: "date", direction: sort}]
-        }
-    } 
-    else {
-        select_options = {
-            maxRecords: 1,
-            view: "Grid view",
-            filterByFormula: filter,
-            sort: [{field: "date", direction: sort}]
-        }
-    }
-    
-    await airBase('Adjust_nav_values').select(select_options).eachPage(function page(records, fetchNextPage) {
-    // This function (`page`) will get called for each page of records.
-        records.forEach(function (record) {
-            result = record.fields
-        })
-        fetchNextPage()
-    })
-
-    return result
-}
 
 function day_between_dates(dateLater, dateEarlier) {
     return (dateLater.getTime() - dateEarlier.getTime()) / (1000 * 3600 * 24)
@@ -1585,9 +1230,9 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
-    let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
-    let miietfBase = airtable.base('app9fpjsdlh5R7gsq')
-    let micfBase = airtable.base('app3KpgeOesdEHazM')
+    // let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
+    // let miietfBase = airtable.base('app9fpjsdlh5R7gsq')
+    // let micfBase = airtable.base('app3KpgeOesdEHazM')
 
     let productName = document.querySelector('#product_name').innerText
     console.log(productName)
@@ -1595,14 +1240,14 @@ async function main() {
     if (productName === 'MIIETF') {
         let appwData = await getAppWriteData(productName)
         
-        getFundPrices(miietfBase, productName, appwData.price)
-        await getFundData(miietfBase, productName, appwData)
+        getFundPrices(productName, appwData.price)
+        await getFundData(productName, appwData)
     } 
     else if (productName === 'MICF') {
         let appwData = await getAppWriteData(productName)
 
-        getFundPrices(micfBase, productName, appwData.price)
-        await getFundData(micfBase, productName, appwData)
+        getFundPrices(productName, appwData.price)
+        await getFundData(productName, appwData)
     }
 
     // Close the loader
