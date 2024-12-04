@@ -463,14 +463,14 @@ async function getAppWriteData(productName) {
     const timeoutDuration = 5000;  // Timeout duration in ms (10 seconds)
     
     // Function to perform the fetch request with timeout
-    const fetchWithTimeout = async (url, options, timeout) => {
+    const fetchWithTimeout = async (url, timeout) => {
         const timeoutPromise = new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Request timed out')), timeout)
         );
 
         try {
             const response = await Promise.race([
-                fetch(url, options),
+                fetch(url),
                 timeoutPromise
             ]);
             return response;
