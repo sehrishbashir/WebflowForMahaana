@@ -459,8 +459,8 @@ function renderLoop(data, airPerformances, productName) {
 async function getAppWriteData(productName) {
 
     let appw_data = null;
-    const retryLimit = 3;  // Retry three time
-    const timeoutDuration = 5000;  // Timeout duration in ms (10 seconds)
+    const retryLimit = 9;  // Retry three time
+    const timeoutDuration = 7000;  // Timeout duration in ms (10 seconds)
     
     // Function to perform the fetch request with timeout
     const fetchWithTimeout = async (url, timeout) => {
@@ -586,11 +586,11 @@ async function getFundData(productName, appwData) {
 
     appwFmrDate = format_date(new Date(appwData.info['Submission date']))
 
-    console.log(appwFundInfo)
-    console.log(appwOverview)
+    // console.log(appwFundInfo)
+    // console.log(appwOverview)
 
-    console.log('appwFmrDate')
-    console.log(appwFmrDate)
+    // console.log('appwFmrDate')
+    // console.log(appwFmrDate)
 
     const appwPerformances = []
 
@@ -620,8 +620,8 @@ async function getFundData(productName, appwData) {
         })
     }
 
-    console.log('appwPerformances')
-    console.log(appwPerformances)
+    // console.log('appwPerformances')
+    // console.log(appwPerformances)
 
     let appwCreditRating = null
     let appwWeightedExpo = null
@@ -644,11 +644,11 @@ async function getFundData(productName, appwData) {
             })
         }
     
-        console.log('appwCreditRating')
-        console.log(appwCreditRating)
+        // console.log('appwCreditRating')
+        // console.log(appwCreditRating)
     
-        console.log('appwWeightedExpo')
-        console.log(appwWeightedExpo)
+        // console.log('appwWeightedExpo')
+        // console.log(appwWeightedExpo)
     }
 
     let appwAssetAlloc = null
@@ -663,8 +663,8 @@ async function getFundData(productName, appwData) {
             appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
         }
     
-        console.log('appwAssetAlloc')
-        console.log(appwAssetAlloc)
+        // console.log('appwAssetAlloc')
+        // console.log(appwAssetAlloc)
     
         appwCreditQuality = []
     
@@ -675,8 +675,8 @@ async function getFundData(productName, appwData) {
             })
         }
     
-        console.log('appwCreditQuality')
-        console.log(appwCreditQuality)
+        // console.log('appwCreditQuality')
+        // console.log(appwCreditQuality)
     }
     
     let appwHolding = {}
@@ -687,8 +687,8 @@ async function getFundData(productName, appwData) {
         appwHolding[key] = value 
     }
 
-    console.log('appwHolding')
-    console.log(appwHolding)
+    // console.log('appwHolding')
+    // console.log(appwHolding)
 
     let appwDistributions = []
 
@@ -706,8 +706,8 @@ async function getFundData(productName, appwData) {
         })
     }
 
-    console.log('appwDistributions')
-    console.log(appwDistributions)
+    // console.log('appwDistributions')
+    // console.log(appwDistributions)
 
     let appwFmr = []
 
