@@ -786,6 +786,7 @@ async function getFundData(productName, appwData) {
         'asset-class': fundInfo.fundCategory,
         'expense-ratio-mtd': expense_ratio_mtd,
         'expense-ratio-ytd': expense_ratio_ytd,
+        'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
         'expense-ratio-with-gov': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
         'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
         'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
