@@ -541,6 +541,60 @@ async function getAppWriteData(productName) {
 }
 
 
+function renderPerformance(performances){
+    if (performances) {
+
+        const performanceContentArea = document.querySelector('#perf-table');
+        if (performanceContentArea) {
+            const performanceRowsDiv = document.querySelector('#perf-table-rows');
+            
+            while (performanceRowsDiv.lastChild) {
+                if (performanceRowsDiv.lastChild.classList.contains('headers'))
+                    break
+                else
+                    performanceRowsDiv.removeChild(performanceRowsDiv.lastChild);
+            }
+
+            performances.forEach((data, index) => {
+                // console.log(data)
+                const selectedColor = PIE_COLORS_NEW[index];
+                const row = document.createElement('div');
+                row.classList.add('table-row');
+
+                // <img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79">
+                const html = `
+                    <div class="div-block-406 _2">
+                        
+                        <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
+                    </div>
+                    <div class="table-box _2">
+                        <div class="table-data name">
+                            <strong class="bold-text">${data?.name || '-'}<br></strong>
+                        </div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.mtd || '-'}</div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.ytd || '-'}</div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.days30 || '-'}</div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.days90 || '-'}</div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.days365 || '-'}</div>
+                    </div>`
+                
+                row.innerHTML = html;
+                performanceRowsDiv.appendChild(row);
+            })
+        }
+    }
+}
+
 async function getFundData(productName, appwData) {
     console.log('getFundData called with productName:', productName);
     if (productName === "MIIRF") {
@@ -571,6 +625,33 @@ async function getMIIRFFundData(appwData) {
         name: appwData.miirf.info['Name']
     };
 
+    // performances
+    const appwPerformances = [];
+
+    const fundKeys = Object.keys(appwData); // Get all fund keys
+    for (let i = 1; i < fundKeys.length; i++) { // Start from index 1 to skip the first key
+        const fundKey = fundKeys[i];
+        const performances = appwData[fundKey].perf;
+        
+        for (const record of performances) {
+            appwPerformances.push({
+                name: record["Fund"] || fundKey.toUpperCase(),
+                mtd: record["MTD"] || '-',
+                ytd: record["YTD"] || '-',
+                days30: record["30D"] || '-',
+                days90: record["90D"] || '-',
+                days365: record["1Y"] || '-',
+                inception: record["Inception"] || '-',
+                lastUpdatedOn: null,
+                years3: null,
+                years5: null
+            });
+        }
+    }
+
+    renderPerformance(appwPerformances)
+
+
     let data = {
         id: null,
         fundInfo: appwFundInfo,
@@ -582,6 +663,7 @@ async function getMIIRFFundData(appwData) {
     const contentMapping = {
         'asset-name': overview?.name,
         'asset-class': fundInfo.fundCategory,
+        "fundType": fundInfo.fundCategory,
         'productSummary': overview.assetCategory,
         'fundManager': fundInfo.fundManager,
         'netAssets': fundInfo.netAssets,
@@ -596,6 +678,8 @@ async function getMIIRFFundData(appwData) {
     for (const elementId in contentMapping) {
         createText(elementId, contentMapping[elementId]);
     }
+
+    
 
     return data;
 }
