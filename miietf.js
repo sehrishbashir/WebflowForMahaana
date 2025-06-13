@@ -498,13 +498,19 @@ async function getAppWriteData(productName) {
             else if (productName === 'MICF') {
                 appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/micf', timeoutDuration);
             }
+            else if (productName === 'MIIRF') {
+                console.log('Fetching MIIRF data');
+                // appw_data = await fetch('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data/miirf?')
+                appw_data = await fetchWithTimeout('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data/miirf', timeoutDuration);
+            }
 
             // Check if the response is successful
             if (appw_data.ok) {
+                
                 console.log(attempt+1)
                 console.log(`Response Status: ${appw_data.status} ${appw_data.statusText}`);
                 const appw_json = await appw_data.json();
-                
+                console.log(appw_json);
                 return appw_json;
             } 
             else {
@@ -535,314 +541,462 @@ async function getAppWriteData(productName) {
 }
 
 
-    // let appw_data = null
-//     if (productName === 'MIIETF')
-//         appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/miietf')    
-//     if (productName === 'MICF')
-//         appw_data = await fetch('https://66b9babb09e006f25472.appwrite.global/micf')
+
+
+
+
+
+async function getFundData(productName, appwData) {   
     
-//     appw_json = await appw_data.json()
-    
-//     console.log('appw_json')
-//     console.log(appw_json)  
+    console.log('getFundData called with productName:', productName);
+    if (productName === "MIIRF") {
+        console.log('Fetching MIIRF data HELooooooo');
+        let appwFundInfo = {
+            custodian: appwData.miirf.info['Custodian'],
+            fundAuditors: appwData.miirf.info['Fund Auditors'],
+            fundCategory: appwData.miirf.info['Fund Category'],
+            fundManager: appwData.miirf.info['Fund manager'],
+            // fundStabilityRating: appwData.info['Fund Stability Rating'],
+            investmentObjective: appwData.miirf.info['Investment Objective'],
+            launchDate: appwData.miirf.info['Launch Date'],
+            // managementFee: appwData.info['Management Fee'],
+            // monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
+            // monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
+            netAssets: appwData.miirf.info['Net Assets']
+            // shariahAdvisors: appwData.info['Shariah Advisors'],
+            // totalExpenseRatio: null,
+            // totalExpenseRatioWithoutLevy: null,
+            // weightedAverageTime: appwData.info['Weighted Average Time to Maturity (Days)'],
+            // yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
+            // yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
+        }
 
-//     return appw_json
-// }
-
-async function getFundData(productName, appwData) {    
-    let appwFundInfo = {
-        authorizedParticipant: appwData.info['Authorized Participant'],
-        benchmark: appwData.info['Benchmark'],
-        custodian: appwData.info['Custodian'],
-        fundAuditors: appwData.info['Fund Auditors'],
-        fundCategory: appwData.info['Fund Category'],
-        fundManager: appwData.info['Fund manager'],
-        fundStabilityRating: appwData.info['Fund Stability Rating'],
-        investmentObjective: appwData.info['Investment Objective'],
-        launchDate: appwData.info['Launch Date'],
-        managementFee: appwData.info['Management Fee'],
-        monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
-        monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
-        netAssets: appwData.info['Net Assets'],
-        shariahAdvisors: appwData.info['Shariah Advisors'],
-        totalExpenseRatio: null,
-        totalExpenseRatioWithoutLevy: null,
-        weightedAverageTime: appwData.info['Weighted Average Time to Maturity (Days)'],
-        yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
-        yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
-    }
-
-    let product_summary
-    if(appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'])
-        product_summary = appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?']
-    if(appwData.info['What is Mahaana Islamic Cash Fund (MICF)?'])
-        product_summary = appwData.info['What is Mahaana Islamic Cash Fund (MICF)?']
-    
-    let appwOverview = {
-        assetCategory: product_summary,
-        description: null,
-        name: appwData.info['Name'],
-        // navDate: "2024/07/18",
-        navDate: format_date(latest_date),
-        navPerUnit: latest_nav.toString(),
-        question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
-    }
-
-    appwFmrDate = format_date(new Date(appwData.info['Submission date']))
-
-    // console.log(appwFundInfo)
-    // console.log(appwOverview)
-
-    // console.log('appwFmrDate')
-    // console.log(appwFmrDate)
-
-    const appwPerformances = []
-
-    for (record_num in appwData.perf) {
-        let days_30 = null
-        if (!appwData.perf[record_num]['30d'])
-            days_30 = '-'
-        else
-            days_30 = (appwData.perf[record_num]['30d'] * 100).toFixed(2) + "%"
-
-        let days_90 = null
-        if (!appwData.perf[record_num]['90d'])
-            days_90 = '-'
-        else
-            days_90 = (appwData.perf[record_num]['90d'] * 100).toFixed(2) + "%"
-
-        if (!appwData.perf[record_num]['1y'])
-            days_365 = '-'
-        else
-            days_365 = (appwData.perf[record_num]['1y'] * 100).toFixed(2) + "%"
+        let product_summary
+        if(appwData.miirf.info['Fund Summary'])
+            product_summary = appwData.miirf.info['Fund Summary']
         
-        appwPerformances.push({
-            days30: days_30,
-            days90: days_90,
-            days365: days_365,
-            inception: (appwData.perf[record_num]['inception'] * 100).toFixed(2) + "%",
-            lastUpdatedOn: null,
-            mtd: (appwData.perf[record_num]['mtd'] * 100).toFixed(2) + "%",
-            name: appwData.perf[record_num]['name'],
-            years3: null,
-            years5: null,
-            ytd: (appwData.perf[record_num]['ytd'] * 100).toFixed(2) + "%",
-        })
+        let appwOverview = {
+            assetCategory: product_summary,
+            description: null,
+            name: appwData.miirf.info['Name']
+            // navDate: "2024/07/18",
+            // navDate: format_date(latest_date),
+            // navPerUnit: latest_nav.toString(),
+            // question: 'What is Mahaana Islamic Index ETF (MIIETF)?'
+        }
+
+        
+
+        let data = {
+            id: null,
+            // id: dataJson.id,
+            // navDate: format_date(latest_date),
+            // benchmarkData: null,
+            // creditRating: appwCreditRating,
+            // creditQuality: appwCreditQuality, // MICF
+            // currentAssetAllocation: null,
+            // assetAllocation: appwAssetAlloc, // MICF
+            // distribution: null,
+            // currentAssetAllocation: dataJson.currentAssetAllocation,
+            // distribution: dataJson.distribution,
+            // distributions: appwDistributions,
+            // etfBenchmarkData: null,
+            // fmrDate: appwFmrDate, 
+            fundInfo: appwFundInfo,
+            // holding: appwHolding, 
+            // lastAssetAllocation: null,
+            // lastAssetAllocation: dataJson.lastAssetAllocation,
+            // monthToDateExpense: {
+            //     // key: Number(airPerformances[0].mtd.replace("%", "")),
+            //     key: Number(appwPerformances[0].mtd.replace("%", "")),
+            //     value: null
+            // },
+            // monthToDateExpense: dataJson.monthToDateExpense,
+            // offeringDocumentList: appwFmr,
+            overview: appwOverview
+            // performances: appwPerformances.slice(0, 2),
+            // performances: dataJson.performances,
+            // weighted_exposure: appwWeightedExpo,
+        }
+
+        // console.log('data')
+        // console.log(data)
+        
+        // let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation, creditQuality } = data;
+        let {fundInfo, overview } = data;
+
+        // let fmrDateElement = document.querySelectorAll('body #fmrDate');
+        // Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        // let navDateElement = document.querySelectorAll('body #navDate');
+        // Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        // let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
+        // let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
+
+        // let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+        // let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+        
+        const contentMapping = {
+            'asset-name': overview?.name,
+            'asset-class': fundInfo.fundCategory,
+            // 'expense-ratio-mtd': expense_ratio_mtd,
+            // 'expense-ratio-ytd': expense_ratio_ytd,
+            // 'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+            // 'expense-ratio-with-gov': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+            // 'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
+            // 'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+            // // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+            // 'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
+            // 'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            // // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            // 'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            'productSummary': overview.assetCategory,
+            'fundManager': fundInfo.fundManager,
+            'netAssets': fundInfo.netAssets,
+            'launchDate': fundInfo.launchDate || '-',
+            'fundCategory': fundInfo.fundCategory,
+            'investmentObjective': fundInfo.investmentObjective,
+            // 'benchmark': fundInfo.benchmark,
+            // 'managementFee': fundInfo.managementFee,
+            'fundAuditors': fundInfo.fundAuditors,
+            // 'fundAuditors': fundInfo.fundStabilityRating,
+            'fundStabilityRating': fundInfo.fundManager,
+            // 'fundStabilityRating': fundInfo.fundStabilityRating,
+            // 'authorizedParticipant': fundInfo.authorizedParticipant,
+            // 'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            // 'custodian': airFundInfo.custodian,
+            // 'shariahAdvisors': airFundInfo.shariahAdvisors,
+            // 'weightedAverageTime': airFundInfo.weightedAverageTime
+            'custodian': fundInfo.custodian,
+            // 'shariahAdvisors': fundInfo.shariahAdvisors,
+            // 'weightedAverageTime': fundInfo.weightedAverageTime
+        };
+        
+        // reportsData = offeringDocumentList;
+
+        // displayReports(offeringDocumentList);
+
+        // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
+
+        for (const elementId in contentMapping) {
+            createText(elementId, contentMapping[elementId])
+        }
+        
+        // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+        // data.creditRating = transformData(creditRating, 'table');
+        // data.holding = transformData(holding, 'table');
+
+        // if (productName === 'MICF') {
+        //     addAssetAllocGraph(data.assetAllocation)
+        //     addGraph("creditQualityChart", data.creditQuality)
+        // }
+
+        // if (productName === 'MIIETF') {
+        //     addGraph("container2", data.creditRating)  
+        // }
+
+        // addGraph("container1", data.holding)  
+
+        // renderLoop(data, appwPerformances, productName);
     }
 
-    // console.log('appwPerformances')
-    // console.log(appwPerformances)
+    else{
+        console.log('Fetching MIIRF data not HELooooooo');
+        let appwFundInfo = {
+            authorizedParticipant: appwData.info['Authorized Participant'],
+            benchmark: appwData.info['Benchmark'],
+            custodian: appwData.info['Custodian'],
+            fundAuditors: appwData.info['Fund Auditors'],
+            fundCategory: appwData.info['Fund Category'],
+            fundManager: appwData.info['Fund manager'],
+            fundStabilityRating: appwData.info['Fund Stability Rating'],
+            investmentObjective: appwData.info['Investment Objective'],
+            launchDate: appwData.info['Launch Date'],
+            managementFee: appwData.info['Management Fee'],
+            monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
+            monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
+            netAssets: appwData.info['Net Assets'],
+            shariahAdvisors: appwData.info['Shariah Advisors'],
+            totalExpenseRatio: null,
+            totalExpenseRatioWithoutLevy: null,
+            weightedAverageTime: appwData.info['Weighted Average Time to Maturity (Days)'],
+            yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
+            yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
+        }
 
-    let appwCreditRating = null
-    let appwWeightedExpo = null
-    if (productName === 'MIIETF') {
-        appwCreditRating = {}
-        appwWeightedExpo = []
-    
-        for (record_num in appwData.weighted_expo) {
-            key = appwData.weighted_expo[record_num].key
-            value = appwData.weighted_expo[record_num].miietf.toFixed(2)
-            appwCreditRating[key] = value 
-    
-            appwWeightedExpo.push({
-                key: key,
-                value: {
-                    miietf: value,
-                    kmi30: appwData.weighted_expo[record_num].kmi30.toFixed(2),
-                    weight: appwData.weighted_expo[record_num].weight.toFixed(2),
-                }
+        let product_summary
+        if(appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'])
+            product_summary = appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?']
+        if(appwData.info['What is Mahaana Islamic Cash Fund (MICF)?'])
+            product_summary = appwData.info['What is Mahaana Islamic Cash Fund (MICF)?']
+        
+        let appwOverview = {
+            assetCategory: product_summary,
+            description: null,
+            name: appwData.info['Name'],
+            // navDate: "2024/07/18",
+            navDate: format_date(latest_date),
+            navPerUnit: latest_nav.toString(),
+            question: 'What is Mahaana Islamic Index ETF (MIIETF)?',
+        }
+
+        appwFmrDate = format_date(new Date(appwData.info['Submission date']))
+
+        // console.log(appwFundInfo)
+        // console.log(appwOverview)
+
+        // console.log('appwFmrDate')
+        // console.log(appwFmrDate)
+
+        const appwPerformances = []
+
+        for (record_num in appwData.perf) {
+            let days_30 = null
+            if (!appwData.perf[record_num]['30d'])
+                days_30 = '-'
+            else
+                days_30 = (appwData.perf[record_num]['30d'] * 100).toFixed(2) + "%"
+
+            let days_90 = null
+            if (!appwData.perf[record_num]['90d'])
+                days_90 = '-'
+            else
+                days_90 = (appwData.perf[record_num]['90d'] * 100).toFixed(2) + "%"
+
+            if (!appwData.perf[record_num]['1y'])
+                days_365 = '-'
+            else
+                days_365 = (appwData.perf[record_num]['1y'] * 100).toFixed(2) + "%"
+            
+            appwPerformances.push({
+                days30: days_30,
+                days90: days_90,
+                days365: days_365,
+                inception: (appwData.perf[record_num]['inception'] * 100).toFixed(2) + "%",
+                lastUpdatedOn: null,
+                mtd: (appwData.perf[record_num]['mtd'] * 100).toFixed(2) + "%",
+                name: appwData.perf[record_num]['name'],
+                years3: null,
+                years5: null,
+                ytd: (appwData.perf[record_num]['ytd'] * 100).toFixed(2) + "%",
             })
         }
-    
-        // console.log('appwCreditRating')
-        // console.log(appwCreditRating)
-    
-        // console.log('appwWeightedExpo')
-        // console.log(appwWeightedExpo)
-    }
 
-    let appwAssetAlloc = null
-    let appwCreditQuality = null
-    if (productName === 'MICF'){
-        appwAssetAlloc = []
-    
-        for (record_num in appwData.asset_alloc) {
-            appwAssetAlloc.push({})
-            appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
-            appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
-            appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
+        // console.log('appwPerformances')
+        // console.log(appwPerformances)
+
+        let appwCreditRating = null
+        let appwWeightedExpo = null
+        if (productName === 'MIIETF') {
+            appwCreditRating = {}
+            appwWeightedExpo = []
+        
+            for (record_num in appwData.weighted_expo) {
+                key = appwData.weighted_expo[record_num].key
+                value = appwData.weighted_expo[record_num].miietf.toFixed(2)
+                appwCreditRating[key] = value 
+        
+                appwWeightedExpo.push({
+                    key: key,
+                    value: {
+                        miietf: value,
+                        kmi30: appwData.weighted_expo[record_num].kmi30.toFixed(2),
+                        weight: appwData.weighted_expo[record_num].weight.toFixed(2),
+                    }
+                })
+            }
+        
+            // console.log('appwCreditRating')
+            // console.log(appwCreditRating)
+        
+            // console.log('appwWeightedExpo')
+            // console.log(appwWeightedExpo)
         }
-    
-        // console.log('appwAssetAlloc')
-        // console.log(appwAssetAlloc)
-    
-        appwCreditQuality = []
-    
+
+        let appwAssetAlloc = null
+        let appwCreditQuality = null
+        if (productName === 'MICF'){
+            appwAssetAlloc = []
+        
+            for (record_num in appwData.asset_alloc) {
+                appwAssetAlloc.push({})
+                appwAssetAlloc[record_num].Name = appwData.asset_alloc[record_num].key
+                appwAssetAlloc[record_num]['Current month'] = appwData.asset_alloc[record_num].current_month
+                appwAssetAlloc[record_num]['Prev month'] = appwData.asset_alloc[record_num].prev_month
+            }
+        
+            // console.log('appwAssetAlloc')
+            // console.log(appwAssetAlloc)
+        
+            appwCreditQuality = []
+        
+            for (record_num in appwData.distribution) {
+                appwCreditQuality.push({
+                    key: appwData.credit_quality[record_num].key,
+                    value: appwData.credit_quality[record_num].value * 100,
+                })
+            }
+        
+            // console.log('appwCreditQuality')
+            // console.log(appwCreditQuality)
+        }
+        
+        let appwHolding = {}
+
+        for (record_num in appwData.holdings) {
+            key = appwData.holdings[record_num].key
+            value = (appwData.holdings[record_num].holding * 100).toFixed(2) + "%"
+            appwHolding[key] = value 
+        }
+
+        // console.log('appwHolding')
+        // console.log(appwHolding)
+
+        let appwDistributions = []
+
         for (record_num in appwData.distribution) {
-            appwCreditQuality.push({
-                key: appwData.credit_quality[record_num].key,
-                value: appwData.credit_quality[record_num].value * 100,
+            let d = new Date(appwData.distribution[record_num].payout_date)
+            let date_str = moment(d).format("DD/MM/YYYY HH:mm:ss")
+            
+            appwDistributions.push({
+                exNav: appwData.distribution[record_num].ex_nav,
+                payoutDate: date_str,
+                payoutPerUnit: appwData.distribution[record_num].payout_per_unit,
+                recordDate: null,
+                type: "",
+                yield: appwData.distribution[record_num].yield * 100,
             })
         }
-    
-        // console.log('appwCreditQuality')
-        // console.log(appwCreditQuality)
-    }
-    
-    let appwHolding = {}
 
-    for (record_num in appwData.holdings) {
-        key = appwData.holdings[record_num].key
-        value = (appwData.holdings[record_num].holding * 100).toFixed(2) + "%"
-        appwHolding[key] = value 
-    }
+        // console.log('appwDistributions')
+        // console.log(appwDistributions)
 
-    // console.log('appwHolding')
-    // console.log(appwHolding)
+        let appwFmr = []
 
-    let appwDistributions = []
+        for (record_num in appwData.fmr) {
+            appwFmr.push({
+                key: appwData.fmr[record_num].key.replaceAll(" ", "_") + ".pdf",
+                value: null,
+                name: appwData.fmr[record_num].key
+            })
+        }
 
-    for (record_num in appwData.distribution) {
-        let d = new Date(appwData.distribution[record_num].payout_date)
-        let date_str = moment(d).format("DD/MM/YYYY HH:mm:ss")
+        // console.log('appwFmr')
+        // console.log(appwFmr)
+
+        let data = {
+            id: null,
+            // id: dataJson.id,
+            navDate: format_date(latest_date),
+            benchmarkData: null,
+            creditRating: appwCreditRating,
+            creditQuality: appwCreditQuality, // MICF
+            currentAssetAllocation: null,
+            assetAllocation: appwAssetAlloc, // MICF
+            distribution: null,
+            // currentAssetAllocation: dataJson.currentAssetAllocation,
+            // distribution: dataJson.distribution,
+            distributions: appwDistributions,
+            etfBenchmarkData: null,
+            fmrDate: appwFmrDate, 
+            fundInfo: appwFundInfo,
+            holding: appwHolding, 
+            lastAssetAllocation: null,
+            // lastAssetAllocation: dataJson.lastAssetAllocation,
+            monthToDateExpense: {
+                // key: Number(airPerformances[0].mtd.replace("%", "")),
+                key: Number(appwPerformances[0].mtd.replace("%", "")),
+                value: null
+            },
+            // monthToDateExpense: dataJson.monthToDateExpense,
+            offeringDocumentList: appwFmr,
+            overview: appwOverview,
+            performances: appwPerformances.slice(0, 2),
+            // performances: dataJson.performances,
+            weighted_exposure: appwWeightedExpo,
+        }
+
+        // console.log('data')
+        // console.log(data)
         
-        appwDistributions.push({
-            exNav: appwData.distribution[record_num].ex_nav,
-            payoutDate: date_str,
-            payoutPerUnit: appwData.distribution[record_num].payout_per_unit,
-            recordDate: null,
-            type: "",
-            yield: appwData.distribution[record_num].yield * 100,
-        })
+        let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation, creditQuality } = data;
+        
+        let fmrDateElement = document.querySelectorAll('body #fmrDate');
+        Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        let navDateElement = document.querySelectorAll('body #navDate');
+        Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
+
+        let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
+        let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
+
+        let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+        let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
+        
+        const contentMapping = {
+            'asset-name': overview?.name,
+            'asset-class': fundInfo.fundCategory,
+            'expense-ratio-mtd': expense_ratio_mtd,
+            'expense-ratio-ytd': expense_ratio_ytd,
+            'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+            'expense-ratio-with-gov': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
+            'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
+            'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
+            // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
+            'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
+            'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
+            'productSummary': overview.assetCategory,
+            'fundManager': fundInfo.fundManager,
+            'netAssets': fundInfo.netAssets,
+            'launchDate': fundInfo.launchDate || '-',
+            'fundCategory': fundInfo.fundCategory,
+            'investmentObjective': fundInfo.investmentObjective,
+            'benchmark': fundInfo.benchmark,
+            'managementFee': fundInfo.managementFee,
+            'fundAuditors': fundInfo.fundAuditors,
+            // 'fundAuditors': fundInfo.fundStabilityRating,
+            // 'fundStabilityRating': fundInfo.fundManager,
+            'fundStabilityRating': fundInfo.fundStabilityRating,
+            'authorizedParticipant': fundInfo.authorizedParticipant,
+            'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
+            // 'custodian': airFundInfo.custodian,
+            // 'shariahAdvisors': airFundInfo.shariahAdvisors,
+            // 'weightedAverageTime': airFundInfo.weightedAverageTime
+            'custodian': fundInfo.custodian,
+            'shariahAdvisors': fundInfo.shariahAdvisors,
+            'weightedAverageTime': fundInfo.weightedAverageTime
+        };
+        
+        reportsData = offeringDocumentList;
+
+        // displayReports(offeringDocumentList);
+
+        // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
+
+        for (const elementId in contentMapping) {
+            createText(elementId, contentMapping[elementId])
+        }
+        
+        // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
+        data.creditRating = transformData(creditRating, 'table');
+        data.holding = transformData(holding, 'table');
+
+        if (productName === 'MICF') {
+            addAssetAllocGraph(data.assetAllocation)
+            addGraph("creditQualityChart", data.creditQuality)
+        }
+
+        if (productName === 'MIIETF') {
+            addGraph("container2", data.creditRating)  
+        }
+
+        addGraph("container1", data.holding)  
+
+        renderLoop(data, appwPerformances, productName);
     }
-
-    // console.log('appwDistributions')
-    // console.log(appwDistributions)
-
-    let appwFmr = []
-
-    for (record_num in appwData.fmr) {
-        appwFmr.push({
-            key: appwData.fmr[record_num].key.replaceAll(" ", "_") + ".pdf",
-            value: null,
-            name: appwData.fmr[record_num].key
-        })
-    }
-
-    // console.log('appwFmr')
-    // console.log(appwFmr)
-
-    let data = {
-        id: null,
-        // id: dataJson.id,
-        navDate: format_date(latest_date),
-        benchmarkData: null,
-        creditRating: appwCreditRating,
-        creditQuality: appwCreditQuality, // MICF
-        currentAssetAllocation: null,
-        assetAllocation: appwAssetAlloc, // MICF
-        distribution: null,
-        // currentAssetAllocation: dataJson.currentAssetAllocation,
-        // distribution: dataJson.distribution,
-        distributions: appwDistributions,
-        etfBenchmarkData: null,
-        fmrDate: appwFmrDate, 
-        fundInfo: appwFundInfo,
-        holding: appwHolding, 
-        lastAssetAllocation: null,
-        // lastAssetAllocation: dataJson.lastAssetAllocation,
-        monthToDateExpense: {
-            // key: Number(airPerformances[0].mtd.replace("%", "")),
-            key: Number(appwPerformances[0].mtd.replace("%", "")),
-            value: null
-        },
-        // monthToDateExpense: dataJson.monthToDateExpense,
-        offeringDocumentList: appwFmr,
-        overview: appwOverview,
-        performances: appwPerformances.slice(0, 2),
-        // performances: dataJson.performances,
-        weighted_exposure: appwWeightedExpo,
-    }
-
-    // console.log('data')
-    // console.log(data)
-    
-    let { offeringDocumentList, fmrDate, fundInfo, monthToDateExpense, overview, creditRating, currentAssetAllocation, holding, navDate, assetAllocation, creditQuality } = data;
-    
-    let fmrDateElement = document.querySelectorAll('body #fmrDate');
-    Array.from(fmrDateElement).forEach(element => { element.textContent = "as of" + " " + moment(fmrDate, 'YYYY-MM-DD').format('D MMM YYYY') });
-
-    let navDateElement = document.querySelectorAll('body #navDate');
-    Array.from(navDateElement).forEach(element => { element.textContent = "as of" + " " + moment(navDate, 'YYYY-MM-DD').format('D MMM YYYY') });
-
-    let expense_ratio_mtd = fundInfo?.monthlyTotalExpenseRatio > 0 ? `${fundInfo?.monthlyTotalExpenseRatio}%` : 'N/A'
-    let expense_ratio_ytd = fundInfo?.yearlyTotalExpenseRatio > 0 ? `${fundInfo?.yearlyTotalExpenseRatio}%` : 'N/A'
-
-    let expense_ratio_without_gov_mtd = fundInfo?.monthlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.monthlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
-    let expense_ratio_without_gov_ytd = fundInfo?.yearlyTotalExpenseRatioWithoutLevy > 0 ? `${fundInfo?.yearlyTotalExpenseRatioWithoutLevy}%` : 'N/A'
-    
-    const contentMapping = {
-        'asset-name': overview?.name,
-        'asset-class': fundInfo.fundCategory,
-        'expense-ratio-mtd': expense_ratio_mtd,
-        'expense-ratio-ytd': expense_ratio_ytd,
-        'expense-ratio': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
-        'expense-ratio-with-gov': expense_ratio_mtd + ' (MTD) | ' + expense_ratio_ytd + ' (YTD)',
-        'expense-ratio-without-gov': expense_ratio_without_gov_mtd + ' (MTD) | ' + expense_ratio_without_gov_ytd + ' (YTD)',
-        'micf-mtd': `${monthToDateExpense.key.toFixed(2)}%`,
-        // 'mtd-date': `as of ${moment(monthToDateExpense.value).format('D MMM YYYY')}`,
-        'mtd-date': `as of ${moment(fmrDate).format('D MMM YYYY')}`,
-        'nav-price': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-        // 'nav-date': `as of ${moment(overview.navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-        'nav-date': `as of ${moment(navDate, 'YYYY/MM/DD').format('D MMM YYYY')}`,
-        'productSummary': overview.assetCategory,
-        'fundManager': fundInfo.fundManager,
-        'netAssets': fundInfo.netAssets,
-        'launchDate': fundInfo.launchDate || '-',
-        'fundCategory': fundInfo.fundCategory,
-        'investmentObjective': fundInfo.investmentObjective,
-        'benchmark': fundInfo.benchmark,
-        'managementFee': fundInfo.managementFee,
-        'fundAuditors': fundInfo.fundAuditors,
-        // 'fundAuditors': fundInfo.fundStabilityRating,
-        // 'fundStabilityRating': fundInfo.fundManager,
-        'fundStabilityRating': fundInfo.fundStabilityRating,
-        'authorizedParticipant': fundInfo.authorizedParticipant,
-        'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
-        // 'custodian': airFundInfo.custodian,
-        // 'shariahAdvisors': airFundInfo.shariahAdvisors,
-        // 'weightedAverageTime': airFundInfo.weightedAverageTime
-        'custodian': fundInfo.custodian,
-        'shariahAdvisors': fundInfo.shariahAdvisors,
-        'weightedAverageTime': fundInfo.weightedAverageTime
-    };
-    
-    reportsData = offeringDocumentList;
-
-    // displayReports(offeringDocumentList);
-
-    // offeringDocumentList.length > 5 && renderPagination(offeringDocumentList);
-
-    for (const elementId in contentMapping) {
-        createText(elementId, contentMapping[elementId])
-    }
-    
-    // data.currentAssetAllocation = transformData(currentAssetAllocation, 'table');
-    data.creditRating = transformData(creditRating, 'table');
-    data.holding = transformData(holding, 'table');
-
-    if (productName === 'MICF') {
-        addAssetAllocGraph(data.assetAllocation)
-        addGraph("creditQualityChart", data.creditQuality)
-    }
-
-    if (productName === 'MIIETF') {
-        addGraph("container2", data.creditRating)  
-    }
-
-    addGraph("container1", data.holding)  
-
-    renderLoop(data, appwPerformances, productName);
 }
 
 function addGraph(id, data) {
@@ -1239,6 +1393,7 @@ function day_between_dates(dateLater, dateEarlier) {
 }
 
 async function main() {
+    console.log('main function started')
     loader = createLoader();
     loader.style.display = 'flex';
 
@@ -1247,7 +1402,7 @@ async function main() {
     // let micfBase = airtable.base('app3KpgeOesdEHazM')
 
     let productName = document.querySelector('#product_name').innerText
-    // console.log(productName)
+    console.log(productName)
 
     if (productName === 'MIIETF') {
         let appwData = await getAppWriteData(productName)
@@ -1259,6 +1414,15 @@ async function main() {
         let appwData = await getAppWriteData(productName)
 
         getFundPrices(productName, appwData.price)
+        await getFundData(productName, appwData)
+    }
+
+    else if (productName === 'MIIRF') {
+        console.log('MIIRF')
+        let appwData = await getAppWriteData(productName)
+        console.log("appdata",appwData)
+        // getFundPrices(productName, appwData.price)
+        // await getFundDataRetire(productName, appwData)
         await getFundData(productName, appwData)
     }
 
