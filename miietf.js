@@ -634,19 +634,35 @@ async function getMIIRFFundData(appwData) {
         const performances = appwData[fundKey].perf;
         
         for (const record of performances) {
-            appwPerformances.push({
-                name: record["Fund"] || fundKey.toUpperCase(),
-                mtd: record["MTD"] || '-',
-                ytd: record["YTD"] || '-',
-                days30: record["30D"] || '-',
-                days90: record["90D"] || '-',
-                days365: record["1Y"] || '-',
-                inception: record["Inception"] || '-',
-                lastUpdatedOn: null,
-                years3: null,
-                years5: null
-            });
+        let displayName;
+
+        switch (record["Fund"]) {
+            case "MIIRF-MMSF":
+                displayName = "Money Market";
+                break;
+            case "MIIRF-DSF":
+                displayName = "Debt";
+                break;
+            case "MIIRF-ESF":
+                displayName = "Equity";
+                break;
+            default:
+                displayName = record["Fund"] || fundKey.toUpperCase();
         }
+
+        appwPerformances.push({
+            name: displayName,
+            mtd: record["MTD"] || '-',
+            ytd: record["YTD"] || '-',
+            days30: record["30D"] || '-',
+            days90: record["90D"] || '-',
+            days365: record["1Y"] || '-',
+            inception: record["Inception"] || '-',
+            lastUpdatedOn: null,
+            years3: null,
+            years5: null
+        });
+    }
     }
 
     renderPerformance(appwPerformances)
