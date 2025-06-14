@@ -624,7 +624,7 @@ async function getMIIRFFundData(appwData) {
         fundManager: appwData.miirf.info['Fund manager'],
         investmentObjective: appwData.miirf.info['Investment Objective'],
         launchDate: appwData.miirf.info['Launch Date'],
-        netAssets: appwData.miirf.info['Net Assets']
+        netAssets: appwData.miirf.info['Net Assets (PKR mn)']
     };
 
     let product_summary = appwData.miirf.info['Fund Summary'] || null;
@@ -662,26 +662,30 @@ async function getMIIRFFundData(appwData) {
     }
 
 
-    // // subfund info
-    // const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
+    // subfund info
+    const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
 
-    // const subFundContentMapping = {
-    //     'asset-name': 'Name',
-    //     'launchDate': 'Launch Date'
-    //     // 'fundCategory': 'Fund Category'
-    // };
+    const subFundContentMapping = {
+        'asset-name': 'Name',
+        'netAssets': "Net Assets (PKR mn)",
+        'launchDate': 'Launch Date',
+        'fundCategory': 'Fund Category',
+        'fundAuditors': 'Fund Auditors',
+        'fundManager': 'Fund manager',
+        'custodian': 'Custodian'
+    };
 
-    // // Update sub-fund info for each tab
-    // const subFundContainers = document.querySelectorAll('.container-12.miirf');
-    // subFundContainers.forEach((container, index) => {
-    //     const subFundData = subFunds[index]; // Get data for the current sub-fund
-    //     if (subFundData) {
-    //         for (const elementId in subFundContentMapping) {
-    //             const dataKey = subFundContentMapping[elementId];
-    //             createText(container, elementId, subFundData[dataKey]);
-    //         }
-    //     }
-    // })
+    // Update sub-fund info for each tab
+    const subFundContainers = document.querySelectorAll('.container-12.miirf');
+    subFundContainers.forEach((container, index) => {
+        const subFundData = subFunds[index]; // Get data for the current sub-fund
+        if (subFundData) {
+            for (const elementId in subFundContentMapping) {
+                const dataKey = subFundContentMapping[elementId];
+                createText(container, elementId, subFundData[dataKey]);
+            }
+        }
+    })
 
 
     // performances
