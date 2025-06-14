@@ -607,32 +607,18 @@ function renderPerformance(performances){
     }
 }
 
-function renderHoldings(appwHolding, subfundKey, subfundName) {
-    const holdingRows = document.querySelector(`.container-12.miirf[data-subfund="${subfundKey}"] #holding-table-rows`);
+function renderHoldings(appwHolding, subfundKey) {
+    const holdingRows = document.querySelector(`#holding-table-rows`);
     
     if (holdingRows) {
         // Clear existing table rows
         while (holdingRows.firstChild) {
             holdingRows.removeChild(holdingRows.firstChild);
         }
-        console.log(`Rendering holdings for subfund: ${subfundName}`);
         console.log(appwHolding[subfundKey]);
         
         // Check if the subfund has holdings
         if (appwHolding[subfundKey] && appwHolding[subfundKey].length > 0) {
-            
-            // Add subfund header
-            const headerRow = document.createElement('div');
-            headerRow.classList.add('table-row-2');
-            const headerHtml = `
-                <div class="div-block-410 _2"></div>
-                <div class="table-box _2 sectors">
-                    <div class="table-data name sectors"><strong class="bold-text">${subfundName}<br></strong></div>
-                </div>
-                <div class="table-box _3"></div>
-            `;
-            headerRow.innerHTML = headerHtml;
-            holdingRows.appendChild(headerRow);
             
             // Add holdings rows
             appwHolding[subfundKey].forEach((item, index) => {
@@ -850,10 +836,10 @@ async function getMIIRFFundData(appwData) {
             });
         }
     });
-
+    console.log('appwHolding',appwHolding);
     // Render holdings for each subfund
     subfunds.forEach(subfund => {
-        renderHoldings(appwHolding, subfund.key, subfund.name);
+        renderHoldings(appwHolding, subfund.key);
     });
 
     
