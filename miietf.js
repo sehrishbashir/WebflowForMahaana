@@ -58,9 +58,10 @@ function createLoader() {
 // function scrollHandler() {const tabsMenu = document.querySelector('.tabs-menu');const tabContent = document.querySelector('.tabs-content');const tabWrapper = document.querySelector('#tab-wrapper');const sections = document.querySelectorAll(".tab-content-container");const tabLinks = document.querySelectorAll(".tab-item");let isTabBarFixed;if (tabsMenu) {isTabBarFixed = tabsMenu.classList.contains('fixed');function obCallback(payload) {if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {tabsMenu.classList.add("fixed");tabWrapper.style.paddingTop = '64px';}else {tabsMenu.classList.remove("fixed");tabWrapper.style.paddingTop = '0';}}const ob = new IntersectionObserver(obCallback);ob.observe(tabContent);const options = { threshold: 0.2 };const observer = new IntersectionObserver((entries) => {entries.forEach(entry => {if (entry.isIntersecting) {const offset = !isTabBarFixed ? 250 : 200;const targetId = entry.target.id;const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {tabLinks.forEach(link => link.classList.remove("active"));targetTabLinks.forEach(link => link.classList.add("active"));} else {targetTabLinks.forEach(link => link.classList.remove("active"));}}});}, options);sections.forEach((section) => {observer.observe(section);});} }
 // function removePer(str) {if (String(str).includes('%')) return str.replace('%', '');else return str}
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
-// const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
 
-const createText = (container, elementId, content) => {
+const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
+
+const createTextRetirment = (container, elementId, content) => {
     // If container is provided, scope the query to it; otherwise, use document
     const element = container 
         ? container.querySelector(`#${elementId}`)
@@ -657,7 +658,7 @@ async function getMIIRFFundData(appwData) {
     const mainFundContainer = document.querySelector('.container-12:not(.miirf)');
     if (mainFundContainer) {
         for (const elementId in contentMapping) {
-            createText(mainFundContainer, elementId, contentMapping[elementId]);
+            createTextRetirment(mainFundContainer, elementId, contentMapping[elementId]);
         }
     }
 
@@ -684,7 +685,7 @@ async function getMIIRFFundData(appwData) {
         if (subFundData) {
             for (const elementId in subFundContentMapping) {
                 const dataKey = subFundContentMapping[elementId];
-                createText(container, elementId, subFundData[dataKey]);
+                createTextRetirment(container, elementId, subFundData[dataKey]);
             }
         }
     })
