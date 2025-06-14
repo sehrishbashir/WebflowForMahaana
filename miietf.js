@@ -607,6 +607,60 @@ function renderPerformance(performances){
     }
 }
 
+function renderHoldings(appwHolding, subfundKey, subfundName) {
+    const holdingRows = document.querySelector(`.container-12.miirf[data-subfund="${subfundKey}"] #holding-table-rows`);
+    
+    if (holdingRows) {
+        // Clear existing table rows
+        while (holdingRows.firstChild) {
+            holdingRows.removeChild(holdingRows.firstChild);
+        }
+        console.log(`Rendering holdings for subfund: ${subfundName}`);
+        console.log(appwHolding[subfundKey]);
+        
+        // Check if the subfund has holdings
+        if (appwHolding[subfundKey] && appwHolding[subfundKey].length > 0) {
+            
+            // Add subfund header
+            const headerRow = document.createElement('div');
+            headerRow.classList.add('table-row-2');
+            const headerHtml = `
+                <div class="div-block-410 _2"></div>
+                <div class="table-box _2 sectors">
+                    <div class="table-data name sectors"><strong class="bold-text">${subfundName}<br></strong></div>
+                </div>
+                <div class="table-box _3"></div>
+            `;
+            headerRow.innerHTML = headerHtml;
+            holdingRows.appendChild(headerRow);
+            
+            // Add holdings rows
+            appwHolding[subfundKey].forEach((item, index) => {
+                const row = document.createElement('div');
+                row.classList.add('table-row-2');
+                
+                const returnVal = typeof item.value === 'string' ? item.value : item.value.toFixed(2);
+                const html = `
+                    <div class="div-block-410 _2">
+                        <svg height="8" width="8" xmlns="http://www.w3.org/2000/svg">
+                            <circle r="4" cx="4" cy="4" fill="${PIE_COLORS_NEW[index % PIE_COLORS_NEW.length]}"></circle>
+                        </svg>
+                    </div>
+                    <div class="table-box _2 sectors">
+                        <div class="table-data name sectors"><strong class="bold-text">${item.key}<br></strong></div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${returnVal.trim()}%<br></div>
+                    </div>
+                `;
+                
+                row.innerHTML = html;
+                holdingRows.appendChild(row);
+            });
+        }
+    }
+}
+
 async function getFundData(productName, appwData) {
     console.log('getFundData called with productName:', productName);
     if (productName === "MIIRF") {
@@ -681,7 +735,6 @@ async function getMIIRFFundData(appwData) {
         'i-nav' : "Latest NAV",
         'navDate': 'Latest NAV Date',
         'mtd': 'MTD',
-
     };
 
     // Update sub-fund info for each tab
@@ -700,8 +753,8 @@ async function getMIIRFFundData(appwData) {
     // update sub-fund upper nav, mtd and nav date info
     const subFundContainersMAIN = document.querySelectorAll('.w-layout-grid.uui-layout82_list.miirf');
     subFundContainersMAIN.forEach((container, index) => {
-        const subFundPriceData = subFundsPrice[index]; // Get price data for the current sub-fund
-        const subFundPerfData = subFundsPerf[index]; // Get performance data for the current sub-fund
+        const subFundPriceData = subFundsPrice[index];
+        const subFundPerfData = subFundsPerf[index];
         if (subFundPriceData) {
             // Get latest NAV and date from price array
             let latestNav = '-';
@@ -720,10 +773,8 @@ async function getMIIRFFundData(appwData) {
             
             for (const elementId in subFundContentMapping) {
                 let contentValue;
-
                 if (elementId === 'i-nav') {
                     contentValue = latestNav;
-                    console.log('latestNav',latestNav);
                     createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'navDate') {
                     contentValue = `as of ${moment(latestNavDate, 'YYYY-MM-DD').format('D MMM YYYY')}`;
@@ -732,7 +783,6 @@ async function getMIIRFFundData(appwData) {
                     contentValue = latestMTD;
                     createTextRetirment(container, elementId, contentValue);
                 }
-                console.log("vallue",latestNav,latestNavDate,latestMTD)
             }
         }
     });
@@ -747,47 +797,73 @@ async function getMIIRFFundData(appwData) {
         const performances = appwData[fundKey].perf;
         
         for (const record of performances) {
-        let displayName;
-
-        switch (record["Fund"]) {
-            case "MIIRF-MMSF":
-                displayName = "Money Market";
-                break;
-            case "MIIRF-DSF":
-                displayName = "Debt";
-                break;
-            case "MIIRF-ESF":
-                displayName = "Equity";
-                break;
-            default:
-                displayName = record["Fund"] || fundKey.toUpperCase();
+            let displayName;
+            switch (record["Fund"]) {
+                case "MIIRF-MMSF":
+                    displayName = "Money Market";
+                    break;
+                case "MIIRF-DSF":
+                    displayName = "Debt";
+                    break;
+                case "MIIRF-ESF":
+                    displayName = "Equity";
+                    break;
+                default:
+                    displayName = record["Fund"] || fundKey.toUpperCase();
+            }
+            appwPerformances.push({
+                name: displayName,
+                mtd: record["MTD"] || '-',
+                ytd: record["YTD"] || '-',
+                days30: record["30D"] || '-',
+                days90: record["90D"] || '-',
+                days365: record["1Y"] || '-',
+                inception: record["Inception"] || '-',
+                lastUpdatedOn: null,
+                years3: null,
+                years5: null
+            });
         }
-
-        appwPerformances.push({
-            name: displayName,
-            mtd: record["MTD"] || '-',
-            ytd: record["YTD"] || '-',
-            days30: record["30D"] || '-',
-            days90: record["90D"] || '-',
-            days365: record["1Y"] || '-',
-            inception: record["Inception"] || '-',
-            lastUpdatedOn: null,
-            years3: null,
-            years5: null
-        });
     }
-    }
+    renderPerformance(appwPerformances);
 
-    renderPerformance(appwPerformances)
+    // Construct appwHolding
+    let appwHolding = {
+        'miirfmmsf': [],
+        'miirfdsf': [],
+        'miirfesf': []
+    };
 
+    const subfunds = [
+        { key: 'miirfmmsf', name: 'Money Market Sub-Fund' },
+        { key: 'miirfdsf', name: 'Debt Sub-Fund' },
+        { key: 'miirfesf', name: 'Equity Sub-Fund' }
+    ];
+
+    subfunds.forEach(subfund => {
+        if (appwData[subfund.key] && appwData[subfund.key].holdings && appwData[subfund.key].holdings.length > 0) {
+            appwData[subfund.key].holdings.forEach(holding => {
+                appwHolding[subfund.key].push({
+                    key: holding.Name,
+                    value: (parseFloat(holding.Holding) * 100).toFixed(2)
+                });
+            });
+        }
+    });
+
+    // Render holdings for each subfund
+    subfunds.forEach(subfund => {
+        renderHoldings(appwHolding, subfund.key, subfund.name);
+    });
+
+    
+    
 
     let data = {
         id: null,
         fundInfo: fundInfo,
         overview: overview
     };
-
-    // let { fundInfo, overview } = data;    
 
     return data;
 }
