@@ -58,7 +58,18 @@ function createLoader() {
 // function scrollHandler() {const tabsMenu = document.querySelector('.tabs-menu');const tabContent = document.querySelector('.tabs-content');const tabWrapper = document.querySelector('#tab-wrapper');const sections = document.querySelectorAll(".tab-content-container");const tabLinks = document.querySelectorAll(".tab-item");let isTabBarFixed;if (tabsMenu) {isTabBarFixed = tabsMenu.classList.contains('fixed');function obCallback(payload) {if (payload[0].isIntersecting && window.scrollY >= 600 && window.innerWidth >= 768) {tabsMenu.classList.add("fixed");tabWrapper.style.paddingTop = '64px';}else {tabsMenu.classList.remove("fixed");tabWrapper.style.paddingTop = '0';}}const ob = new IntersectionObserver(obCallback);ob.observe(tabContent);const options = { threshold: 0.2 };const observer = new IntersectionObserver((entries) => {entries.forEach(entry => {if (entry.isIntersecting) {const offset = !isTabBarFixed ? 250 : 200;const targetId = entry.target.id;const targetTabLinks = document.querySelectorAll(`.tab-item[href="#${targetId}"]`);if (entry.boundingClientRect.top <= offset && entry.intersectionRatio > 0) {tabLinks.forEach(link => link.classList.remove("active"));targetTabLinks.forEach(link => link.classList.add("active"));} else {targetTabLinks.forEach(link => link.classList.remove("active"));}}});}, options);sections.forEach((section) => {observer.observe(section);});} }
 // function removePer(str) {if (String(str).includes('%')) return str.replace('%', '');else return str}
 // function transformData(data, type) {return data && Object.entries(data).map(([key, value]) => ({ key, value: type === 'table' ? removePer(value) : Number(value?.toString()?.replace("%", "")) })).filter((item) => item.value > 0);}
-const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
+// const createText = (elementId, content) => { const element = document.getElementById(elementId); if (element) { element.textContent = content; } };
+
+const createText = (container, elementId, content) => {
+    // If container is provided, scope the query to it; otherwise, use document
+    const element = container 
+        ? container.querySelector(`#${elementId}`)
+        : document.getElementById(elementId);
+    if (element) {
+        element.textContent = content || '-'; // Fallback to '-' if content is undefined/null
+    }
+};
+
 
 function renderLoop(data, airPerformances, productName) {
     let { performances, holding, creditRating, distributions, overAllCreditRating, currentAssetAllocation, assetAllocation, creditQuality, weighted_exposure } = data;
@@ -598,16 +609,15 @@ function renderPerformance(performances){
 async function getFundData(productName, appwData) {
     console.log('getFundData called with productName:', productName);
     if (productName === "MIIRF") {
-        console.log('Fetching MIIRF data HELooooooo');
         return getMIIRFFundData(appwData);
     } else {
-        console.log('Fetching MIIRF data not HELooooooo');
         return getNonMIIRFFundData(productName, appwData);
     }
 }
 
 async function getMIIRFFundData(appwData) {
-    let appwFundInfo = {
+    // main fund info
+    let fundInfo = {
         custodian: appwData.miirf.info['Custodian'],
         fundAuditors: appwData.miirf.info['Fund Auditors'],
         fundCategory: appwData.miirf.info['Fund Category'],
@@ -619,11 +629,60 @@ async function getMIIRFFundData(appwData) {
 
     let product_summary = appwData.miirf.info['Fund Summary'] || null;
 
-    let appwOverview = {
+    let overview = {
         assetCategory: product_summary,
         description: null,
         name: appwData.miirf.info['Name']
     };
+
+    const contentMapping = {
+        'asset-name': overview?.name,
+        'asset-class': fundInfo.fundCategory,
+        "fundType": fundInfo.fundCategory,
+        'productSummary': overview.assetCategory,
+        'fundManager': fundInfo.fundManager,
+        'netAssets': fundInfo.netAssets,
+        'launchDate': fundInfo.launchDate || '-',
+        'fundCategory': fundInfo.fundCategory,
+        'investmentObjective': fundInfo.investmentObjective,
+        'fundAuditors': fundInfo.fundAuditors,
+        'fundStabilityRating': fundInfo.fundManager,
+        'custodian': fundInfo.custodian
+    };
+
+    // for (const elementId in contentMapping) {
+    //     createText(elementId, contentMapping[elementId]);
+    // }
+
+    const mainFundContainer = document.querySelector('.container-12:not(.miirf)');
+    if (mainFundContainer) {
+        for (const elementId in contentMapping) {
+            createText(mainFundContainer, elementId, contentMapping[elementId]);
+        }
+    }
+
+
+    // // subfund info
+    // const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
+
+    // const subFundContentMapping = {
+    //     'asset-name': 'Name',
+    //     'launchDate': 'Launch Date'
+    //     // 'fundCategory': 'Fund Category'
+    // };
+
+    // // Update sub-fund info for each tab
+    // const subFundContainers = document.querySelectorAll('.container-12.miirf');
+    // subFundContainers.forEach((container, index) => {
+    //     const subFundData = subFunds[index]; // Get data for the current sub-fund
+    //     if (subFundData) {
+    //         for (const elementId in subFundContentMapping) {
+    //             const dataKey = subFundContentMapping[elementId];
+    //             createText(container, elementId, subFundData[dataKey]);
+    //         }
+    //     }
+    // })
+
 
     // performances
     const appwPerformances = [];
@@ -670,32 +729,11 @@ async function getMIIRFFundData(appwData) {
 
     let data = {
         id: null,
-        fundInfo: appwFundInfo,
-        overview: appwOverview
+        fundInfo: fundInfo,
+        overview: overview
     };
 
-    let { fundInfo, overview } = data;
-
-    const contentMapping = {
-        'asset-name': overview?.name,
-        'asset-class': fundInfo.fundCategory,
-        "fundType": fundInfo.fundCategory,
-        'productSummary': overview.assetCategory,
-        'fundManager': fundInfo.fundManager,
-        'netAssets': fundInfo.netAssets,
-        'launchDate': fundInfo.launchDate || '-',
-        'fundCategory': fundInfo.fundCategory,
-        'investmentObjective': fundInfo.investmentObjective,
-        'fundAuditors': fundInfo.fundAuditors,
-        'fundStabilityRating': fundInfo.fundManager,
-        'custodian': fundInfo.custodian
-    };
-
-    for (const elementId in contentMapping) {
-        createText(elementId, contentMapping[elementId]);
-    }
-
-    
+    // let { fundInfo, overview } = data;    
 
     return data;
 }
