@@ -701,7 +701,7 @@ async function getMIIRFFundData(appwData) {
                 latestNavDate = latest.date;
             }
             
-            latestMTD = subFundData.perf[0]?.MTD || '-';
+            latestMTD = subFundData.perf?.[0]?.MTD || '-';
             
             for (const elementId in subFundContentMapping) {
                 let contentValue;
