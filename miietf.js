@@ -667,6 +667,8 @@ async function getMIIRFFundData(appwData) {
 
     const subFundContentMapping = {
         'asset-name': 'Name',
+        'productSummary' : 'Fund Summary',
+        'investmentObjective' : 'Investment Objective',
         'netAssets': "Net Assets (PKR mn)",
         'launchDate': 'Launch Date',
         'fundCategory': 'Fund Category',
