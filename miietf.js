@@ -665,6 +665,8 @@ async function getMIIRFFundData(appwData) {
 
     // subfund info
     const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
+    const subFundsPrice = [appwData.miirfmmsf.price, appwData.miirfdsf.price, appwData.miirfesf.price];
+    const subFundsPerf = [appwData.miirfmmsf.perf, appwData.miirfdsf.perf, appwData.miirfesf.perf];
 
     const subFundContentMapping = {
         'asset-name': 'Name',
@@ -677,47 +679,60 @@ async function getMIIRFFundData(appwData) {
         'fundManager': 'Fund manager',
         'custodian': 'Custodian',
         'i-nav' : "Latest NAV",
-        'nav-date': 'Latest NAV Date',
+        'navDate': 'Latest NAV Date',
         'mtd': 'MTD',
 
     };
 
     // Update sub-fund info for each tab
     const subFundContainers = document.querySelectorAll('.container-12.miirf');
-
     subFundContainers.forEach((container, index) => {
         const subFundData = subFunds[index]; // Get data for the current sub-fund
         if (subFundData) {
+            for (const elementId in subFundContentMapping) {
+                const dataKey = subFundContentMapping[elementId];
+                createTextRetirment(container, elementId, subFundData[dataKey]);
+            }
+        }
+    })
+
+
+    // update sub-fund upper nav, mtd and nav date info
+    const subFundContainersMAIN = document.querySelectorAll('.w-layout-grid.uui-layout82_list.miirf');
+    subFundContainersMAIN.forEach((container, index) => {
+        const subFundPriceData = subFundsPrice[index]; // Get price data for the current sub-fund
+        const subFundPerfData = subFundsPerf[index]; // Get performance data for the current sub-fund
+        if (subFundPriceData) {
             // Get latest NAV and date from price array
             let latestNav = '-';
             let latestNavDate = '-';
             let latestMTD = '-';
 
-            if (Array.isArray(subFundData.price) && subFundData.price.length > 0) {
-                const latest = subFundData.price.reduce((latestSoFar, current) =>
+            if (Array.isArray(subFundPriceData) && subFundPriceData.length > 0) {
+                const latest = subFundPriceData.reduce((latestSoFar, current) =>
                     new Date(current.date) > new Date(latestSoFar.date) ? current : latestSoFar
                 );
                 latestNav = latest.nav;
                 latestNavDate = latest.date;
             }
             
-            latestMTD = subFundData.perf?.[0]?.MTD || '-';
+            latestMTD = subFundPerfData?.[0]?.MTD || '-';
             
             for (const elementId in subFundContentMapping) {
                 let contentValue;
 
                 if (elementId === 'i-nav') {
                     contentValue = latestNav;
-                } else if (elementId === 'nav-date') {
-                    contentValue = latestNavDate;
+                    console.log('latestNav',latestNav);
+                    createTextRetirment(container, elementId, contentValue);
+                } else if (elementId === 'navDate') {
+                    contentValue = `as of ${moment(latestNavDate, 'YYYY-MM-DD').format('D MMM YYYY')}`;
+                    createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'mtd') {
                     contentValue = latestMTD;
-                } else {
-                    const dataKey = subFundContentMapping[elementId];
-                    contentValue = subFundData[dataKey] || '-';
+                    createTextRetirment(container, elementId, contentValue);
                 }
-
-                createTextRetirment(container, elementId, contentValue);
+                console.log("vallue",latestNav,latestNavDate,latestMTD)
             }
         }
     });
