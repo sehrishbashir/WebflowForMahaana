@@ -611,7 +611,7 @@ function renderHoldings(container, appwHolding, subfundKey) {
     // Scope the query to the specific holdings container
     const holdingRows = container.querySelector(`#holding-table-rows`);
     
-    if (holdingRows) {
+    if (holdingRows && appwHolding[subfundKey].length > 0) {
         // Clear existing table rows
         while (holdingRows.firstChild) {
             holdingRows.removeChild(holdingRows.firstChild);
