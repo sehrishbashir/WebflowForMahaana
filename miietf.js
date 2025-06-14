@@ -666,13 +666,6 @@ async function getMIIRFFundData(appwData) {
     // subfund info
     const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
 
-    // sub fund price details
-
-
-    const latest = priceData.reduce((latestSoFar, current) => {
-        return new Date(current.date) > new Date(latestSoFar.date) ? current : latestSoFar;
-    });
-
     const subFundContentMapping = {
         'asset-name': 'Name',
         'productSummary' : 'Fund Summary',
