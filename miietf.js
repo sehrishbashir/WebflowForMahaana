@@ -607,19 +607,19 @@ function renderPerformance(performances){
     }
 }
 
-function renderHoldings(appwHolding, subfundKey) {
-    const holdingRows = document.querySelector(`#holding-table-rows`);
+function renderHoldings(container, appwHolding, subfundKey) {
+    // Scope the query to the specific holdings container
+    const holdingRows = container.querySelector(`#holding-table-rows`);
     
     if (holdingRows) {
         // Clear existing table rows
         while (holdingRows.firstChild) {
             holdingRows.removeChild(holdingRows.firstChild);
         }
-        console.log(appwHolding[subfundKey]);
+        console.log(`Rendering holdings for ${subfundKey}:`, appwHolding[subfundKey]);
         
         // Check if the subfund has holdings
         if (appwHolding[subfundKey] && appwHolding[subfundKey].length > 0) {
-            
             // Add holdings rows
             appwHolding[subfundKey].forEach((item, index) => {
                 const row = document.createElement('div');
@@ -644,6 +644,8 @@ function renderHoldings(appwHolding, subfundKey) {
                 holdingRows.appendChild(row);
             });
         }
+    } else {
+        console.warn(`No holding-table-rows found in container for ${subfundKey}`);
     }
 }
 
@@ -820,26 +822,37 @@ async function getMIIRFFundData(appwData) {
         'miirfesf': []
     };
 
+    
     const subfunds = [
         { key: 'miirfmmsf', name: 'Money Market Sub-Fund' },
         { key: 'miirfdsf', name: 'Debt Sub-Fund' },
         { key: 'miirfesf', name: 'Equity Sub-Fund' }
     ];
 
+    // Initialize holdings data
     subfunds.forEach(subfund => {
         if (appwData[subfund.key] && appwData[subfund.key].holdings && appwData[subfund.key].holdings.length > 0) {
+            appwHolding[subfund.key] = []; // Initialize array
             appwData[subfund.key].holdings.forEach(holding => {
                 appwHolding[subfund.key].push({
                     key: holding.Name,
                     value: (parseFloat(holding.Holding) * 100).toFixed(2)
                 });
             });
+        } else {
+            appwHolding[subfund.key] = []; // Ensure empty array for subfunds with no holdings
         }
     });
-    console.log('appwHolding',appwHolding);
-    // Render holdings for each subfund
-    subfunds.forEach(subfund => {
-        renderHoldings(appwHolding, subfund.key);
+
+    // Render holdings separately
+    const holdingsContainers = document.querySelectorAll('.w-layout-layout.quick-stack.wf-layout-layout');
+    subfunds.forEach((subfund, index) => {
+        const holdingsContainer = holdingsContainers[index];
+        if (holdingsContainer) {
+            renderHoldings(holdingsContainer, appwHolding, subfund.key);
+        } else {
+            console.warn(`Holdings container not found for ${subfund.key} at index ${index}`);
+        }
     });
 
     
