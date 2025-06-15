@@ -716,7 +716,7 @@ async function getMIIRFFundData(appwData) {
         'investmentObjective' : 'Investment Objective',
         'netAssets': "Net Assets (PKR mn)",
         'launchDate': 'Launch Date',
-        'fundCategory': 'Fund Category',
+        'fundCategory': 'Fund Type',
         'fundAuditors': 'Fund Auditors',
         'fundManager': 'Fund manager',
         'custodian': 'Custodian',
