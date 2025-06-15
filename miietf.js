@@ -663,7 +663,7 @@ async function getMIIRFFundData(appwData) {
     let fundInfo = {
         custodian: appwData.miirf.info['Custodian'],
         fundAuditors: appwData.miirf.info['Fund Auditors'],
-        fundCategory: appwData.miirf.info['Fund Category'],
+        fundCategory: appwData.miirf.info['Fund Type'],
         fundManager: appwData.miirf.info['Fund manager'],
         investmentObjective: appwData.miirf.info['Investment Objective'],
         launchDate: appwData.miirf.info['Launch Date'],
@@ -716,7 +716,7 @@ async function getMIIRFFundData(appwData) {
         'investmentObjective' : 'Investment Objective',
         'netAssets': "Net Assets (PKR mn)",
         'launchDate': 'Launch Date',
-        'fundCategory': 'Fund Type',
+        'fundCategory': 'Fund Category',
         'fundAuditors': 'Fund Auditors',
         'fundManager': 'Fund manager',
         'custodian': 'Custodian',
