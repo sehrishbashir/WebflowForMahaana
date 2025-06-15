@@ -856,6 +856,74 @@ async function getMIIRFFundData(appwData) {
     });
 
     
+    // Construct appwAssets
+    let appwAsset = {
+        'miirfmmsf': [],
+        'miirfdsf': [],
+        'miirfesf': []
+    };
+
+    subfunds.forEach(subfund => {
+
+        if (subfund.key === "miirfesf"){
+            if (appwData[subfund.key] && appwData[subfund.key].sector_holdings && appwData[subfund.key].sector_holdings.length > 0) {
+                appwAsset[subfund.key] = []; // Initialize array
+                appwData[subfund.key].sector_holdings.forEach(sector_holding => {
+                    appwAsset[subfund.key].push({
+                        key: sector_holding.Name,
+                        value: (parseFloat(sector_holding.Holding) * 100)
+                    });
+                });
+            } else {
+                appwAsset[subfund.key] = []; // Ensure empty array for subfunds with no holdings
+            }
+        }
+        else{
+            if (appwData[subfund.key] && appwData[subfund.key].asset_alloc && appwData[subfund.key].asset_alloc.length > 0) {
+                appwAsset[subfund.key] = []; // Initialize array
+                appwData[subfund.key].asset_alloc.forEach(asset => {
+                    appwAsset[subfund.key].push({
+                        key: asset.Name,
+                        value: (parseFloat(asset["Current Month"]) * 100)
+                    });
+                });
+            } else {
+                appwAsset[subfund.key] = []; // Ensure empty array for subfunds with no holdings
+            }
+        } 
+    });
+
+    // Render Asset Graph separately
+    const assetContainers = document.querySelectorAll('.w-layout-cell.piechart.miirf');
+    subfunds.forEach((subfund, index) => {
+        const assetContainer = assetContainers[index];
+        if (assetContainer) {
+            // Check if a chart container already exists
+            let chartContainer = assetContainer.querySelector('.w-embed');
+            if (!chartContainer) {
+                // Create a new div for the chart
+                chartContainer = document.createElement('div');
+                chartContainer.className = 'w-embed';
+                assetContainer.appendChild(chartContainer);
+            }
+            
+            // Assign a unique ID to the chart container
+            const chartId = `chart-${subfund.key}-${index}`;
+            chartContainer.id = chartId;
+            
+            // Get data for this subfund
+            const subfundData = appwAsset[subfund.key] || [];
+            
+            if (subfundData.length > 0) {
+                addGraph(chartId, subfundData);
+            } else {
+                console.warn(`No data found for subfund ${subfund.key}`);
+                chartContainer.innerHTML = '<p>No data available</p>';
+            }
+        } else {
+            console.warn(`Asset container not found for ${subfund.key} at index ${index}`);
+        }
+    });
     
 
     let data = {
@@ -1541,16 +1609,12 @@ async function getNonMIIRFFundData(productName, appwData) {
 // }
 
 function addGraph(id, data) {
-    // console.log('Add graph')
-
-    let transformed_data = []
+    let transformed_data = [];
     for (let i in data) {
-        // console.log(i)
-
         transformed_data.push({
             name: data[i].key,
             y: Number(data[i].value)
-        })
+        });
     }
 
     function getChartWidth() {
@@ -1558,32 +1622,29 @@ function addGraph(id, data) {
         return screenWidth < 600 ? screenWidth * 0.6 : 600;
     }
 
-    // console.log('transformed_data')
-    // console.log(transformed_data)
-
     const chart = Highcharts.chart(id, {
         chart: {
             type: 'pie',
-            width: getChartWidth() 
+            width: getChartWidth()
         },
         title: {
-            text: ''  // Remove the title
+            text: ''
         },
         exporting: {
-            enabled: false  // Disable the exporting hamburger icon
+            enabled: false
         },
         credits: {
-            enabled: false  // Disable the Highcharts watermark
+            enabled: false
         },
         tooltip: {
             pointFormat: '{series.name} {point.y:.2f}%',
-            headerFormat: '<b>{point.key}</b><br>',
+            headerFormat: '<b>{point.key}</b><br>'
         },
         colors: PIE_COLORS_NEW,
         plotOptions: {
             pie: {
-                innerSize: '80%',  // Adjust inner radius size (donut hole)
-                size: '90%',  // Adjust outer radius size (decrease overall chart size)
+                innerSize: '80%',
+                size: '90%',
                 depth: 45,
                 // dataLabels: [{
                 //     enabled: true,
@@ -1598,7 +1659,7 @@ function addGraph(id, data) {
                 //     }
                 // }],
                 dataLabels: {
-                    enabled: false,
+                    enabled: false
                     // format: '<b>{point.name}</b>: {point.percentage:.2f}%'
                 }
             }
@@ -1610,8 +1671,7 @@ function addGraph(id, data) {
     });
 
     window.addEventListener('resize', () => {
-        // console.log("resize")
-        chart.setSize(getChartWidth(), null); // Set new width, keep height as is
+        chart.setSize(getChartWidth(), null);
     });
 }
 
