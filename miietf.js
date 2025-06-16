@@ -660,13 +660,16 @@ async function getFundData(productName, appwData) {
 
 async function getMIIRFFundData(appwData) {
     // main fund info
+    const launchDate = new Date(appwData.miirf.info['Launch Date']);
+    const launchDateFormatted = moment(launchDate).format('MMM DD, YYYY'); // e.g., "May 26, 2025"
+
     let fundInfo = {
         custodian: appwData.miirf.info['Custodian'],
         fundAuditors: appwData.miirf.info['Fund Auditors'],
         fundCategory: appwData.miirf.info['Fund Type'],
         fundManager: appwData.miirf.info['Fund manager'],
         investmentObjective: appwData.miirf.info['Investment Objective'],
-        launchDate: appwData.miirf.info['Launch Date'],
+        launchDate: launchDateFormatted,
         netAssets: appwData.miirf.info['Net Assets (PKR mn)']
     };
 
@@ -732,10 +735,18 @@ async function getMIIRFFundData(appwData) {
         if (subFundData) {
             for (const elementId in subFundContentMapping) {
                 const dataKey = subFundContentMapping[elementId];
-                createTextRetirment(container, elementId, subFundData[dataKey]);
+                let value = subFundData[dataKey] || '-';
+
+                // Special formatting for launchDate
+                if (elementId === 'launchDate' && value !== '-') {
+                    const dateObj = new Date(value);
+                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "May 26, 2025"
+                }
+
+                createTextRetirment(container, elementId, value);
             }
         }
-    })
+    });
 
 
     // update sub-fund upper nav, mtd and nav date info
