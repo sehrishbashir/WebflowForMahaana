@@ -726,6 +726,7 @@ async function getMIIRFFundData(appwData) {
         'i-nav' : "Latest NAV",
         'navDate': 'Latest NAV Date',
         'mtd': 'MTD',
+        'navDateMTD' : 'Latest NAV Date MTD'
     };
 
     // Update sub-fund info for each tab
@@ -775,7 +776,7 @@ async function getMIIRFFundData(appwData) {
                 if (elementId === 'i-nav') {
                     contentValue = latestNav;
                     createTextRetirment(container, elementId, contentValue);
-                } else if (elementId === 'navDate') {
+                } else if (elementId === 'navDate' || elementId === 'navDateMTD') {
                     contentValue = `as of ${moment(latestNavDate, 'YYYY-MM-DD').format('D MMM YYYY')}`;
                     createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'mtd') {
