@@ -915,7 +915,7 @@ async function getMIIRFFundData(appwData) {
             const subfundData = appwAsset[subfund.key] || [];
             
             if (subfundData.length > 0) {
-                addGraph(chartId, subfundData);
+                addGraph(chartId, subfundData, true);
             } else {
                 console.warn(`No data found for subfund ${subfund.key}`);
                 chartContainer.innerHTML = '<p>No data available</p>';
@@ -1608,7 +1608,7 @@ async function getNonMIIRFFundData(productName, appwData) {
 //     }
 // }
 
-function addGraph(id, data) {
+function addGraph(id, data, hasSubfund = false) {
     let transformed_data = [];
     for (let i in data) {
         transformed_data.push({
@@ -1625,7 +1625,8 @@ function addGraph(id, data) {
     const chart = Highcharts.chart(id, {
         chart: {
             type: 'pie',
-            width: getChartWidth()
+            width: getChartWidth(),
+            backgroundColor: hasSubfund ? '#f9fafa' : null
         },
         title: {
             text: ''
