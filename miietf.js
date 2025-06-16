@@ -937,6 +937,56 @@ async function getMIIRFFundData(appwData) {
         }
     });
     
+    // Render Performance Graph separately
+    const performanceContainers = document.querySelectorAll('.layout-2.miirf');
+    subfunds.forEach((subfund, index) => {
+        const perfContainer = performanceContainers[index];
+        if (perfContainer) {
+            // Check if a chart container already exists
+            let chartContainer = perfContainer.querySelector('.code-embed-3.w-embed');
+            if (!chartContainer) {
+                // Create a new div for the chart
+                chartContainer = document.createElement('div');
+                chartContainer.className = 'code-embed-3 w-embed';
+                perfContainer.appendChild(chartContainer);
+            }
+            
+            // Assign a unique ID to the chart container
+            const chartId = `chart-${subfund.key}-${index}`;
+            chartContainer.id = chartId;
+            
+            // Get data for this subfund
+            const subfundData = appwData[subfund.key].price || [];
+            
+            if (subfundData.length > 0) {
+                // addGraph(chartId, subfundData, true);
+                console.log(subfundData)
+                getRetireFundPrices(subfund.key,subfundData)
+            } else {
+                console.warn(`No data found for subfund ${subfund.key}`);
+                chartContainer.innerHTML = '<p>No data available</p>';
+            }
+        } else {
+            console.warn(`Price container not found for ${subfund.key} at index ${index}`);
+        }
+            
+    });
+
+    // appw_price_reformed = []
+    
+    // for (item in appw_price) {
+    //     let d = new Date(appw_price[item].date)
+    //     let date_str = moment(d).format('DD/MM/YYYY');
+        
+    //     appw_price_reformed.push({
+    //         date: date_str,
+    //         navValue: appw_price[item].nav_adjusted,
+    //         performanceValue: appw_price[item].benchmark,
+    //         kmi30: appw_price[item].kmi30,
+    //         peer_avg: appw_price[item].peer_avg,
+    //     })
+    // }
+    
 
     let data = {
         id: null,
@@ -1756,6 +1806,115 @@ function addAssetAllocGraph(data) {
     });
 }
 
+function getRetireFundPrices(productName, appw_price) {
+    data = []
+    
+    for (item in appw_price) {
+        let d = new Date(appw_price[item].date)
+        let date_str = moment(d).format('DD/MM/YYYY');
+        
+        data.push({
+            date: date_str,
+            navValue: appw_price[item].ad_nav,
+            performanceValue: appw_price[item].benchmark,
+        })
+    }
+
+    const currentDate = new Date();
+    const timezoneOffset = currentDate.getTimezoneOffset();
+    const hoursOffset = -timezoneOffset / 60;
+    // console.log('hoursOffset');
+    // console.log(hoursOffset);
+    
+    let miietf_series = []
+    let benchmark_series = []
+
+    let max_val = null
+    let min_val = null
+    
+    for (let i in data) {
+        miietf_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
+            data[i].navValue
+        ])
+        
+        benchmark_series.push([
+            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
+            data[i].performanceValue
+        ])
+         
+    }
+
+    let {min, max} = getMinMax(data, productName)
+    min = min * 0.85
+    max = max * 1.15
+
+    let series
+   
+    series = [
+        {
+            name: productName,
+            data: miietf_series,
+        },
+        {
+            name: 'Benchmark',
+            data: benchmark_series,
+        }
+    ]
+    
+    Highcharts.chart('perf-chart', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: null,
+        },
+        exporting: {
+            enabled: false  // Disable the exporting hamburger icon
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            min: min,
+            max: max,
+            title: null,
+            gridLineWidth: 0
+        },
+        tooltip: {
+            shared: true,
+            headerFormat: '<b>{point.key}</b><br>',
+            xDateFormat: '%d %b %Y',
+            valueDecimals: 2
+            // pointFormat: '<b>{point.y:.2f}</b>'
+            // xDateFormat: moment(this.x, 'dddd, D MMM, HH:mm').format('D MMM YYYY')
+            // xDateFormat: console.log(this.x)
+        },
+        credits: {
+            enabled: false
+        },
+        colors: PIE_COLORS_NEW,
+        plotOptions: {
+            line: {
+                fillOpacity: 0.2,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                    	}
+                  	}
+            	}
+            }
+        },
+        series: series
+    });
+ 
+    // renderPerfChart(appw_price_reformed, productName)
+}
+
 function getFundPrices(productName, appw_price) {
     appw_price_reformed = []
     
@@ -2034,9 +2193,7 @@ async function main() {
     else if (productName === 'MIIRF') {
         console.log('MIIRF')
         let appwData = await getAppWriteData(productName)
-        console.log("appdata",appwData)
-        // getFundPrices(productName, appwData.price)
-        // await getFundDataRetire(productName, appwData)
+
         await getFundData(productName, appwData)
     }
 
