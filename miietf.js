@@ -937,40 +937,6 @@ async function getMIIRFFundData(appwData) {
         }
     });
 
-    // Render Performance Graph separately
-    // const performanceContainers = document.querySelectorAll('.layout-2.miirf');
-    // subfunds.forEach((subfund, index) => {
-    //     const perfContainer = performanceContainers[index];
-    //     if (perfContainer) {
-    //         // Check if a chart container already exists
-    //         let chartContainer = perfContainer.querySelector('.code-embed-3.w-embed');
-    //         if (!chartContainer) {
-    //             // Create a new div for the chart
-    //             chartContainer = document.createElement('div');
-    //             chartContainer.className = 'code-embed-3 w-embed';
-    //             perfContainer.appendChild(chartContainer);
-    //         }
-            
-    //         // Assign a unique ID to the chart container
-    //         const chartId = `chart-${subfund.key}-${index}`;
-    //         chartContainer.id = chartId;
-            
-    //         // Get data for this subfund
-    //         const subfundData = appwData[subfund.key].price || [];
-            
-    //         if (subfundData.length > 0) {
-    //             // addGraph(chartId, subfundData, true);
-    //             console.log(subfundData)
-    //             getRetireFundPrices(subfund.key,subfundData)
-    //         } else {
-    //             console.warn(`No data found for subfund ${subfund.key}`);
-    //             chartContainer.innerHTML = '<p>No data available</p>';
-    //         }
-    //     } else {
-    //         console.warn(`Price container not found for ${subfund.key} at index ${index}`);
-    //     }
-            
-    // });
 
     const performanceContainers = document.querySelectorAll('.layout-2.miirf');
     subfunds.forEach((subfund, index) => {
@@ -983,7 +949,7 @@ async function getMIIRFFundData(appwData) {
                 perfContainer.appendChild(chartContainer);
             }
             
-            const chartId = `chart-${subfund.key}-${index}`;
+            const chartId = `perf-chart-${subfund.key}-${index}`;
             chartContainer.id = chartId;
             
             const subfundData = appwData[subfund.key]?.price || [];
@@ -1883,7 +1849,8 @@ function getRetireFundPrices(productName, appw_price, chartId) {
     
     Highcharts.chart(chartId, {
         chart: {
-            type: 'line'
+            type: 'line',
+            backgroundColor: '#f9fafa'
         },
         title: {
             text: null,
