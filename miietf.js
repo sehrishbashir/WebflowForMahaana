@@ -936,7 +936,7 @@ async function getMIIRFFundData(appwData) {
             console.warn(`Asset container not found for ${subfund.key} at index ${index}`);
         }
     });
-    
+
     // Render Performance Graph separately
     const performanceContainers = document.querySelectorAll('.layout-2.miirf');
     subfunds.forEach((subfund, index) => {
@@ -1845,7 +1845,7 @@ function getRetireFundPrices(productName, appw_price) {
          
     }
 
-    let {min, max} = getMinMax(data, productName)
+    let {min, max} = getMinMax(data, "MIIRF")
     min = min * 0.85
     max = max * 1.15
 
@@ -2144,6 +2144,22 @@ function getMinMax(arr, productName) {
                 obj.navValue, 
                 obj.performanceValue,
                 obj.peer_avg
+            );
+            return acc;
+        }, { min: Infinity, max: -Infinity });    
+    }
+
+    if (productName === 'MIIRF') {
+        return arr.reduce((acc, obj) => {
+            acc.min = Math.min(
+                acc.min, 
+                obj.navValue, 
+                obj.performanceValue, 
+            );
+            acc.max = Math.max(
+                acc.max, 
+                obj.navValue, 
+                obj.performanceValue, 
             );
             return acc;
         }, { min: Infinity, max: -Infinity });    
