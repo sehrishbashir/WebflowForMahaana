@@ -1806,11 +1806,11 @@ function getRetireFundPrices(productName, appw_price, chartId) {
     const timezoneOffset = currentDate.getTimezoneOffset();
     const hoursOffset = -timezoneOffset / 60;
     
-    let miietf_series = [];
+    let miirf_series = [];
     let benchmark_series = [];
     
     for (let item of data) {
-        miietf_series.push([
+        miirf_series.push([
             moment.utc(item.date, "DD/MM/YYYY").valueOf(),
             item.navValue
         ]);
@@ -1836,9 +1836,16 @@ function getRetireFundPrices(productName, appw_price, chartId) {
     min = min * 0.85;
     max = max * 1.15;
 
+    const subfunds = [
+        { key: 'miirfmmsf', name: 'Money Market' },
+        { key: 'miirfdsf', name: 'Debt' },
+        { key: 'miirfesf', name: 'Equity' }
+    ];
+
+
     let series = [{
-        name: productName,
-        data: miietf_series,
+        name: subfunds.find(f => f.key === productName)?.name || productName,
+        data: miirf_series,
     }];
     if (benchmark_series.length > 0) {
         series.push({
