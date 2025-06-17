@@ -1859,8 +1859,8 @@ function renderRetireFundPrices(appw_price) {
     }
 
     let {min, max} = getMinMax(data);
-    min = min * 0.85;
-    max = max * 1.15;
+    min = min * 0.95;
+    max = max * 1.05;
 
     let series = [
         {
