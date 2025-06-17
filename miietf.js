@@ -707,6 +707,22 @@ async function getMIIRFFundData(appwData) {
         }
     }
 
+    // risk profile performance chart
+
+    const riskProfileContainer = document.querySelector('.perf-chart');
+    if (riskProfileContainer) {
+        const riskProfileData = appwData.miirf.price;
+        if (riskProfileData && riskProfileData.length > 0) {
+            // const chartData = riskProfileData.map(item => ({
+            //     date: item.date,
+            //     value: item['1Y'] || 0 // Assuming '1Y' is the key for the performance value
+            // }));
+            // renderRiskProfileChart(riskProfileContainer, chartData);
+            console.log("riskProfileData", riskProfileData);
+        } else {
+            console.warn('No risk profile data available for MIIRF');
+        }
+    }
 
     // subfund info
     const subFunds = [appwData.miirfmmsf.info, appwData.miirfdsf.info, appwData.miirfesf.info];
@@ -955,7 +971,7 @@ async function getMIIRFFundData(appwData) {
             const subfundData = appwData[subfund.key]?.price || [];
             
             if (subfundData.length > 0) {
-                getRetireFundPrices(subfund.key, subfundData, chartId);
+                renderSubFundPrices(subfund.key, subfundData, chartId);
             } else {
                 console.warn(`No data found for subfund ${subfund.key}`);
                 chartContainer.innerHTML = '<p>No data available</p>';
@@ -1784,7 +1800,126 @@ function addAssetAllocGraph(data) {
     });
 }
 
-function getRetireFundPrices(productName, appw_price, chartId) {
+function renderRetireFundPrices(appw_price, chartId) {
+    let data = [];
+    
+    for (let item of appw_price) {
+        let d = new Date(item.date);
+        let date_str = d.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).split('/').join('/');
+        
+        data.push({
+            date: date_str,
+            navValue: parseFloat(item.ad_nav),
+            performanceValue: item.benchmark ? parseFloat(item.benchmark) : null
+        });
+    }
+
+    const currentDate = new Date();
+    const timezoneOffset = currentDate.getTimezoneOffset();
+    const hoursOffset = -timezoneOffset / 60;
+    
+    let miirf_series = [];
+    let benchmark_series = [];
+    
+    for (let item of data) {
+        miirf_series.push([
+            moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+            item.navValue
+        ]);
+        if (item.performanceValue !== null) {
+            benchmark_series.push([
+                moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+                item.performanceValue
+            ]);
+        }
+    }
+
+    function getMinMax(data) {
+        let navValues = data.map(item => item.navValue).filter(val => val !== null);
+        let benchmarkValues = data.map(item => item.performanceValue).filter(val => val !== null);
+        let allValues = [...navValues, ...benchmarkValues];
+        return {
+            min: allValues.length > 0 ? Math.min(...allValues) : 0,
+            max: allValues.length > 0 ? Math.max(...allValues) : 100
+        };
+    }
+
+    let {min, max} = getMinMax(data);
+    min = min * 0.85;
+    max = max * 1.15;
+
+    const subfunds = [
+        { key: 'miirfmmsf', name: 'Money Market' },
+        { key: 'miirfdsf', name: 'Debt' },
+        { key: 'miirfesf', name: 'Equity' }
+    ];
+
+
+    let series = [{
+        name: subfunds.find(f => f.key === productName)?.name || productName,
+        data: miirf_series,
+    }];
+    if (benchmark_series.length > 0) {
+        series.push({
+            name: 'Benchmark',
+            data: benchmark_series,
+        });
+    }
+    
+    Highcharts.chart(chartId, {
+        chart: {
+            type: 'line',
+            backgroundColor: '#f9fafa'
+        },
+        title: {
+            text: null,
+        },
+        exporting: {
+            enabled: false
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            min: min,
+            max: max,
+            title: null,
+            gridLineWidth: 0
+        },
+        tooltip: {
+            shared: true,
+            headerFormat: '<b>{point.key}</b><br>',
+            xDateFormat: '%d %b %Y',
+            valueDecimals: 2
+        },
+        credits: {
+            enabled: false
+        },
+        colors: ['#007bff', '#ff5733'],
+        plotOptions: {
+            line: {
+                fillOpacity: 0.2,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: series
+    });
+}
+
+function renderSubFundPrices(productName, appw_price, chartId) {
     let data = [];
     
     for (let item of appw_price) {
