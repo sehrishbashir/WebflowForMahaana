@@ -696,9 +696,6 @@ async function getMIIRFFundData(appwData) {
         'custodian': fundInfo.custodian
     };
 
-    // for (const elementId in contentMapping) {
-    //     createText(elementId, contentMapping[elementId]);
-    // }
 
     const mainFundContainer = document.querySelector('.container-12:not(.miirf)');
     if (mainFundContainer) {
@@ -709,16 +706,11 @@ async function getMIIRFFundData(appwData) {
 
     // risk profile performance chart
 
-    const riskProfileContainer = document.querySelector('.perf-chart');
+    const riskProfileContainer = document.querySelector('#perf-chart');
     if (riskProfileContainer) {
         const riskProfileData = appwData.miirf.price;
         if (riskProfileData && riskProfileData.length > 0) {
-            // const chartData = riskProfileData.map(item => ({
-            //     date: item.date,
-            //     value: item['1Y'] || 0 // Assuming '1Y' is the key for the performance value
-            // }));
-            // renderRiskProfileChart(riskProfileContainer, chartData);
-            console.log("riskProfileData", riskProfileData);
+            renderRetireFundPrices(riskProfileData)
         } else {
             console.warn('No risk profile data available for MIIRF');
         }
@@ -1800,9 +1792,8 @@ function addAssetAllocGraph(data) {
     });
 }
 
-function renderRetireFundPrices(appw_price, chartId) {
+function renderRetireFundPrices(appw_price) {
     let data = [];
-    
     for (let item of appw_price) {
         let d = new Date(item.date);
         let date_str = d.toLocaleDateString('en-GB', {
@@ -1813,35 +1804,54 @@ function renderRetireFundPrices(appw_price, chartId) {
         
         data.push({
             date: date_str,
-            navValue: parseFloat(item.ad_nav),
-            performanceValue: item.benchmark ? parseFloat(item.benchmark) : null
+            Conservative: parseFloat(item.Conservative),
+            LowRisk: parseFloat(item["Low Risk"]),
+            Balanced: parseFloat(item.Balanced),
+            MediumRisk: parseFloat(item["Medium Risk"]),
+            Aggressive: parseFloat(item.Aggressive)
         });
     }
 
     const currentDate = new Date();
     const timezoneOffset = currentDate.getTimezoneOffset();
-    const hoursOffset = -timezoneOffset / 60;
     
-    let miirf_series = [];
-    let benchmark_series = [];
+    let conservative_series = [];
+    let lowRisk_series = [];
+    let balanced_series = [];
+    let mediumRisk_series = [];
+    let aggressive_series = [];
     
     for (let item of data) {
-        miirf_series.push([
+        conservative_series.push([
             moment.utc(item.date, "DD/MM/YYYY").valueOf(),
-            item.navValue
+            item.Conservative
         ]);
-        if (item.performanceValue !== null) {
-            benchmark_series.push([
-                moment.utc(item.date, "DD/MM/YYYY").valueOf(),
-                item.performanceValue
-            ]);
-        }
+        lowRisk_series.push([
+            moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+            item.LowRisk
+        ]);
+        balanced_series.push([
+            moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+            item.Balanced
+        ]);
+        mediumRisk_series.push([
+            moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+            item.MediumRisk
+        ]);
+        aggressive_series.push([
+            moment.utc(item.date, "DD/MM/YYYY").valueOf(),
+            item.Aggressive
+        ]);
     }
 
     function getMinMax(data) {
-        let navValues = data.map(item => item.navValue).filter(val => val !== null);
-        let benchmarkValues = data.map(item => item.performanceValue).filter(val => val !== null);
-        let allValues = [...navValues, ...benchmarkValues];
+        let allValues = [
+            ...data.map(item => item.Conservative),
+            ...data.map(item => item.LowRisk),
+            ...data.map(item => item.Balanced),
+            ...data.map(item => item.MediumRisk),
+            ...data.map(item => item.Aggressive)
+        ].filter(val => val !== null);
         return {
             min: allValues.length > 0 ? Math.min(...allValues) : 0,
             max: allValues.length > 0 ? Math.max(...allValues) : 100
@@ -1852,28 +1862,37 @@ function renderRetireFundPrices(appw_price, chartId) {
     min = min * 0.85;
     max = max * 1.15;
 
-    const subfunds = [
-        { key: 'miirfmmsf', name: 'Money Market' },
-        { key: 'miirfdsf', name: 'Debt' },
-        { key: 'miirfesf', name: 'Equity' }
+    let series = [
+        {
+            name: 'Conservative',
+            data: conservative_series,
+            color: PIE_COLORS_NEW[0] // #0E70C7
+        },
+        {
+            name: 'Low Risk',
+            data: lowRisk_series,
+            color: PIE_COLORS_NEW[1] // #7719E3
+        },
+        {
+            name: 'Balanced',
+            data: balanced_series,
+            color: PIE_COLORS_NEW[2] // #067D77
+        },
+        {
+            name: 'Medium Risk',
+            data: mediumRisk_series,
+            color: PIE_COLORS_NEW[3] // #EB7F13
+        },
+        {
+            name: 'Aggressive',
+            data: aggressive_series,
+            color: PIE_COLORS_NEW[4] // #E3193B
+        }
     ];
-
-
-    let series = [{
-        name: subfunds.find(f => f.key === productName)?.name || productName,
-        data: miirf_series,
-    }];
-    if (benchmark_series.length > 0) {
-        series.push({
-            name: 'Benchmark',
-            data: benchmark_series,
-        });
-    }
     
-    Highcharts.chart(chartId, {
+    Highcharts.chart('perf-chart', {
         chart: {
             type: 'line',
-            backgroundColor: '#f9fafa'
         },
         title: {
             text: null,
@@ -1899,7 +1918,7 @@ function renderRetireFundPrices(appw_price, chartId) {
         credits: {
             enabled: false
         },
-        colors: ['#007bff', '#ff5733'],
+        colors: PIE_COLORS_NEW,
         plotOptions: {
             line: {
                 fillOpacity: 0.2,
