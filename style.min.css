@@ -175,7 +175,8 @@ body :is(.b2c-home-arrow, .b2c-slick-arrow):hover path { stroke: var(--primary-5
 .w-tab-content {padding-top: 0; display: flex; flex-direction: column; gap: 32px;  }
 
 .uui-pricing08_tabs-menu-temp.w-tab-menu {display: flex; background-color: blue;}
-.uui-pricing08_tab-pane.w-tab-pane {background-color: green;}
+.uui-pricing08_tab-pane.w-tab-pane {background-color: green; display: none;}
+.uui-pricing08_tab-pane.w-tab-pane.w--tab-active {background-color: yellow; display: block;}
 
 /* .uui-pricing08_tab-content-temp.w-tab-pane { background-color: pink;}  */
 
