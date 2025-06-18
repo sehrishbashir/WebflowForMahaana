@@ -1462,7 +1462,7 @@ function renderRetireFundPrices(appw_price) {
             shared: true,
             headerFormat: '<b>{point.key}</b><br>',
             xDateFormat: '%d %b %Y',
-            valueDecimals: 2
+            valueDecimals: 0
         },
         credits: {
             enabled: false
