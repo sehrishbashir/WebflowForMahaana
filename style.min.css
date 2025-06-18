@@ -172,11 +172,18 @@ body :is(.b2c-home-arrow, .b2c-slick-arrow):hover path { stroke: var(--primary-5
 @media screen and (max-width: 739px) {
 .w-tab-pane {display: inline}
 .w-tab-menu {display: none}
+.w-tab-content {padding-top: 0; display: flex; flex-direction: column; gap: 32px;  }
+
 .uui-pricing08_tabs-menu-temp.w-tab-menu {display: flex; background-color: blue;}
+.uui-pricing08_tab-content-temp.w-tab-pane { background-color: pink;} 
+
+.uui-pricing08_tab-content-temp.w-tab-content { background-color: green;} 
+/* .uui-pricing08_tabs-menu-temp.w-tab-content.w-tab-pane {display: none; background-color: red;}  */
+
 /* .uui-pricing08_tabs-menu-temp.w-tab-content.w-tab-pane {display: none; background-color: red;} 
 .uui-pricing08_tabs-menu-temp.w--tab-active {display: block;} */
-.w-tab-content {padding-top: 0; display: flex; flex-direction: column; gap: 32px;  }
-.uui-pricing08_tab-content-temp.w-tab-content { background-color: pink;} 
+
+
 }  
 @media screen and (max-width: 767px) {
 .w-nav-brand {padding-left: 0;}
