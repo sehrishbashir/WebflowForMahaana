@@ -598,7 +598,11 @@ function renderPerformance(performances){
                     </div>
                     <div class="table-box _3">
                         <div class="table-data name">${data.days365 || '-'}</div>
+                    </div>
+                    <div class="table-box _3">
+                        <div class="table-data name">${data.inception || '-'}</div>
                     </div>`
+                    
                 
                 row.innerHTML = html;
                 performanceRowsDiv.appendChild(row);
