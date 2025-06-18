@@ -1408,8 +1408,8 @@ function renderRetireFundPrices(appw_price) {
     }
 
     let {min, max} = getMinMax(data);
-    min = min * 0.95;
-    max = max * 1.05;
+    min = min * 0.99;
+    max = max * 1.01;
 
     let series = [
         {
@@ -1536,9 +1536,15 @@ function renderSubFundPrices(productName, appw_price, chartId) {
     }
 
     let {min, max} = getMinMax(data);
-    min = min * 0.85;
-    max = max * 1.15;
 
+    if (productName === 'miirfdsf' || productName === 'miirfmmsf') {
+        min = min * 0.995;
+        max = max * 1.005;
+    }
+    else{
+        min = min * 0.99;
+        max = max * 1.01;
+    }
     const subfunds = [
         { key: 'miirfmmsf', name: 'Money Market' },
         { key: 'miirfdsf', name: 'Debt' },
