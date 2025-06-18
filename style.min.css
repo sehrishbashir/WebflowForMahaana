@@ -180,7 +180,7 @@ body :is(.b2c-home-arrow, .b2c-slick-arrow):hover path { stroke: var(--primary-5
 
 /* .uui-pricing08_tab-content-temp.w-tab-pane { background-color: pink;}  */
 
-.uui-pricing08_tab-content-temp.w-tab-content.w-tab-pane { background-color: green;} 
+.uui-pricing08_tab-content-temp.w-tab-content.uui-pricing08_tab-pane.w-tab-pane { background-color: green;} 
 /* .uui-pricing08_tabs-menu-temp.w-tab-content.w-tab-pane {display: none; background-color: red;}  */
 
 /* .uui-pricing08_tabs-menu-temp.w-tab-content.w-tab-pane {display: none; background-color: red;} 
