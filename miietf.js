@@ -513,7 +513,7 @@ async function getAppWriteData(productName) {
             else if (productName === 'MIIRF') {
                 console.log('Fetching MIIRF data');
                 // appw_data = await fetch('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data/miirf?')
-                appw_data = await fetchWithTimeout('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data/miirf', timeoutDuration);
+                appw_data = await fetchWithTimeout('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data?name=miirf', timeoutDuration);
             }
 
             // Check if the response is successful
