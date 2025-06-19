@@ -1574,7 +1574,7 @@ function renderSubFundPrices(productName, appw_price, chartId) {
         credits: {
             enabled: false
         },
-        colors: ['#007bff', '#ff5733'],
+        colors: [PIE_COLORS_NEW[0], PIE_COLORS_NEW[1]],
         plotOptions: {
             line: {
                 fillOpacity: 0.2,
