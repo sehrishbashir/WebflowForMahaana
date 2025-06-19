@@ -585,22 +585,22 @@ function renderPerformance(product_name, performances, container){
                         </div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.MTD || '-'}</div>
+                        <div class="table-data name">${data?.MTD ? `${data.MTD}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.YTD || '-'}</div>
+                        <div class="table-data name">${data?.YTD ? `${data.YTD}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data["30D"] || '-'}</div>
+                        <div class="table-data name">${data?.["30D"] ? `${data["30D"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data["90D"] || '-'}</div>
+                        <div class="table-data name">${data?.["90D"] ? `${data["90D"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data["1Y"] || '-'}</div>
+                        <div class="table-data name">${data?.["1Y"] ? `${data["1Y"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.Inception || '-'}</div>
+                        <div class="table-data name">${data?.["Inception"] ? `${data.Inception}%` : '-'}</div>
                     </div>`
                     
                 
