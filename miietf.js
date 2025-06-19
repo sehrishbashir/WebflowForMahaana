@@ -823,8 +823,8 @@ async function getMIIRFFundData(appwData) {
             appwHolding[subfund.key] = []; // Initialize array
             appwData[subfund.key].holdings.forEach(holding => {
                 appwHolding[subfund.key].push({
-                    key: holding.Name,
-                    value: (parseFloat(holding.Holding) * 100).toFixed(2)
+                    key: holding.key,
+                    value: (parseFloat(holding.holding) * 100).toFixed(2)
                 });
             });
         } else {
@@ -858,8 +858,8 @@ async function getMIIRFFundData(appwData) {
                 appwAsset[subfund.key] = []; // Initialize array
                 appwData[subfund.key].sector_holdings.forEach(sector_holding => {
                     appwAsset[subfund.key].push({
-                        key: sector_holding.Name,
-                        value: (parseFloat(sector_holding.Holding) * 100)
+                        key: sector_holding.key,
+                        value: (parseFloat(sector_holding.holding) * 100)
                     });
                 });
             } else {
@@ -871,8 +871,8 @@ async function getMIIRFFundData(appwData) {
                 appwAsset[subfund.key] = []; // Initialize array
                 appwData[subfund.key].asset_alloc.forEach(asset => {
                     appwAsset[subfund.key].push({
-                        key: asset.Name,
-                        value: (parseFloat(asset["Current Month"]) * 100)
+                        key: asset.key,
+                        value: (parseFloat(asset.current_month) * 100)
                     });
                 });
             } else {
