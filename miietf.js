@@ -553,12 +553,12 @@ async function getAppWriteData(productName) {
 }
 
 
-function renderPerformance(performances){
+function renderPerformance(product_name, performances, container){
     if (performances) {
 
-        const performanceContentArea = document.querySelector('#perf-table');
+        const performanceContentArea = container.querySelector('#perf-table');
         if (performanceContentArea) {
-            const performanceRowsDiv = document.querySelector('#perf-table-rows');
+            const performanceRowsDiv = container.querySelector('#perf-table-rows');
             
             while (performanceRowsDiv.lastChild) {
                 if (performanceRowsDiv.lastChild.classList.contains('headers'))
@@ -581,26 +581,26 @@ function renderPerformance(performances){
                     </div>
                     <div class="table-box _2">
                         <div class="table-data name">
-                            <strong class="bold-text">${data?.name || '-'}<br></strong>
+                            <strong class="bold-text">${data?.Fund || '-'}<br></strong>
                         </div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.mtd || '-'}</div>
+                        <div class="table-data name">${data.MTD || '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.ytd || '-'}</div>
+                        <div class="table-data name">${data.YTD || '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.days30 || '-'}</div>
+                        <div class="table-data name">${data["30D"] || '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.days90 || '-'}</div>
+                        <div class="table-data name">${data["90D"] || '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.days365 || '-'}</div>
+                        <div class="table-data name">${data["1Y"] || '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data.inception || '-'}</div>
+                        <div class="table-data name">${data.Inception || '-'}</div>
                     </div>`
                     
                 
@@ -803,45 +803,6 @@ async function getMIIRFFundData(appwData) {
     });
 
 
-    // performances
-    const appwPerformances = [];
-
-    const fundKeys = Object.keys(appwData); // Get all fund keys
-    for (let i = 1; i < fundKeys.length; i++) { // Start from index 1 to skip the first key
-        const fundKey = fundKeys[i];
-        const performances = appwData[fundKey].perf;
-        
-        for (const record of performances) {
-            let displayName;
-            switch (record["Fund"]) {
-                case "MIIRF-MMSF":
-                    displayName = "Money Market";
-                    break;
-                case "MIIRF-DSF":
-                    displayName = "Debt";
-                    break;
-                case "MIIRF-ESF":
-                    displayName = "Equity";
-                    break;
-                default:
-                    displayName = record["Fund"] || fundKey.toUpperCase();
-            }
-            appwPerformances.push({
-                name: displayName,
-                mtd: record["MTD"] || '-',
-                ytd: record["YTD"] || '-',
-                days30: record["30D"] || '-',
-                days90: record["90D"] || '-',
-                days365: record["1Y"] || '-',
-                inception: record["Inception"] || '-',
-                lastUpdatedOn: null,
-                years3: null,
-                years5: null
-            });
-        }
-    }
-    renderPerformance(appwPerformances);
-
     // Construct appwHolding
     let appwHolding = {
         'miirfmmsf': [],
@@ -980,6 +941,23 @@ async function getMIIRFFundData(appwData) {
         }
     });
     
+    // performances
+    subfunds.forEach((subfund, index) => {
+        const returnContainer = performanceContainers[index];
+        if (returnContainer) {
+            
+            const subfundData = appwData[subfund.key]?.perf || [];
+            if (subfundData.length > 0) {
+                renderPerformance(subfund.key, subfundData, returnContainer);
+            } else {
+                console.warn(`No data found for subfund ${subfund.key}`);
+                chartContainer.innerHTML = '<p>No data available</p>';
+            }
+        } else {
+            console.warn(`Return container not found for ${subfund.key} at index ${index}`);
+        }
+    });
+
 
     let data = {
         id: null,
