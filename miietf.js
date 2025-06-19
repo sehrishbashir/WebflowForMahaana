@@ -581,26 +581,26 @@ function renderPerformance(product_name, performances, container){
                     </div>
                     <div class="table-box _2">
                         <div class="table-data name">
-                            <strong class="bold-text">${data?.Fund || '-'}<br></strong>
+                            <strong class="bold-text">${data?.name || '-'}<br></strong>
                         </div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.MTD ? `${data.MTD}%` : '-'}</div>
+                        <div class="table-data name">${data?.mtd ? `${data.mtd}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.YTD ? `${data.YTD}%` : '-'}</div>
+                        <div class="table-data name">${data?.ytd ? `${data.ytd}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["30D"] ? `${data["30D"]}%` : '-'}</div>
+                        <div class="table-data name">${data?.["30d"] ? `${data["30d"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["90D"] ? `${data["90D"]}%` : '-'}</div>
+                        <div class="table-data name">${data?.["90d"] ? `${data["90d"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["1Y"] ? `${data["1Y"]}%` : '-'}</div>
+                        <div class="table-data name">${data?.["1y"] ? `${data["1y"]}%` : '-'}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["Inception"] ? `${data.Inception}%` : '-'}</div>
+                        <div class="table-data name">${data?.["inception"] ? `${data.inception}%` : '-'}</div>
                     </div>`
                     
                 
