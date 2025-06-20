@@ -568,15 +568,19 @@ function renderPerformance(product_name, performances, container){
             }
 
             performances.forEach((data, index) => {
-                // console.log(data)
                 const selectedColor = PIE_COLORS_NEW[index];
                 const row = document.createElement('div');
                 row.classList.add('table-row');
 
-                // <img width="16" src="https://cdn.prod.website-files.com/647f1d0084dd393f468d58a6/66668a5b5b769b78a21062ab_Vectors-Wrapper.svg" alt="" class="image-79">
+                const formatValue = (value) => {
+                    if (value != null) {
+                        return `${(value * 100).toFixed(2)}%`;
+                    }
+                    return '-';
+                };
+
                 const html = `
                     <div class="div-block-406 _2">
-                        
                         <svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none"><circle cx="3.5" cy="9.04102" r="3" fill=${selectedColor}></circle></svg>
                     </div>
                     <div class="table-box _2">
@@ -585,28 +589,27 @@ function renderPerformance(product_name, performances, container){
                         </div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.mtd ? `${data.mtd}%` : '-'}</div>
+                        <div class="table-data name">${formatValue(data?.mtd)}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.ytd ? `${data.ytd}%` : '-'}</div>
+                        <div class="table-data name">${formatValue(data?.ytd)}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["30d"] ? `${data["30d"]}%` : '-'}</div>
+                        <div class="table-data name">${formatValue(data?.["30d"])}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["90d"] ? `${data["90d"]}%` : '-'}</div>
+                        <div class="table-data name">${formatValue(data?.["90d"])}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["1y"] ? `${data["1y"]}%` : '-'}</div>
+                        <div class="table-data name">${formatValue(data?.["1y"])}</div>
                     </div>
                     <div class="table-box _3">
-                        <div class="table-data name">${data?.["inception"] ? `${data.inception}%` : '-'}</div>
-                    </div>`
-                    
-                
+                        <div class="table-data name">${formatValue(data?.["inception"])}</div>
+                    </div>`;
+
                 row.innerHTML = html;
                 performanceRowsDiv.appendChild(row);
-            })
+            });
         }
     }
 }
@@ -784,7 +787,7 @@ async function getMIIRFFundData(appwData) {
                 latestNavDate = latest.date;
             }
             
-            latestMTD = subFundPerfData?.[0]?.mtd ? `${subFundPerfData[0].mtd}%` : '-';
+            latestMTD = subFundPerfData?.[0]?.mtd != null ? `${(subFundPerfData[0].mtd * 100).toFixed(2)}%` : '-';
             
             for (const elementId in subFundContentMapping) {
                 let contentValue;
