@@ -1614,7 +1614,7 @@ function getFundPrices(productName, appw_price) {
     }
 
     // console.log('appw_price_reformed')
-    // console.log(appw_price_reformed)
+    console.log(appw_price_reformed)
 
     latest_date = new Date(appw_price[appw_price.length - 1].date)
     latest_nav = appw_price[appw_price.length - 1].nav
@@ -1703,6 +1703,7 @@ function renderPerfChart(data, productName) {
             }
         ]
     }
+    console.log(miietf_series);
 
     if (productName === 'MIIETF') {
         series = [
@@ -1818,14 +1819,12 @@ function getMinMax(arr, productName) {
             acc.min = Math.min(
                 acc.min, 
                 obj.navValue, 
-                obj.performanceValue,
-                obj.peer_avg
+                obj.performanceValue
             );
             acc.max = Math.max(
                 acc.max, 
                 obj.navValue, 
-                obj.performanceValue,
-                obj.peer_avg
+                obj.performanceValue
             );
             return acc;
         }, { min: Infinity, max: -Infinity });    
