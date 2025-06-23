@@ -1164,7 +1164,7 @@ async function getNonMIIRFFundData(productName, appwData) {
         'benchmark': fundInfo.benchmark,
         'managementFee': fundInfo.managementFee,
         'fundAuditors': fundInfo.fundAuditors,
-        'fundStabilityRating': fundInfo.fundStabilityRating,
+        'fundStabilityRating': fundInfo.fundStabilityRating && fundInfo.fundStabilityRating.trim() !== "" ? fundInfo.fundStabilityRating : "N/A",
         'authorizedParticipant': fundInfo.authorizedParticipant,
         'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         'custodian': fundInfo.custodian,
