@@ -508,8 +508,8 @@ async function getAppWriteData(productName) {
                 appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/miietf', timeoutDuration);
             } 
             else if (productName === 'MICF') {
-                // appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/micf', timeoutDuration);
-                appw_data = await fetchWithTimeout('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data?name=micf', timeoutDuration);
+                appw_data = await fetchWithTimeout('https://66b9babb09e006f25472.appwrite.global/micf', timeoutDuration);
+                // appw_data = await fetchWithTimeout('https://dev-mahaana-wealth-marketfeedinvestuniverse.azurewebsites.net/api/fund-data?name=micf', timeoutDuration);
             }
             else if (productName === 'MIIRF') {
                 console.log('Fetching MIIRF data');
