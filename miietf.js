@@ -1002,8 +1002,7 @@ async function getNonMIIRFFundData(productName, appwData) {
         yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)']
     };
 
-    let product_summary = appwData.info['What is Mahaana Islamic Index ETF (MIIETF)?'] || 
-                         appwData.info['What is Mahaana Islamic Cash Fund (MICF)?'] || null;
+    let product_summary = appwData.info['Fund Summary'] ;
 
     let appwOverview = {
         assetCategory: product_summary,
