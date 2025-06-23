@@ -976,6 +976,10 @@ async function getMIIRFFundData(appwData) {
 }
 
 async function getNonMIIRFFundData(productName, appwData) {
+
+    const launchDate = new Date(appwData.info['Launch Date']);
+    const launchDateFormatted = moment(launchDate).format('MMM DD, YYYY'); // e.g., "May 26, 2025"
+
     let appwFundInfo = {
         authorizedParticipant: appwData.info['Authorized Participant'],
         benchmark: appwData.info['Benchmark'],
@@ -985,7 +989,7 @@ async function getNonMIIRFFundData(productName, appwData) {
         fundManager: appwData.info['Fund manager'],
         fundStabilityRating: appwData.info['Fund Stability Rating'],
         investmentObjective: appwData.info['Investment Objective'],
-        launchDate: appwData.info['Launch Date'],
+        launchDate: launchDateFormatted,
         managementFee: appwData.info['Management Fee'],
         monthlyTotalExpenseRatio: appwData.info['Monthly Total Expense Ratio'],
         monthlyTotalExpenseRatioWithoutLevy: appwData.info['Monthly Total Expense Ratio (without gov levy)'],
