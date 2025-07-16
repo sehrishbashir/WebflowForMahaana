@@ -740,39 +740,22 @@ async function getMIIRFFundData(appwData) {
     const subFundsPrice = [appwData.miirfmmsf.price, appwData.miirfdsf.price, appwData.miirfesf.price];
     const subFundsPerf = [appwData.miirfmmsf.perf, appwData.miirfdsf.perf, appwData.miirfesf.perf];
 
-    // const subFundContentMapping = {
-    //     'asset-name': 'Name',
-    //     'productSummary' : 'Fund Summary',
-    //     'investmentObjective' : 'Investment Objective',
-    //     'netAssets': "Net Assets (PKR mn)",
-    //     'launchDate': 'Launch Date',
-    //     'fundCategory': 'Fund Category',
-    //     'fundAuditors': 'Fund Auditors',
-    //     'fundManager': 'Fund manager',
-    //     'custodian': 'Custodian',
-    //     'i-nav' : "Latest NAV",
-    //     'navDate': 'Latest NAV Date',
-    //     'navDateMonth': 'Submission date',
-    //     'expense-ratio': 'Expense Ratio',
-    //     'mtd': 'MTD',
-    //     'navDateMTD' : 'Latest NAV Date MTD'
-    // };
     const subFundContentMapping = {
-        // 'asset-name': 'Name',
-        // 'productSummary' : 'Fund Summary',
-        // 'investmentObjective' : 'Investment Objective',
-        // 'netAssets': "Net Assets (PKR mn)",
-        // 'launchDate': 'Launch Date',
-        // 'fundCategory': 'Fund Category',
-        // 'fundAuditors': 'Fund Auditors',
-        // 'fundManager': 'Fund manager',
-        // 'custodian': 'Custodian',
+        'asset-name': 'Name',
+        'productSummary' : 'Fund Summary',
+        'investmentObjective' : 'Investment Objective',
+        'netAssets': "Net Assets (PKR mn)",
+        'launchDate': 'Launch Date',
+        'fundCategory': 'Fund Category',
+        'fundAuditors': 'Fund Auditors',
+        'fundManager': 'Fund manager',
+        'custodian': 'Custodian',
         'i-nav' : "Latest NAV",
-        // 'navDate': 'Latest NAV Date',
-        // 'navDateMonth': 'Submission date',
-        'expense-ratio': 'Expense Ratio'
-        // 'mtd': 'MTD',
-        // 'navDateMTD' : 'Latest NAV Date MTD'
+        'navDate': 'Latest NAV Date',
+        'navDateMonth': 'Submission date',
+        'expense-ratio': 'Expense Ratio',
+        'mtd': 'MTD',
+        'navDateMTD' : 'Latest NAV Date MTD'
     };
 
     // Update sub-fund info for each tab
