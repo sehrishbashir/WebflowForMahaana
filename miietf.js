@@ -744,6 +744,8 @@ async function getMIIRFFundData(appwData) {
         'custodian': 'Custodian',
         'i-nav' : "Latest NAV",
         'navDate': 'Latest NAV Date',
+        'navDateMonth': 'Submission date',
+        'expense-ratio': 'Expense Ratio',
         'mtd': 'MTD',
         'navDateMTD' : 'Latest NAV Date MTD'
     };
@@ -764,6 +766,15 @@ async function getMIIRFFundData(appwData) {
                 }
                 if (elementId === 'netAssets' && value !== '-') {
                     value = `PKR ${(value / 1_000_000).toFixed(1)}mn`; // Convert to millions
+                }
+                if (elementId === 'expense-ratio' && value !== '-') {
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio (without gov levy)']) * 100).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio (without gov levy)']) * 100).toFixed(2); // Convert to percentage
+                    value = `${monthlyExpense}% | ${yearlyExpense}%`; // Format as "monthly% / yearly%"
+                }
+                if (elementId === 'navDateMonth' && value !== '-') {
+                    const dateObj = new Date(value);
+                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
                 }
 
                 createTextRetirment(container, elementId, value);
