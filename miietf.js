@@ -755,6 +755,7 @@ async function getMIIRFFundData(appwData) {
     subFundContainers.forEach((container, index) => {
         const subFundData = subFunds[index]; // Get data for the current sub-fund
         if (subFundData) {
+            
             for (const elementId in subFundContentMapping) {
                 const dataKey = subFundContentMapping[elementId];
                 let value = subFundData[dataKey] || '-';
@@ -767,14 +768,16 @@ async function getMIIRFFundData(appwData) {
                 if (elementId === 'netAssets' && value !== '-') {
                     value = `PKR ${(value / 1_000_000).toFixed(1)}mn`; // Convert to millions
                 }
-                if (elementId === 'expense-ratio' && value !== '-') {
-                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio (without gov levy)']) * 100).toFixed(2); // Convert to percentage
-                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio (without gov levy)']) * 100).toFixed(2); // Convert to percentage
-                    value = `${monthlyExpense}% | ${yearlyExpense}%`; // Format as "monthly% / yearly%"
+                if (elementId === 'expense-ratio') {
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
+                    value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
                 }
                 if (elementId === 'navDateMonth' && value !== '-') {
                     const dateObj = new Date(value);
                     value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
+                    value = `as of ${value}`; // Add "as of" prefix
                 }
 
                 createTextRetirment(container, elementId, value);
