@@ -63,10 +63,18 @@ const createText = (elementId, content) => { const element = document.getElement
 
 const createTextRetirment = (container, elementId, content) => {
     // If container is provided, scope the query to it; otherwise, use document
-    const element = container 
-        ? container.querySelector(`#${elementId}`)
-        : document.getElementById(elementId);
+    console.log(container, elementId, content);
+    console.log(container, "attttt=>container");
+    console.log(elementId, "attttt=>elementId");
+    // console.log(content, "attttt=>content");
+    // const element = container 
+    //     ? container.querySelector(`#${elementId}`)
+    //     : document.getElementById(elementId);
+    // console.log(element, "attttt=>element");
+    const element = document.getElementById(`${elementId}`);
+    console.log(element, "ab=>element");
     if (element) {
+        console.log(`Setting content for element with ID: ${content}`);
         element.textContent = content || '-'; // Fallback to '-' if content is undefined/null
     }
 };
@@ -732,22 +740,39 @@ async function getMIIRFFundData(appwData) {
     const subFundsPrice = [appwData.miirfmmsf.price, appwData.miirfdsf.price, appwData.miirfesf.price];
     const subFundsPerf = [appwData.miirfmmsf.perf, appwData.miirfdsf.perf, appwData.miirfesf.perf];
 
+    // const subFundContentMapping = {
+    //     'asset-name': 'Name',
+    //     'productSummary' : 'Fund Summary',
+    //     'investmentObjective' : 'Investment Objective',
+    //     'netAssets': "Net Assets (PKR mn)",
+    //     'launchDate': 'Launch Date',
+    //     'fundCategory': 'Fund Category',
+    //     'fundAuditors': 'Fund Auditors',
+    //     'fundManager': 'Fund manager',
+    //     'custodian': 'Custodian',
+    //     'i-nav' : "Latest NAV",
+    //     'navDate': 'Latest NAV Date',
+    //     'navDateMonth': 'Submission date',
+    //     'expense-ratio': 'Expense Ratio',
+    //     'mtd': 'MTD',
+    //     'navDateMTD' : 'Latest NAV Date MTD'
+    // };
     const subFundContentMapping = {
-        'asset-name': 'Name',
-        'productSummary' : 'Fund Summary',
-        'investmentObjective' : 'Investment Objective',
-        'netAssets': "Net Assets (PKR mn)",
-        'launchDate': 'Launch Date',
-        'fundCategory': 'Fund Category',
-        'fundAuditors': 'Fund Auditors',
-        'fundManager': 'Fund manager',
-        'custodian': 'Custodian',
-        'i-nav' : "Latest NAV",
-        'navDate': 'Latest NAV Date',
-        'navDateMonth': 'Submission date',
-        'expense-ratio': 'Expense Ratio',
-        'mtd': 'MTD',
-        'navDateMTD' : 'Latest NAV Date MTD'
+        // 'asset-name': 'Name',
+        // 'productSummary' : 'Fund Summary',
+        // 'investmentObjective' : 'Investment Objective',
+        // 'netAssets': "Net Assets (PKR mn)",
+        // 'launchDate': 'Launch Date',
+        // 'fundCategory': 'Fund Category',
+        // 'fundAuditors': 'Fund Auditors',
+        // 'fundManager': 'Fund manager',
+        // 'custodian': 'Custodian',
+        // 'i-nav' : "Latest NAV",
+        // 'navDate': 'Latest NAV Date',
+        // 'navDateMonth': 'Submission date',
+        // 'expense-ratio': 'Expense Ratio',
+        // 'mtd': 'MTD',
+        // 'navDateMTD' : 'Latest NAV Date MTD'
     };
 
     // Update sub-fund info for each tab
@@ -778,6 +803,9 @@ async function getMIIRFFundData(appwData) {
                     const dateObj = new Date(value);
                     value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
                     value = `as of ${value}`; // Add "as of" prefix
+                    console.log(value);
+                    console.log(container);
+                    console.log(elementId);
                 }
 
                 createTextRetirment(container, elementId, value);
