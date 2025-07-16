@@ -767,10 +767,10 @@ async function getMIIRFFundData(appwData) {
         // 'fundAuditors': 'Fund Auditors',
         // 'fundManager': 'Fund manager',
         // 'custodian': 'Custodian',
-        // 'i-nav' : "Latest NAV",
+        'i-nav' : "Latest NAV",
         // 'navDate': 'Latest NAV Date',
         // 'navDateMonth': 'Submission date',
-        // 'expense-ratio': 'Expense Ratio',
+        'expense-ratio': 'Expense Ratio'
         // 'mtd': 'MTD',
         // 'navDateMTD' : 'Latest NAV Date MTD'
     };
