@@ -68,7 +68,22 @@ const createTextRetirment = (container, elementId, content) => {
         : document.getElementById(elementId);
     if (element) {
         element.textContent = content || '-'; // Fallback to '-' if content is undefined/null
+        console.log(container)
+        console.log(elementId)
     }
+
+    // if (elementId === "expense-ratio") {
+    //     const element = container 
+    //     ? container.querySelector(`[data-field="${elementId}"]`)
+    //     : document.querySelector(`[data-field="${elementId}"]`);
+    // }
+
+    if (!element) {
+        console.warn(`Element not found: ${elementId} in container`, container);
+    // } else {
+    //     element.textContent = content || '-';
+    }
+    
 };
 
 
@@ -768,17 +783,7 @@ async function getMIIRFFundData(appwData) {
                 if (elementId === 'netAssets' && value !== '-') {
                     value = `PKR ${(value / 1_000_000).toFixed(1)}mn`; // Convert to millions
                 }
-                if (elementId === 'expense-ratio') {
-                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
-                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
-                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
-                    value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
-                }
-                if (elementId === 'navDateMonth' && value !== '-') {
-                    const dateObj = new Date(value);
-                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
-                    value = `as of ${value}`; // Add "as of" prefix
-                }
+                
                 createTextRetirment(container, elementId, value);
             }
         }
@@ -790,6 +795,9 @@ async function getMIIRFFundData(appwData) {
     subFundContainersMAIN.forEach((container, index) => {
         const subFundPriceData = subFundsPrice[index];
         const subFundPerfData = subFundsPerf[index];
+        const subFundData = subFunds[index]; // Get data for the current sub-fund
+        
+        
         if (subFundPriceData) {
             // Get latest NAV and date from price array
             let latestNav = '-';
@@ -816,6 +824,17 @@ async function getMIIRFFundData(appwData) {
                     createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'mtd') {
                     contentValue = latestMTD;
+                    createTextRetirment(container, elementId, contentValue);
+                } else if (elementId === 'expense-ratio') {
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
+                    contentValue = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
+                    createTextRetirment(container, elementId, contentValue);
+                } else if (elementId === 'navDateMonth') {
+                    const dateObj = new Date(subFundData['Monthly Total Expense Ratio']);
+                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
+                    contentValue = `as of ${value}`; // Add "as of" prefix
                     createTextRetirment(container, elementId, contentValue);
                 }
             }
