@@ -745,7 +745,10 @@ async function getMIIRFFundData(appwData) {
         'i-nav' : "Latest NAV",
         'navDate': 'Latest NAV Date',
         'mtd': 'MTD',
-        'navDateMTD' : 'Latest NAV Date MTD'
+        'navDateMTD' : 'Latest NAV Date MTD',
+        'navDateMonth': 'Submission date',
+        'expense-ratio': 'Monthly Total Expense Ratio'
+        
     };
 
     // Update sub-fund info for each tab
@@ -756,7 +759,7 @@ async function getMIIRFFundData(appwData) {
             for (const elementId in subFundContentMapping) {
                 const dataKey = subFundContentMapping[elementId];
                 let value = subFundData[dataKey] || '-';
-
+                console.log(index)
                 // Special formatting for launchDate
                 if (elementId === 'launchDate' && value !== '-') {
                     const dateObj = new Date(value);
@@ -765,7 +768,17 @@ async function getMIIRFFundData(appwData) {
                 if (elementId === 'netAssets' && value !== '-') {
                     value = `PKR ${(value / 1_000_000).toFixed(1)}mn`; // Convert to millions
                 }
-
+                if (elementId === 'expense-ratio') {
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
+                    value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
+                }
+                if (elementId === 'navDateMonth' && value !== '-') {
+                    const dateObj = new Date(value);
+                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
+                    value = `as of ${value}`; // Add "as of" prefix
+                }
                 createTextRetirment(container, elementId, value);
             }
         }
