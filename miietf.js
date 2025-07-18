@@ -72,18 +72,6 @@ const createTextRetirment = (container, elementId, content) => {
         console.log(elementId)
     }
 
-    // if (elementId === "expense-ratio") {
-    //     const element = container 
-    //     ? container.querySelector(`[data-field="${elementId}"]`)
-    //     : document.querySelector(`[data-field="${elementId}"]`);
-    // }
-
-    if (!element) {
-        console.warn(`Element not found: ${elementId} in container`, container);
-    // } else {
-    //     element.textContent = content || '-';
-    }
-    
 };
 
 
@@ -832,7 +820,10 @@ async function getMIIRFFundData(appwData) {
                     contentValue = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
                     createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'navDateMonth') {
-                    const dateObj = new Date(subFundData['Monthly Total Expense Ratio']);
+                    const dataKey = subFundContentMapping[elementId];
+                    let value = subFundData[dataKey] || '-';
+                    const dateObj = new Date(value);
+                    console.log(`navDateMonth value: ${value}`);
                     value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
                     contentValue = `as of ${value}`; // Add "as of" prefix
                     createTextRetirment(container, elementId, contentValue);
