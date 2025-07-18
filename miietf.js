@@ -824,7 +824,7 @@ async function getMIIRFFundData(appwData) {
                     let value = subFundData[dataKey] || '-';
                     const dateObj = new Date(value);
                     console.log(`navDateMonth value: ${value}`);
-                    value = moment(dateObj).format('MMM DD, YYYY'); // e.g., "june 30, 2025"
+                    value = moment(dateObj).format('DD MMM YYYY'); // e.g., "30 Jun 2025"
                     contentValue = `as of ${value}`; // Add "as of" prefix
                     createTextRetirment(container, elementId, contentValue);
                 }
