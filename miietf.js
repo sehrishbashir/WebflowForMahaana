@@ -1636,6 +1636,7 @@ function getFundPrices(productName, appw_price) {
         
         appw_price_reformed.push({
             date: date_str,
+            nav: appw_price[item].nav,
             navValue: appw_price[item].nav_adjusted,
             performanceValue: appw_price[item].benchmark,
             kmi30: appw_price[item].kmi30,
@@ -1681,10 +1682,18 @@ function renderPerfChart(data, productName) {
     let min_val = null
     
     for (let i in data) {
-        miietf_series.push([
-            moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
-            data[i].navValue
-        ])
+        if(productName === 'MIIETF') {
+            miietf_series.push([
+                moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
+                data[i].nav
+            ])
+        }
+        else {
+            miietf_series.push([
+                moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60),
+                data[i].navValue
+            ])
+        }
         
         benchmark_series.push([
             moment(data[i].date, "DD/MM/YYYY").unix() * 1000 + hoursOffset * (1000 * 60 * 60), 
