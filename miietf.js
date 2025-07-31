@@ -1650,6 +1650,13 @@ function getFundPrices(productName, appw_price) {
     latest_date = new Date(appw_price[appw_price.length - 1].date)
     latest_nav = appw_price[appw_price.length - 1].nav
 
+    if (productName === "MIIETF"){
+        latest_nav = appw_price[appw_price.length - 1].nav_adjusted
+    }
+    else{
+        latest_nav = appw_price[appw_price.length - 1].nav
+    }
+
     // console.log('latest_date')
     // console.log(latest_date)
 
