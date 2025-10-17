@@ -750,8 +750,12 @@ async function getMIIRFFundData(appwData) {
         'mtd': 'MTD',
         'navDateMTD' : 'Latest NAV Date MTD',
         'navDateMonth': 'Submission date',
-        'expense-ratio': 'Monthly Total Expense Ratio'
-        
+        'benchmark': 'Benchmark',
+        'managementFee': 'Management Fee',
+        'weightedAverageTime': 'Weighted Average Time to Maturity (Days)',
+        'expense-ratio': 'Monthly Total Expense Ratio',
+        'expense-ratio-with-gov': 'Monthly Total Expense Ratio With Gov',
+        'expense-ratio-without-gov': 'Monthly Total Expense Ratio without Gov',
     };
 
     // Update sub-fund info for each tab
@@ -771,6 +775,21 @@ async function getMIIRFFundData(appwData) {
                 if (elementId === 'netAssets' && value !== '-') {
                     value = `PKR ${(value / 1_000_000).toFixed(1)}mn`; // Convert to millions
                 }
+                if (elementId === 'managementFee' && value !== '-') {
+                    value = `${(parseFloat(value) * 100).toFixed(1)}% p.a`; // Convert to percentage
+                }
+                if (elementId === 'expense-ratio-with-gov') {
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio'])).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio'])).toFixed(2); // Convert to percentage
+                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
+                    value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
+                } 
+                if (elementId === 'expense-ratio-without-gov') {
+                    monthlyExpense = (parseFloat(subFundData["Monthly Total Expense Ratio (without gov levy)"])).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData["Yearly Total Expense Ratio (without gov levy)"])).toFixed(2); // Convert to percentage
+                    console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
+                    value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
+                } 
                 
                 createTextRetirment(container, elementId, value);
             }
@@ -814,8 +833,8 @@ async function getMIIRFFundData(appwData) {
                     contentValue = latestMTD;
                     createTextRetirment(container, elementId, contentValue);
                 } else if (elementId === 'expense-ratio') {
-                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
-                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio']) * 100).toFixed(2); // Convert to percentage
+                    monthlyExpense = (parseFloat(subFundData['Monthly Total Expense Ratio'])).toFixed(2); // Convert to percentage
+                    yearlyExpense = (parseFloat(subFundData['Yearly Total Expense Ratio'])).toFixed(2); // Convert to percentage
                     console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
                     contentValue = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
                     createTextRetirment(container, elementId, contentValue);
@@ -1913,9 +1932,6 @@ async function main() {
     loader = createLoader();
     loader.style.display = 'flex';
 
-    // let airtable = new Airtable({apiKey: 'patnDPQnOez6XuH3I.acbafbff38cb2659ad2a74247aa50db04dc276aaccda314aedf7df118f6bf3e2'})
-    // let miietfBase = airtable.base('app9fpjsdlh5R7gsq')
-    // let micfBase = airtable.base('app3KpgeOesdEHazM')
 
     let productName = document.querySelector('#product_name').innerText
     console.log(productName)
