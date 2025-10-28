@@ -756,6 +756,7 @@ async function getMIIRFFundData(appwData) {
         'expense-ratio': 'Monthly Total Expense Ratio',
         'expense-ratio-with-gov': 'Monthly Total Expense Ratio With Gov',
         'expense-ratio-without-gov': 'Monthly Total Expense Ratio without Gov',
+        'sales-load': 'Sales Load'
     };
 
     // Update sub-fund info for each tab
@@ -790,6 +791,15 @@ async function getMIIRFFundData(appwData) {
                     console.log(`Monthly Expense: ${monthlyExpense}, Yearly Expense: ${yearlyExpense}`);
                     value = `${monthlyExpense}% (MTD) | ${yearlyExpense}% (YTD)`; // Format as "monthly% / yearly%"
                 } 
+                if (elementId === 'sales-load') {
+                    // Use "Sales Load" value; if empty/null/undefined then set "NIL"
+                    const salesLoad = subFundData['Sales Load'];
+                    if (salesLoad === null || salesLoad === undefined || String(salesLoad).trim() === '') {
+                        value = 'NIL';
+                    } else {
+                        value = salesLoad;
+                    }
+                }
                 
                 createTextRetirment(container, elementId, value);
             }
@@ -1041,7 +1051,8 @@ async function getNonMIIRFFundData(productName, appwData) {
         totalExpenseRatioWithoutLevy: null,
         weightedAverageTime: appwData.info['Weighted Average Time to Maturity (Days)'],
         yearlyTotalExpenseRatio: appwData.info['Yearly Total Expense Ratio'],
-        yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)']
+        yearlyTotalExpenseRatioWithoutLevy: appwData.info['Yearly Total Expense Ratio (without gov levy)'],
+        salesLoad: appwData.info['Sales Load']
     };
 
     let product_summary = appwData.info['Fund Summary'] ;
@@ -1211,7 +1222,8 @@ async function getNonMIIRFFundData(productName, appwData) {
         'i-nav': `${overview.navPerUnit.includes('.') ? Number(overview.navPerUnit).toFixed(4) : Number(overview.navPerUnit)}`,
         'custodian': fundInfo.custodian,
         'shariahAdvisors': fundInfo.shariahAdvisors,
-        'weightedAverageTime': fundInfo.weightedAverageTime
+        'weightedAverageTime': fundInfo.weightedAverageTime,
+        'sales-load': fundInfo.salesLoad ? fundInfo.salesLoad : 'NIL'
     };
 
     for (const elementId in contentMapping) {
