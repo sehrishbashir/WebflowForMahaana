@@ -166,7 +166,7 @@ function renderLoop(data, airPerformances, productName) {
             row.classList.add('table-row');
 
             let curr_month_perc = (data['Current month']) ? (data['Current month'] * 100).toFixed(2) + '%' : '-'
-            let prev_month_perc = (data['Current month']) ? (data['Prev month'] * 100).toFixed(2) + '%' : '-'
+            let prev_month_perc = (data['Prev month']) ? (data['Prev month'] * 100).toFixed(2) + '%' : '-'
             
             const html = `
             <div class="div-block-406 _2">
@@ -1323,7 +1323,7 @@ function addAssetAllocGraph(data) {
     let labels = []
     let curr_month = []
     let prev_month = []
-    
+
     for(let i in data) {
         if(data[i]['Current month'] === 0 && data[i]['Prev month'] === 0)
             continue
