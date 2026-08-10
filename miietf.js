@@ -1106,21 +1106,16 @@ async function getNonMIIRFFundData(productName, appwData) {
     let appwAssetAlloc = null;
     let appwCreditQuality = null;
     if (productName === 'MICF') {
-        appwAssetAlloc = [];
-        for (let record_num in appwData.asset_alloc) {
-            appwAssetAlloc.push({
-                Name: appwData.asset_alloc[record_num].key,
-                'Current month': appwData.asset_alloc[record_num].current_month,
-                'Prev month': appwData.asset_alloc[record_num].prev_month
-            });
-        }
-        appwCreditQuality = [];
-        for (let record_num in appwData.distribution) {
-            appwCreditQuality.push({
-                key: appwData.credit_quality[record_num].key,
-                value: appwData.credit_quality[record_num].value * 100
-            });
-        }
+        appwAssetAlloc = (appwData.asset_alloc || []).map((item) => ({
+            Name: item.key,
+            'Current month': item.current_month,
+            'Prev month': item.prev_month
+        }));
+        // Must iterate credit_quality (not distribution) — lengths differ and crash the page
+        appwCreditQuality = (appwData.credit_quality || []).map((item) => ({
+            key: item.key,
+            value: item.value * 100
+        }));
     }
 
     let appwHolding = {};
