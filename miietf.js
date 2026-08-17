@@ -508,14 +508,14 @@ async function getAppWriteData(productName) {
         try {
             // Make the fetch request depending on product name
             if (productName === 'MIIETF') {
-                appw_data = await fetchWithTimeout('https://fdepprodmahaana-gkb9bdeehudhdedy.z02.azurefd.net/marketfeedinvestmentuniverse/api/fund-data?name=miietf', timeoutDuration);
+                appw_data = await fetchWithTimeout('https://api.app.mahaana.com/marketfeedinvestuniverse/api/fund-data?name=miietf', timeoutDuration);
             } 
             else if (productName === 'MICF') {
-                appw_data = await fetchWithTimeout('https://fdepprodmahaana-gkb9bdeehudhdedy.z02.azurefd.net/marketfeedinvestmentuniverse/api/fund-data?name=micf', timeoutDuration);
+                appw_data = await fetchWithTimeout('https://api.app.mahaana.com/marketfeedinvestuniverse/api/fund-data?name=micf', timeoutDuration);
             }
             else if (productName === 'MIIRF') {
                 console.log('Fetching MIIRF data');
-                appw_data = await fetchWithTimeout('https://fdepprodmahaana-gkb9bdeehudhdedy.z02.azurefd.net/marketfeedinvestmentuniverse/api/fund-data?name=miirf', timeoutDuration);
+                appw_data = await fetchWithTimeout('https://api.app.mahaana.com/marketfeedinvestuniverse/api/fund-data?name=miirf', timeoutDuration);
             }
 
             // Check if the response is successful
